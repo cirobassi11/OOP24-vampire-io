@@ -1,4 +1,6 @@
 package it.unibo.vampireio.model;
 
-public interface Score {
+import java.io.Serializable;
+
+public interface Score extends Serializable {
 }
