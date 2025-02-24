@@ -1,37 +1,56 @@
 package it.unibo.vampireio.model;
 
-import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.geom.Point2D.Double;
 
-public class Projectile implements Movable {
+public class Projectile implements Movable, Collidable {
 
     @Override
-    public void move(float dx, float dy) {
+    public void setDirection(Double direction) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'move'");
+        throw new UnsupportedOperationException("Unimplemented method 'setDirection'");
     }
 
     @Override
-    public void update() {
+    public Double getDirection() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        throw new UnsupportedOperationException("Unimplemented method 'getDirection'");
     }
 
     @Override
-    public float getSpeed() {
+    public void setSpeed(double speed) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setSpeed'");
+    }
+
+    @Override
+    public double getSpeed() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getSpeed'");
     }
 
     @Override
-    public Point getPosition() {
+    public void move(Double positionOffset) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
+        throw new UnsupportedOperationException("Unimplemented method 'move'");
     }
 
     @Override
-    public int getDistance(Placeable placeable) {
+    public Rectangle getHitbox() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDistance'");
+        throw new UnsupportedOperationException("Unimplemented method 'getHitbox'");
+    }
+
+    @Override
+    public boolean isCollidingWith(Collidable collidable) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isCollidingWith'");
+    }
+
+    @Override
+    public void onCollision(Collidable collidable) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'onCollision'");
     }
 
 }

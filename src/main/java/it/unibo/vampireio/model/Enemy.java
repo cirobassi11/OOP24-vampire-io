@@ -1,23 +1,26 @@
 package it.unibo.vampireio.model;
 
-import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 
-public class Enemy extends LivingEntity implements Movable {
+public class Enemy extends LivingEntity {
 
-    @Override
-    public Point getPosition() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
+    private int damage;
+
+    public Enemy(Point2D.Double position, int maxHealth, int damage, int speed, Point2D.Double direction) {
+        super(position, maxHealth, speed, direction);
+        this.damage = damage;
     }
 
     @Override
-    public int getDistance(Placeable placeable) {
+    public void setDirection(Double direction) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDistance'");
+        throw new UnsupportedOperationException("Unimplemented method 'setDirection'");
     }
 
     @Override
-    public void move(float dx, float dy) {
+    public void move(Double positionOffset) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'move'");
     }
@@ -29,9 +32,21 @@ public class Enemy extends LivingEntity implements Movable {
     }
 
     @Override
-    public float getSpeed() {
+    public Rectangle getHitbox() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSpeed'");
+        throw new UnsupportedOperationException("Unimplemented method 'getHitbox'");
+    }
+
+    @Override
+    public boolean isCollidingWith(Collidable collidable) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isCollidingWith'");
+    }
+
+    @Override
+    public void onCollision(Collidable collidable) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'onCollision'");
     }
 
 }

@@ -1,4 +1,4 @@
 package it.unibo.vampireio.model;
 
-public interface Collectible extends Placeable {    
+public interface Collectible extends Positionable {    
 }
