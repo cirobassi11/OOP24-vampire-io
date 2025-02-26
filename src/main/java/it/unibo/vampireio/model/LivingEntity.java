@@ -1,60 +1,42 @@
 package it.unibo.vampireio.model;
 
-import java.awt.geom.Point2D;
+import java.awt.Rectangle;
+import java.awt.geom.Point2D.Double;
 
-public abstract class LivingEntity extends Entity implements Movable {
+public abstract class LivingEntity extends MovableEntity implements Living {
+
     private int health;
     private int maxHealth;
-    private double speed;
-    private Point2D.Double direction;
 
-    protected LivingEntity(Point2D.Double position, int maxHealth, int speed, Point2D.Double direction) {
-        super(position);
-        this.health = maxHealth;
-        this.maxHealth = maxHealth;
-        this.speed = speed;
-        this.direction = direction;
+    protected LivingEntity(Double position, Rectangle hitbox, Double direction, double speed) {
+        super(position, hitbox, direction, speed);
     }
 
+    @Override
     public int getHealth() {
-        return this.health;
+        return health;
     }
 
+    @Override
     public int getMaxHealth() {
-        return this.maxHealth;
+        return maxHealth;
     }
 
-    public void dealDamage(int damage) {
-        this.setHealth(this.getHealth() - ((damage < 0) ? 0 : damage));
-        if(this.health <= 0) {
-            //TODO --------------------- DEATHHHHHHHH/GAMEOVER
-        }
-    }
-
-    public void heal(int heal) {
-        this.setHealth(Math.min(this.getHealth() + ((heal < 0) ? 0 : heal), this.getMaxHealth()));
-    }
-
+    @Override
     public void setMaxHealth(int maxHealth) {
         this.maxHealth = maxHealth;
     }
 
     @Override
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    public void dealDamage(int damage) {
+        this.health = Math.max(this.health - ((damage < 0) ? 0 : damage), 0);
+        if(this.health == 0) {
+            //TODO -die
+        }
     }
 
     @Override
-    public double getSpeed() {
-        return this.speed;
-    }
-
-    @Override
-    public Point2D.Double getDirection() {
-        return this.direction;
-    }
-
-    private void setHealth(int health) {
-        this.health = health;
+    public void heal(int heal) {
+        this.health = Math.min(this.health + ((heal < 0) ? 0 : heal), this.maxHealth);
     }
 }

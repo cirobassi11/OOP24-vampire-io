@@ -10,7 +10,7 @@ class SettingsPanel extends JPanel {
     SettingsPanel(GameViewImpl view) {
         this.setBackground(Color.YELLOW);
         
-        JButton switchButton = new JButton("Main Menu");
+        JButton switchButton = new JButton("MAIN MENU");
         switchButton.addActionListener(e -> view.showScreen(GameViewImpl.MAIN_MENU));
         this.add(switchButton, BorderLayout.SOUTH);
     }

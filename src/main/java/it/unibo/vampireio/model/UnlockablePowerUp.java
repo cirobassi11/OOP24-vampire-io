@@ -1,4 +1,4 @@
 package it.unibo.vampireio.model;
 
-public interface TemporaryPowerUp {
+public interface UnlockablePowerUp {
 }

@@ -17,6 +17,7 @@ public class GameViewImpl implements GameView {
     static final String MAIN_MENU = "mainMenu";
     static final String SETTINGS = "settings";
     static final String GAME = "game";
+    static final String CHOOSE_CHARACTER = "chooseCharacter";
     static final String END_GAME = "endGame";
     static final String PAUSE = "pause";
     static final String POWERUPS = "powerups";
@@ -32,6 +33,7 @@ public class GameViewImpl implements GameView {
         this.cardPanel.add(new MainMenuPanel(this), GameViewImpl.MAIN_MENU);
         this.cardPanel.add(new SettingsPanel(this), GameViewImpl.SETTINGS);
         this.cardPanel.add(new GamePanel(this), GameViewImpl.GAME);
+        this.cardPanel.add(new ChooseCharacterMenu(this), GameViewImpl.CHOOSE_CHARACTER);
         this.cardPanel.add(new EndGamePanel(this), GameViewImpl.END_GAME);
         this.cardPanel.add(new PausePanel(this), GameViewImpl.PAUSE);
         this.cardPanel.add(new PowerUpPanel(this), GameViewImpl.POWERUPS);
@@ -48,6 +50,12 @@ public class GameViewImpl implements GameView {
 
     void showScreen(String name) {
         this.cardLayout.show(this.cardPanel, name);
+    }
+
+    @Override
+    public void update() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
 }

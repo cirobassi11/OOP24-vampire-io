@@ -2,9 +2,9 @@ package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D.Double;
 
-public class Coin extends Lootable {
+public class Food extends Lootable {
 
-    protected Coin(Double position) {
+    protected Food(Double position) {
         super(position);
     }
 

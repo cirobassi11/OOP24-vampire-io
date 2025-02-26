@@ -8,7 +8,7 @@ public class PowerUpPanel extends JPanel {
     public PowerUpPanel(GameViewImpl view) {
         this.setBackground(Color.GREEN);
         
-        JButton mainMenuButton = new JButton("Main Menu");
+        JButton mainMenuButton = new JButton("MAIN MENU");
         mainMenuButton.addActionListener(e -> view.showScreen(GameViewImpl.MAIN_MENU));
         this.add(mainMenuButton);
     }

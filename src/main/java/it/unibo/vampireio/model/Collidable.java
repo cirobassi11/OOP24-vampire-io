@@ -2,8 +2,8 @@ package it.unibo.vampireio.model;
 
 import java.awt.Rectangle;
 
-public interface Collidable {
+public interface Collidable extends Positionable {
     Rectangle getHitbox();
-    boolean isCollidingWith(Collidable collidable);
+    boolean collidesWith(Collidable collidable);
     void onCollision(Collidable collidable);
 }
