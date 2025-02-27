@@ -10,7 +10,7 @@ class EndGamePanel extends JPanel {
     EndGamePanel(GameViewImpl view) {
         this.setBackground(Color.BLACK);
 
-        JButton mainMenuButton = new JButton("Main Menu");
+        JButton mainMenuButton = new JButton("CONTINUE");
         mainMenuButton.addActionListener(e -> view.showScreen(GameViewImpl.MAIN_MENU));
         this.add(mainMenuButton);
     }

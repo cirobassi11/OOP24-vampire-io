@@ -1,17 +1,14 @@
 package it.unibo.vampireio.view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
-class SettingsPanel extends JPanel {
-
+class SettingsPanel extends BasePanel {
     SettingsPanel(GameViewImpl view) {
-        this.setBackground(Color.YELLOW);
+        super(view);
         
-        JButton switchButton = new JButton("MAIN MENU");
-        switchButton.addActionListener(e -> view.showScreen(GameViewImpl.MAIN_MENU));
-        this.add(switchButton, BorderLayout.SOUTH);
+        JButton backButton = createStyledButton("BACK", this.buttonSize);
+        backButton.addActionListener(e -> view.showScreen(GameViewImpl.MAIN_MENU));
+
+        this.add(backButton);
     }
 }

@@ -1,36 +1,38 @@
 package it.unibo.vampireio.view;
 
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import javax.swing.*;
+import java.awt.*;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-class MainMenuPanel extends JPanel {
+class MainMenuPanel extends BasePanel {
     
     MainMenuPanel(GameViewImpl view) {
-        this.setBackground(Color.RED);
-        this.setLayout(new GridBagLayout());
-        
+        super(view);
+
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
+        buttonPanel.setOpaque(false);
+
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 30, 10);
         gbc.gridx = 0;
-        gbc.weightx = 1.0;
-        gbc.insets = new java.awt.Insets(10, 20, 10, 20);
+        gbc.weightx = 1;
+        gbc.anchor = GridBagConstraints.SOUTH;
 
-        gbc.gridy = 0;
-        JButton startButton = new JButton("PLAY");
+        // Bottoni
+        JButton startButton = createStyledButton("START", this.buttonSize);
         startButton.addActionListener(e -> view.showScreen(GameViewImpl.CHOOSE_CHARACTER));
-        this.add(startButton, gbc);
+        gbc.gridy = 0;
+        buttonPanel.add(startButton, gbc);
 
-        gbc.gridy = 1;
-        JButton powerUpButton = new JButton("POWERUPS");
+        JButton powerUpButton = createStyledButton("POWERUPS", this.buttonSize);
         powerUpButton.addActionListener(e -> view.showScreen(GameViewImpl.POWERUPS));
-        this.add(powerUpButton, gbc);
+        gbc.gridy = 1;
+        buttonPanel.add(powerUpButton, gbc);
 
-        gbc.gridy = 2;
-        JButton settingsButton = new JButton("SETTINGS");
+        JButton settingsButton = createStyledButton("SETTINGS", this.buttonSize);
         settingsButton.addActionListener(e -> view.showScreen(GameViewImpl.SETTINGS));
-        this.add(settingsButton, gbc);
+        gbc.gridy = 2;
+        buttonPanel.add(settingsButton, gbc);
+
+        this.add(buttonPanel);
     }
 }
