@@ -7,7 +7,6 @@ public class Character extends LivingEntity {
 
     protected Character(Double position, Rectangle hitbox, Double direction, double speed) {
         super(position, hitbox, direction, speed);
-        //TODO Auto-generated constructor stub
     }
 
     @Override

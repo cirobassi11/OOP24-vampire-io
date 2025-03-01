@@ -1,5 +1,6 @@
 package it.unibo.vampireio.model;
 
-public interface Attack extends Movable, Collidable {
-    
+public interface Attack extends Collidable {
+    int getDamage();
+    String getType();
 }

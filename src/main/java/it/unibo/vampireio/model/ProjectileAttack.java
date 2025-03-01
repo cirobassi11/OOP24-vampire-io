@@ -1,18 +1,34 @@
 package it.unibo.vampireio.model;
 
-import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
 
-public abstract class ProjectileAttack extends MovableEntity implements Attack {
+public class ProjectileAttack extends MovableEntity implements Attack {
 
-    protected ProjectileAttack(Double position, Rectangle hitbox, Double direction, double speed) {
+    private int damage;
+    private String type;
+
+    public ProjectileAttack(Point2D.Double position, Shape hitbox, Double direction, double speed, int damage, String type) {
         super(position, hitbox, direction, speed);
+        this.damage = damage;
+        this.type = type;
     }
 
     @Override
     public void onCollision(Collidable collidable) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'onCollision'");
+    }
+
+    @Override
+    public int getDamage() {
+        return this.damage;
+    }
+
+    @Override
+    public String getType() {
+        return this.type;
     }
     
 }

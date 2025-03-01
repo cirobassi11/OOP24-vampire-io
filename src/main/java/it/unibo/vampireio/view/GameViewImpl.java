@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Taskbar;
 import java.awt.Toolkit;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,12 +17,20 @@ public class GameViewImpl implements GameView {
     private final JFrame frame;
     private final CardLayout cardLayout;
     private final JPanel cardPanel;
-    
-    private static final double SCALE = 0.8;
+
+    private final GameController controller;
 
     private Dimension screenSize;
 
-    private final GameController controller;
+    private Dimension currentFrameSize;
+
+    public static final List<Dimension> resolutions = List.of(
+        new Dimension(960, 540),
+        new Dimension(1280, 720),
+        new Dimension(1920, 1080),
+        new Dimension(2560, 1440),
+        new Dimension(3840, 2160)
+    );
     
     static final String MAIN_MENU = "mainMenu";
     static final String SETTINGS = "settings";
@@ -29,7 +38,8 @@ public class GameViewImpl implements GameView {
     static final String CHOOSE_CHARACTER = "chooseCharacter";
     static final String END_GAME = "endGame";
     static final String PAUSE = "pause";
-    static final String POWERUPS = "powerups";
+    static final String UNLOCKABLE_POWERUPS = "unlockablePowerups";
+    static final String IN_GAME_POWERUPS = "inGamePowerups";
 
     private final String iconPath = "/images/icon.png";
 
@@ -41,6 +51,11 @@ public class GameViewImpl implements GameView {
         this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         
         this.frame = new JFrame("Vampire.io");
+        this.setIcon(this.iconPath);
+        this.setResolution(resolutions.stream().filter(res -> res.width < this.screenSize.getWidth() && res.height < this.screenSize.getHeight()).reduce((first, second) -> second).get());
+        this.frame.setLocationRelativeTo(null);
+        this.frame.setResizable(false);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.cardLayout = new CardLayout();
         this.cardPanel = new JPanel(this.cardLayout);
@@ -51,15 +66,12 @@ public class GameViewImpl implements GameView {
         this.cardPanel.add(new ChooseCharacterPanel(this), GameViewImpl.CHOOSE_CHARACTER);
         this.cardPanel.add(new EndGamePanel(this), GameViewImpl.END_GAME);
         this.cardPanel.add(new PausePanel(this), GameViewImpl.PAUSE);
-        this.cardPanel.add(new PowerUpPanel(this), GameViewImpl.POWERUPS);
+        this.cardPanel.add(new UnlockablePowerUpPanel(this), GameViewImpl.UNLOCKABLE_POWERUPS);
+        this.cardPanel.add(new InGamePowerUpPanel(this), GameViewImpl.IN_GAME_POWERUPS);
         this.showScreen(GameViewImpl.MAIN_MENU);
         this.frame.add(this.cardPanel);
 
-        this.setIcon(this.iconPath);
-        this.frame.setSize((int) (screenSize.width * GameViewImpl.SCALE), (int) (screenSize.height * GameViewImpl.SCALE));
-        this.frame.setLocationRelativeTo(null);
-        this.frame.setResizable(false);
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         this.frame.setVisible(true);
     }
 
@@ -73,6 +85,10 @@ public class GameViewImpl implements GameView {
 
     public Dimension getScreenSize() {
         return this.screenSize;
+    }
+
+    public Dimension getCurrentFrameSize() {
+        return this.currentFrameSize;
     }
 
     private void setIcon(String path) {
@@ -91,6 +107,12 @@ public class GameViewImpl implements GameView {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setResolution(Dimension resolution) {
+        this.screenSize = resolution;
+        this.frame.setSize(resolution);
+        this.currentFrameSize = resolution;
     }
 
     @Override

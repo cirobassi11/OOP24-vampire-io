@@ -1,24 +1,26 @@
 package it.unibo.vampireio.model;
 
-import java.awt.Rectangle;
-import java.awt.geom.Point2D.Double;
+import java.awt.Shape;
+import java.awt.geom.Area;
+import java.awt.geom.Point2D;
 
 public abstract class CollidableEntity extends PositionableEntity implements Collidable {
-    private Rectangle hitbox;
+    private Area hitBoxArea;
     
-    protected CollidableEntity(Double position, Rectangle hitbox) {
+    protected CollidableEntity(Point2D.Double position, Shape hitbox) {
         super(position);
-        this.hitbox = hitbox;
+        this.hitBoxArea = new Area(hitbox);
     }
 
     @Override
-    public Rectangle getHitbox() {
-        return hitbox;
+    public Area getHitbox() {
+        return this.hitBoxArea;
     }
 
     @Override
     public boolean collidesWith(Collidable collidable) {
-        return hitbox.intersects(collidable.getHitbox());
+        Area intersection = new Area(this.getHitbox());
+        intersection.intersect(collidable.getHitbox());
+        return !intersection.isEmpty();
     }
-
 }

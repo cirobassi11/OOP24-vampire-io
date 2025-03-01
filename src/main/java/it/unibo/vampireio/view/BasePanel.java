@@ -60,4 +60,24 @@ abstract class BasePanel extends JPanel {
 
         return button;
     }
+
+    protected JComboBox<String> createStyledComboBox(Dimension size) {
+        JComboBox<String> comboBox = new JComboBox<>();
+        comboBox.setPreferredSize(size);
+        comboBox.setFont(new Font("Arial", Font.BOLD, 16));
+        comboBox.setBackground(new Color(50, 50, 50));
+        comboBox.setForeground(Color.WHITE);
+        comboBox.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 2));
+        comboBox.setUI(new javax.swing.plaf.basic.BasicComboBoxUI() {
+            @Override
+            protected JButton createArrowButton() {
+                JButton button = new JButton("▼");
+                button.setBorder(BorderFactory.createEmptyBorder());
+                button.setContentAreaFilled(false);
+                button.setForeground(Color.WHITE);
+                return button;
+            }
+        });
+        return comboBox;
+    }
 }

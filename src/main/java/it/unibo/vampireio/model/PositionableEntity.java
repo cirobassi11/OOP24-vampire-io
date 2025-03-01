@@ -21,7 +21,7 @@ public abstract class PositionableEntity implements Positionable {
     }
 
     @Override
-    public int getDistance(Positionable positionable) {
-        return (int) Math.sqrt(Math.pow(position.x - positionable.getPosition().x, 2) + Math.pow(position.y - positionable.getPosition().y, 2));
+    public double getDistance(Positionable positionable) {
+        return position.distance(positionable.getPosition());
     }
 }

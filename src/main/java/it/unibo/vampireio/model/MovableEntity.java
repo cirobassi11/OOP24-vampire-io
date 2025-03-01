@@ -1,14 +1,13 @@
 package it.unibo.vampireio.model;
 
-import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
 
 public abstract class MovableEntity extends CollidableEntity implements Movable{
     private Point2D.Double direction;
     private double speed;
 
-    protected MovableEntity(Double position, Rectangle hitbox, Point2D.Double direction, double speed) {
+    protected MovableEntity(Point2D.Double position, Shape hitbox, Point2D.Double direction, double speed) {
         super(position, hitbox);
         this.direction = direction;
         this.speed = speed;

@@ -1,9 +1,9 @@
 package it.unibo.vampireio.model;
 
-import java.awt.Rectangle;
+import java.awt.geom.Area;
 
 public interface Collidable extends Positionable {
-    Rectangle getHitbox();
+    Area getHitbox();
     boolean collidesWith(Collidable collidable);
     void onCollision(Collidable collidable);
 }

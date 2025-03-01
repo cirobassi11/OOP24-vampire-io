@@ -2,8 +2,8 @@ package it.unibo.vampireio.view;
 
 import javax.swing.JButton;
 
-class PowerUpPanel extends BasePanel {
-    PowerUpPanel(GameViewImpl view) {
+class UnlockablePowerUpPanel extends BasePanel {
+    UnlockablePowerUpPanel(GameViewImpl view) {
         super(view);
         
         JButton backButton = createStyledButton("BACK", this.buttonSize);
