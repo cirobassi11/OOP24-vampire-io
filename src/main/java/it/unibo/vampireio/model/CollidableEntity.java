@@ -7,8 +7,8 @@ import java.awt.geom.Point2D;
 public abstract class CollidableEntity extends PositionableEntity implements Collidable {
     private Area hitBoxArea;
     
-    protected CollidableEntity(Point2D.Double position, Shape hitbox) {
-        super(position);
+    protected CollidableEntity(String id, Point2D.Double position, Shape hitbox) {
+        super(id, position);
         this.hitBoxArea = new Area(hitbox);
     }
 

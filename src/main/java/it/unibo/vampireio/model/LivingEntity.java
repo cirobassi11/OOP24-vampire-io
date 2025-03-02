@@ -1,15 +1,15 @@
 package it.unibo.vampireio.model;
 
-import java.awt.Rectangle;
-import java.awt.geom.Point2D.Double;
+import java.awt.Shape;
+import java.awt.geom.Point2D;
 
 public abstract class LivingEntity extends MovableEntity implements Living {
 
     private int health;
     private int maxHealth;
 
-    protected LivingEntity(Double position, Rectangle hitbox, Double direction, double speed) {
-        super(position, hitbox, direction, speed);
+    protected LivingEntity(String id, Point2D.Double position, Shape hitbox, Point2D.Double direction, double speed) {
+        super(id, position, hitbox, direction, speed);
     }
 
     @Override

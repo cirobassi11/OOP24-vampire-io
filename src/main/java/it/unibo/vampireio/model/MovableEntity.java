@@ -7,8 +7,8 @@ public abstract class MovableEntity extends CollidableEntity implements Movable{
     private Point2D.Double direction;
     private double speed;
 
-    protected MovableEntity(Point2D.Double position, Shape hitbox, Point2D.Double direction, double speed) {
-        super(position, hitbox);
+    protected MovableEntity(String id, Point2D.Double position, Shape hitbox, Point2D.Double direction, double speed) {
+        super(id, position, hitbox);
         this.direction = direction;
         this.speed = speed;
     }

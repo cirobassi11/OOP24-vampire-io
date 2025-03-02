@@ -36,8 +36,8 @@ public class GameControllerImpl implements GameController {
     @Override
     public void run() {
         while (this.isRunning()) {
-            this.model.update();
-            this.view.update(); //bisogna passargli qualcosa        i positionable??
+            //this.model.update(); //bisogna passare l'input del movimento
+            //this.view.update(this.model.getPositionables(); //aggiorna view      È EFFICIENTE??
 
             System.out.println("\n\nNUOVO CICLOO");
 

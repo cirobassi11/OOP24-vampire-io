@@ -1,12 +1,12 @@
 package it.unibo.vampireio.model;
 
-import java.awt.Rectangle;
-import java.awt.geom.Point2D.Double;
+import java.awt.Shape;
+import java.awt.geom.Point2D;
 
 public class Character extends LivingEntity {
 
-    protected Character(Double position, Rectangle hitbox, Double direction, double speed) {
-        super(position, hitbox, direction, speed);
+    protected Character(String id, Point2D.Double position, Shape hitbox, Point2D.Double direction, double speed) {
+        super(id, position, hitbox, direction, speed);
     }
 
     @Override
