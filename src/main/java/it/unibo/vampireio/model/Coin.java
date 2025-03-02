@@ -5,7 +5,7 @@ import java.awt.geom.Point2D.Double;
 public class Coin extends Lootable {
 
     protected Coin(Double position) {
-        super(position);
+        super("coin", position); /// il nome va preso da un'altra parte??
     }
 
     @Override

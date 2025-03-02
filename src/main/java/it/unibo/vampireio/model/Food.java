@@ -5,7 +5,7 @@ import java.awt.geom.Point2D.Double;
 public class Food extends Lootable {
 
     protected Food(Double position) {
-        super(position);
+        super("food", position); //il nome lo prendiamo da un'altra parte?? ci sono più tipi di cibo?
     }
 
     @Override

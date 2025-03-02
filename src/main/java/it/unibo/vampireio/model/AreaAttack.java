@@ -8,8 +8,8 @@ public class AreaAttack extends CollidableEntity implements Attack {
     private int damage;
     private String type;
 
-    public AreaAttack(Point2D.Double position, Shape hitbox, int damage, String type) {
-        super(position, hitbox);
+    public AreaAttack(String id, Point2D.Double position, Shape hitbox, int damage, String type) {
+        super(id, position, hitbox);
         this.damage = damage;
         this.type = type;
     }
