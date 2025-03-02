@@ -1,7 +1,6 @@
 package it.unibo.vampireio.view;
 
 import java.awt.GridBagConstraints;
-
 import javax.swing.JButton;
 
 class ChooseCharacterPanel extends BasePanel {
@@ -14,17 +13,18 @@ class ChooseCharacterPanel extends BasePanel {
         gbc.weightx = 1;
         gbc.anchor = GridBagConstraints.SOUTH;
 
-        gbc.gridy = 0;
-        JButton startButton = createStyledButton("CHOOSE", this.buttonSize);
-        startButton.addActionListener(e -> {
-            //view.getController().setCharacter(""); IMPOSTARE IL PERSONAGGIO
-            view.getController().startGame();
-            view.showScreen(GameViewImpl.GAME);
-        });
-        this.add(startButton, gbc);
-
+        // jcombobox con immagini https://www.youtube.com/watch?v=zzMSbaIEAQM
 
         gbc.gridy = 1;
+        JButton confirmButton = createStyledButton("CONFIRM", this.buttonSize);
+        confirmButton.addActionListener(e -> {
+            String selectedCharacter = "nomeACaso";
+            view.getController().startGame(selectedCharacter);
+            view.showScreen(GameViewImpl.GAME);
+        });
+        this.add(confirmButton, gbc);
+
+        gbc.gridy = 2;
         JButton backButton = createStyledButton("BACK", this.buttonSize);
         backButton.addActionListener(e -> view.showScreen(GameViewImpl.MAIN_MENU));
 

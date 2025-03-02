@@ -6,5 +6,5 @@ public interface GameController extends Runnable {
     void setRunning(boolean running);
     boolean isRunning();
     void setView(GameView view);
-    void startGame();
+    void startGame(String selectedCharacter);
 }

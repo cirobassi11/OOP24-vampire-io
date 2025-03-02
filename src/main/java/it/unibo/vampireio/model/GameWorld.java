@@ -7,10 +7,12 @@ import java.util.Set;
 public class GameWorld implements GameModel {
 
     private Set<Positionable> positionables;
+    private String selectedCharacter;
 
-    public static final Dimension WORLD_SIZE = new Dimension(800, 600);
+    public static final Dimension WORLD_SIZE = new Dimension(1600, 900);
 
-    public GameWorld() {
+    public GameWorld(String selectedCharacter) {
+        this.selectedCharacter = selectedCharacter;
         this.positionables = new HashSet<>();
     }
 

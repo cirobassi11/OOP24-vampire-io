@@ -17,8 +17,7 @@ public class ProjectileAttack extends MovableEntity implements Attack {
 
     @Override
     public void onCollision(Collidable collidable) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onCollision'");
+        // DANNO AL PERSONAGGIO
     }
 
     @Override

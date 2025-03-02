@@ -1,19 +1,16 @@
 package it.unibo.vampireio.controller;
 
 import it.unibo.vampireio.model.GameModel;
+import it.unibo.vampireio.model.GameWorld;
 import it.unibo.vampireio.view.GameView;
 
 public class GameControllerImpl implements GameController {
-    private final GameModel model;
+    private GameModel model;
     private GameView view;
 
     private boolean running = true;
 
     private final int frameRate = /*60*/ 1;
-    
-    public GameControllerImpl(GameModel model) {
-        this.model = model;
-    }
 
     @Override
     public void setRunning(boolean running) {
@@ -31,7 +28,8 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void startGame() {
+    public void startGame(String selectedCharacter) {
+        this.model = new GameWorld(selectedCharacter);
         new Thread(this).start();
     }
 
@@ -39,7 +37,7 @@ public class GameControllerImpl implements GameController {
     public void run() {
         while (this.isRunning()) {
             this.model.update();
-            this.view.update(); //bisogna passargli qualcosa
+            this.view.update(); //bisogna passargli qualcosa        i positionable??
 
             System.out.println("\n\nNUOVO CICLOO");
 

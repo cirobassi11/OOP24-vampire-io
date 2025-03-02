@@ -2,8 +2,6 @@ package it.unibo.vampireio;
 
 import it.unibo.vampireio.controller.GameController;
 import it.unibo.vampireio.controller.GameControllerImpl;
-import it.unibo.vampireio.model.GameModel;
-import it.unibo.vampireio.model.GameWorld;
 import it.unibo.vampireio.view.GameView;
 import it.unibo.vampireio.view.GameViewImpl;
 
@@ -21,8 +19,7 @@ final class Main {
      * @param args the command line arguments
      */
     public static void main(final String[] args) {
-        GameModel model = new GameWorld();
-        GameController controller = new GameControllerImpl(model);
+        GameController controller = new GameControllerImpl();
         GameView view = new GameViewImpl(controller);
         controller.setView(view);
     }

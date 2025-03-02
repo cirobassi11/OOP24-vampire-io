@@ -71,7 +71,6 @@ public class GameViewImpl implements GameView {
         this.showScreen(GameViewImpl.MAIN_MENU);
         this.frame.add(this.cardPanel);
 
-        
         this.frame.setVisible(true);
     }
 
