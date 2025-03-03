@@ -3,9 +3,15 @@ package it.unibo.vampireio.view;
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
 
+import it.unibo.vampireio.controller.GameController;
+
 class ChooseCharacterPanel extends BasePanel {
-    ChooseCharacterPanel(GameViewImpl view) {
+
+    private GameController controller;
+
+    ChooseCharacterPanel(GameViewImpl view, GameController controller) {
         super(view);
+        this.controller = controller;
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new java.awt.Insets(10, 10, 30, 10);
@@ -19,8 +25,8 @@ class ChooseCharacterPanel extends BasePanel {
         JButton confirmButton = createStyledButton("CONFIRM", this.buttonSize);
         confirmButton.addActionListener(e -> {
             String selectedCharacter = "nomeACaso";
-            view.getController().startGame(selectedCharacter);
-            view.showScreen(GameViewImpl.GAME);
+            this.controller.startGame(selectedCharacter);
+            this.view.showScreen(GameViewImpl.GAME);
         });
         this.add(confirmButton, gbc);
 

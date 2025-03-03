@@ -6,29 +6,37 @@ import java.awt.Image;
 import java.awt.Taskbar;
 import java.awt.Toolkit;
 import java.util.List;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import it.unibo.vampireio.controller.GameController;
 
 public class GameViewImpl implements GameView {
     
+    private final GameController controller;
+
     private final JFrame frame;
     private final CardLayout cardLayout;
     private final JPanel cardPanel;
 
-    private final GameController controller;
+    private JPanel mainMenuPanel;
+    private JPanel settingsPanel;
+    private JPanel gamePanel;
+    private JPanel chooseCharacterPanel;
+    private JPanel endGamePanel;
+    private JPanel pausePanel;
+    private JPanel unlockablePowerUpPanel;
+    private JPanel inGamePowerUpPanel;
 
     private Dimension screenSize;
 
     private Dimension currentFrameSize;
 
     public static final List<Dimension> resolutions = List.of(
-        new Dimension(960, 540),
+        new Dimension(640, 360),
         new Dimension(1280, 720),
         new Dimension(1920, 1080),
-        new Dimension(2560, 1440),
         new Dimension(3840, 2160)
     );
     
@@ -57,17 +65,27 @@ public class GameViewImpl implements GameView {
         this.frame.setResizable(false);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        this.mainMenuPanel = new MainMenuPanel(this);
+        this.settingsPanel = new SettingsPanel(this);
+        this.gamePanel = new GamePanel(this, this.controller);
+        this.chooseCharacterPanel = new ChooseCharacterPanel(this, this.controller);
+        this.endGamePanel = new EndGamePanel(this);
+        this.pausePanel = new PausePanel(this);
+        this.unlockablePowerUpPanel = new UnlockablePowerUpPanel(this);
+        this.inGamePowerUpPanel = new InGamePowerUpPanel(this);
+
         this.cardLayout = new CardLayout();
         this.cardPanel = new JPanel(this.cardLayout);
         
-        this.cardPanel.add(new MainMenuPanel(this), GameViewImpl.MAIN_MENU);
-        this.cardPanel.add(new SettingsPanel(this), GameViewImpl.SETTINGS);
-        this.cardPanel.add(new GamePanel(this), GameViewImpl.GAME);
-        this.cardPanel.add(new ChooseCharacterPanel(this), GameViewImpl.CHOOSE_CHARACTER);
-        this.cardPanel.add(new EndGamePanel(this), GameViewImpl.END_GAME);
-        this.cardPanel.add(new PausePanel(this), GameViewImpl.PAUSE);
-        this.cardPanel.add(new UnlockablePowerUpPanel(this), GameViewImpl.UNLOCKABLE_POWERUPS);
-        this.cardPanel.add(new InGamePowerUpPanel(this), GameViewImpl.IN_GAME_POWERUPS);
+        this.cardPanel.add(this.mainMenuPanel, GameViewImpl.MAIN_MENU);
+        this.cardPanel.add(this.settingsPanel, GameViewImpl.SETTINGS);
+        this.cardPanel.add(this.gamePanel, GameViewImpl.GAME);
+        this.cardPanel.add(this.chooseCharacterPanel, GameViewImpl.CHOOSE_CHARACTER);
+        this.cardPanel.add(this.endGamePanel, GameViewImpl.END_GAME);
+        this.cardPanel.add(this.pausePanel, GameViewImpl.PAUSE);
+        this.cardPanel.add(this.unlockablePowerUpPanel, GameViewImpl.UNLOCKABLE_POWERUPS);
+        this.cardPanel.add(this.inGamePowerUpPanel, GameViewImpl.IN_GAME_POWERUPS);
+
         this.showScreen(GameViewImpl.MAIN_MENU);
         this.frame.add(this.cardPanel);
 
@@ -115,13 +133,8 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public GameController getController() {
-        return this.controller;
-    }
-
-    @Override
     public void update() {
-        System.out.println("NUOVO FRAMEE");
+        this.gamePanel.repaint();
     }
 
 }

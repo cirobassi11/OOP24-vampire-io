@@ -10,7 +10,7 @@ abstract class BasePanel extends JPanel {
 
     protected Dimension buttonSize;
     
-    private final String backgroundPath = "/images/background.jpg";
+    private final String backgroundPath = "/images/background.png";
     private Image backgroundImage;
 
     BasePanel(GameViewImpl view) {

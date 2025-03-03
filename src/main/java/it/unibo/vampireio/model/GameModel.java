@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model;
 
-import java.awt.geom.Point2D;
-import java.util.Map;
+import java.util.Set;
 
 public interface GameModel {
     void update();
@@ -9,5 +8,7 @@ public interface GameModel {
     void removeEnemy(Enemy enemy);
     void addCollectible(Collectible collectible);
     void removeCollectible(Collectible collectible);
-    Map<String, Point2D.Double> getPositionables();
+    Character getCharacter();
+    Set<Enemy> getEnemies();
+    Set<Collectible> getCollectibles();
 }
