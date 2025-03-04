@@ -55,17 +55,23 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public Character getCharacter() {
-        return this.model.getCharacter();
+    public CharacterDTO getCharacterData() {
+        Character character = this.model.getCharacter();
+        //return new CharacterDTO(character.getPosition(), character.getHealth(), character.getMaxHealth(), character.getDirection());
+        return null;
     }
 
     @Override
-    public Set<Enemy> getEnemies() {
-        return this.model.getEnemies();
+    public Set<EnemyDTO> getEnemiesData() {
+        Set<Enemy> enemies = this.model.getEnemies();
+        //return enemies.stream().map(enemy -> new EnemyDTO(enemy.getPosition(), enemy.getHealth(), enemy.getMaxHealth(), enemy.getDirection())).collect(Collectors.toSet());
+        return null;
     }
 
     @Override
-    public Set<Collectible> getCollectibles() {
-        return this.model.getCollectibles();
+    public Set<CollectibleDTO> getCollectiblesData() {
+        Set<Collectible> collectibles = this.model.getCollectibles();
+        //return collectibles.stream().map(collectible -> new CollectibleDTO(collectible.getPosition(), collectible.getType())).collect(Collectors.toSet());
+        return null;
     }
 }

@@ -7,14 +7,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
+import it.unibo.vampireio.controller.CharacterDTO;
+import it.unibo.vampireio.controller.CollectibleDTO;
+import it.unibo.vampireio.controller.EnemyDTO;
 import it.unibo.vampireio.controller.GameController;
-import it.unibo.vampireio.model.Character;
-import it.unibo.vampireio.model.Collectible;
-import it.unibo.vampireio.model.Enemy;
 
 class GamePanel extends JPanel {   
 
@@ -22,8 +20,7 @@ class GamePanel extends JPanel {
     private GameController controller;
     private Map<String, Image> images = new HashMap<>();
 
-    // VANNO MESSE QUA?????????????????????????
-    private final Dimension mapTileSize = new Dimension(64, 64);
+    private final Dimension mapTileSize = new Dimension(64, 64); // VANNO MESSE QUA?????????????????????????
     private final Dimension characterSize = new Dimension(64, 64);
     private final Dimension enemySize = new Dimension(64, 64);
     private final Dimension collectibleSize = new Dimension(64, 64);/////boooooohhhhhhhhhh PROBABILMENTE È MENO
@@ -31,8 +28,15 @@ class GamePanel extends JPanel {
     GamePanel(GameViewImpl view, GameController controller) {
         this.view = view;
         this.controller = controller;
-        //riempire map immagini
+        //riempire map immagini FORSE E' MEGLIO METTERLO IN UN METODO INIT???
         try {
+            //character
+
+            //enemies
+
+            //collectibles
+
+            //map
             this.images.put("grass", ImageIO.read(getClass().getResource("/images/grass.png")));
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -45,15 +49,13 @@ class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         
-        Character character = this.controller.getCharacter();
-        Set<Enemy> enemies = this.controller.getEnemies();
-        Set<Collectible> collectibles = this.controller.getCollectibles();
+        //get dto data
+        CharacterDTO character = this.controller.getCharacterData();
+        Set<EnemyDTO> enemies = this.controller.getEnemiesData();
+        Set<CollectibleDTO> collectibles = this.controller.getCollectiblesData();
 
-        double scaleFactorX = this.view.getScreenSize().getWidth() / 1280; //sistemareee
+        double scaleFactorX = this.view.getScreenSize().getWidth() / 1280; //non va qui 1280!!!
         double scaleFactorY = this.view.getScreenSize().getHeight() / 720;
-
-        System.out.println("SCALE FACTOR X: " + scaleFactorX);
-        System.out.println("SCALE FACTOR Y: " + scaleFactorY);
 
         //disegno mappa
         for (int i = 0; i < 10; i++) {
