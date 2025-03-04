@@ -1,7 +1,7 @@
 package it.unibo.vampireio.controller;
 
 import java.util.Set;
-
+import java.util.stream.Collectors;
 import it.unibo.vampireio.model.Character;
 import it.unibo.vampireio.model.Enemy;
 import it.unibo.vampireio.model.Collectible;
@@ -57,21 +57,18 @@ public class GameControllerImpl implements GameController {
     @Override
     public CharacterDTO getCharacterData() {
         Character character = this.model.getCharacter();
-        //return new CharacterDTO(character.getPosition(), character.getHealth(), character.getMaxHealth(), character.getDirection());
-        return null;
+        return new CharacterDTO(character.getId(), character.getPosition(), character.getDirection(), character.getHealth(), character.getMaxHealth());
     }
 
     @Override
     public Set<EnemyDTO> getEnemiesData() {
         Set<Enemy> enemies = this.model.getEnemies();
-        //return enemies.stream().map(enemy -> new EnemyDTO(enemy.getPosition(), enemy.getHealth(), enemy.getMaxHealth(), enemy.getDirection())).collect(Collectors.toSet());
-        return null;
+        return enemies.stream().map(enemy -> new EnemyDTO(enemy.getId(), enemy.getPosition(), enemy.getDirection())).collect(Collectors.toSet());
     }
 
     @Override
     public Set<CollectibleDTO> getCollectiblesData() {
         Set<Collectible> collectibles = this.model.getCollectibles();
-        //return collectibles.stream().map(collectible -> new CollectibleDTO(collectible.getPosition(), collectible.getType())).collect(Collectors.toSet());
-        return null;
+        return collectibles.stream().map(collectible -> new CollectibleDTO(collectible.getId(), collectible.getPosition())).collect(Collectors.toSet());
     }
 }

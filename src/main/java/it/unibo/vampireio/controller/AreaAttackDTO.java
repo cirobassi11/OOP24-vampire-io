@@ -1,5 +1,5 @@
 package it.unibo.vampireio.controller;
 
-public class AttackDTO {
+public class AreaAttackDTO {
     
 }

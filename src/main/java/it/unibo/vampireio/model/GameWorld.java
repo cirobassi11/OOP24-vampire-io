@@ -7,6 +7,8 @@ import java.util.Set;
 public class GameWorld implements GameModel {
     private Character character;
     private Set<Enemy> enemies;
+    private Set<ProjectileAttack> projectileAttacks;
+    private Set<AreaAttack> areaAttacks;
     private Set<Collectible> collectibles;
 
     public static final Dimension VISUAL_SIZE = new Dimension(1280, 720);
@@ -18,7 +20,7 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public void update() { //DA AGGIUNGERE INPUTTT
+    public void update() { //AGGIUNGERE INPUTTT
         System.out.println("AGGIORNAMENTO MODELLOOO");
     
         //muove il personaggio (non dovrebbe sovrapporsi a nemici)

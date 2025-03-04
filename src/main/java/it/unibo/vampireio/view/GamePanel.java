@@ -50,9 +50,9 @@ class GamePanel extends JPanel {
         super.paintComponent(g);
         
         //get dto data
-        CharacterDTO character = this.controller.getCharacterData();
-        Set<EnemyDTO> enemies = this.controller.getEnemiesData();
-        Set<CollectibleDTO> collectibles = this.controller.getCollectiblesData();
+        //CharacterDTO character = this.controller.getCharacterData();
+        //Set<EnemyDTO> enemies = this.controller.getEnemiesData();
+        //Set<CollectibleDTO> collectibles = this.controller.getCollectiblesData();
 
         double scaleFactorX = this.view.getScreenSize().getWidth() / 1280; //non va qui 1280!!!
         double scaleFactorY = this.view.getScreenSize().getHeight() / 720;
