@@ -14,6 +14,7 @@ public class GameWorld implements GameModel {
     public final Dimension visualSize = new Dimension(1280, 720);
 
     public GameWorld(String selectedCharacter) {
+        ///player???
         /////////////////////////////////////////this.character = 
         this.enemies = new HashSet<>();
         this.collectibles = new HashSet<>();
@@ -69,5 +70,11 @@ public class GameWorld implements GameModel {
     @Override
     public Set<Collectible> getCollectibles() {
         return this.collectibles;
+    }
+
+    @Override
+    public Set<UnlockablePowerUp> getUnlockablePowerUps() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getUnlockablePowerUps'");
     }
 }
