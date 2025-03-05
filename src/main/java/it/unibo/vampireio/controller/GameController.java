@@ -12,4 +12,5 @@ public interface GameController extends Runnable {
     CharacterDTO getCharacterData();
     Set<EnemyDTO> getEnemiesData();
     Set<CollectibleDTO> getCollectiblesData();
+    Set<UnlockablePowerUpDTO> getUnlockablePowerUpData();
 }

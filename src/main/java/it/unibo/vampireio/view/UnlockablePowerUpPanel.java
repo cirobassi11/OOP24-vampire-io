@@ -8,7 +8,6 @@ class UnlockablePowerUpPanel extends BasePanel {
         
         JButton backButton = createStyledButton("BACK", this.buttonSize);
         backButton.addActionListener(e -> view.showScreen(GameViewImpl.MAIN_MENU));
-
         this.add(backButton);
     }
 }

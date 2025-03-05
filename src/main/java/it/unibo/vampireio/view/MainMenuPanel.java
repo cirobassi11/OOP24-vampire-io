@@ -19,7 +19,7 @@ class MainMenuPanel extends BasePanel {
         gbc.gridy = 0;
         this.add(startButton, gbc);
 
-        JButton powerUpButton = createStyledButton("POWERUPS", this.buttonSize);
+        JButton powerUpButton = createStyledButton("POWER UP", this.buttonSize);
         powerUpButton.addActionListener(e -> view.showScreen(GameViewImpl.UNLOCKABLE_POWERUPS));
         gbc.gridy = 1;
         this.add(powerUpButton, gbc);

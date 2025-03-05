@@ -11,4 +11,5 @@ public interface GameModel {
     Character getCharacter();
     Set<Enemy> getEnemies();
     Set<Collectible> getCollectibles();
+    Set<UnlockablePowerUp> getUnlockablePowerUps();
 }

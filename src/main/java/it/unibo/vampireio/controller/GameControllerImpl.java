@@ -7,6 +7,7 @@ import it.unibo.vampireio.model.Enemy;
 import it.unibo.vampireio.model.Collectible;
 import it.unibo.vampireio.model.GameModel;
 import it.unibo.vampireio.model.GameWorld;
+import it.unibo.vampireio.model.UnlockablePowerUp;
 import it.unibo.vampireio.view.GameView;
 
 public class GameControllerImpl implements GameController {
@@ -70,5 +71,11 @@ public class GameControllerImpl implements GameController {
     public Set<CollectibleDTO> getCollectiblesData() {
         Set<Collectible> collectibles = this.model.getCollectibles();
         return collectibles.stream().map(collectible -> new CollectibleDTO(collectible.getId(), collectible.getPosition())).collect(Collectors.toSet());
+    }
+
+    public Set<UnlockablePowerUpDTO> getUnlockablePowerUpData(){
+        //Set<UnlockablePowerUp> unlockablePowerUps = this.model.getUnlockablePowerUps();
+        //return unlockablePowerUps.stream().
+        return null;
     }
 }
