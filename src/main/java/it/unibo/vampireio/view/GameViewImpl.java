@@ -39,6 +39,8 @@ public class GameViewImpl implements GameView {
         new Dimension(1920, 1080),
         new Dimension(3840, 2160)
     );
+
+    private double scaleFactor;
     
     static final String MAIN_MENU = "mainMenu";
     static final String SETTINGS = "settings";
@@ -132,9 +134,16 @@ public class GameViewImpl implements GameView {
         this.currentFrameSize = resolution;
     }
 
+    public double getScaleFactor() {
+        return this.scaleFactor;
+    }
+
+    public void setScaleFactor(double scaleFactor) {
+        this.scaleFactor = scaleFactor;
+    }
+
     @Override
     public void update() {
         this.gamePanel.repaint();
     }
-
 }

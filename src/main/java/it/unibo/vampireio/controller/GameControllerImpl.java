@@ -8,6 +8,7 @@ import it.unibo.vampireio.model.Collectible;
 import it.unibo.vampireio.model.GameModel;
 import it.unibo.vampireio.model.GameWorld;
 import it.unibo.vampireio.view.GameView;
+import it.unibo.vampireio.view.GameViewImpl;
 
 public class GameControllerImpl implements GameController {
     private GameModel model;
@@ -15,7 +16,11 @@ public class GameControllerImpl implements GameController {
 
     private boolean running = true;
 
-    private final int frameRate = /*60*/ 1;
+    private final int frameRate = /*60*/ 4;
+
+    public GameControllerImpl() {
+        this.view = new GameViewImpl(this);
+    }
 
     @Override
     public void setRunning(boolean running) {
@@ -25,11 +30,6 @@ public class GameControllerImpl implements GameController {
     @Override
     public boolean isRunning() {
         return running;
-    }
-
-    @Override
-    public void setView(GameView view) {
-        this.view = view;
     }
 
     @Override
@@ -43,15 +43,17 @@ public class GameControllerImpl implements GameController {
         while (this.isRunning()) {
             this.model.update(); //bisogna passare l'input del movimento
             this.view.update();
-
-            System.out.println("\n\nNUOVO CICLOO");
-
             try {
                 Thread.sleep(1000 / this.frameRate);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public VisualSizeDTO getVisualSizeData() {
+        return new VisualSizeDTO((int) this.model.getVisualSize().getWidth(), (int) this.model.getVisualSize().getHeight());
     }
 
     @Override
