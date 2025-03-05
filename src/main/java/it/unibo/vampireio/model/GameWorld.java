@@ -11,7 +11,7 @@ public class GameWorld implements GameModel {
     private Set<AreaAttack> areaAttacks;
     private Set<Collectible> collectibles;
 
-    public static final Dimension VISUAL_SIZE = new Dimension(1280, 720);
+    public final Dimension visualSize = new Dimension(1280, 720);
 
     public GameWorld(String selectedCharacter) {
         /////////////////////////////////////////this.character = 
@@ -28,7 +28,7 @@ public class GameWorld implements GameModel {
 
         // muove tutti i nemici (controllando anche che non si sovrappongano)
 
-        //spanwna i nemici fuori dalla visuale (VISUAL_SIZE)
+        //spanwna i nemici fuori dalla visuale (visualSize)
     }
 
     @Override
@@ -52,6 +52,11 @@ public class GameWorld implements GameModel {
     }
 
     @Override
+    public Dimension getVisualSize() {
+        return this.visualSize;
+    }
+
+    @Override
     public Character getCharacter() {
         return this.character;
     }
@@ -65,5 +70,4 @@ public class GameWorld implements GameModel {
     public Set<Collectible> getCollectibles() {
         return this.collectibles;
     }
-    
 }
