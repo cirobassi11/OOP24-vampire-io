@@ -7,7 +7,6 @@ import it.unibo.vampireio.model.Enemy;
 import it.unibo.vampireio.model.Collectible;
 import it.unibo.vampireio.model.GameModel;
 import it.unibo.vampireio.model.GameWorld;
-import it.unibo.vampireio.model.UnlockablePowerUp;
 import it.unibo.vampireio.view.GameView;
 import it.unibo.vampireio.view.GameViewImpl;
 
@@ -17,7 +16,7 @@ public class GameControllerImpl implements GameController {
 
     private boolean running = true;
 
-    private final int frameRate = /*60*/ 4;
+    private int frameRate = /*60*/ 4;
 
     public GameControllerImpl() {
         this.view = new GameViewImpl(this);
@@ -42,7 +41,7 @@ public class GameControllerImpl implements GameController {
     @Override
     public void run() {
         while (this.isRunning()) {
-            this.model.update(); //bisogna passare l'input del movimento
+            this.model.update(); //Movement input should be passed.
             this.view.update();
             try {
                 Thread.sleep(1000 / this.frameRate);

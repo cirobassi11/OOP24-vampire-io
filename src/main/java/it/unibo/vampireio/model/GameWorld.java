@@ -1,6 +1,7 @@
 package it.unibo.vampireio.model;
 
 import java.awt.Dimension;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,13 +16,13 @@ public class GameWorld implements GameModel {
 
     public GameWorld(String selectedCharacter) {
         ///player???
-        /////////////////////////////////////////this.character = 
+        this.character = CharacterLoader.loadCharacterById(selectedCharacter);
         this.enemies = new HashSet<>();
         this.collectibles = new HashSet<>();
     }
 
     @Override
-    public void update() { //AGGIUNGERE INPUTTT
+    public void update() { // TODO: add input
         System.out.println("AGGIORNAMENTO MODELLOOO");
     
         //muove il personaggio (non dovrebbe sovrapporsi a nemici)
