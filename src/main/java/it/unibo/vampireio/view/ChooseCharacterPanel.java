@@ -24,7 +24,7 @@ class ChooseCharacterPanel extends BasePanel {
         gbc.gridy = 1;
         JButton confirmButton = createStyledButton("CONFIRM", this.buttonSize);
         confirmButton.addActionListener(e -> {
-            String selectedCharacter = "0"; //selected character id
+            String selectedCharacter = "0"; //DA PRENDERE DAL COMBOBOX
             this.controller.startGame(selectedCharacter);
             this.view.setScaleFactor((double) this.view.getScreenSize().getWidth() / this.controller.getVisualSizeData().getDimension().getWidth());
             this.view.showScreen(GameViewImpl.GAME);

@@ -3,7 +3,7 @@ package it.unibo.vampireio.model;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 
-public abstract class MovableEntity extends CollidableEntity implements Movable{
+public abstract class MovableEntity extends CollidableEntity implements Movable {
     private Point2D.Double direction;
     private double speed;
 

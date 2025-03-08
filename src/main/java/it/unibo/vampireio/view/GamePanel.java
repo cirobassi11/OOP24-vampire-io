@@ -5,19 +5,19 @@ import java.awt.Image;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import it.unibo.vampireio.controller.CharacterDTO;
-import it.unibo.vampireio.controller.CollectibleDTO;
-import it.unibo.vampireio.controller.EnemyDTO;
 import it.unibo.vampireio.controller.GameController;
+import it.unibo.vampireio.controller.PositionableDTO;
 
 class GamePanel extends JPanel {
 
     private GameViewImpl view;
     private GameController controller;
     private Map<String, Image> images = new HashMap<>();
+
+    private List<PositionableDTO> positionables;
 
     private final int tileSize = 64;
 
@@ -33,14 +33,13 @@ class GamePanel extends JPanel {
         }
     }
 
+    public void setPositionables(List<PositionableDTO> positionables) {
+        this.positionables = positionables;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
-        // Ottieni dati dal controller
-        CharacterDTO character = this.controller.getCharacterData();
-        Set<EnemyDTO> enemies = this.controller.getEnemiesData();
-        Set<CollectibleDTO> collectibles = this.controller.getCollectiblesData();
         
         double scale = this.view.getScaleFactor();
 
@@ -48,6 +47,8 @@ class GamePanel extends JPanel {
         int screenHeight = (int) this.controller.getVisualSizeData().getDimension().getHeight();
         int centerX = screenWidth / 2;
         int centerY = screenHeight / 2;
+
+        PositionableDTO character = this.positionables.get(0);
 
         // Offset basato sulla posizione del Character
         int offsetX = (int) (centerX - character.getPosition().getX() * scale);
@@ -62,9 +63,15 @@ class GamePanel extends JPanel {
             for (int j = -1; j <= screenHeight / (tileSize * scale) + 1; j++) {
                 int tileX = (int) (((i + startTileX) * tileSize * scale + offsetX) % (tileSize * scale));
                 int tileY = (int) (((j + startTileY) * tileSize * scale + offsetY) % (tileSize * scale));
-                
                 g.drawImage(this.images.get("grass"), tileX, tileY, (int) (tileSize * scale), (int) (tileSize * scale), null);
             }
+        }
+
+        // Disegna i personaggi
+        for (PositionableDTO positionable : this.positionables) {
+            int x = (int) (positionable.getPosition().getX() * scale + offsetX);
+            int y = (int) (positionable.getPosition().getY() * scale + offsetY);
+            //g.drawImage(this.images.get(positionable.getImage()), x, y, (int) (tileSize * scale), (int) (tileSize * scale), null);
         }
     }
 }

@@ -1,6 +1,9 @@
 package it.unibo.vampireio.controller;
 
-import java.util.Set;
+import java.awt.geom.Point2D;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 import it.unibo.vampireio.model.Character;
 import it.unibo.vampireio.model.Enemy;
@@ -42,7 +45,7 @@ public class GameControllerImpl implements GameController {
     public void run() {
         while (this.isRunning()) {
             this.model.update(); //Movement input should be passed.
-            this.view.update();
+            this.view.update(this.getPositionablesData());
             try {
                 Thread.sleep(1000 / this.frameRate);
             } catch (InterruptedException e) {
@@ -51,32 +54,26 @@ public class GameControllerImpl implements GameController {
         }
     }
 
+    private List<PositionableDTO> getPositionablesData() {
+        Character character = this.model.getCharacter();
+        List<Enemy> enemies = this.model.getEnemies();
+        List<Collectible> collectibles = this.model.getCollectibles();
+
+        List<PositionableDTO> positionables = new LinkedList<>();
+        positionables.add(new PositionableDTO(character.getId(), character.getPosition(), character.getDirection()));
+        positionables.addAll(enemies.stream().map(enemy -> new PositionableDTO(enemy.getId(), enemy.getPosition(), enemy.getDirection())).collect(Collectors.toSet()));
+        positionables.addAll(collectibles.stream().map(collectible -> new PositionableDTO(collectible.getId(), collectible.getPosition(), new Point2D.Double(0, 0))).collect(Collectors.toSet()));
+        
+        return positionables;
+    }
+
     @Override
     public VisualSizeDTO getVisualSizeData() {
         return new VisualSizeDTO((int) this.model.getVisualSize().getWidth(), (int) this.model.getVisualSize().getHeight());
     }
 
-    @Override
-    public CharacterDTO getCharacterData() {
-        Character character = this.model.getCharacter();
-        return new CharacterDTO(character.getId(), character.getPosition(), character.getDirection(), character.getHealth(), character.getMaxHealth());
-    }
-
-    @Override
-    public Set<EnemyDTO> getEnemiesData() {
-        Set<Enemy> enemies = this.model.getEnemies();
-        return enemies.stream().map(enemy -> new EnemyDTO(enemy.getId(), enemy.getPosition(), enemy.getDirection())).collect(Collectors.toSet());
-    }
-
-    @Override
-    public Set<CollectibleDTO> getCollectiblesData() {
-        Set<Collectible> collectibles = this.model.getCollectibles();
-        return collectibles.stream().map(collectible -> new CollectibleDTO(collectible.getId(), collectible.getPosition())).collect(Collectors.toSet());
-    }
-
-    public Set<UnlockablePowerUpDTO> getUnlockablePowerUpData(){
-        //Set<UnlockablePowerUp> unlockablePowerUps = this.model.getUnlockablePowerUps();
-        //return unlockablePowerUps.stream().
+    public List<UnlockablePowerUpDTO> getUnlockablePowerUpData(){
+        //TODO
         return null;
     }
 }

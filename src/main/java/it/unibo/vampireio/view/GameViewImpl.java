@@ -6,11 +6,11 @@ import java.awt.Image;
 import java.awt.Taskbar;
 import java.awt.Toolkit;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import it.unibo.vampireio.controller.GameController;
+import it.unibo.vampireio.controller.PositionableDTO;
 
 public class GameViewImpl implements GameView {
     
@@ -143,7 +143,8 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void update() {
+    public void update(List<PositionableDTO> positionables) {
+        ((GamePanel) this.gamePanel).setPositionables(positionables);
         this.gamePanel.repaint();
     }
 }
