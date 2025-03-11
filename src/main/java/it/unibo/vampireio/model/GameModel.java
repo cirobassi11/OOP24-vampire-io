@@ -1,7 +1,7 @@
 package it.unibo.vampireio.model;
 
 import java.awt.Dimension;
-import java.util.Set;
+import java.util.List;
 
 public interface GameModel {
     void update();
@@ -11,7 +11,8 @@ public interface GameModel {
     void removeCollectible(Collectible collectible);
     Dimension getVisualSize();
     Character getCharacter();
-    Set<Enemy> getEnemies();
-    Set<Collectible> getCollectibles();
-    Set<UnlockablePowerUp> getUnlockablePowerUps();
+    List<Enemy> getEnemies();
+    List<ProjectileAttack> getProjectileAttacks();
+    List<Collectible> getCollectibles();
+    List<UnlockablePowerUp> getUnlockablePowerUps();
 }

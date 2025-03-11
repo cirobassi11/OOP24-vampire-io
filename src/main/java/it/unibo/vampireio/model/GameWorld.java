@@ -1,26 +1,27 @@
 package it.unibo.vampireio.model;
 
 import java.awt.Dimension;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GameWorld implements GameModel {
     private Character character;
-    private Set<Enemy> enemies;
-    private Set<ProjectileAttack> projectileAttacks;
-    private Set<AreaAttack> areaAttacks;
-    private Set<Collectible> collectibles;
+    private List<Enemy> enemies;
+    private List<ProjectileAttack> projectileAttacks;
+    private List<AreaAttack> areaAttacks;
+    private List<Collectible> collectibles;
 
     public final Dimension visualSize = new Dimension(1280, 720);
 
     public GameWorld(String selectedCharacter) {
-        /////////////////////////////////////////this.character = 
-        this.enemies = new HashSet<>();
-        this.collectibles = new HashSet<>();
+        ///player???
+        this.character = CharacterLoader.loadCharacterById(selectedCharacter);
+        this.enemies = new LinkedList<>();
+        this.collectibles = new LinkedList<>();
     }
 
     @Override
-    public void update() { //AGGIUNGERE INPUTTT
+    public void update() { // TODO: add input
         System.out.println("AGGIORNAMENTO MODELLOOO");
     
         //muove il personaggio (non dovrebbe sovrapporsi a nemici)
@@ -62,17 +63,26 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public Set<Enemy> getEnemies() {
+    public List<Enemy> getEnemies() {
         return this.enemies;
     }
 
     @Override
-    public Set<Collectible> getCollectibles() {
+    public List<ProjectileAttack> getProjectileAttacks() {
+        return this.projectileAttacks;
+    }
+
+    @Override
+    public List<Collectible> getCollectibles() {
         return this.collectibles;
     }
 
     @Override
+<<<<<<< HEAD
     public Set<UnlockablePowerUp> getUnlockablePowerUps() {
+=======
+    public List<UnlockablePowerUp> getUnlockablePowerUps() {
+>>>>>>> 513a20e7eba9f3f926fde5e1dbf76d32a06ade93
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getUnlockablePowerUps'");
     }

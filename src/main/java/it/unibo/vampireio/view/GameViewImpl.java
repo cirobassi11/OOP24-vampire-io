@@ -6,11 +6,11 @@ import java.awt.Image;
 import java.awt.Taskbar;
 import java.awt.Toolkit;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import it.unibo.vampireio.controller.GameController;
+import it.unibo.vampireio.controller.PositionableDTO;
 
 public class GameViewImpl implements GameView {
     
@@ -52,7 +52,7 @@ public class GameViewImpl implements GameView {
     static final String IN_GAME_POWERUPS = "inGamePowerups";
 
     private final String iconPath = "/images/icon.png";
-
+    private final String backgroundPath = "/images/background.png";
     private Image backgroundImage;
 
     public GameViewImpl(GameController controller) {
@@ -62,7 +62,8 @@ public class GameViewImpl implements GameView {
         
         this.frame = new JFrame("Vampire.io");
         this.setIcon(this.iconPath);
-        this.setResolution(resolutions.stream().filter(res -> res.width < this.screenSize.getWidth() && res.height < this.screenSize.getHeight()).reduce((first, second) -> second).get());
+        this.setBackgroundImage(this.backgroundPath);
+        this.setResolution(new Dimension(1280, 720)); /// DA LEGGERE DALLE IMPOSTAZIONII
         this.frame.setLocationRelativeTo(null);
         this.frame.setResizable(false);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,10 +99,6 @@ public class GameViewImpl implements GameView {
         this.cardLayout.show(this.cardPanel, name);
     }
 
-    public Image getBackgroundImage() {
-        return this.backgroundImage;
-    }
-
     public Dimension getScreenSize() {
         return this.screenSize;
     }
@@ -128,7 +125,15 @@ public class GameViewImpl implements GameView {
         }
     }
 
-    public void setResolution(Dimension resolution) {
+    private void setBackgroundImage(String path) {
+        this.backgroundImage = new ImageIcon(getClass().getResource(path)).getImage();
+    }
+
+    Image getBackgroundImage() {
+        return this.backgroundImage;
+    }
+
+    void setResolution(Dimension resolution) {
         this.screenSize = resolution;
         this.frame.setSize(resolution);
         this.currentFrameSize = resolution;
@@ -143,7 +148,8 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void update() {
+    public void update(List<PositionableDTO> positionables) {
+        ((GamePanel) this.gamePanel).setPositionables(positionables);
         this.gamePanel.repaint();
     }
 }

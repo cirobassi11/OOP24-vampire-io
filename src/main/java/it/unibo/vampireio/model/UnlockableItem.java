@@ -7,7 +7,13 @@ public abstract class UnlockableItem implements Unlockable {
     private final String description;
     private final int price;
 
+<<<<<<< HEAD
     public UnlockableItem(final String id, final String name, final String description, final int price) {
+=======
+    public UnlockableItem(final String name, final int price) {
+        this.name = name;
+        this.price = price;
+>>>>>>> 513a20e7eba9f3f926fde5e1dbf76d32a06ade93
         this.unlocked = false;
         this.id = id;
         this.name = name;
