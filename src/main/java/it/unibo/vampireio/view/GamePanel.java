@@ -1,12 +1,7 @@
 package it.unibo.vampireio.view;
 
 import java.awt.Graphics;
-import java.awt.Image;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import it.unibo.vampireio.controller.GameController;
 import it.unibo.vampireio.controller.PositionableDTO;
@@ -15,22 +10,16 @@ class GamePanel extends JPanel {
 
     private GameViewImpl view;
     private GameController controller;
-    private Map<String, Image> images = new HashMap<>();
 
     private List<PositionableDTO> positionables;
 
     private final int tileSize = 64;
 
+    private ImageManager imageManager = new ImageManager();
+
     GamePanel(GameViewImpl view, GameController controller) {
         this.view = view;
         this.controller = controller;
-
-        try {
-            // Caricare le immagini
-            this.images.put("grass", ImageIO.read(getClass().getResource("/images/grass.png")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void setPositionables(List<PositionableDTO> positionables) {
@@ -63,7 +52,7 @@ class GamePanel extends JPanel {
             for (int j = -1; j <= screenHeight / (tileSize * scale) + 1; j++) {
                 int tileX = (int) (((i + startTileX) * tileSize * scale + offsetX) % (tileSize * scale));
                 int tileY = (int) (((j + startTileY) * tileSize * scale + offsetY) % (tileSize * scale));
-                g.drawImage(this.images.get("grass"), tileX, tileY, (int) (tileSize * scale), (int) (tileSize * scale), null);
+                g.drawImage(this.imageManager.getImage("grass"), tileX, tileY, (int) (tileSize * scale), (int) (tileSize * scale), null);
             }
         }
 
@@ -71,7 +60,7 @@ class GamePanel extends JPanel {
         for (PositionableDTO positionable : this.positionables) {
             int x = (int) (positionable.getPosition().getX() * scale + offsetX);
             int y = (int) (positionable.getPosition().getY() * scale + offsetY);
-            //g.drawImage(this.images.get(positionable.getImage()), x, y, (int) (tileSize * scale), (int) (tileSize * scale), null);
+            g.drawImage(this.imageManager.getImage(positionable.getId()), x, y, (int) (tileSize * scale), (int) (tileSize * scale), null);
         }
     }
 }

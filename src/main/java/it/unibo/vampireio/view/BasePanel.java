@@ -1,25 +1,15 @@
 package it.unibo.vampireio.view;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 abstract class BasePanel extends JPanel {
     protected GameViewImpl view;
 
     protected Dimension buttonSize;
-    
-    private final String backgroundPath = "/images/background.png";
-    private Image backgroundImage;
 
     BasePanel(GameViewImpl view) {
         this.view = view;
-        try {
-            backgroundImage = ImageIO.read(getClass().getResource(backgroundPath));
-        } catch (IOException | IllegalArgumentException e) {
-            e.printStackTrace();
-        }
         
         this.setLayout(new GridBagLayout());
         this.setOpaque(false);
@@ -30,9 +20,7 @@ abstract class BasePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (backgroundImage != null) {
-            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-        }
+        g.drawImage(this.view.getBackgroundImage(), 0, 0, getWidth(), getHeight(), this);
     }
 
     protected JButton createStyledButton(String text, Dimension size) {

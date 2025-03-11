@@ -1,6 +1,6 @@
 package it.unibo.vampireio.model;
 
-public class UnlockableCharacter extends AbstractUnlockableItem {
+public class UnlockableCharacter extends UnlockableItem {
 
     public UnlockableCharacter(String name, int price) {
         super(name, price);

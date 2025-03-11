@@ -1,6 +1,6 @@
 package it.unibo.vampireio.model;
 
-public class UnlockablePowerUp extends AbstractUnlockableItem {
+public class UnlockablePowerUp extends UnlockableItem {
     private int might;
     private int armor;
     private int maxHealth;
