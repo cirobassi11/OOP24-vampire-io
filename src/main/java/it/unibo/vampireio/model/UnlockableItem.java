@@ -1,14 +1,18 @@
 package it.unibo.vampireio.model;
 
-public abstract class AbstractUnlockableItem implements Unlockable {
+public abstract class UnlockableItem implements Unlockable {
     private boolean unlocked;
+    private final String id;
     private final String name;
+    private final String description;
     private final int price;
 
-    public AbstractUnlockableItem(final String name, final int price) {
-        this.name = name;
-        this.price = price;
+    public UnlockableItem(final String id, final String name, final String description, final int price) {
         this.unlocked = false;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
     }
 
     @Override
@@ -24,12 +28,23 @@ public abstract class AbstractUnlockableItem implements Unlockable {
     }
 
     @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public String getDescription() {
+        return this.description;
     }
 
     @Override
     public int getPrice() {
         return this.price;
     }
+
 }

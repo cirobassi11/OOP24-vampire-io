@@ -70,4 +70,10 @@ public class GameWorld implements GameModel {
     public Set<Collectible> getCollectibles() {
         return this.collectibles;
     }
+
+    @Override
+    public Set<UnlockablePowerUp> getUnlockablePowerUps() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getUnlockablePowerUps'");
+    }
 }
