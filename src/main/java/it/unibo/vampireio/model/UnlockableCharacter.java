@@ -2,8 +2,7 @@ package it.unibo.vampireio.model;
 
 public class UnlockableCharacter extends UnlockableItem {
 
-    public UnlockableCharacter(String name, int price) {
-        super(name, price);
-        //TODO Auto-generated constructor stub
+    public UnlockableCharacter(String id, String name, String description, int price) {
+        super(id, name, description, price);
     }
 }

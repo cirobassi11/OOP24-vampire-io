@@ -78,11 +78,7 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-<<<<<<< HEAD
-    public Set<UnlockablePowerUp> getUnlockablePowerUps() {
-=======
     public List<UnlockablePowerUp> getUnlockablePowerUps() {
->>>>>>> 513a20e7eba9f3f926fde5e1dbf76d32a06ade93
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getUnlockablePowerUps'");
     }
