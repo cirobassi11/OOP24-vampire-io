@@ -35,6 +35,9 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
 
     @Override
     public void move(double frameTime) {
-        this.setPosition(new Point2D.Double((this.getDirection().getX() * this.getSpeed() * frameTime), (this.getDirection().getY() * this.getSpeed() * frameTime)));
+        this.setPosition(new Point2D.Double(
+            this.getPosition().getX() + this.getDirection().getX() * this.getSpeed() * frameTime, 
+            this.getPosition().getY() + this.getDirection().getY() * this.getSpeed() * frameTime
+        ));
     }
 }
