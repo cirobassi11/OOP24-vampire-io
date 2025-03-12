@@ -1,6 +1,7 @@
 package it.unibo.vampireio.view;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.List;
 import javax.swing.JPanel;
 import it.unibo.vampireio.controller.GameController;
@@ -56,11 +57,15 @@ class GamePanel extends JPanel {
             }
         }
 
-        // Disegna i personaggi
+        // Disegna i positionable
         for (PositionableDTO positionable : this.positionables) {
             int x = (int) (positionable.getPosition().getX() * scale + offsetX);
             int y = (int) (positionable.getPosition().getY() * scale + offsetY);
-            g.drawImage(this.imageManager.getImage(positionable.getId()), x, y, (int) (tileSize * scale), (int) (tileSize * scale), null);
+
+            String directionSuffix = positionable.getDirection().getX() < 0 ? "_l" : "_r";
+            Image image = this.imageManager.getImage(positionable.getId() + directionSuffix);
+
+            g.drawImage(image, x, y, (int) (tileSize * scale), (int) (tileSize * scale), null);
         }
     }
 }

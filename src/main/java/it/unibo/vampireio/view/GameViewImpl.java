@@ -55,6 +55,8 @@ public class GameViewImpl implements GameView {
     private final String backgroundPath = "/images/background.png";
     private Image backgroundImage;
 
+    private AudioManager audioManager;
+
     public GameViewImpl(GameController controller) {
         this.controller = controller;
         
@@ -93,6 +95,8 @@ public class GameViewImpl implements GameView {
         this.frame.add(this.cardPanel);
 
         this.frame.setVisible(true);
+
+        this.audioManager = new AudioManager();
     }
 
     public void showScreen(String name) {
