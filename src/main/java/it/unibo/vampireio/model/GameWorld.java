@@ -21,7 +21,7 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public void update() { // TODO: add input
+    public void update(double frameTime) { // TODO: add input
         System.out.println("AGGIORNAMENTO MODELLOOO");
     
         //muove il personaggio (non dovrebbe sovrapporsi a nemici)

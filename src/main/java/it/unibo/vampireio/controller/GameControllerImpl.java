@@ -1,7 +1,6 @@
 package it.unibo.vampireio.controller;
 
 import java.awt.geom.Point2D;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,11 +42,12 @@ public class GameControllerImpl implements GameController {
 
     @Override
     public void run() {
+        double frameTime = 1000.0 / this.frameRate;
         while (this.isRunning()) {
-            this.model.update(); //Movement input should be passed.
+            this.model.update(frameTime); //Movement input should be passed.
             this.view.update(this.getPositionablesData());
             try {
-                Thread.sleep(1000 / this.frameRate);
+                Thread.sleep((long) frameTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

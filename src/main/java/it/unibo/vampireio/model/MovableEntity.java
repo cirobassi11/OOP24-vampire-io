@@ -20,7 +20,7 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
 
     @Override
     public Point2D.Double getDirection() {
-        return direction;
+        return this.direction;
     }
 
     @Override
@@ -34,7 +34,7 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
     }
 
     @Override
-    public void move(Point2D.Double positionOffset) {
-        setPosition(new Point2D.Double(getPosition().getX() + positionOffset.x, getPosition().y + positionOffset.getY()));
+    public void move(double frameTime) {
+        this.setPosition(new Point2D.Double((this.getDirection().getX() * this.getSpeed() * frameTime), (this.getDirection().getY() * this.getSpeed() * frameTime)));
     }
 }

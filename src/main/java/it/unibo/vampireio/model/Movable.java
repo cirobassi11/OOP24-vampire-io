@@ -7,5 +7,5 @@ public interface Movable extends Positionable {
     Point2D.Double getDirection();
     void setSpeed(double speed);
     double getSpeed();
-    void move(Point2D.Double positionOffset);
+    void move(double frameTime);
 }
