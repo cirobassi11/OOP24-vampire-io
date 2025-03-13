@@ -14,14 +14,14 @@ public class PositionableDTO {
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public Point2D.Double getPosition() {
-        return position;
+        return this.position;
     }
 
     public Point2D.Double getDirection() {
-        return direction;
+        return this.direction;
     }
 }

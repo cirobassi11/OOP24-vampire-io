@@ -10,6 +10,6 @@ public class VisualSizeDTO {
     }
 
     public Dimension getDimension() {
-        return dimension;
+        return this.dimension;
     }
 }

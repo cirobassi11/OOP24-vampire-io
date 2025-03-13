@@ -1,8 +1,7 @@
 package it.unibo.vampireio.view;
 
-import java.util.List;
-import it.unibo.vampireio.controller.PositionableDTO;
+import it.unibo.vampireio.controller.DTO;
 
 public interface GameView {
-    void update(List<PositionableDTO> positionables);
+    void update(DTO data);
 }

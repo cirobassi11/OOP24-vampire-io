@@ -9,8 +9,8 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import it.unibo.vampireio.controller.DTO;
 import it.unibo.vampireio.controller.GameController;
-import it.unibo.vampireio.controller.PositionableDTO;
 
 public class GameViewImpl implements GameView {
     
@@ -39,8 +39,6 @@ public class GameViewImpl implements GameView {
         new Dimension(1920, 1080),
         new Dimension(3840, 2160)
     );
-
-    private double scaleFactor;
     
     static final String MAIN_MENU = "mainMenu";
     static final String SETTINGS = "settings";
@@ -54,8 +52,6 @@ public class GameViewImpl implements GameView {
     private final String iconPath = "/images/icon.png";
     private final String backgroundPath = "/images/background.png";
     private Image backgroundImage;
-
-    private AudioManager audioManager;
 
     public GameViewImpl(GameController controller) {
         this.controller = controller;
@@ -72,7 +68,7 @@ public class GameViewImpl implements GameView {
 
         this.mainMenuPanel = new MainMenuPanel(this);
         this.settingsPanel = new SettingsPanel(this);
-        this.gamePanel = new GamePanel(this, this.controller);
+        this.gamePanel = new GamePanel(this);
         this.chooseCharacterPanel = new ChooseCharacterPanel(this, this.controller);
         this.endGamePanel = new EndGamePanel(this);
         this.pausePanel = new PausePanel(this);
@@ -96,7 +92,7 @@ public class GameViewImpl implements GameView {
 
         this.frame.setVisible(true);
 
-        this.audioManager = new AudioManager();
+        new AudioManager();
     }
 
     public void showScreen(String name) {
@@ -143,17 +139,9 @@ public class GameViewImpl implements GameView {
         this.currentFrameSize = resolution;
     }
 
-    public double getScaleFactor() {
-        return this.scaleFactor;
-    }
-
-    public void setScaleFactor(double scaleFactor) {
-        this.scaleFactor = scaleFactor;
-    }
-
     @Override
-    public void update(List<PositionableDTO> positionables) {
-        ((GamePanel) this.gamePanel).setPositionables(positionables);
+    public void update(DTO data) {
+        ((GamePanel) this.gamePanel).setData(data);
         this.gamePanel.repaint();
     }
 }
