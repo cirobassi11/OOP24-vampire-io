@@ -1,6 +1,7 @@
 package it.unibo.vampireio.model;
 
 import java.awt.Dimension;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,20 +17,23 @@ public class GameWorld implements GameModel {
     public GameWorld(String selectedCharacter) {
         ///player???
         this.character = CharacterLoader.loadCharacterById(selectedCharacter);
-        this.enemies = new LinkedList<>();
-        this.collectibles = new LinkedList<>();
+        this.enemies = Collections.synchronizedList(new LinkedList<>());
+        this.projectileAttacks = Collections.synchronizedList(new LinkedList<>());
+        this.areaAttacks = Collections.synchronizedList(new LinkedList<>());
+        this.collectibles = Collections.synchronizedList(new LinkedList<>());
     }
 
     @Override
-    public void update(double frameTime) { // TODO: add input
+    public void update(long tickTime) { // TODO: add input
         System.out.println("AGGIORNAMENTO MODELLOOO");
-    
-        //muove il personaggio (non dovrebbe sovrapporsi a nemici)
-        //controlla collisioni con nemici o positionable
+        synchronized(this) {
+            //muove il personaggio (non dovrebbe sovrapporsi a nemici)
+            //controlla collisioni con nemici o positionable
 
-        // muove tutti i nemici (controllando anche che non si sovrappongano)
+            // muove tutti i nemici (controllando anche che non si sovrappongano)
 
-        //spanwna i nemici fuori dalla visuale (visualSize)
+            //spanwna i nemici fuori dalla visuale (visualSize)
+        }
     }
 
     @Override
@@ -59,22 +63,37 @@ public class GameWorld implements GameModel {
 
     @Override
     public Character getCharacter() {
-        return this.character;
+        synchronized (this.character) {
+            return this.character;
+        }
     }
 
     @Override
     public List<Enemy> getEnemies() {
-        return this.enemies;
+        synchronized (this.enemies) {
+            return Collections.unmodifiableList(this.enemies);
+        }
     }
 
     @Override
     public List<ProjectileAttack> getProjectileAttacks() {
-        return this.projectileAttacks;
+        synchronized (this.projectileAttacks) {
+            return Collections.unmodifiableList(this.projectileAttacks);
+        }
+    }
+
+    @Override
+    public List<AreaAttack> getAreaAttacks() {
+        synchronized (this.areaAttacks) {
+            return Collections.unmodifiableList(this.areaAttacks);
+        }
     }
 
     @Override
     public List<Collectible> getCollectibles() {
-        return this.collectibles;
+        synchronized (this.collectibles) {
+            return Collections.unmodifiableList(this.collectibles);
+        }
     }
 
     @Override

@@ -18,7 +18,8 @@ public class GameControllerImpl implements GameController {
 
     private boolean running = true;
 
-    private int frameRate = /*60*/ 4;
+    private int frameRate = 60;
+    private int tickRate = 60;
 
     public GameControllerImpl() {
         this.view = new GameViewImpl(this);
@@ -37,17 +38,28 @@ public class GameControllerImpl implements GameController {
     @Override
     public void startGame(String selectedCharacter) {
         this.model = new GameWorld(selectedCharacter);
-        new Thread(this).start();
+        new Thread(this::modelLoop).start();
+        new Thread(this::viewLoop).start();
     }
 
-    @Override
-    public void run() {
-        double frameTime = 1000.0 / this.frameRate;
+    private void modelLoop() {
+        long tickTime = 1000 / this.tickRate;
         while (this.isRunning()) {
-            this.model.update(frameTime); //Movement input should be passed.
+            this.model.update(tickTime); //Movement input should be passed.
+            try {
+                Thread.sleep(tickTime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void viewLoop() {
+        long frameTime = 1000 / this.frameRate;
+        while (this.isRunning()) {
             this.view.update(this.getPositionablesData());
             try {
-                Thread.sleep((long) frameTime);
+                Thread.sleep(frameTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
