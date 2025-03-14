@@ -14,8 +14,12 @@ public class GameWorld implements GameModel {
 
     public final Dimension visualSize = new Dimension(1280, 720);
 
-    public GameWorld(String selectedCharacter) {
+    public GameWorld() {
         ///player???
+    }
+
+    @Override
+    public void initGame(String selectedCharacter) {
         this.character = CharacterLoader.loadCharacterById(selectedCharacter);
         this.enemies = Collections.synchronizedList(new LinkedList<>());
         this.projectileAttacks = Collections.synchronizedList(new LinkedList<>());

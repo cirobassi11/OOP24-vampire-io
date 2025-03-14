@@ -24,6 +24,7 @@ public class GameControllerImpl implements GameController {
     private int tickRate = 60;
 
     public GameControllerImpl() {
+        this.model = new GameWorld();
         this.view = new GameViewImpl(this);
     }
 
@@ -39,7 +40,7 @@ public class GameControllerImpl implements GameController {
 
     @Override
     public void startGame(String selectedCharacter) {
-        this.model = new GameWorld(selectedCharacter);
+        this.model.initGame(selectedCharacter);
         new Thread(this::modelLoop).start();
         new Thread(this::viewLoop).start();
     }

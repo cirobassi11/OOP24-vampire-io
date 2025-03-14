@@ -2,6 +2,8 @@ package it.unibo.vampireio.view;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
+
 import javax.swing.JPanel;
 import it.unibo.vampireio.controller.DTO;
 import it.unibo.vampireio.controller.PositionableDTO;
@@ -51,16 +53,20 @@ class GamePanel extends JPanel {
             for (int j = -1; j <= tileNumberX; j++) {
                 int tileX = (int) (((i + startTileX) * tileSize * scale + offsetX) % (tileSize * scale));
                 int tileY = (int) (((j + startTileY) * tileSize * scale + offsetY) % (tileSize * scale));
-                g.drawImage(this.imageManager.getImage("grass"), tileX, tileY, (int) (tileSize * scale), (int) (tileSize * scale), null);
+                Image tile = this.imageManager.getImage("grass");
+                if(tile != null) {
+                    g.drawImage(tile, tileX, tileY, (int) (tileSize * scale), (int) (tileSize * scale), null);
+                }
             }
         }
-
-        //disegnare le livingentity
 
         //disegnare i collectible
 
         //disegnare i proiettili
 
         //disegnare gli attacchi ad area
+
+        //disegnare le livingentity
+
     }
 }

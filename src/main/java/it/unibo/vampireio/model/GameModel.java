@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.util.List;
 
 public interface GameModel {
+    void initGame(String selectedCharacter);
     void update(long tickTime);
     void addEnemy(Enemy enemy);
     void removeEnemy(Enemy enemy);
