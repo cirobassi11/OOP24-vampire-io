@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model;
 
 import java.awt.Dimension;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,10 +20,10 @@ public class GameWorld implements GameModel {
     @Override
     public void initGame(String selectedCharacter) {
         this.character = CharacterLoader.loadCharacterById(selectedCharacter);
-        this.enemies = Collections.synchronizedList(new LinkedList<>());
-        this.projectileAttacks = Collections.synchronizedList(new LinkedList<>());
-        this.areaAttacks = Collections.synchronizedList(new LinkedList<>());
-        this.collectibles = Collections.synchronizedList(new LinkedList<>());
+        this.enemies = new LinkedList<>();
+        this.projectileAttacks = new LinkedList<>();
+        this.areaAttacks = new LinkedList<>();
+        this.collectibles = new LinkedList<>();
     }
 
     @Override
@@ -75,28 +74,28 @@ public class GameWorld implements GameModel {
     @Override
     public List<Enemy> getEnemies() {
         synchronized (this.enemies) {
-            return Collections.unmodifiableList(this.enemies);
+            return this.enemies.stream().toList();
         }
     }
 
     @Override
     public List<ProjectileAttack> getProjectileAttacks() {
         synchronized (this.projectileAttacks) {
-            return Collections.unmodifiableList(this.projectileAttacks);
+            return this.projectileAttacks.stream().toList();
         }
     }
 
     @Override
     public List<AreaAttack> getAreaAttacks() {
         synchronized (this.areaAttacks) {
-            return Collections.unmodifiableList(this.areaAttacks);
+            return this.areaAttacks.stream().toList();
         }
     }
 
     @Override
     public List<Collectible> getCollectibles() {
         synchronized (this.collectibles) {
-            return Collections.unmodifiableList(this.collectibles);
+            return this.collectibles.stream().toList();
         }
     }
 
