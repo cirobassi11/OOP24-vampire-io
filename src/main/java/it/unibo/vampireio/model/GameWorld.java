@@ -74,28 +74,28 @@ public class GameWorld implements GameModel {
     @Override
     public List<Enemy> getEnemies() {
         synchronized (this.enemies) {
-            return this.enemies.stream().toList();
+            return this.enemies.parallelStream().toList();
         }
     }
 
     @Override
     public List<ProjectileAttack> getProjectileAttacks() {
         synchronized (this.projectileAttacks) {
-            return this.projectileAttacks.stream().toList();
+            return this.projectileAttacks.parallelStream().toList();
         }
     }
 
     @Override
     public List<AreaAttack> getAreaAttacks() {
         synchronized (this.areaAttacks) {
-            return this.areaAttacks.stream().toList();
+            return this.areaAttacks.parallelStream().toList();
         }
     }
 
     @Override
     public List<Collectible> getCollectibles() {
         synchronized (this.collectibles) {
-            return this.collectibles.stream().toList();
+            return this.collectibles.parallelStream().toList();
         }
     }
 
