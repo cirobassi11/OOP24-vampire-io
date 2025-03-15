@@ -2,8 +2,9 @@ package it.unibo.vampireio.view;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
-
+import java.awt.geom.AffineTransform;
 import javax.swing.JPanel;
 import it.unibo.vampireio.controller.DTO;
 import it.unibo.vampireio.controller.PositionableDTO;
@@ -14,6 +15,8 @@ class GamePanel extends JPanel {
     private DTO data;
     private final int tileSize = 64;
     private ImageManager imageManager = new ImageManager();
+
+    private String lastCharacterDirection = "r";
 
     GamePanel(GameViewImpl view) {
         this.view = view;
@@ -71,12 +74,20 @@ class GamePanel extends JPanel {
         }
 
         //Draws the projectiles
-        for(PositionableDTO projectile : this.data.getProjectilesData()) {
+        Graphics2D g2d = (Graphics2D) g;
+        for (PositionableDTO projectile : this.data.getProjectilesData()) {
             int projectileX = (int) (projectile.getPosition().getX() * scale + offsetX);
             int projectileY = (int) (projectile.getPosition().getY() * scale + offsetY);
             Image tile = this.imageManager.getImage(projectile.getId());
-            if(tile != null) {
-                g.drawImage(tile, projectileX, projectileY, (int) (tileSize * scale), (int) (tileSize * scale), null); // TODO: DA RUOTARE IN BASE ALLA DIREZIONE
+            if (tile != null) { // Da controllare
+                int width = (int) (tileSize * scale);
+                int height = (int) (tileSize * scale);
+                double rotationAngle = Math.atan2(projectile.getDirection().getY(), projectile.getDirection().getX());
+                AffineTransform transform = new AffineTransform();
+                transform.translate(projectileX + width / 2, projectileY + height / 2);
+                transform.rotate(rotationAngle);
+                transform.translate(-width / 2, -height / 2);
+                g2d.drawImage(tile, transform, null);
             }
         }
 
@@ -94,7 +105,8 @@ class GamePanel extends JPanel {
         for(PositionableDTO enemy : this.data.getEnemiesData()) {
             int enemyX = (int) (enemy.getPosition().getX() * scale + offsetX);
             int enemyY = (int) (enemy.getPosition().getY() * scale + offsetY);
-            Image tile = this.imageManager.getImage(enemy.getId());
+            String directionSuffix = "_" + (enemy.getDirection().getX() <= 0 ? "l" : "r");
+            Image tile = this.imageManager.getImage(enemy.getId() + directionSuffix);
             if(tile != null) {
                 g.drawImage(tile, enemyX, enemyY, (int) (tileSize * scale), (int) (tileSize * scale), null); //TODO: DA GIRARE A DESTRA O SINISTRA + ANIMAZIONI + DIVENTANO BIANCHI SE COLPITI
             }
@@ -103,7 +115,19 @@ class GamePanel extends JPanel {
         //Draws the character
         int characterX = (int) (character.getPosition().getX() * scale + offsetX);
         int characterY = (int) (character.getPosition().getY() * scale + offsetY);
-        Image tile = this.imageManager.getImage(character.getId());
+
+        String directionSuffix = "_";
+        if(character.getDirection().getX() < 0) {
+            directionSuffix += "l";
+            this.lastCharacterDirection = "l";
+        } else if (character.getDirection().getX() > 0) {
+            directionSuffix += "r";
+            this.lastCharacterDirection = "r";
+        }
+        else {
+            directionSuffix += this.lastCharacterDirection;
+        }
+        Image tile = this.imageManager.getImage(character.getId() + directionSuffix);
         if(tile != null) {
             g.drawImage(tile, characterX, characterY, (int) (tileSize * scale), (int) (tileSize * scale), null); //TODO: DA GIRARE A DESTRA O SINISTRA + ANIMAZIONI + DIVENTA ROSSO SE COLPITO
         }
