@@ -1,30 +1,21 @@
 package it.unibo.vampireio.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Saving implements Serializable{
-    /* personaggio utilizzato, duratapartita, kill, livello raggiunto, punteggio (kill*livello raggiunto??)
-    statistiche sortate in base al punteggio*/
-    //private String character;
-    private int killCounter;
-    private int lvlCounter;
-    //private double score;
-    //private double time;
-
-    private Saving(){
-        //this.character="";
-        this.killCounter=0;
-        this.lvlCounter=0;
-        //this.score=0;
-    }
-
-    public int incrementKillCounter(){
-        this.killCounter += 1;
-        return this.killCounter;
-    }
-
-    public int incrementlvlCounter(){
-        this.lvlCounter += 1;
-        return this.lvlCounter;
-    } 
+    /* Salvataggio dei progressi
+     * Lista dei personaggi sbloccati
+     * Lista delle armi sbloccate
+     * Lista dei nomi del giocatore
+     * Lista dei powerup sbloccati
+     * Quantità monete possedute
+    */
+    private List<String> accountId = new ArrayList<>();
+    private List<Character> characterList = new ArrayList<>();
+    private List<Weapon> weaponsList = new ArrayList<>();
+    private List<UnlockablePowerUp> unlockedPowerUpsList = new ArrayList<>();
+    private int moneyAmount;
+    private List<Score> scores;
 }
