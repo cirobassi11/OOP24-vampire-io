@@ -12,10 +12,10 @@ public class Saving implements Serializable{
      * Lista dei powerup sbloccati
      * Quantità monete possedute
     */
-    private List<String> accountId = new ArrayList<>();
+    private String accountId;
     private List<Character> characterList = new ArrayList<>();
     private List<Weapon> weaponsList = new ArrayList<>();
     private List<UnlockablePowerUp> unlockedPowerUpsList = new ArrayList<>();
     private int moneyAmount;
-    private List<Score> scores;
+    private List<Score> playerScores;
 }
