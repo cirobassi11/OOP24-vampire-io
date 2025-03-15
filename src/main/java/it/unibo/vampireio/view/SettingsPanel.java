@@ -23,7 +23,7 @@ class SettingsPanel extends BasePanel {
         this.add(resolutionLabel, gbc);
 
         gbc.gridy = 1;
-        JComboBox<String> resolutionComboBox = this.createStyledComboBox(this.buttonSize);
+        JComboBox<String> resolutionComboBox = this.createComboBox(this.buttonSize);
         for (Dimension res : GameViewImpl.resolutions) {
             resolutionComboBox.addItem((int) res.getWidth() + "x" + (int) res.getHeight());
         }
@@ -33,13 +33,9 @@ class SettingsPanel extends BasePanel {
         //DIFFICOLTA??
 
         //SUONI??
-
-        //SALVATAGGIO PROGRESSI ABILITATO??
-
-        //PERCORSO SALVATAGGIO PROGRESSI??
         
         gbc.gridy = 2;
-        JButton applyButton = createStyledButton("APPLY", this.buttonSize);
+        JButton applyButton = createButton("APPLY", this.buttonSize);
         applyButton.addActionListener(e -> {
             String selectedResolution = (String) resolutionComboBox.getSelectedItem();
             String[] resolution = selectedResolution.split("x");
@@ -48,7 +44,7 @@ class SettingsPanel extends BasePanel {
         this.add(applyButton, gbc);
 
         gbc.gridy = 3;
-        JButton backButton = createStyledButton("BACK", this.buttonSize);
+        JButton backButton = createButton("BACK", this.buttonSize);
         backButton.addActionListener(e -> view.showScreen(GameViewImpl.MAIN_MENU));
         this.add(backButton, gbc);
     }

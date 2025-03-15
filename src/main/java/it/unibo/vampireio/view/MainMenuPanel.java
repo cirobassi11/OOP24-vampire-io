@@ -14,17 +14,17 @@ class MainMenuPanel extends BasePanel {
         gbc.weightx = 1;
         gbc.anchor = GridBagConstraints.SOUTH;
 
-        JButton startButton = createStyledButton("START", this.buttonSize);
+        JButton startButton = createButton("START", this.buttonSize);
         startButton.addActionListener(e -> view.showScreen(GameViewImpl.CHOOSE_CHARACTER));
         gbc.gridy = 0;
         this.add(startButton, gbc);
 
-        JButton powerUpButton = createStyledButton("POWER UP", this.buttonSize);
+        JButton powerUpButton = createButton("POWER UP", this.buttonSize);
         powerUpButton.addActionListener(e -> view.showScreen(GameViewImpl.UNLOCKABLE_POWERUPS));
         gbc.gridy = 1;
         this.add(powerUpButton, gbc);
 
-        JButton settingsButton = createStyledButton("SETTINGS", this.buttonSize);
+        JButton settingsButton = createButton("SETTINGS", this.buttonSize);
         settingsButton.addActionListener(e -> view.showScreen(GameViewImpl.SETTINGS));
         gbc.gridy = 2;
         this.add(settingsButton, gbc);
