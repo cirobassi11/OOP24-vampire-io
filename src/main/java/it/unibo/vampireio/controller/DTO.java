@@ -3,6 +3,7 @@ package it.unibo.vampireio.controller;
 import java.util.List;
 
 public class DTO {
+    private long elapsedTime;
     private VisualSizeDTO visualSize;
     private PositionableDTO character;
     private List<PositionableDTO> enemies;
@@ -10,13 +11,18 @@ public class DTO {
     private List<PositionableDTO> areaAttacks;
     private List<PositionableDTO> collectibles;
 
-    public DTO(VisualSizeDTO visualSize, PositionableDTO character, List<PositionableDTO> enemies, List<PositionableDTO> projectiles, List<PositionableDTO> areaAttacks, List<PositionableDTO> collectibles) {
+    public DTO(long elapsedTime, VisualSizeDTO visualSize, PositionableDTO character, List<PositionableDTO> enemies, List<PositionableDTO> projectiles, List<PositionableDTO> areaAttacks, List<PositionableDTO> collectibles) {
+        this.elapsedTime = elapsedTime;
         this.visualSize = visualSize;
         this.character = character;
         this.enemies = enemies;
         this.projectiles = projectiles;
         this.areaAttacks = areaAttacks;
         this.collectibles = collectibles;
+    }
+
+    public long getElapsedTime() {
+        return this.elapsedTime;
     }
 
     public VisualSizeDTO getVisualSizeData() {

@@ -17,6 +17,11 @@ class GamePanel extends JPanel {
     private ImageManager imageManager = new ImageManager();
 
     private String lastCharacterDirection = "l";
+    private int currentCharacterFrame = 0;
+    private final int characterFrames = 4;
+    private long lastCharacterFrameTime = 0;
+    private final long characterFrameRate = 10;
+    private final long characterFrameDelay = 1000 / characterFrameRate;
 
     GamePanel(GameViewImpl view) {
         this.view = view;
@@ -135,9 +140,15 @@ class GamePanel extends JPanel {
         else {
             directionSuffix += this.lastCharacterDirection;
         }
-        Image tile = this.imageManager.getImage(character.getId() + directionSuffix);
+        Image tile = this.imageManager.getImage(character.getId() + this.currentCharacterFrame + directionSuffix);
         if(tile != null) {
             g.drawImage(tile, characterX, characterY, (int) (tileSize * scale), (int) (tileSize * scale), null); //TODO: ANIMAZIONI + DIVENTA ROSSO SE COLPITO
+        }
+        
+        long elapsedTime = this.data.getElapsedTime();
+        if (elapsedTime - this.lastCharacterFrameTime >= this.characterFrameDelay) {
+            this.currentCharacterFrame = (this.currentCharacterFrame + 1) % this.characterFrames;
+            this.lastCharacterFrameTime = elapsedTime;
         }
     }
 

@@ -18,6 +18,8 @@ public class GameControllerImpl implements GameController {
     private GameModel model;
     private GameView view;
 
+    private long startTime;
+
     private boolean running = true;
 
     private int frameRate = 60;
@@ -41,6 +43,7 @@ public class GameControllerImpl implements GameController {
     @Override
     public void startGame(String selectedCharacter) {
         this.model.initGame(selectedCharacter);
+        this.startTime = System.currentTimeMillis();
         new Thread(this::modelLoop).start();
         new Thread(this::viewLoop).start();
     }
@@ -69,9 +72,12 @@ public class GameControllerImpl implements GameController {
         }
     }
 
+    private long getElapsedTime() {
+        return System.currentTimeMillis() - this.startTime;
+    }
+
     private DTO getData() {
         Dimension visualSize = this.model.getVisualSize();
-
         Character character = this.model.getCharacter();
         List<Enemy> enemies = this.model.getEnemies();
         List<ProjectileAttack> projectileAttacks = this.model.getProjectileAttacks();
@@ -145,6 +151,7 @@ public class GameControllerImpl implements GameController {
             .collect(Collectors.toList());
 
         return new DTO(
+            this.getElapsedTime(),
             visualSizeData, 
             characterData, 
             enemiesData, 
