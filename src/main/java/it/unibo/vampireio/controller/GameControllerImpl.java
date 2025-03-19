@@ -76,7 +76,7 @@ public class GameControllerImpl implements GameController {
         return System.currentTimeMillis() - this.startTime;
     }
 
-    private DTO getData() {
+    private GameData getData() {
         Dimension visualSize = this.model.getVisualSize();
         Character character = this.model.getCharacter();
         List<Enemy> enemies = this.model.getEnemies();
@@ -84,11 +84,11 @@ public class GameControllerImpl implements GameController {
         List<AreaAttack> areaAttacks = this.model.getAreaAttacks();
         List<Collectible> collectibles = this.model.getCollectibles();
 
-        VisualSizeDTO visualSizeData = new VisualSizeDTO(
+        VisualSizeData visualSizeData = new VisualSizeData(
             visualSize.width, visualSize.height
         );
 
-        PositionableDTO characterData = new PositionableDTO(
+        LivingEntityData characterData = new LivingEntityData(
             character.getId(),
             new Point2D.Double(
                 character.getPosition().getX(), 
@@ -97,11 +97,15 @@ public class GameControllerImpl implements GameController {
             new Point2D.Double(
                 character.getDirection().getX(), 
                 character.getDirection().getY()
-            )
+            ),
+            character.getHealth(),
+            character.getMaxHealth(),
+            false,//character.isBeingAttacked(),
+            true//character.isMoving()
         );
 
-        List<PositionableDTO> enemiesData = enemies.stream()
-            .map(enemy -> new PositionableDTO(
+        List<LivingEntityData> enemiesData = enemies.stream()
+            .map(enemy -> new LivingEntityData(
                 enemy.getId(),
                 new Point2D.Double(
                     enemy.getPosition().getX(),
@@ -110,12 +114,16 @@ public class GameControllerImpl implements GameController {
                 new Point2D.Double(
                     enemy.getDirection().getX(),
                     enemy.getDirection().getY()
-                )
+                ),
+                enemy.getHealth(),
+                enemy.getMaxHealth(),
+                false,//enemy.isBeingAttacked(),
+                true//enemy.isMoving()
             ))
             .collect(Collectors.toList());
 
-        List<PositionableDTO> projectileAttacksData = projectileAttacks.stream()
-            .map(projectileAttack -> new PositionableDTO(
+        List<PositionableData> projectileAttacksData = projectileAttacks.stream()
+            .map(projectileAttack -> new PositionableData(
                 projectileAttack.getId(),
                 new Point2D.Double(
                     projectileAttack.getPosition().getX(),
@@ -128,8 +136,8 @@ public class GameControllerImpl implements GameController {
             ))
             .collect(Collectors.toList());
 
-        List<PositionableDTO> areaAttacksData = areaAttacks.stream()
-            .map(areaAttack -> new PositionableDTO(
+        List<PositionableData> areaAttacksData = areaAttacks.stream()
+            .map(areaAttack -> new PositionableData(
                 areaAttack.getId(),
                 new Point2D.Double(
                     areaAttack.getPosition().getX(),
@@ -139,8 +147,8 @@ public class GameControllerImpl implements GameController {
             ))
             .collect(Collectors.toList());
 
-        List<PositionableDTO> collectiblesData = collectibles.stream()
-            .map(collectible -> new PositionableDTO(
+        List<PositionableData> collectiblesData = collectibles.stream()
+            .map(collectible -> new PositionableData(
                 collectible.getId(),
                 new Point2D.Double(
                     collectible.getPosition().getX(),
@@ -150,7 +158,7 @@ public class GameControllerImpl implements GameController {
             ))
             .collect(Collectors.toList());
 
-        return new DTO(
+        return new GameData(
             this.getElapsedTime(),
             visualSizeData, 
             characterData, 

@@ -6,13 +6,14 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import javax.swing.JPanel;
-import it.unibo.vampireio.controller.DTO;
-import it.unibo.vampireio.controller.PositionableDTO;
+import it.unibo.vampireio.controller.GameData;
+import it.unibo.vampireio.controller.PositionableData;
+import it.unibo.vampireio.controller.LivingEntityData;
 
 class GamePanel extends JPanel {
 
     private GameViewImpl view;
-    private DTO data;
+    private GameData data;
     private final int tileSize = 64;
     private ImageManager imageManager = new ImageManager();
 
@@ -27,7 +28,7 @@ class GamePanel extends JPanel {
         this.view = view;
     }
 
-    public void setData(DTO data) {
+    public void setData(GameData data) {
         this.data = data;
     }
 
@@ -42,7 +43,7 @@ class GamePanel extends JPanel {
         int centerX = fov.width / 2;
         int centerY = fov.height / 2;
 
-        PositionableDTO character = this.data.getCharacterData();
+        LivingEntityData character = this.data.getCharacterData();
 
         // Calculate the offset
         int offsetX = (int) (centerX - character.getPosition().getX() * scale);
@@ -69,7 +70,7 @@ class GamePanel extends JPanel {
         }
 
         //Draws the collectibles
-        for(PositionableDTO collectible : this.data.getCollectiblesData()) {
+        for(PositionableData collectible : this.data.getCollectiblesData()) {
             if(this.isVisible(collectible, fov, offsetX, offsetY)) {
                 int collectibleX = (int) (collectible.getPosition().getX() * scale + offsetX);
                 int collectibleY = (int) (collectible.getPosition().getY() * scale + offsetY);
@@ -82,12 +83,12 @@ class GamePanel extends JPanel {
 
         //Draws the projectiles
         Graphics2D g2d = (Graphics2D) g;
-        for (PositionableDTO projectile : this.data.getProjectilesData()) { //TODO: ANIMAZIONI??
+        for (PositionableData projectile : this.data.getProjectilesData()) { //TODO: ANIMAZIONI??
             if(this.isVisible(projectile, fov, offsetX, offsetY)) {
                 int projectileX = (int) (projectile.getPosition().getX() * scale + offsetX);
                 int projectileY = (int) (projectile.getPosition().getY() * scale + offsetY);
                 Image tile = this.imageManager.getImage(projectile.getId());
-                if (tile != null) { // Da controllare
+                if (tile != null) {                                                                 // DA CONTROLLARE
                     int width = (int) (tileSize * scale);
                     int height = (int) (tileSize * scale);
                     double rotationAngle = Math.atan2(projectile.getDirection().getY(), projectile.getDirection().getX());
@@ -101,7 +102,7 @@ class GamePanel extends JPanel {
         }
 
         //Draws the area attacks
-        for(PositionableDTO areaAttack : this.data.getAreaAttacksData()) {
+        for(PositionableData areaAttack : this.data.getAreaAttacksData()) {
             if(this.isVisible(areaAttack, fov, offsetX, offsetY)) {
                 int areaAttackX = (int) (areaAttack.getPosition().getX() * scale + offsetX);
                 int areaAttackY = (int) (areaAttack.getPosition().getY() * scale + offsetY);
@@ -113,14 +114,14 @@ class GamePanel extends JPanel {
         }
 
         //Draws the enemies
-        for(PositionableDTO enemy : this.data.getEnemiesData()) {
+        for(LivingEntityData enemy : this.data.getEnemiesData()) {
             if(this.isVisible(enemy, fov, offsetX, offsetY)) {
                 int enemyX = (int) (enemy.getPosition().getX() * scale + offsetX);
                 int enemyY = (int) (enemy.getPosition().getY() * scale + offsetY);
                 String directionSuffix = "_" + (enemy.getDirection().getX() <= 0 ? "l" : "r");
                 Image tile = this.imageManager.getImage(enemy.getId() + directionSuffix);
                 if(tile != null) {
-                    g.drawImage(tile, enemyX, enemyY, (int) (tileSize * scale), (int) (tileSize * scale), null); //TODO: ANIMAZIONI + DIVENTANO BIANCHI SE COLPITI
+                    g.drawImage(tile, enemyX, enemyY, (int) (tileSize * scale), (int) (tileSize * scale), null); //TODO: ANIMAZIONI??? + DIVENTANO BIANCHI SE COLPITI
                 }
             }
         }
@@ -142,17 +143,17 @@ class GamePanel extends JPanel {
         }
         Image tile = this.imageManager.getImage(character.getId() + this.currentCharacterFrame + directionSuffix);
         if(tile != null) {
-            g.drawImage(tile, characterX, characterY, (int) (tileSize * scale), (int) (tileSize * scale), null); //TODO: ANIMAZIONI + DIVENTA ROSSO SE COLPITO
+            g.drawImage(tile, characterX, characterY, (int) (tileSize * scale), (int) (tileSize * scale), null); //TODO: DIVENTA ROSSO SE COLPITO
         }
         
         long elapsedTime = this.data.getElapsedTime();
-        if (elapsedTime - this.lastCharacterFrameTime >= this.characterFrameDelay) {
+        if (character.isMoving() && elapsedTime - this.lastCharacterFrameTime >= this.characterFrameDelay) {
             this.currentCharacterFrame = (this.currentCharacterFrame + 1) % this.characterFrames;
             this.lastCharacterFrameTime = elapsedTime;
         }
     }
 
-    private boolean isVisible(PositionableDTO positionable, Dimension fov, int offsetX, int offsetY) {
+    private boolean isVisible(PositionableData positionable, Dimension fov, int offsetX, int offsetY) {
         return true;
         //TODO
     }

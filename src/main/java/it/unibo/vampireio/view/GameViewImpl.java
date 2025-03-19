@@ -9,7 +9,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import it.unibo.vampireio.controller.DTO;
+import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.GameController;
 
 public class GameViewImpl implements GameView {
@@ -140,7 +140,7 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void update(DTO data) {
+    public void update(GameData data) {
         ((GamePanel) this.gamePanel).setData(data);
         this.gamePanel.repaint();
     }

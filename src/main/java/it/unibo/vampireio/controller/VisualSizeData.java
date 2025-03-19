@@ -2,10 +2,10 @@ package it.unibo.vampireio.controller;
 
 import java.awt.Dimension;
 
-public class VisualSizeDTO {
+public class VisualSizeData {
     private Dimension dimension;
 
-    public VisualSizeDTO(int width, int height) {
+    public VisualSizeData(int width, int height) {
         this.dimension = new Dimension(width, height);
     }
 
