@@ -38,7 +38,7 @@ class GamePanel extends JPanel {
         
         Dimension fov = this.data.getVisualSizeData().getDimension();
         
-        double scale = this.view.getScreenSize().getWidth() / fov.getWidth();
+        double scale = this.view.getCurrentFrameSize().getWidth() / fov.getWidth();
 
         int centerX = fov.width / 2;
         int centerY = fov.height / 2;

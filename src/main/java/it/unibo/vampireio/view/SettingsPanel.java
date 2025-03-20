@@ -24,15 +24,11 @@ class SettingsPanel extends BasePanel {
 
         gbc.gridy = 1;
         JComboBox<String> resolutionComboBox = this.createComboBox(this.buttonSize);
-        for (Dimension res : GameViewImpl.resolutions) {
+        for (Dimension res : GameViewImpl.RESOLUTIONS) {
             resolutionComboBox.addItem((int) res.getWidth() + "x" + (int) res.getHeight());
         }
         resolutionComboBox.setSelectedItem((int) view.getCurrentFrameSize().getWidth() + "x" + (int) view.getCurrentFrameSize().getHeight());
         this.add(resolutionComboBox, gbc);
-
-        //DIFFICOLTA??
-
-        //SUONI??
         
         gbc.gridy = 2;
         JButton applyButton = createButton("APPLY", this.buttonSize);
