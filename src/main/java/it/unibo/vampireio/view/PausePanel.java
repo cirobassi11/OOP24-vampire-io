@@ -1,13 +1,9 @@
 package it.unibo.vampireio.view;
 
-import java.awt.Color;
-
-import javax.swing.JPanel;
-
-class PausePanel extends JPanel {
+class PausePanel extends BasePanel {
     
     PausePanel(GameViewImpl view) {
-        this.setBackground(Color.BLUE);
+        super(view);
 
         //tasto continua
 

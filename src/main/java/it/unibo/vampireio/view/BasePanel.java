@@ -2,6 +2,8 @@ package it.unibo.vampireio.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+
 abstract class BasePanel extends JPanel {
     private static final Color BUTTON_BACKGROUND = new Color(50, 50, 50);
     private static final Color BUTTON_HOVER = new Color(200, 0, 0);
@@ -68,5 +70,27 @@ abstract class BasePanel extends JPanel {
             }
         });
         return comboBox;
+    }
+
+    protected void addButton(String text, int gridy, ActionListener action) {
+        JButton button = createButton(text, this.buttonSize);
+        button.addActionListener(action);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 30, 10);
+        gbc.gridx = 0;
+        gbc.gridy = gridy;
+        gbc.weightx = 1;
+        gbc.anchor = GridBagConstraints.SOUTH;
+        this.add(button, gbc);
+    }
+
+    protected void addComboBox(JComboBox<String> comboBox, int gridy) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 30, 10);
+        gbc.gridx = 0;
+        gbc.gridy = gridy;
+        gbc.weightx = 1;
+        gbc.anchor = GridBagConstraints.SOUTH;
+        this.add(comboBox, gbc);
     }
 }

@@ -1,32 +1,12 @@
 package it.unibo.vampireio.view;
 
-import javax.swing.*;
-import java.awt.*;
-
 class MainMenuPanel extends BasePanel {
     
     MainMenuPanel(GameViewImpl view) {
         super(view);
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 30, 10);
-        gbc.gridx = 0;
-        gbc.weightx = 1;
-        gbc.anchor = GridBagConstraints.SOUTH;
-
-        JButton startButton = createButton("START", this.buttonSize);
-        startButton.addActionListener(e -> view.showScreen(GameViewImpl.CHOOSE_CHARACTER));
-        gbc.gridy = 0;
-        this.add(startButton, gbc);
-
-        JButton powerUpButton = createButton("POWER UP", this.buttonSize);
-        powerUpButton.addActionListener(e -> view.showScreen(GameViewImpl.UNLOCKABLE_POWERUPS));
-        gbc.gridy = 1;
-        this.add(powerUpButton, gbc);
-
-        JButton settingsButton = createButton("SETTINGS", this.buttonSize);
-        settingsButton.addActionListener(e -> view.showScreen(GameViewImpl.SETTINGS));
-        gbc.gridy = 2;
-        this.add(settingsButton, gbc);
+        this.addButton("START", 0, e -> view.showScreen(GameViewImpl.CHOOSE_CHARACTER));
+        this.addButton("POWER UP", 1, e -> view.showScreen(GameViewImpl.UNLOCKABLE_POWERUPS));
+        this.addButton("SETTINGS", 2, e -> view.showScreen(GameViewImpl.SETTINGS));
     }
 }
