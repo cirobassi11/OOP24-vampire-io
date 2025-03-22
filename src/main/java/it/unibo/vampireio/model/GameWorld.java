@@ -11,14 +11,18 @@ public class GameWorld implements GameModel {
     private List<AreaAttack> areaAttacks;
     private List<Collectible> collectibles;
 
-    public final Dimension visualSize = new Dimension(1280, 720);
+    private EnemySpawner enemySpawner;
+
+    private final Dimension visualSize = new Dimension(1280, 720);
 
     public GameWorld() {
-        ///player???
+        
     }
 
     @Override
     public void initGame(String selectedCharacter) {
+        this.enemySpawner = new EnemySpawnerImpl(this);
+
         this.character = CharacterLoader.loadCharacterById(selectedCharacter);
         this.enemies = new LinkedList<>();
         this.projectileAttacks = new LinkedList<>();
@@ -35,7 +39,8 @@ public class GameWorld implements GameModel {
 
             // muove tutti i nemici (controllando anche che non si sovrappongano)
 
-            //spanwna i nemici fuori dalla visuale (visualSize)
+            //spanwna i nemici FUORI DALLA VISUALE
+            this.enemySpawner.update(tickTime);
         }
     }
 
