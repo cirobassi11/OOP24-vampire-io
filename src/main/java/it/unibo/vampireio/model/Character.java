@@ -14,7 +14,7 @@ public class Character extends LivingEntity {
             double might, double area, double duration, double amount, double cooldown, double luck, double growth,
             double greed, double curse, double magnet, double revival, double reroll, double skip, double banish,
             double charm, double defang, Shape hitbox) {
-        super(id, new Point2D.Double(0, 0), hitbox, new Point2D.Double(1, 0), moveSpeed);
+        super(id, new Point2D.Double(0, 0), hitbox, new Point2D.Double(1, 0), moveSpeed, maxHealth);
     }
 
     @Override

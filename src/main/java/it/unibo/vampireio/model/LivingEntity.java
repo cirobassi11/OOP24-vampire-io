@@ -5,21 +5,23 @@ import java.awt.geom.Point2D;
 
 public abstract class LivingEntity extends MovableEntity implements Living {
 
-    private int health;
     private int maxHealth;
+    private int health;
 
-    protected LivingEntity(String id, Point2D.Double position, Shape hitbox, Point2D.Double direction, double speed) {
+    protected LivingEntity(String id, Point2D.Double position, Shape hitbox, Point2D.Double direction, double speed, int maxHealth) {
         super(id, position, hitbox, direction, speed);
+        this.maxHealth = maxHealth;
+        this.health = maxHealth;
     }
 
     @Override
     public int getHealth() {
-        return health;
+        return this.health;
     }
 
     @Override
     public int getMaxHealth() {
-        return maxHealth;
+        return this.maxHealth;
     }
 
     @Override

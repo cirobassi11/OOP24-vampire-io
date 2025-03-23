@@ -47,7 +47,7 @@ public class EnemySpawnerImpl implements EnemySpawner {
         //andando avanti col gioco i nemici devono essere sempre più forti
         //crea un numero casuale di nemici
         for (int i = 0; i < random.nextInt(MAX_ENEMY_SPAWN) + 1; i++) {
-            Enemy newEnemy = new Enemy("", this.getRandomSpawnPosition(), null, null, 0);
+            Enemy newEnemy = new Enemy("", this.getRandomSpawnPosition(), null, null, 0, 0, 0);
             this.gameWorld.addEnemy(newEnemy);
         }
     }
