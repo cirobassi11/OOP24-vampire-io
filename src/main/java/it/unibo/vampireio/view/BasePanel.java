@@ -3,6 +3,8 @@ package it.unibo.vampireio.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 abstract class BasePanel extends JPanel {
     private static final Color BUTTON_BACKGROUND = new Color(50, 50, 50);
@@ -18,7 +20,7 @@ abstract class BasePanel extends JPanel {
         this.view = view;
         this.setLayout(new GridBagLayout());
         this.setOpaque(false);
-        this.buttonSize = new Dimension(view.getScreenSize().width / 6, view.getScreenSize().height / 15);
+        this.buttonSize = new Dimension(view.getFrameSize().width / 6, view.getFrameSize().height / 15);
     }
 
     @Override
@@ -37,14 +39,14 @@ abstract class BasePanel extends JPanel {
         button.setContentAreaFilled(false);
         button.setOpaque(true);
         button.setBackground(BUTTON_BACKGROUND);
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
+        button.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
+            public void mouseEntered(MouseEvent evt) {
                 button.setBackground(BUTTON_HOVER);
             }
 
             @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
+            public void mouseExited(MouseEvent evt) {
                 button.setBackground(BUTTON_BACKGROUND);
             }
         });

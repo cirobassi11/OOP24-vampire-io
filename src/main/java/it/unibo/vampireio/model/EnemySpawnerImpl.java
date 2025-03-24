@@ -10,6 +10,7 @@ public class EnemySpawnerImpl implements EnemySpawner {
     private static final int MIN_SPAWN_INTERVAL = 300;
     private static final int DECREMENT_INTERVAL = 1000;
     private static final int DECREMENT = 10;
+    private static final int RANDOM_SPAWN_INTERVAL = 500;
 
     private static final int MAX_ENEMY_SPAWN = 5;
 
@@ -36,7 +37,7 @@ public class EnemySpawnerImpl implements EnemySpawner {
             this.spawnInterval = Math.max(MIN_SPAWN_INTERVAL, this.spawnInterval - DECREMENT);
             this.timeSinceLastDecrement = 0;
         }
-        if (this.timeSinceLastSpawn >= (this.spawnInterval + this.random.nextInt(500))) {
+        if (this.timeSinceLastSpawn >= (this.spawnInterval + this.random.nextInt(RANDOM_SPAWN_INTERVAL))) {
             this.spawnEnemy();
             this.timeSinceLastSpawn = 0;
         }
@@ -46,7 +47,7 @@ public class EnemySpawnerImpl implements EnemySpawner {
     private void spawnEnemy() {
         //andando avanti col gioco i nemici devono essere sempre più forti
         //crea un numero casuale di nemici
-        for (int i = 0; i < random.nextInt(MAX_ENEMY_SPAWN) + 1; i++) {
+        for (int i = 0; i < this.random.nextInt(MAX_ENEMY_SPAWN) + 1; i++) {
             Enemy newEnemy = new Enemy("", this.getRandomSpawnPosition(), null, null, 0, 0, 0);
             this.gameWorld.addEnemy(newEnemy);
         }
@@ -55,7 +56,6 @@ public class EnemySpawnerImpl implements EnemySpawner {
     private Point2D.Double getRandomSpawnPosition() {
         Dimension visualSize = this.gameWorld.getVisualSize();
         Point2D.Double currentCharacterPosition = this.gameWorld.getCharacter().getPosition();
-        //returna una nuova posizione casuale, distante di almeno visualsize/2 da character
         return new Point2D.Double(
             currentCharacterPosition.getX() + visualSize.getWidth() / 2 + this.random.nextInt((int) visualSize.getWidth()),
             currentCharacterPosition.getY() + visualSize.getHeight() / 2 + this.random.nextInt((int) visualSize.getHeight())

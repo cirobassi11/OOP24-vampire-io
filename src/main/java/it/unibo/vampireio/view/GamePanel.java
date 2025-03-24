@@ -22,7 +22,7 @@ class GamePanel extends JPanel {
     private final int characterFrames = 4;
     private long lastCharacterFrameTime = 0;
     private final long characterFrameRate = 10;
-    private final long characterFrameDelay = 1000 / characterFrameRate;
+    private final long characterFrameDelay = 1000 / this.characterFrameRate;
 
     GamePanel(GameViewImpl view) {
         this.view = view;
@@ -38,7 +38,7 @@ class GamePanel extends JPanel {
         
         Dimension fov = this.data.getVisualSizeData().getDimension();
         
-        double scale = this.view.getCurrentFrameSize().getWidth() / fov.getWidth();
+        double scale = this.view.getFrameSize().getWidth() / fov.getWidth();
 
         int centerX = fov.width / 2;
         int centerY = fov.height / 2;
