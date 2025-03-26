@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
-public class Saving implements Serializable{
-    private static final long serialVersionUID = 567742502623265945L;
+public class Saving implements Serializable {
     public static final String FILE_NAME = System.getProperty("user.home") + File.separator + "progress"; // da cambiare
     private String accountId;
     private List<Character> characterList = new ArrayList<>();
@@ -21,7 +19,7 @@ public class Saving implements Serializable{
     private int moneyAmount;
     private List<Score> playerScores;
     
-    public void load(){
+    public void load() {
         try(
             final ObjectInputStream progress = new ObjectInputStream(new FileInputStream(FILE_NAME));
         ){
@@ -38,13 +36,13 @@ public class Saving implements Serializable{
         }
     }
 
-    public void save(){
+    public void save() {
         try(
             final ObjectOutputStream progress = new ObjectOutputStream(new FileOutputStream(FILE_NAME));
         ){
             progress.writeObject(this);
         }
-        catch(IOException ex){
+        catch(IOException ex) {
             //
         }
     }
