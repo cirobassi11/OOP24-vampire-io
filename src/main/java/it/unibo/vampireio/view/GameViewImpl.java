@@ -29,6 +29,7 @@ public class GameViewImpl implements GameView {
     private static final double ASPECT_RATIO = 16.0 / 9.0;
 
     private static final Dimension DEFAULT_RESOLUTION = new Dimension(1280, 720);
+    private static final Dimension MIN_RESOLUTION = new Dimension(640, 360);
 
     static final String frameTitle = "Vampire.io";
 
@@ -69,9 +70,14 @@ public class GameViewImpl implements GameView {
         this.frame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                int width = frame.getWidth();
-                int height = (int) (width / ASPECT_RATIO);
+                int width = Math.max(frame.getWidth(), MIN_RESOLUTION.width);
+                int height = Math.max((int) (width / ASPECT_RATIO), MIN_RESOLUTION.height);
                 setResolution(new Dimension(width, height));
+                for (var panel : panels.values()) {
+                    if(panel instanceof BasePanel) {
+                        ((BasePanel) panel).updateButtonsSize();
+                    }
+                }
             }
         });
 
@@ -88,7 +94,6 @@ public class GameViewImpl implements GameView {
         this.panels.put(PAUSE, new PausePanel(this));
         this.panels.put(UNLOCKABLE_POWERUPS, new UnlockablePowerUpPanel(this));
         this.panels.put(IN_GAME_POWERUPS, new InGamePowerUpPanel(this));
-
         this.panels.forEach((name, panel) -> cardPanel.add(panel, name));
     }
 

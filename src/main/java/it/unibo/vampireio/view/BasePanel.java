@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
+import java.util.List;
 
 abstract class BasePanel extends JPanel {
     private static final Color BUTTON_BACKGROUND = new Color(50, 50, 50);
@@ -16,11 +18,13 @@ abstract class BasePanel extends JPanel {
     protected GameViewImpl view;
     protected Dimension buttonSize;
 
+    private final List<JButton> buttons = new LinkedList<>();
+
     BasePanel(GameViewImpl view) {
         this.view = view;
         this.setLayout(new GridBagLayout());
         this.setOpaque(false);
-        this.buttonSize = new Dimension(view.getFrameSize().width / 6, view.getFrameSize().height / 15);
+        this.updateButtonsSize();
     }
 
     @Override
@@ -50,7 +54,7 @@ abstract class BasePanel extends JPanel {
                 button.setBackground(BUTTON_BACKGROUND);
             }
         });
-
+        this.buttons.add(button);
         return button;
     }
 
@@ -94,5 +98,11 @@ abstract class BasePanel extends JPanel {
         gbc.weightx = 1;
         gbc.anchor = GridBagConstraints.SOUTH;
         this.add(comboBox, gbc);
+    }
+
+    void updateButtonsSize() {
+        this.buttonSize = new Dimension(this.view.getFrameSize().width / 6, this.view.getFrameSize().height / 15);
+        this.buttons.forEach(button -> button.setPreferredSize(this.buttonSize));
+        this.buttons.forEach(button -> button.setFont(new Font("Serif", Font.BOLD, this.view.getFrameSize().height / 30)));
     }
 }
