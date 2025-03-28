@@ -32,7 +32,7 @@ public class Saving implements Serializable {
             this.playerScores = sav.playerScores;
         }
         catch(IOException | ClassNotFoundException ex){
-            //
+            System.out.println("An error occured while trying to load the saving: " + ex.getMessage());
         }
     }
 
@@ -43,7 +43,7 @@ public class Saving implements Serializable {
             progress.writeObject(this);
         }
         catch(IOException ex) {
-            //
+            System.out.println("An error occured while trying to save: " + ex.getMessage());
         }
     }
 }
