@@ -7,6 +7,6 @@ class EndGamePanel extends BasePanel {
 
         //VISUALIZZAZIONE PUNTEGGIO PARTITA
 
-        this.addButton("CONTINUE", 0, e -> view.showScreen(GameViewImpl.MAIN_MENU));
+        this.addButton("CONTINUE", 0, e -> view.showScreen(GameViewImpl.START));
     }
 }

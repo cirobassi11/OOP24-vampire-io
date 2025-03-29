@@ -18,6 +18,6 @@ class ChooseCharacterPanel extends BasePanel {
             this.view.showScreen(GameViewImpl.GAME);
         });
 
-        this.addButton("BACK", 1, e -> this.view.showScreen(GameViewImpl.MAIN_MENU));
+        this.addButton("BACK", 1, e -> this.view.showScreen(GameViewImpl.START));
     }
 }

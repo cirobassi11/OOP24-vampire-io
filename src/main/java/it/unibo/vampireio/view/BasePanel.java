@@ -82,7 +82,7 @@ abstract class BasePanel extends JPanel {
         JButton button = createButton(text, this.buttonSize);
         button.addActionListener(action);
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 30, 10);
+        gbc.insets = new Insets(10, 10, 20, 10);
         gbc.gridx = 0;
         gbc.gridy = gridy;
         gbc.weightx = 1;
@@ -92,7 +92,7 @@ abstract class BasePanel extends JPanel {
 
     protected void addComboBox(JComboBox<String> comboBox, int gridy) {
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 30, 10);
+        gbc.insets = new Insets(10, 10, 20, 10);
         gbc.gridx = 0;
         gbc.gridy = gridy;
         gbc.weightx = 1;

@@ -33,9 +33,11 @@ public class GameViewImpl implements GameView {
 
     static final String frameTitle = "Vampire.io";
 
-    static final String MAIN_MENU = "mainMenu";
-    static final String GAME = "game";
+    static final String SAVING = "savingMenu";
+    static final String START = "mainMenu";
+    static final String SCOREBOARD = "scoreboard";
     static final String CHOOSE_CHARACTER = "chooseCharacter";
+    static final String GAME = "game";
     static final String END_GAME = "endGame";
     static final String PAUSE = "pause";
     static final String UNLOCKABLE_POWERUPS = "unlockablePowerups";
@@ -54,7 +56,7 @@ public class GameViewImpl implements GameView {
         this.initFrame();
         this.initPanels();
 
-        this.showScreen(GameViewImpl.MAIN_MENU);
+        this.showScreen(GameViewImpl.SAVING);
 
         new AudioManager();
     }
@@ -87,9 +89,11 @@ public class GameViewImpl implements GameView {
     }
 
     private void initPanels() {
-        this.panels.put(MAIN_MENU, new MainMenuPanel(this));
-        this.panels.put(GAME, new GamePanel(this));
+        this.panels.put(SAVING, new SavingMenuPanel(this));
+        this.panels.put(START, new StartMenuPanel(this));
+        this.panels.put(SCOREBOARD, new ScoreBoardPanel(this));
         this.panels.put(CHOOSE_CHARACTER, new ChooseCharacterPanel(this, this.controller));
+        this.panels.put(GAME, new GamePanel(this));
         this.panels.put(END_GAME, new EndGamePanel(this));
         this.panels.put(PAUSE, new PausePanel(this));
         this.panels.put(UNLOCKABLE_POWERUPS, new UnlockablePowerUpPanel(this));
