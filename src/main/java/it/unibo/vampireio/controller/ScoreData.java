@@ -1,7 +1,5 @@
 package it.unibo.vampireio.controller;
 
-import java.util.List;
-
 public class ScoreData {
     private String characterName;
     private double sessionTime;
@@ -15,6 +13,10 @@ public class ScoreData {
         this.killCounter = killCounter;
         this.levelCounter = levelCounter;
         this.score = score;
+    }
+
+    public String getCharacterName() {
+        return this.characterName;
     }
 
     public int getKillCounter() {

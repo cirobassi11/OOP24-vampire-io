@@ -33,7 +33,8 @@ public class GameViewImpl implements GameView {
 
     static final String frameTitle = "Vampire.io";
 
-    static final String SAVING = "savingMenu";
+    static final String SAVING_MENU = "savingMenu";
+    static final String SAVING_SELECTION = "savingSelection";
     static final String START = "mainMenu";
     static final String SCOREBOARD = "scoreboard";
     static final String CHOOSE_CHARACTER = "chooseCharacter";
@@ -56,7 +57,7 @@ public class GameViewImpl implements GameView {
         this.initFrame();
         this.initPanels();
 
-        this.showScreen(GameViewImpl.SAVING);
+        this.showScreen(GameViewImpl.SAVING_MENU);
 
         new AudioManager();
     }
@@ -89,7 +90,8 @@ public class GameViewImpl implements GameView {
     }
 
     private void initPanels() {
-        this.panels.put(SAVING, new SavingMenuPanel(this));
+        this.panels.put(SAVING_MENU, new SavingMenuPanel(this));
+        this.panels.put(SAVING_SELECTION, new SavingSelectionPanel(this));
         this.panels.put(START, new StartMenuPanel(this));
         this.panels.put(SCOREBOARD, new ScoreBoardPanel(this));
         this.panels.put(CHOOSE_CHARACTER, new ChooseCharacterPanel(this, this.controller));

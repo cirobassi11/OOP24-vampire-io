@@ -22,6 +22,10 @@ public class SavingData {
         this.moneyAmount = moneyAmount;
         this.scores = scores;
     }
+
+    public String getSavingTime() {
+        return this.savingTime;
+    }
     
     public List<String> getUnlockedCharacters() {
         return List.copyOf(this.unlockedCharacters);

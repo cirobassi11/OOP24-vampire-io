@@ -9,34 +9,32 @@ import java.util.LinkedList;
 import java.util.List;
 
 abstract class BasePanel extends JPanel {
-    private static final Color BUTTON_BACKGROUND = new Color(50, 50, 50);
-    private static final Color BUTTON_HOVER = new Color(200, 0, 0);
-    private static final Color BUTTON_BORDER = new Color(255, 215, 0);
-    private static final Color COMBOBOX_BACKGROUND = new Color(50, 50, 50);
-    private static final Color COMBOBOX_BORDER = new Color(200, 200, 200);
+    protected static final Color BUTTON_BACKGROUND = new Color(50, 50, 50);
+    protected static final Color BUTTON_HOVER = new Color(200, 0, 0);
+    protected static final Color BUTTON_BORDER = new Color(255, 215, 0);
+    protected static final Color COMBOBOX_BACKGROUND = new Color(50, 50, 50);
+    protected static final Color COMBOBOX_BORDER = new Color(200, 200, 200);
+    protected static final Font DEFAULT_FONT = new Font("Serif", Font.BOLD, 24);
 
-    protected GameViewImpl view;
-    protected Dimension buttonSize;
-
+    protected final GameViewImpl view;
     private final List<JButton> buttons = new LinkedList<>();
 
     BasePanel(GameViewImpl view) {
         this.view = view;
         this.setLayout(new GridBagLayout());
         this.setOpaque(false);
-        this.updateButtonsSize();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        this.updateButtonsSize();
         g.drawImage(this.view.getBackgroundImage(), 0, 0, this.getWidth(), this.getHeight(), this);
     }
 
-    protected JButton createButton(String text, Dimension size) {
+    private JButton createButton(String text) {
         JButton button = new JButton(text);
-        button.setPreferredSize(size);
-        button.setFont(new Font("Serif", Font.BOLD, 24));
+        button.setFont(DEFAULT_FONT);
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createLineBorder(BUTTON_BORDER, 3));
@@ -54,55 +52,57 @@ abstract class BasePanel extends JPanel {
                 button.setBackground(BUTTON_BACKGROUND);
             }
         });
-        this.buttons.add(button);
+        buttons.add(button);
         return button;
     }
 
-    protected JComboBox<String> createComboBox(Dimension size) {
+    private JComboBox<String> createComboBox() {
         JComboBox<String> comboBox = new JComboBox<>();
-        comboBox.setPreferredSize(size);
-        comboBox.setFont(new Font("Arial", Font.BOLD, 16));
+        comboBox.setFont(DEFAULT_FONT.deriveFont(16f)); // Font ridotto per le ComboBox
         comboBox.setBackground(COMBOBOX_BACKGROUND);
         comboBox.setForeground(Color.WHITE);
         comboBox.setBorder(BorderFactory.createLineBorder(COMBOBOX_BORDER, 2));
-        comboBox.setUI(new javax.swing.plaf.basic.BasicComboBoxUI() {
-            @Override
-            protected JButton createArrowButton() {
-                JButton button = new JButton("▼");
-                button.setBorder(BorderFactory.createEmptyBorder());
-                button.setContentAreaFilled(false);
-                button.setForeground(Color.WHITE);
-                return button;
-            }
-        });
         return comboBox;
     }
 
-    protected void addButton(String text, int gridy, ActionListener action) {
-        JButton button = createButton(text, this.buttonSize);
-        button.addActionListener(action);
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 20, 10);
-        gbc.gridx = 0;
-        gbc.gridy = gridy;
-        gbc.weightx = 1;
-        gbc.anchor = GridBagConstraints.SOUTH;
-        this.add(button, gbc);
+    private JLabel createLabel(String text) {
+        JLabel label = new JLabel(text);
+        label.setFont(DEFAULT_FONT);
+        label.setForeground(Color.WHITE);
+        return label;
     }
 
-    protected void addComboBox(JComboBox<String> comboBox, int gridy) {
+    protected void addComponent(Component component, int gridy) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 20, 10);
         gbc.gridx = 0;
         gbc.gridy = gridy;
         gbc.weightx = 1;
         gbc.anchor = GridBagConstraints.SOUTH;
-        this.add(comboBox, gbc);
+        this.add(component, gbc);
+    }
+
+    protected void addButton(String text, int gridy, ActionListener action) {
+        JButton button = createButton(text);
+        button.addActionListener(action);
+        addComponent(button, gridy);
+    }
+
+    protected void addComboBox(int gridy) {
+        JComboBox<String> comboBox = createComboBox();
+        addComponent(comboBox, gridy);
+    }
+
+    protected void addLabel(String text, int gridy) {
+        JLabel label = createLabel(text);
+        addComponent(label, gridy);
     }
 
     void updateButtonsSize() {
-        this.buttonSize = new Dimension(this.view.getFrameSize().width / 6, this.view.getFrameSize().height / 15);
-        this.buttons.forEach(button -> button.setPreferredSize(this.buttonSize));
-        this.buttons.forEach(button -> button.setFont(new Font("Serif", Font.BOLD, this.view.getFrameSize().height / 30)));
+        Dimension newSize = new Dimension(this.view.getFrameSize().width / 6, this.view.getFrameSize().height / 15);
+        buttons.forEach(button -> {
+            button.setPreferredSize(newSize);
+            button.setFont(DEFAULT_FONT.deriveFont((float) this.view.getFrameSize().height / 30));
+        });
     }
 }

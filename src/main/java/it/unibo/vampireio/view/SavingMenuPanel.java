@@ -13,8 +13,7 @@ class SavingMenuPanel extends BasePanel {
 
         });
         this.addButton("LOAD GAME", 1, e -> {
-            //fa selezionare da lista salvataggi (con possibilità di eliminare)
-            view.showScreen(GameViewImpl.START);
+            view.showScreen(GameViewImpl.SAVING_SELECTION);
         });
 
         this.addButton("QUIT", 2, e -> view.quit());

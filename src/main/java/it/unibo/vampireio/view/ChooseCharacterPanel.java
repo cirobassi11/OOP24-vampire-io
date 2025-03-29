@@ -10,7 +10,7 @@ class ChooseCharacterPanel extends BasePanel {
         super(view);
         this.controller = controller;
 
-        // jcombobox con immagini https://www.youtube.com/watch?v=zzMSbaIEAQM
+        // NUOVO PANNELLO CON GRIGLIA DI BUTTON
 
         this.addButton("CONFIRM", 0, e -> {
             String selectedCharacter = "nomePersonaggio"; //DA PRENDERE DAL COMBOBOX
