@@ -1,49 +1,80 @@
 package it.unibo.vampireio.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
 import java.util.List;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 
 public class Saving implements Serializable {
-    public static final String FILE_NAME = System.getProperty("user.home") + File.separator + "progress"; // da cambiare
-    private String accountId;
-    private List<Character> characterList = new ArrayList<>();
-    private List<Weapon> weaponsList = new ArrayList<>();
-    private List<UnlockablePowerUp> unlockedPowerUpsList = new ArrayList<>();
-    private int moneyAmount;
-    private List<Score> playerScores;
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
     
-    public void load() {
-        try(
-            final ObjectInputStream progress = new ObjectInputStream(new FileInputStream(FILE_NAME));
-        ){
-            Saving sav = (Saving)progress.readObject();
-            this.accountId = sav.accountId;
-            this.characterList = sav.characterList;
-            this.weaponsList = sav.weaponsList;
-            this.unlockedPowerUpsList = sav.unlockedPowerUpsList;
-            this.moneyAmount = sav.moneyAmount;
-            this.playerScores = sav.playerScores;
-        }
-        catch(IOException | ClassNotFoundException ex){
-            System.out.println("An error occured while trying to load the saving: " + ex.getMessage());
-        }
+    private String savingTime;
+    private List<UnlockableCharacter> unlockedCharacters;
+    private List<UnlockableItem> unlockedItems;
+    private int moneyAmount;
+    private List<Score> scores;
+    
+    // Salvataggio già esistente
+    public Saving(
+        String savingTime, 
+        List<UnlockableCharacter> unlockedCharacters,
+        List<UnlockableItem> unlockedItems, 
+        int moneyAmount, 
+        List<Score> scores
+    ) {
+        this.savingTime = savingTime;
+        this.unlockedCharacters = unlockedCharacters;
+        this.unlockedItems = unlockedItems;
+        this.moneyAmount = moneyAmount;
+        this.scores = scores;
     }
 
-    public void save() {
-        try(
-            final ObjectOutputStream progress = new ObjectOutputStream(new FileOutputStream(FILE_NAME));
-        ){
-            progress.writeObject(this);
-        }
-        catch(IOException ex) {
-            System.out.println("An error occured while trying to save: " + ex.getMessage());
-        }
+    // Nuovo salvataggio vuoto
+    public Saving() {
+        this(
+            generateSaveTimestamp(), 
+            new LinkedList<UnlockableCharacter>(), 
+            new LinkedList<UnlockableItem>(), 
+            0, 
+            new LinkedList<Score>()
+        );
+    }
+    
+    public List<UnlockableCharacter> getUnlockedCharacters() {
+        return List.copyOf(this.unlockedCharacters);
+    }
+
+    public List<UnlockableItem> getUnlockedItems() {
+        return List.copyOf(this.unlockedItems);
+    }
+
+    public int getMoneyAmount() {
+        return this.moneyAmount;
+    }
+
+    public List<Score> getScores() {
+        return List.copyOf(this.scores);
+    }
+
+    public void addUnlockedCharacter(UnlockableCharacter unlockedCharacter) {
+        this.unlockedCharacters.add(unlockedCharacter);
+    }
+
+    public void addUnlockedItem(UnlockableItem unlockedItem) {
+        this.unlockedItems.add(unlockedItem);
+    }
+
+    public void incrementMoneyAmount(int moneyAmount) {
+        this.moneyAmount += moneyAmount;
+    }
+    
+    public void addScore(Score score) {
+        this.scores.add(score);
+    }
+    
+    // Generazione stringa data-ora dd-MM-yyyy_HH-mm-ss
+    private static String generateSaveTimestamp() {
+        return LocalDateTime.now().format(FORMATTER);
     }
 }

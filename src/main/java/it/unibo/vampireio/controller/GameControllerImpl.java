@@ -11,6 +11,7 @@ import it.unibo.vampireio.model.Collectible;
 import it.unibo.vampireio.model.GameModel;
 import it.unibo.vampireio.model.GameWorld;
 import it.unibo.vampireio.model.ProjectileAttack;
+import it.unibo.vampireio.model.Saving;
 import it.unibo.vampireio.view.GameView;
 import it.unibo.vampireio.view.GameViewImpl;
 
@@ -18,16 +19,19 @@ public class GameControllerImpl implements GameController {
     private GameModel model;
     private GameView view;
 
+    private SavingManager savingManager;
+
     private long startTime;
 
     private boolean running = true;
 
-    private int frameRate = 60;
-    private int tickRate = 60;
+    private final int frameRate = 60;
+    private final int tickRate = 60;
 
     public GameControllerImpl() {
         this.model = new GameWorld();
         this.view = new GameViewImpl(this);
+        this.savingManager = new SavingManager();
     }
 
     @Override
@@ -167,5 +171,25 @@ public class GameControllerImpl implements GameController {
             areaAttacksData, 
             collectiblesData
         );
+    }
+
+    @Override
+    public List<Saving> readSavings() {
+        return this.savingManager.readSavings();
+    }
+
+    @Override
+    public void writeSaving(Saving saving) {
+        this.savingManager.writeSaving(saving);
+    }
+
+    @Override
+    public void removeSaving(String savingTime) {
+        this.savingManager.removeSaving(savingTime);
+    }
+
+    @Override
+    public List<SavingData> getSavingsData() {
+        return this.savingManager.getSavingsData();
     }
 }
