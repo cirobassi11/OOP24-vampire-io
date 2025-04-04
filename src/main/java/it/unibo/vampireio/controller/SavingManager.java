@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import it.unibo.vampireio.model.Saving;
 
@@ -17,10 +16,10 @@ public class SavingManager {
     public List<Saving> readSavings() {
         List<Saving> savings = new ArrayList<>();
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
-            savings = (List<Saving>) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
+            savings = (List<Saving>) in.readObject(); // warning! Implementare con stream
+        } catch (IOException | ClassNotFoundException ex) {
             System.err.println("An error occured while reading the list of savings!");
-            e.printStackTrace();
+            ex.printStackTrace();
         }
         return savings;
     }
