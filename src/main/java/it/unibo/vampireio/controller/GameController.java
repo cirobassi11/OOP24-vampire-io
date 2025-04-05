@@ -7,8 +7,4 @@ public interface GameController {
     void setRunning(boolean running);
     boolean isRunning();
     void startGame(String selectedCharacter);
-    List<Saving> readSavings();
-    void writeSaving(Saving saving);
-    void removeSaving(String savingTime);
-    List<SavingData> getSavingsData();
 }

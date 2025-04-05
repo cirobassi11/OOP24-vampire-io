@@ -19,8 +19,6 @@ public class GameControllerImpl implements GameController {
     private GameModel model;
     private GameView view;
 
-    private SavingManager savingManager;
-
     private long startTime;
 
     private boolean running = true;
@@ -31,7 +29,6 @@ public class GameControllerImpl implements GameController {
     public GameControllerImpl() {
         this.model = new GameWorld();
         this.view = new GameViewImpl(this);
-        this.savingManager = new SavingManager();
     }
 
     @Override
@@ -171,25 +168,5 @@ public class GameControllerImpl implements GameController {
             areaAttacksData, 
             collectiblesData
         );
-    }
-
-    @Override
-    public List<Saving> readSavings() {
-        return this.savingManager.readSavings();
-    }
-
-    @Override
-    public void writeSaving(Saving saving) {
-        this.savingManager.writeSaving(saving);
-    }
-
-    @Override
-    public void removeSaving(String savingTime) {
-        this.savingManager.removeSaving(savingTime);
-    }
-
-    @Override
-    public List<SavingData> getSavingsData() {
-        return this.savingManager.getSavingsData();
     }
 }

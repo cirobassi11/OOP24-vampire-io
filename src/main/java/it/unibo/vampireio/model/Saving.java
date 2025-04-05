@@ -41,6 +41,10 @@ public class Saving implements Serializable {
         );
     }
     
+    public String getSavingTime() {
+        return this.savingTime;
+    }
+
     public List<UnlockableCharacter> getUnlockedCharacters() {
         return List.copyOf(this.unlockedCharacters);
     }

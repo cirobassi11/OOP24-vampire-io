@@ -25,6 +25,10 @@ public class Score {
         this.sessionTime += tickRate;
     }
 
+    public String getCharacterName() {
+        return this.characterName;
+    }
+
     public int getKillCounter() {
         return this.killCounter;
     }

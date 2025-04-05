@@ -23,11 +23,14 @@ public class GameWorld implements GameModel {
     public void initGame(String selectedCharacter) {
         this.enemySpawner = new EnemySpawnerImpl(this);
 
-        this.character = CharacterLoader.loadCharacterById(selectedCharacter);
+        //this.character = DataLoader.getCharacterById(selectedCharacter);
+        
         this.enemies = new LinkedList<>();
-        this.projectileAttacks = new LinkedList<>();
-        this.areaAttacks = new LinkedList<>();
+
         this.collectibles = new LinkedList<>();
+
+        this.areaAttacks = new LinkedList<>();
+        this.projectileAttacks = new LinkedList<>();
     }
 
     @Override
