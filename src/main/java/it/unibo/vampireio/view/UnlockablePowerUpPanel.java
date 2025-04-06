@@ -4,6 +4,6 @@ class UnlockablePowerUpPanel extends BasePanel {
     UnlockablePowerUpPanel(GameViewImpl view) {
         super(view);
         
-        this.addButton("BACK", 0, e -> this.view.showScreen(GameViewImpl.START));
+        this.addButton("BACK", 0, 0, e -> this.view.showScreen(GameViewImpl.START));
     }
 }

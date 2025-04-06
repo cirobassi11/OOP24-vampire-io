@@ -169,4 +169,36 @@ public class GameControllerImpl implements GameController {
             collectiblesData
         );
     }
+
+    @Override
+    public List<String> getSavingNames() {
+        return this.model.getSavingNames();
+    }
+
+    @Override
+    public void loadNewSaving() {
+        this.model.loadNewSaving();
+    }
+
+    @Override
+    public void loadSaving(String selectedSaving) {
+        this.model.loadSaving(selectedSaving);
+    }
+
+    @Override
+    public List<ScoreData> getScores() {
+        Saving currentSaving = this.model.getCurrentSaving();
+        if (currentSaving == null) {
+            return List.of();
+        }
+        return currentSaving.getScores().stream()
+            .map(score -> new ScoreData(
+                score.getCharacterName(),
+                score.getSessionTime(),
+                score.getKillCounter(),
+                score.getLevelCounter(),
+                score.getScore()
+            ))
+            .collect(Collectors.toList());
+    }
 }

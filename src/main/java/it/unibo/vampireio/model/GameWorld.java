@@ -13,11 +13,9 @@ public class GameWorld implements GameModel {
 
     private EnemySpawner enemySpawner;
 
-    private final Dimension visualSize = new Dimension(1280, 720);
+    private SavingManager savingManager = new SavingManager();
 
-    public GameWorld() {
-        
-    }
+    private final Dimension visualSize = new Dimension(1280, 720);
 
     @Override
     public void initGame(String selectedCharacter) {
@@ -109,7 +107,26 @@ public class GameWorld implements GameModel {
 
     @Override
     public List<UnlockablePowerUp> getUnlockablePowerUps() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUnlockablePowerUps'");
+        return List.of(); // TODO
+    }
+
+    @Override
+    public List<String> getSavingNames() {
+        return this.savingManager.getSavingNames();
+    }
+
+    @Override
+    public void loadNewSaving() {
+        this.savingManager.loadNewSaving();
+    }
+
+    @Override
+    public void loadSaving(String selectedSaving) {
+        this.savingManager.loadSaving(selectedSaving);
+    }
+
+    @Override
+    public Saving getCurrentSaving() {
+        return this.savingManager.getCurrentSaving();
     }
 }

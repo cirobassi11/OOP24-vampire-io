@@ -78,7 +78,7 @@ public class GameViewImpl implements GameView {
                 setResolution(new Dimension(width, height));
                 for (var panel : panels.values()) {
                     if(panel instanceof BasePanel) {
-                        ((BasePanel) panel).updateButtonsSize();
+                        ((BasePanel) panel).updateComponentSize();
                     }
                 }
             }
@@ -94,7 +94,7 @@ public class GameViewImpl implements GameView {
         this.panels.put(SAVING_SELECTION, new SavingSelectionPanel(this));
         this.panels.put(START, new StartMenuPanel(this));
         this.panels.put(SCOREBOARD, new ScoreBoardPanel(this));
-        this.panels.put(CHOOSE_CHARACTER, new ChooseCharacterPanel(this, this.controller));
+        this.panels.put(CHOOSE_CHARACTER, new ChooseCharacterPanel(this));
         this.panels.put(GAME, new GamePanel(this));
         this.panels.put(END_GAME, new EndGamePanel(this));
         this.panels.put(PAUSE, new PausePanel(this));
@@ -139,6 +139,10 @@ public class GameViewImpl implements GameView {
 
     public void quit() {
         System.exit(0);
+    }
+
+    GameController getController() {
+        return this.controller;
     }
 
     @Override

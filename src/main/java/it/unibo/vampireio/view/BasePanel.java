@@ -17,7 +17,7 @@ abstract class BasePanel extends JPanel {
     protected static final Font DEFAULT_FONT = new Font("Serif", Font.BOLD, 24);
 
     protected final GameViewImpl view;
-    private final List<JButton> buttons = new LinkedList<>();
+    private final List<Component> allComponents = new LinkedList<>();
 
     BasePanel(GameViewImpl view) {
         this.view = view;
@@ -28,11 +28,23 @@ abstract class BasePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        this.updateButtonsSize();
+        this.updateComponentSize();
         g.drawImage(this.view.getBackgroundImage(), 0, 0, this.getWidth(), this.getHeight(), this);
     }
 
-    private JButton createButton(String text) {
+    private void addComponent(Component component, int gridx, int gridy) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 20, 10);
+        gbc.gridx = gridx;
+        gbc.gridy = gridy;
+        gbc.weightx = 1;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        this.add(component, gbc);
+        allComponents.add(component);
+    }
+
+    protected JButton addButton(String text, int gridx, int gridy, ActionListener action) {
         JButton button = new JButton(text);
         button.setFont(DEFAULT_FONT);
         button.setForeground(Color.WHITE);
@@ -52,57 +64,63 @@ abstract class BasePanel extends JPanel {
                 button.setBackground(BUTTON_BACKGROUND);
             }
         });
-        buttons.add(button);
+        button.addActionListener(action);
+        addComponent(button, gridx, gridy);
         return button;
     }
 
-    private JComboBox<String> createComboBox() {
-        JComboBox<String> comboBox = new JComboBox<>();
-        comboBox.setFont(DEFAULT_FONT.deriveFont(16f)); // Font ridotto per le ComboBox
-        comboBox.setBackground(COMBOBOX_BACKGROUND);
-        comboBox.setForeground(Color.WHITE);
-        comboBox.setBorder(BorderFactory.createLineBorder(COMBOBOX_BORDER, 2));
-        return comboBox;
-    }
-
-    private JLabel createLabel(String text) {
+    protected JLabel addLabel(String text, int gridx, int gridy) {
         JLabel label = new JLabel(text);
         label.setFont(DEFAULT_FONT);
         label.setForeground(Color.WHITE);
+        addComponent(label, gridx, gridy);
         return label;
     }
 
-    protected void addComponent(Component component, int gridy) {
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 20, 10);
-        gbc.gridx = 0;
-        gbc.gridy = gridy;
-        gbc.weightx = 1;
-        gbc.anchor = GridBagConstraints.SOUTH;
-        this.add(component, gbc);
+    protected JComboBox<String> addComboBox(int gridx, int gridy) {
+        JComboBox<String> comboBox = new JComboBox<>();
+        comboBox.setFont(DEFAULT_FONT.deriveFont(16f));
+        comboBox.setBackground(COMBOBOX_BACKGROUND);
+        comboBox.setForeground(Color.WHITE);
+        comboBox.setBorder(BorderFactory.createLineBorder(COMBOBOX_BORDER, 2));
+        addComponent(comboBox, gridx, gridy);
+        return comboBox;
     }
 
-    protected void addButton(String text, int gridy, ActionListener action) {
-        JButton button = createButton(text);
-        button.addActionListener(action);
-        addComponent(button, gridy);
+    protected JList<String> addScrollableList(List<String> items, int gridx, int gridy) {
+        DefaultListModel<String> model = new DefaultListModel<>();
+        items.forEach(model::addElement);
+
+        JList<String> list = new JList<>(model);
+        list.setFont(DEFAULT_FONT.deriveFont(16f));
+        list.setForeground(Color.WHITE);
+        list.setBackground(new Color(40, 40, 40));
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setVisibleRowCount(5);
+
+        JScrollPane scrollPane = new JScrollPane(list);
+        scrollPane.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+
+        addComponent(scrollPane, gridx, gridy);
+        return list;
     }
 
-    protected void addComboBox(int gridy) {
-        JComboBox<String> comboBox = createComboBox();
-        addComponent(comboBox, gridy);
-    }
+    void updateComponentSize() {
+        Dimension frameSize = this.view.getFrameSize();
 
-    protected void addLabel(String text, int gridy) {
-        JLabel label = createLabel(text);
-        addComponent(label, gridy);
-    }
+        for (Component c : allComponents) {
+            if (c instanceof JButton) {
+                c.setPreferredSize(new Dimension(frameSize.width / 6, frameSize.height / 15));
+                c.setFont(DEFAULT_FONT.deriveFont((float) frameSize.height / 30));
+            } else if (c instanceof JLabel || c instanceof JComboBox) {
+                c.setFont(DEFAULT_FONT.deriveFont((float) frameSize.height / 30));
+            } else if (c instanceof JScrollPane) {
+                c.setPreferredSize(new Dimension(frameSize.width / 5, frameSize.height / 5));
+            }
+        }
 
-    void updateButtonsSize() {
-        Dimension newSize = new Dimension(this.view.getFrameSize().width / 6, this.view.getFrameSize().height / 15);
-        buttons.forEach(button -> {
-            button.setPreferredSize(newSize);
-            button.setFont(DEFAULT_FONT.deriveFont((float) this.view.getFrameSize().height / 30));
-        });
+        this.revalidate();
     }
 }

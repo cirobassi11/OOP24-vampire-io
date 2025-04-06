@@ -13,7 +13,7 @@ class EndGamePanel extends BasePanel {
             //stampa le informazioni di score
         }
 
-        this.addButton("CONTINUE", 0, e -> view.showScreen(GameViewImpl.START));
+        this.addButton("CONTINUE", 0, 0, e -> view.showScreen(GameViewImpl.START));
     }
 
     public void setScore(ScoreData score) {
