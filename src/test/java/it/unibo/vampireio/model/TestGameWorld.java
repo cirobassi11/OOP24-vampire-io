@@ -11,9 +11,4 @@ class TestGameWorld {
         // GameView view = new GameViewImpl(controller);
         // controller.setView(view);
     }
-
-    @Test
-    void testThings() {
-        //assert qualcosa
-    }
 }

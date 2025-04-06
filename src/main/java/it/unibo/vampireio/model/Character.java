@@ -3,18 +3,16 @@ package it.unibo.vampireio.model;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import it.unibo.vampireio.model.Stats;
 
 public class Character extends LivingEntity {
 
     public Character(String id) {
-        this(id, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new Rectangle2D.Double());
+        this(id, "characterName", new Stats(), new Rectangle2D.Double());
     }
 
-    public Character(String id, String name, int maxHealth, int armor, double speed, double moveSpeed, double recovery,
-            double might, double area, double duration, double amount, double cooldown, double luck, double growth,
-            double greed, double curse, double magnet, double revival, double reroll, double skip, double banish,
-            double charm, double defang, Shape hitbox) {
-        super(id, new Point2D.Double(0, 0), hitbox, new Point2D.Double(1, 0), moveSpeed, maxHealth);
+    public Character(String id, String name, Stats stats,  Shape hitbox) {
+        super(id, new Point2D.Double(0, 0), hitbox, new Point2D.Double(1, 0), stats.getStat(StatType.MOVE_SPEED), stats.getStat(StatType.MAX_HEALTH));
     }
 
     @Override

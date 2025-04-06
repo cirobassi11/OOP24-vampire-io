@@ -116,8 +116,8 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public void loadNewSaving() {
-        this.savingManager.loadNewSaving();
+    public void createNewSaving() {
+        this.savingManager.createNewSaving();
     }
 
     @Override

@@ -18,7 +18,7 @@ public interface GameModel {
     List<Collectible> getCollectibles();
     List<UnlockablePowerUp> getUnlockablePowerUps();
     List<String> getSavingNames();
-    void loadNewSaving();
+    void createNewSaving();
     void loadSaving(String selectedSaving);
     Saving getCurrentSaving();
 }

@@ -1,9 +1,9 @@
 package it.unibo.vampireio.model;
 
 public interface Living {
-    int getHealth();
-    int getMaxHealth();
-    void setMaxHealth(int maxHealth);
-    void dealDamage (int damage);
-    void heal(int heal);
+    double getHealth();
+    double getMaxHealth();
+    void setMaxHealth(double maxHealth);
+    void dealDamage (double damage);
+    void heal(double heal);
 }

@@ -6,7 +6,7 @@ class SavingMenuPanel extends BasePanel {
         super(view);
 
         this.addButton("NEW GAME", 0, 0, e -> {
-            this.view.getController().loadNewSaving();
+            this.view.getController().createNewSaving();
             view.showScreen(GameViewImpl.START);
 
         });

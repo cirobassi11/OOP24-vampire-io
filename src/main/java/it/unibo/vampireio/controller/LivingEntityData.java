@@ -3,12 +3,12 @@ package it.unibo.vampireio.controller;
 import java.awt.geom.Point2D;
 
 public class LivingEntityData extends PositionableData {
-    private final int health;
-    private final int maxHealth;
+    private final double health;
+    private final double maxHealth;
     private boolean isBeingAttacked;
     private boolean isMoving;
 
-    public LivingEntityData(String id, Point2D.Double position, Point2D.Double direction, int health, int maxHealth, boolean isBeingAttacked, boolean isMoving) {
+    public LivingEntityData(String id, Point2D.Double position, Point2D.Double direction, double health, double maxHealth, boolean isBeingAttacked, boolean isMoving) {
         super(id, position, direction);
         this.health = health;
         this.maxHealth = maxHealth;
@@ -16,11 +16,11 @@ public class LivingEntityData extends PositionableData {
         this.isMoving = isMoving;
     }
 
-    public int getHealth() {
+    public double getHealth() {
         return this.health;
     }
 
-    public int getMaxHealth() {
+    public double getMaxHealth() {
         return this.maxHealth;
     }
 

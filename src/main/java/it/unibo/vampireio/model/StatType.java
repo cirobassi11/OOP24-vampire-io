@@ -1,8 +1,5 @@
 package it.unibo.vampireio.model;
 
-/**
- * Enum che rappresenta i tipi di statistiche.
- */
 public enum StatType {
     MAX_HEALTH,
     ARMOR,

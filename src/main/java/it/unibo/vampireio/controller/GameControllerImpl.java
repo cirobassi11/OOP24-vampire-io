@@ -176,8 +176,8 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void loadNewSaving() {
-        this.model.loadNewSaving();
+    public void createNewSaving() {
+        this.model.createNewSaving();
     }
 
     @Override
