@@ -11,7 +11,8 @@ class SavingMenuPanel extends BasePanel {
 
         });
         this.addButton("LOAD GAME", 0, 1, e -> {
-            view.showScreen(GameViewImpl.SAVING_SELECTION);
+            this.view.updateSavingList();
+            this.view.showScreen(GameViewImpl.SAVING_SELECTION);
         });
 
         this.addButton("QUIT", 0, 2, e -> view.quit());

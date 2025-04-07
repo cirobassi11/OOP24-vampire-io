@@ -1,6 +1,7 @@
 package it.unibo.vampireio.model;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,14 +10,14 @@ import java.util.Map;
 public class SavingManager {
     private final String INDEX_FILE_NAME = System.getProperty("user.home") + File.separator + "vampire-io_savings_index.sav";
     private Saving currentSaving;
-    private Map<String, String> indexMap = new HashMap<>();
+    private List<String> savingNames; 
 
     public SavingManager() {
         File indexFile = new File(INDEX_FILE_NAME); // nome salvataggio e percorso file salvataggio
         if (!indexFile.exists()) {
             try {
                 indexFile.createNewFile();
-                this.indexMap = new HashMap<>();
+                this.savingNames = new ArrayList<>();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -28,7 +29,7 @@ public class SavingManager {
     private void readIndex() {
         try (FileInputStream input = new FileInputStream(this.INDEX_FILE_NAME);
              ObjectInputStream in = new ObjectInputStream(input)) {
-            this.indexMap = (Map<String, String>) in.readObject();
+            this.savingNames = (List<String>) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -37,33 +38,26 @@ public class SavingManager {
     private void saveIndex() {
         try (FileOutputStream fileOut = new FileOutputStream(INDEX_FILE_NAME);
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-            out.writeObject(indexMap);
+            out.writeObject(savingNames);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public List<String> getSavingNames() {
-        return new LinkedList<>(this.indexMap.keySet());
+        System.out.println("lista:" + this.savingNames);
+        return List.copyOf(this.savingNames);
     }
 
     public void createNewSaving() {
         this.currentSaving = new Saving();
-
-        // Crea la cartella se non esiste
-        File savingDirectory = new File(System.getProperty("user.home") + File.separator + "vampire-io_savings");
-        if (!savingDirectory.exists()) {
-            savingDirectory.mkdirs();
-        }
-
-        String savingFilePath = savingDirectory + File.separator + currentSaving.getSavingTime() + ".sav";
-        this.indexMap.put(currentSaving.getSavingTime(), savingFilePath);
+        this.savingNames.add(this.currentSaving.getSavingTime());
         this.saveCurrentSaving();
         this.saveIndex();
     }
 
     public void loadSaving(String selectedSaving) {
-        String savingFilePath = indexMap.get(selectedSaving);
+        String savingFilePath = this.getFilePath(selectedSaving);
         if (savingFilePath != null) {
             try (FileInputStream input = new FileInputStream(savingFilePath);
                  ObjectInputStream in = new ObjectInputStream(input)) {
@@ -78,7 +72,7 @@ public class SavingManager {
     }
 
     public void saveCurrentSaving() {
-        String savingFilePath = indexMap.get(currentSaving.getSavingTime());
+        String savingFilePath = this.getFilePath(this.currentSaving.getSavingTime());
         if (savingFilePath != null) {
             try (FileOutputStream output = new FileOutputStream(savingFilePath);
                  ObjectOutputStream out = new ObjectOutputStream(output)) {
@@ -91,5 +85,13 @@ public class SavingManager {
 
     public Saving getCurrentSaving() {
         return this.currentSaving;
+    }
+
+    private String getFilePath(String savingTime){
+        File savingDirectory = new File(System.getProperty("user.home") + File.separator + "vampire-io_savings");
+        if (!savingDirectory.exists()) {
+            savingDirectory.mkdirs();
+        }
+        return savingDirectory.getPath() + File.separator + currentSaving.getSavingTime() + ".sav";
     }
 }
