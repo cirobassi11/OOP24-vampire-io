@@ -7,14 +7,14 @@ import java.util.List;
 public class SavingManager {
     private final String INDEX_FILE_NAME = System.getProperty("user.home") + File.separator + "vampire-io_savings_index.sav";
     private Saving currentSaving;
-    private List<String> savingNames; 
+    private List<String> savingsNames; 
 
     public SavingManager() {
         File indexFile = new File(INDEX_FILE_NAME); // nome salvataggio e percorso file salvataggio
         if (!indexFile.exists()) {
             try {
                 indexFile.createNewFile();
-                this.savingNames = new ArrayList<>();
+                this.savingsNames = new ArrayList<>();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -26,7 +26,19 @@ public class SavingManager {
     private void readIndex() {
         try (FileInputStream input = new FileInputStream(this.INDEX_FILE_NAME);
              ObjectInputStream in = new ObjectInputStream(input)) {
-            this.savingNames = (List<String>) in.readObject();
+            Object obj = in.readObject();
+            if (obj instanceof List<?>) {
+                this.savingsNames = new ArrayList<>();
+                for (Object item : (List<?>) obj) {
+                    if (item instanceof String) {
+                        this.savingsNames.add((String) item);
+                    } else {
+                        // ERRORE
+                    }
+                }
+            } else {
+                //ERRORE
+            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -35,20 +47,19 @@ public class SavingManager {
     private void saveIndex() {
         try (FileOutputStream fileOut = new FileOutputStream(INDEX_FILE_NAME);
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-            out.writeObject(savingNames);
+            out.writeObject(savingsNames);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public List<String> getSavingNames() {
-        System.out.println("lista:" + this.savingNames);
-        return List.copyOf(this.savingNames);
+    public List<String> getSavingsNames() {
+        return List.copyOf(this.savingsNames);
     }
 
     public void createNewSaving() {
         this.currentSaving = new Saving();
-        this.savingNames.add(this.currentSaving.getSavingTime());
+        this.savingsNames.add(this.currentSaving.getSavingTime());
         this.saveCurrentSaving();
         this.saveIndex();
     }

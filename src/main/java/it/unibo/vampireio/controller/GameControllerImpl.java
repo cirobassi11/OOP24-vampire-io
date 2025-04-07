@@ -171,8 +171,8 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public List<String> getSavingNames() {
-        return this.model.getSavingNames();
+    public List<String> getSavingsNames() {
+        return this.model.getSavingsNames();
     }
 
     @Override

@@ -145,9 +145,9 @@ public class GameViewImpl implements GameView {
         return this.controller;
     }
 
-    void updateSavingList() {
+    void updateSavingsList() {
         var loadSavingPanel = (SavingSelectionPanel) panels.get(SAVING_SELECTION);
-        loadSavingPanel.updateSavingList();
+        loadSavingPanel.updateSavingsList();
     }
 
     @Override

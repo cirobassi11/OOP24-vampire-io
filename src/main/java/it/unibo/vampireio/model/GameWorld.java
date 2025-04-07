@@ -111,8 +111,8 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public List<String> getSavingNames() {
-        return this.savingManager.getSavingNames();
+    public List<String> getSavingsNames() {
+        return this.savingManager.getSavingsNames();
     }
 
     @Override

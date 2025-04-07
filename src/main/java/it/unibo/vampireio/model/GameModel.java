@@ -17,7 +17,7 @@ public interface GameModel {
     List<AreaAttack> getAreaAttacks();
     List<Collectible> getCollectibles();
     List<UnlockablePowerUp> getUnlockablePowerUps();
-    List<String> getSavingNames();
+    List<String> getSavingsNames();
     void createNewSaving();
     void loadSaving(String selectedSaving);
     Saving getCurrentSaving();

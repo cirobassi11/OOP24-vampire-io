@@ -6,7 +6,7 @@ public interface GameController {
     void setRunning(boolean running);
     boolean isRunning();
     void startGame(String selectedCharacter);
-    List<String> getSavingNames();
+    List<String> getSavingsNames();
     void createNewSaving();
     void loadSaving(String selectedSaving);
     List<ScoreData> getScores();
