@@ -5,18 +5,16 @@ import javax.swing.JList;
 
 class SavingSelectionPanel extends BasePanel {
     private List<String> savings;
-    private JList<String> savesList;
+    private JList<String> savingList;
 
     SavingSelectionPanel(GameViewImpl view) {
         super(view);
 
-        this.updateSavingList();
-        this.addScrollableList(this.savings, 0, 0);
-
+        this.savingList = this.addScrollableList(List.of(), 0, 0);
+        
         this.addButton("SELECT", 0, 1, e -> {
-            String selectedSaving = savesList.getSelectedValue();
+            String selectedSaving = this.savingList.getSelectedValue();
             if (selectedSaving != null) {
-                System.out.println("Selected saving: " + selectedSaving);
                 this.view.getController().loadSaving(selectedSaving);
                 this.view.showScreen(GameViewImpl.START);
             }
@@ -27,6 +25,10 @@ class SavingSelectionPanel extends BasePanel {
 
     void updateSavingList() {
         this.savings = this.view.getController().getSavingNames();
-        //Aggiornare jlist
+        String[] savingArray = new String[this.savings.size()];
+        for (int i = 0; i < this.savings.size(); i++) {
+            savingArray[i] = this.savings.get(i);
+        }
+        this.savingList.setListData(savingArray);
     }
 }

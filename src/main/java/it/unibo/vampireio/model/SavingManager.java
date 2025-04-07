@@ -2,10 +2,7 @@ package it.unibo.vampireio.model;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class SavingManager {
     private final String INDEX_FILE_NAME = System.getProperty("user.home") + File.separator + "vampire-io_savings_index.sav";
@@ -92,6 +89,6 @@ public class SavingManager {
         if (!savingDirectory.exists()) {
             savingDirectory.mkdirs();
         }
-        return savingDirectory.getPath() + File.separator + currentSaving.getSavingTime() + ".sav";
+        return savingDirectory.getPath() + File.separator + savingTime + ".sav";
     }
 }
