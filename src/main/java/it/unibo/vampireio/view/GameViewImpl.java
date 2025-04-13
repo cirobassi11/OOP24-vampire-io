@@ -41,6 +41,8 @@ public class GameViewImpl implements GameView {
     static final String GAME = "game";
     static final String END_GAME = "endGame";
     static final String PAUSE = "pause";
+    static final String SHOP = "shop";
+    static final String UNLOCKABLE_CHARACTERS = "unlockableCharacters";
     static final String UNLOCKABLE_POWERUPS = "unlockablePowerups";
     static final String IN_GAME_POWERUPS = "inGamePowerups";
 
@@ -98,7 +100,9 @@ public class GameViewImpl implements GameView {
         this.panels.put(GAME, new GamePanel(this));
         this.panels.put(END_GAME, new EndGamePanel(this));
         this.panels.put(PAUSE, new PausePanel(this));
-        this.panels.put(UNLOCKABLE_POWERUPS, new UnlockablePowerUpPanel(this));
+        this.panels.put(SHOP, new ShopPanel(this));
+        this.panels.put(UNLOCKABLE_CHARACTERS, new UnlockableCharactersPanel(this));
+        this.panels.put(UNLOCKABLE_POWERUPS, new UnlockablePowerUpsPanel(this));
         this.panels.put(IN_GAME_POWERUPS, new InGamePowerUpPanel(this));
         this.panels.forEach((name, panel) -> cardPanel.add(panel, name));
     }

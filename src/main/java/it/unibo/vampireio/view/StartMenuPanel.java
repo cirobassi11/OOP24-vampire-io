@@ -7,7 +7,7 @@ class StartMenuPanel extends BasePanel {
 
         this.addButton("START", 1, 0, e -> view.showScreen(GameViewImpl.CHOOSE_CHARACTER));
         this.addButton("SCOREBOARD", 0, 1, e -> view.showScreen(GameViewImpl.SCOREBOARD));
-        this.addButton("POWER UP", 1, 1, e -> view.showScreen(GameViewImpl.UNLOCKABLE_POWERUPS));
+        this.addButton("SHOP", 1, 1, e -> view.showScreen(GameViewImpl.SHOP));
         this.addButton("LOAD SAVING", 2, 1, e -> {
             this.view.updateSavingsList();
             this.view.showScreen(GameViewImpl.SAVING_MENU);

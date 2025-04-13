@@ -11,7 +11,7 @@ public class Saving implements Serializable {
     
     private String savingTime;
     private List<UnlockableCharacter> unlockedCharacters;
-    private List<UnlockableItem> unlockedItems;
+    private List<UnlockablePowerUp> unlockedPowerUps;
     private int moneyAmount;
     private List<Score> scores;
     
@@ -19,13 +19,13 @@ public class Saving implements Serializable {
     public Saving(
         String savingTime, 
         List<UnlockableCharacter> unlockedCharacters,
-        List<UnlockableItem> unlockedItems, 
+        List<UnlockablePowerUp> unlockedPowerUps, 
         int moneyAmount, 
         List<Score> scores
     ) {
         this.savingTime = savingTime;
         this.unlockedCharacters = unlockedCharacters;
-        this.unlockedItems = unlockedItems;
+        this.unlockedPowerUps = unlockedPowerUps;
         this.moneyAmount = moneyAmount;
         this.scores = scores;
     }
@@ -35,7 +35,7 @@ public class Saving implements Serializable {
         this(
             generateSaveTimestamp(), 
             new LinkedList<UnlockableCharacter>(), 
-            new LinkedList<UnlockableItem>(), 
+            new LinkedList<UnlockablePowerUp>(), 
             0, 
             new LinkedList<Score>()
         );
@@ -49,8 +49,8 @@ public class Saving implements Serializable {
         return List.copyOf(this.unlockedCharacters);
     }
 
-    public List<UnlockableItem> getUnlockedItems() {
-        return List.copyOf(this.unlockedItems);
+    public List<UnlockablePowerUp> getUnlockedItems() {
+        return List.copyOf(this.unlockedPowerUps);
     }
 
     public int getMoneyAmount() {
@@ -65,8 +65,8 @@ public class Saving implements Serializable {
         this.unlockedCharacters.add(unlockedCharacter);
     }
 
-    public void addUnlockedItem(UnlockableItem unlockedItem) {
-        this.unlockedItems.add(unlockedItem);
+    public void addUnlockedPowerUp(UnlockablePowerUp unlockedPowerUp) {
+        this.unlockedPowerUps.add(unlockedPowerUp);
     }
 
     public void incrementMoneyAmount(int moneyAmount) {

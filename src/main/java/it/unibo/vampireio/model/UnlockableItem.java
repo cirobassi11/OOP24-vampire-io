@@ -1,30 +1,34 @@
 package it.unibo.vampireio.model;
 
 public abstract class UnlockableItem implements Unlockable {
-    private boolean unlocked;
     private final String id;
     private final String name;
     private final String description;
     private final int price;
+    private int currentLevel;
+    private int maxLevel;
 
-    public UnlockableItem(final String id, final String name, final String description, final int price) {
-        this.unlocked = false;
+    public UnlockableItem(final String id, final String name, final String description, final int price, final int maxLevel) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.currentLevel = 0;
     }
 
     @Override
-    public boolean isUnlocked() {
-        return this.unlocked;
+    public boolean isLocked() {
+        return this.currentLevel > 0;
     }
 
     @Override
-    public void unlock() {
-        //contollare se ha abbastanza soldi
+    public void enhance() {
+        //controllare se l'item ha raggiunto livello massimo
+        //se non l'ha raggiunto, controllare se ha abbastanza soldi
         //se si, sottrarli
-        this.unlocked = true;
+        //salvare salvataggio (dove va fatto??)
+        
+        this.currentLevel++;
     }
 
     @Override
@@ -45,6 +49,11 @@ public abstract class UnlockableItem implements Unlockable {
     @Override
     public int getPrice() {
         return this.price;
+    }
+
+    @Override
+    public int getLevel() {
+        return this.currentLevel;
     }
 
 }
