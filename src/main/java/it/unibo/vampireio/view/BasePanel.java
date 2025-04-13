@@ -9,12 +9,36 @@ import java.util.LinkedList;
 import java.util.List;
 
 abstract class BasePanel extends JPanel {
+
+    // Color constants
     protected static final Color BUTTON_BACKGROUND = new Color(50, 50, 50);
     protected static final Color BUTTON_HOVER = new Color(200, 0, 0);
     protected static final Color BUTTON_BORDER = new Color(255, 215, 0);
     protected static final Color COMBOBOX_BACKGROUND = new Color(50, 50, 50);
     protected static final Color COMBOBOX_BORDER = new Color(200, 200, 200);
+    protected static final Color LIST_BACKGROUND = new Color(40, 40, 40);
+    protected static final Color LIST_BORDER_COLOR = Color.GRAY;
+
+    // Font constants
     protected static final Font DEFAULT_FONT = new Font("Serif", Font.BOLD, 24);
+    protected static final float SMALL_FONT_SCALE = 16f;
+    protected static final int FONT_SIZE_RATIO = 30;
+
+    // Layout constants
+    protected static final int COMPONENT_INSET_TOP = 10;
+    protected static final int COMPONENT_INSET_LEFT = 10;
+    protected static final int COMPONENT_INSET_BOTTOM = 20;
+    protected static final int COMPONENT_INSET_RIGHT = 10;
+    protected static final int BUTTON_BORDER_THICKNESS = 3;
+    protected static final int COMBOBOX_BORDER_THICKNESS = 2;
+    protected static final int LIST_BORDER_THICKNESS = 2;
+    protected static final int LIST_VISIBLE_ROWS = 5;
+
+    // Resize ratios
+    protected static final int BUTTON_WIDTH_RATIO = 6;
+    protected static final int BUTTON_HEIGHT_RATIO = 15;
+    protected static final int SCROLL_WIDTH_RATIO = 5;
+    protected static final int SCROLL_HEIGHT_RATIO = 5;
 
     protected final GameViewImpl view;
     private final List<Component> allComponents = new LinkedList<>();
@@ -34,7 +58,10 @@ abstract class BasePanel extends JPanel {
 
     private void addComponent(Component component, int gridx, int gridy) {
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 20, 10);
+        gbc.insets = new Insets(
+                COMPONENT_INSET_TOP, COMPONENT_INSET_LEFT,
+                COMPONENT_INSET_BOTTOM, COMPONENT_INSET_RIGHT
+        );
         gbc.gridx = gridx;
         gbc.gridy = gridy;
         gbc.weightx = 1;
@@ -49,7 +76,7 @@ abstract class BasePanel extends JPanel {
         button.setFont(DEFAULT_FONT);
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
-        button.setBorder(BorderFactory.createLineBorder(BUTTON_BORDER, 3));
+        button.setBorder(BorderFactory.createLineBorder(BUTTON_BORDER, BUTTON_BORDER_THICKNESS));
         button.setContentAreaFilled(false);
         button.setOpaque(true);
         button.setBackground(BUTTON_BACKGROUND);
@@ -79,10 +106,10 @@ abstract class BasePanel extends JPanel {
 
     protected JComboBox<String> addComboBox(int gridx, int gridy) {
         JComboBox<String> comboBox = new JComboBox<>();
-        comboBox.setFont(DEFAULT_FONT.deriveFont(16f));
+        comboBox.setFont(DEFAULT_FONT.deriveFont(SMALL_FONT_SCALE));
         comboBox.setBackground(COMBOBOX_BACKGROUND);
         comboBox.setForeground(Color.WHITE);
-        comboBox.setBorder(BorderFactory.createLineBorder(COMBOBOX_BORDER, 2));
+        comboBox.setBorder(BorderFactory.createLineBorder(COMBOBOX_BORDER, COMBOBOX_BORDER_THICKNESS));
         addComponent(comboBox, gridx, gridy);
         return comboBox;
     }
@@ -92,14 +119,14 @@ abstract class BasePanel extends JPanel {
         items.forEach(model::addElement);
 
         JList<String> list = new JList<>(model);
-        list.setFont(DEFAULT_FONT.deriveFont(16f));
+        list.setFont(DEFAULT_FONT.deriveFont(SMALL_FONT_SCALE));
         list.setForeground(Color.WHITE);
-        list.setBackground(new Color(40, 40, 40));
+        list.setBackground(LIST_BACKGROUND);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.setVisibleRowCount(5);
+        list.setVisibleRowCount(LIST_VISIBLE_ROWS);
 
         JScrollPane scrollPane = new JScrollPane(list);
-        scrollPane.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        scrollPane.setBorder(BorderFactory.createLineBorder(LIST_BORDER_COLOR, LIST_BORDER_THICKNESS));
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
 
@@ -112,12 +139,18 @@ abstract class BasePanel extends JPanel {
 
         for (Component c : allComponents) {
             if (c instanceof JButton) {
-                c.setPreferredSize(new Dimension(frameSize.width / 6, frameSize.height / 15));
-                c.setFont(DEFAULT_FONT.deriveFont((float) frameSize.height / 30));
+                c.setPreferredSize(new Dimension(
+                        frameSize.width / BUTTON_WIDTH_RATIO,
+                        frameSize.height / BUTTON_HEIGHT_RATIO
+                ));
+                c.setFont(DEFAULT_FONT.deriveFont((float) frameSize.height / FONT_SIZE_RATIO));
             } else if (c instanceof JLabel || c instanceof JComboBox) {
-                c.setFont(DEFAULT_FONT.deriveFont((float) frameSize.height / 30));
+                c.setFont(DEFAULT_FONT.deriveFont((float) frameSize.height / FONT_SIZE_RATIO));
             } else if (c instanceof JScrollPane) {
-                c.setPreferredSize(new Dimension(frameSize.width / 5, frameSize.height / 5));
+                c.setPreferredSize(new Dimension(
+                        frameSize.width / SCROLL_WIDTH_RATIO,
+                        frameSize.height / SCROLL_HEIGHT_RATIO
+                ));
             }
         }
 

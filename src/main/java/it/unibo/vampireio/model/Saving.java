@@ -19,8 +19,8 @@ public class Saving implements Serializable {
     public Saving(
         String savingTime, 
         List<UnlockableCharacter> unlockedCharacters,
-        List<UnlockablePowerUp> unlockedPowerUps, 
-        int moneyAmount, 
+        List<UnlockablePowerUp> unlockedPowerUps,
+        int moneyAmount,
         List<Score> scores
     ) {
         this.savingTime = savingTime;
@@ -33,7 +33,7 @@ public class Saving implements Serializable {
     // Nuovo salvataggio vuoto
     public Saving() {
         this(
-            generateSaveTimestamp(), 
+            generateSavingTimestamp(), 
             new LinkedList<UnlockableCharacter>(), 
             new LinkedList<UnlockablePowerUp>(), 
             0, 
@@ -78,7 +78,7 @@ public class Saving implements Serializable {
     }
     
     // Generazione stringa data-ora dd-MM-yyyy_HH-mm-ss
-    private static String generateSaveTimestamp() {
+    private static String generateSavingTimestamp() {
         return LocalDateTime.now().format(FORMATTER);
     }
 }

@@ -7,4 +7,8 @@ public class UnlockableCharacter extends UnlockableItem {
         super(id, name, description, price, 1);
         this.characterStats = stats;
     }
+
+    public Stats getCharacterStats() {
+        return this.characterStats;
+    }
 }

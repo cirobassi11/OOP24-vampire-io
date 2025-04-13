@@ -24,21 +24,29 @@ public class SavingManager {
     }
 
     private void readIndex() {
-        try (FileInputStream input = new FileInputStream(this.INDEX_FILE_NAME);
-             ObjectInputStream in = new ObjectInputStream(input)) {
+        File indexFile = new File(this.INDEX_FILE_NAME);
+        this.savingsNames = new ArrayList<>();
+
+        if (indexFile.length() == 0) {
+            return;
+        }
+
+        try (FileInputStream input = new FileInputStream(indexFile);
+            ObjectInputStream in = new ObjectInputStream(input)) {
+
             Object obj = in.readObject();
             if (obj instanceof List<?>) {
-                this.savingsNames = new ArrayList<>();
                 for (Object item : (List<?>) obj) {
                     if (item instanceof String) {
                         this.savingsNames.add((String) item);
                     } else {
-                        // ERRORE
+                        //STAMPA ERRORE ("errore nella lettura del file")
                     }
                 }
             } else {
-                //ERRORE
+                //STAMPA ERRORE ("errore nella lettura del file")
             }
+
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

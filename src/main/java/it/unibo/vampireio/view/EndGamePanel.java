@@ -9,7 +9,7 @@ class EndGamePanel extends BasePanel {
     EndGamePanel(GameViewImpl view) {
         super(view);
 
-        if(score != null) {
+        if(this.score != null) {
             //stampa le informazioni di score
         }
 

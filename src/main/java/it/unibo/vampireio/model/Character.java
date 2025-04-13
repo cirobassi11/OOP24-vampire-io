@@ -3,7 +3,6 @@ package it.unibo.vampireio.model;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import it.unibo.vampireio.model.Stats;
 
 public class Character extends LivingEntity {
 

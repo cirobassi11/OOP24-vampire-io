@@ -12,8 +12,10 @@ class ScoreBoardPanel extends BasePanel {
         List<ScoreData> scores = this.view.getController().getScores();
         List<String> scoreNames = new LinkedList<>();
         for (ScoreData score : scores) {
-            scoreNames.add(score.getScore() + "");
+            scoreNames.add(String.valueOf(score.getScore()));
         }
+
+        this.addScrollableList(scoreNames, 0, 0);
 
         this.addButton("BACK", 0, 1, e -> view.showScreen(GameViewImpl.START));
     }

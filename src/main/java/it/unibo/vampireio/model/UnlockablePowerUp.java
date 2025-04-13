@@ -8,6 +8,6 @@ public class UnlockablePowerUp extends UnlockableItem {
     }
 
     public double getMultiplier() {
-        return this.getLevel() * this.MULTIPLIER_INCREMENT;
+        return this.getLevel() * MULTIPLIER_INCREMENT;
     }
 }
