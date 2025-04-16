@@ -23,8 +23,8 @@ public class GameControllerImpl implements GameController {
 
     private boolean running = true;
 
-    private final int frameRate = 1;
-    private final int tickRate = 1;
+    private final int frameRate = 60;
+    private final int tickRate = 60;
 
     public GameControllerImpl() {
         this.model = new GameWorld();
@@ -38,8 +38,7 @@ public class GameControllerImpl implements GameController {
 
         this.view.setNewSaveListener(e -> {
             this.model.createNewSave();
-            this.view.updateSaveList(this.model.getSaveNames());
-            this.view.showScreen(GameViewImpl.SAVE_MENU);
+            this.view.showScreen(GameViewImpl.START);
         });
 
         this.view.setShowSaveListener(e -> {

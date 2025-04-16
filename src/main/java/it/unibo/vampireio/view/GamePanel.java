@@ -21,7 +21,7 @@ class GamePanel extends JPanel {
     private int currentCharacterFrame = 0;
     private final int characterFrames = 4;
     private long lastCharacterFrameTime = 0;
-    private final long characterFrameRate = 10;
+    private final long characterFrameRate = 5;
     private final long characterFrameDelay = 1000 / this.characterFrameRate;
 
     GamePanel(GameViewImpl view) {
@@ -40,8 +40,8 @@ class GamePanel extends JPanel {
         
         double scale = this.view.getFrameSize().getWidth() / fov.getWidth();
 
-        int centerX = fov.width / 2;
-        int centerY = fov.height / 2;
+        int centerX = fov.width / 2 - tileSize / 2;
+        int centerY = fov.height / 2 - tileSize / 2;
 
         LivingEntityData character = this.data.getCharacterData();
 
@@ -50,21 +50,25 @@ class GamePanel extends JPanel {
         int offsetY = (int) (centerY - character.getPosition().getY() * scale);
 
         // Calculate the start map tile position
-        int startTileX = (int) ((character.getPosition().getX() * scale) - centerX) / (int) (tileSize * scale);
-        int startTileY = (int) ((character.getPosition().getY() * scale) - centerY) / (int) (tileSize * scale);
+        int startTileX = (int) Math.floor((character.getPosition().getX() - centerX / scale) / tileSize);
+        int startTileY = (int) Math.floor((character.getPosition().getY() - centerY / scale) / tileSize);
 
-        // Calculate the number of map tiles to draw
-        int tileNumberX = (int) (fov.height / (tileSize * scale)) + 1;
-        int tileNumberY = (int) (fov.width / (tileSize * scale)) + 1;
+        // Calculate how many tiles we need to draw
+        int tilesX = (int) Math.ceil(fov.getWidth() / tileSize) + 2;
+        int tilesY = (int) Math.ceil(fov.getHeight() / tileSize) + 2;
 
-        // Draws the map
-        for (int i = -1; i <= tileNumberY; i++) {
-            for (int j = -1; j <= tileNumberX; j++) {
-                int tileX = (int) (((i + startTileX) * tileSize * scale + offsetX) % (tileSize * scale));
-                int tileY = (int) (((j + startTileY) * tileSize * scale + offsetY) % (tileSize * scale));
+        // Draw the tiles
+        for (int y = 0; y < tilesY; y++) {
+            for (int x = 0; x < tilesX; x++) {
+                int worldX = (startTileX + x) * tileSize;
+                int worldY = (startTileY + y) * tileSize;
+
+                int screenX = (int) (worldX * scale + offsetX);
+                int screenY = (int) (worldY * scale + offsetY);
+
                 Image tile = this.imageManager.getImage("map");
-                if(tile != null) {
-                    g.drawImage(tile, tileX, tileY, (int) (tileSize * scale), (int) (tileSize * scale), null);
+                if (tile != null) {
+                    g.drawImage(tile, screenX, screenY, (int) (tileSize * scale), (int) (tileSize * scale), null);
                 }
             }
         }
@@ -141,7 +145,7 @@ class GamePanel extends JPanel {
         else {
             directionSuffix += this.lastCharacterDirection;
         }
-        Image tile = this.imageManager.getImage(character.getId() + this.currentCharacterFrame + directionSuffix);
+        Image tile = this.imageManager.getImage(character.getId() + "/" + this.currentCharacterFrame + directionSuffix);
         if(tile != null) {
             g.drawImage(tile, characterX, characterY, (int) (tileSize * scale), (int) (tileSize * scale), null); //TODO: DIVENTA ROSSO SE COLPITO
         }

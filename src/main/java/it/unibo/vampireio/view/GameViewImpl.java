@@ -51,8 +51,6 @@ public class GameViewImpl implements GameView {
     private final String iconPath = "/images/icon.png";
     private final String backgroundPath = "/images/background.png";
 
-    private ActionListener startListener;
-
     public GameViewImpl(GameController controller) {
         this.controller = controller;
 
@@ -179,7 +177,7 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void setStartListener(ActionListener listener) {
-        this.startListener = listener;
+        ((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).setStartListener(listener);
     }
 
     @Override

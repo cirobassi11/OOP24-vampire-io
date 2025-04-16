@@ -28,7 +28,7 @@ class ChooseCharacterPanel extends BasePanel {
         return this.characterList.getSelectedValue();
     }
 
-    void setConfirmListener(ActionListener listener) {
+    void setStartListener(ActionListener listener) {
         this.confirmButton.addActionListener(listener);
     }
 
