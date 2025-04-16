@@ -36,7 +36,7 @@ class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         
-        Dimension fov = this.data.getVisualSizeData().getDimension();
+        Dimension fov = this.data.getVisibleMapSizeData().getDimension();
         
         double scale = this.view.getFrameSize().getWidth() / fov.getWidth();
 

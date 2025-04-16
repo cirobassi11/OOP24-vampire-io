@@ -6,24 +6,24 @@ import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Saving implements Serializable {
+public class Save implements Serializable {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
     
-    private String savingTime;
+    private String saveTime;
     private List<UnlockableCharacter> unlockedCharacters;
     private List<UnlockablePowerUp> unlockedPowerUps;
     private int moneyAmount;
     private List<Score> scores;
     
     // Salvataggio già esistente
-    public Saving(
-        String savingTime, 
+    public Save(
+        String saveTime, 
         List<UnlockableCharacter> unlockedCharacters,
         List<UnlockablePowerUp> unlockedPowerUps,
         int moneyAmount,
         List<Score> scores
     ) {
-        this.savingTime = savingTime;
+        this.saveTime = saveTime;
         this.unlockedCharacters = unlockedCharacters;
         this.unlockedPowerUps = unlockedPowerUps;
         this.moneyAmount = moneyAmount;
@@ -31,9 +31,9 @@ public class Saving implements Serializable {
     }
 
     // Nuovo salvataggio vuoto
-    public Saving() {
+    public Save() {
         this(
-            generateSavingTimestamp(), 
+            generateSaveTimestamp(), 
             new LinkedList<UnlockableCharacter>(), 
             new LinkedList<UnlockablePowerUp>(), 
             0, 
@@ -41,8 +41,8 @@ public class Saving implements Serializable {
         );
     }
     
-    public String getSavingTime() {
-        return this.savingTime;
+    public String getSaveTime() {
+        return this.saveTime;
     }
 
     public List<UnlockableCharacter> getUnlockedCharacters() {
@@ -78,7 +78,7 @@ public class Saving implements Serializable {
     }
     
     // Generazione stringa data-ora dd-MM-yyyy_HH-mm-ss
-    private static String generateSavingTimestamp() {
+    private static String generateSaveTimestamp() {
         return LocalDateTime.now().format(FORMATTER);
     }
 }

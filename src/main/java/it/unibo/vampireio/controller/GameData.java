@@ -4,16 +4,16 @@ import java.util.List;
 
 public class GameData {
     private long elapsedTime;
-    private VisualSizeData visualSize;
+    private VisibleMapSizeData VisibleMapSize;
     private LivingEntityData character;
     private List<LivingEntityData> enemies;
     private List<PositionableData> projectiles;
     private List<PositionableData> areaAttacks;
     private List<PositionableData> collectibles;
 
-    public GameData(long elapsedTime, VisualSizeData visualSize, LivingEntityData character, List<LivingEntityData> enemies, List<PositionableData> projectiles, List<PositionableData> areaAttacks, List<PositionableData> collectibles) {
+    public GameData(long elapsedTime, VisibleMapSizeData VisibleMapSize, LivingEntityData character, List<LivingEntityData> enemies, List<PositionableData> projectiles, List<PositionableData> areaAttacks, List<PositionableData> collectibles) {
         this.elapsedTime = elapsedTime;
-        this.visualSize = visualSize;
+        this.VisibleMapSize = VisibleMapSize;
         this.character = character;
         this.enemies = enemies;
         this.projectiles = projectiles;
@@ -25,8 +25,8 @@ public class GameData {
         return this.elapsedTime;
     }
 
-    public VisualSizeData getVisualSizeData() {
-        return this.visualSize;
+    public VisibleMapSizeData getVisibleMapSizeData() {
+        return this.VisibleMapSize;
     }
 
     public LivingEntityData getCharacterData() {

@@ -4,17 +4,17 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavingManager {
-    private final String INDEX_FILE_NAME = System.getProperty("user.home") + File.separator + "vampire-io_savings_index.sav";
-    private Saving currentSaving;
-    private List<String> savingsNames; 
+public class SaveManager {
+    private final String INDEX_FILE_NAME = System.getProperty("user.home") + File.separator + "vampire-io_saves_index.sav";
+    private Save currentSave;
+    private List<String> savesNames; 
 
-    public SavingManager() {
+    public SaveManager() {
         File indexFile = new File(INDEX_FILE_NAME); // nome salvataggio e percorso file salvataggio
         if (!indexFile.exists()) {
             try {
                 indexFile.createNewFile();
-                this.savingsNames = new ArrayList<>();
+                this.savesNames = new ArrayList<>();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -25,7 +25,7 @@ public class SavingManager {
 
     private void readIndex() {
         File indexFile = new File(this.INDEX_FILE_NAME);
-        this.savingsNames = new ArrayList<>();
+        this.savesNames = new ArrayList<>();
 
         if (indexFile.length() == 0) {
             return;
@@ -38,7 +38,7 @@ public class SavingManager {
             if (obj instanceof List<?>) {
                 for (Object item : (List<?>) obj) {
                     if (item instanceof String) {
-                        this.savingsNames.add((String) item);
+                        this.savesNames.add((String) item);
                     } else {
                         //STAMPA ERRORE ("errore nella lettura del file")
                     }
@@ -55,59 +55,59 @@ public class SavingManager {
     private void saveIndex() {
         try (FileOutputStream fileOut = new FileOutputStream(INDEX_FILE_NAME);
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-            out.writeObject(savingsNames);
+            out.writeObject(savesNames);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public List<String> getSavingsNames() {
-        return List.copyOf(this.savingsNames);
+    public List<String> getSavesNames() {
+        return List.copyOf(this.savesNames);
     }
 
-    public void createNewSaving() {
-        this.currentSaving = new Saving();
-        this.savingsNames.add(this.currentSaving.getSavingTime());
-        this.saveCurrentSaving();
+    public void createNewSave() {
+        this.currentSave = new Save();
+        this.savesNames.add(this.currentSave.getSaveTime());
+        this.saveCurrentSave();
         this.saveIndex();
     }
 
-    public void loadSaving(String selectedSaving) {
-        String savingFilePath = this.getFilePath(selectedSaving);
-        if (savingFilePath != null) {
-            try (FileInputStream input = new FileInputStream(savingFilePath);
+    public void loadSave(String selectedSave) {
+        String saveFilePath = this.getFilePath(selectedSave);
+        if (saveFilePath != null) {
+            try (FileInputStream input = new FileInputStream(saveFilePath);
                  ObjectInputStream in = new ObjectInputStream(input)) {
-                this.currentSaving = (Saving) in.readObject();
+                this.currentSave = (Save) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
                 throw new RuntimeException("Errore nel caricare il salvataggio", e);
             }
         } else {
-            throw new RuntimeException("Salvataggio non trovato: " + selectedSaving);
+            throw new RuntimeException("Salvataggio non trovato: " + selectedSave);
         }
     }
 
-    public void saveCurrentSaving() {
-        String savingFilePath = this.getFilePath(this.currentSaving.getSavingTime());
-        if (savingFilePath != null) {
-            try (FileOutputStream output = new FileOutputStream(savingFilePath);
+    public void saveCurrentSave() {
+        String saveFilePath = this.getFilePath(this.currentSave.getSaveTime());
+        if (saveFilePath != null) {
+            try (FileOutputStream output = new FileOutputStream(saveFilePath);
                  ObjectOutputStream out = new ObjectOutputStream(output)) {
-                out.writeObject(currentSaving);
+                out.writeObject(currentSave);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public Saving getCurrentSaving() {
-        return this.currentSaving;
+    public Save getCurrentSave() {
+        return this.currentSave;
     }
 
-    private String getFilePath(String savingTime){
-        File savingDirectory = new File(System.getProperty("user.home") + File.separator + "vampire-io_savings");
-        if (!savingDirectory.exists()) {
-            savingDirectory.mkdirs();
+    private String getFilePath(String saveTime){
+        File saveDirectory = new File(System.getProperty("user.home") + File.separator + "vampire-io_save");
+        if (!saveDirectory.exists()) {
+            saveDirectory.mkdirs();
         }
-        return savingDirectory.getPath() + File.separator + savingTime + ".sav";
+        return saveDirectory.getPath() + File.separator + saveTime + ".sav";
     }
 }

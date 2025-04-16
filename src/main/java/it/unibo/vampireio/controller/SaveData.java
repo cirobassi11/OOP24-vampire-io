@@ -2,29 +2,29 @@ package it.unibo.vampireio.controller;
 
 import java.util.List;
 
-public class SavingData {
-    private final String savingTime;
+public class SaveData {
+    private final String saveTime;
     private List<String> unlockedCharacters;
     private List<String> unlockedItems;
     private int moneyAmount;
     private List<ScoreData> scores;
     
-    public SavingData(
-        String savingTime, 
+    public SaveData(
+        String saveTime, 
         List<String> unlockedCharacters,
         List<String> unlockedItems, 
         int moneyAmount, 
         List<ScoreData> scores
     ) {
-        this.savingTime = savingTime;
+        this.saveTime = saveTime;
         this.unlockedCharacters = unlockedCharacters;
         this.unlockedItems = unlockedItems;
         this.moneyAmount = moneyAmount;
         this.scores = scores;
     }
 
-    public String getSavingTime() {
-        return this.savingTime;
+    public String getSaveTime() {
+        return this.saveTime;
     }
     
     public List<String> getUnlockedCharacters() {

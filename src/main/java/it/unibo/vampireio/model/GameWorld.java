@@ -1,6 +1,7 @@
 package it.unibo.vampireio.model;
 
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class GameWorld implements GameModel {
 
     private EnemySpawner enemySpawner;
 
-    private SavingManager savingManager = new SavingManager();
+    private SaveManager saveManager = new SaveManager();
 
     private final Dimension visualSize = new Dimension(1280, 720);
 
@@ -21,7 +22,7 @@ public class GameWorld implements GameModel {
     public void initGame(String selectedCharacter) {
         this.enemySpawner = new EnemySpawnerImpl(this);
 
-        //this.character = DataLoader.getCharacterById(selectedCharacter);
+        this.character = new Character("characters/" + selectedCharacter, selectedCharacter, new Stats(), new Rectangle(50, 50));////////////
         
         this.enemies = new LinkedList<>();
 
@@ -41,7 +42,7 @@ public class GameWorld implements GameModel {
             // muove tutti i nemici (controllando anche che non si sovrappongano)
 
             //spanwna i nemici FUORI DALLA VISUALE
-            this.enemySpawner.update(tickTime);
+            //this.enemySpawner.update(tickTime);
         }
     }
 
@@ -107,26 +108,26 @@ public class GameWorld implements GameModel {
 
     @Override
     public List<UnlockablePowerUp> getUnlockablePowerUps() {
-        return List.of(); // TODO
+        return List.of(); ///////////////////// TODO
     }
 
     @Override
-    public List<String> getSavingsNames() {
-        return this.savingManager.getSavingsNames();
+    public List<String> getSaveNames() {
+        return this.saveManager.getSavesNames();
     }
 
     @Override
-    public void createNewSaving() {
-        this.savingManager.createNewSaving();
+    public void createNewSave() {
+        this.saveManager.createNewSave();
     }
 
     @Override
-    public void loadSaving(String selectedSaving) {
-        this.savingManager.loadSaving(selectedSaving);
+    public void loadSave(String selectedSave) {
+        this.saveManager.loadSave(selectedSave);
     }
 
     @Override
-    public Saving getCurrentSaving() {
-        return this.savingManager.getCurrentSaving();
+    public Save getCurrentSave() {
+        return this.saveManager.getCurrentSave();
     }
 }

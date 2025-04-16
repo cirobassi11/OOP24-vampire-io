@@ -11,7 +11,7 @@ import it.unibo.vampireio.model.Collectible;
 import it.unibo.vampireio.model.GameModel;
 import it.unibo.vampireio.model.GameWorld;
 import it.unibo.vampireio.model.ProjectileAttack;
-import it.unibo.vampireio.model.Saving;
+import it.unibo.vampireio.model.Save;
 import it.unibo.vampireio.view.GameView;
 import it.unibo.vampireio.view.GameViewImpl;
 
@@ -23,12 +23,37 @@ public class GameControllerImpl implements GameController {
 
     private boolean running = true;
 
-    private final int frameRate = 60;
-    private final int tickRate = 60;
+    private final int frameRate = 1;
+    private final int tickRate = 1;
 
     public GameControllerImpl() {
         this.model = new GameWorld();
         this.view = new GameViewImpl(this);
+
+        this.view.setStartListener(e -> {
+            this.startGame(this.view.getSelectedCharacter());
+            this.view.update(this.getData());
+            this.view.showScreen(GameViewImpl.GAME);
+        });
+
+        this.view.setNewSaveListener(e -> {
+            this.model.createNewSave();
+            this.view.updateSaveList(this.model.getSaveNames());
+            this.view.showScreen(GameViewImpl.SAVE_MENU);
+        });
+
+        this.view.setShowSaveListener(e -> {
+            this.view.updateSaveList(this.model.getSaveNames());
+            this.view.showScreen(GameViewImpl.SAVE_SELECTION);
+        });
+
+        this.view.setChooseSaveListener(e -> {
+            String selectedSave = this.view.getSelectedSave();
+            if (selectedSave != null) {
+                this.model.loadSave(selectedSave);
+                this.view.showScreen(GameViewImpl.START);
+            }
+        });
     }
 
     @Override
@@ -63,7 +88,7 @@ public class GameControllerImpl implements GameController {
 
     private void viewLoop() {
         long frameTime = 1000 / this.frameRate;
-        while (this.isRunning()) {
+        while (this.isRunning()) {            
             this.view.update(this.getData());
             try {
                 Thread.sleep(frameTime);
@@ -85,7 +110,7 @@ public class GameControllerImpl implements GameController {
         List<AreaAttack> areaAttacks = this.model.getAreaAttacks();
         List<Collectible> collectibles = this.model.getCollectibles();
 
-        VisualSizeData visualSizeData = new VisualSizeData(
+        VisibleMapSizeData visibleMapSizeData = new VisibleMapSizeData(
             visualSize.width, visualSize.height
         );
 
@@ -161,7 +186,7 @@ public class GameControllerImpl implements GameController {
 
         return new GameData(
             this.getElapsedTime(),
-            visualSizeData, 
+            visibleMapSizeData, 
             characterData, 
             enemiesData, 
             projectileAttacksData, 
@@ -171,27 +196,12 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public List<String> getSavingsNames() {
-        return this.model.getSavingsNames();
-    }
-
-    @Override
-    public void createNewSaving() {
-        this.model.createNewSaving();
-    }
-
-    @Override
-    public void loadSaving(String selectedSaving) {
-        this.model.loadSaving(selectedSaving);
-    }
-
-    @Override
     public List<ScoreData> getScores() {
-        Saving currentSaving = this.model.getCurrentSaving();
-        if (currentSaving == null) {
+        Save currentSave = this.model.getCurrentSave();
+        if (currentSave == null) {
             return List.of();
         }
-        return currentSaving.getScores().stream()
+        return currentSave.getScores().stream()
             .map(score -> new ScoreData(
                 score.getCharacterName(),
                 score.getSessionTime(),

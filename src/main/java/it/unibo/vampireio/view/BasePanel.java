@@ -2,7 +2,6 @@ package it.unibo.vampireio.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
@@ -71,7 +70,7 @@ abstract class BasePanel extends JPanel {
         allComponents.add(component);
     }
 
-    protected JButton addButton(String text, int gridx, int gridy, ActionListener action) {
+    protected JButton addButton(String text, int gridx, int gridy) {
         JButton button = new JButton(text);
         button.setFont(DEFAULT_FONT);
         button.setForeground(Color.WHITE);
@@ -85,13 +84,11 @@ abstract class BasePanel extends JPanel {
             public void mouseEntered(MouseEvent evt) {
                 button.setBackground(BUTTON_HOVER);
             }
-
             @Override
             public void mouseExited(MouseEvent evt) {
                 button.setBackground(BUTTON_BACKGROUND);
             }
         });
-        button.addActionListener(action);
         addComponent(button, gridx, gridy);
         return button;
     }

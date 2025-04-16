@@ -4,9 +4,11 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Taskbar;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -33,21 +35,23 @@ public class GameViewImpl implements GameView {
 
     static final String frameTitle = "Vampire.io";
 
-    static final String SAVING_MENU = "savingMenu";
-    static final String SAVING_SELECTION = "savingSelection";
-    static final String START = "mainMenu";
-    static final String SCOREBOARD = "scoreboard";
-    static final String CHOOSE_CHARACTER = "chooseCharacter";
-    static final String GAME = "game";
-    static final String END_GAME = "endGame";
-    static final String PAUSE = "pause";
-    static final String SHOP = "shop";
-    static final String UNLOCKABLE_CHARACTERS = "unlockableCharacters";
-    static final String UNLOCKABLE_POWERUPS = "unlockablePowerups";
-    static final String IN_GAME_POWERUPS = "inGamePowerups";
+    public static final String SAVE_MENU = "saveMenu";
+    public static final String SAVE_SELECTION = "saveSelection";
+    public static final String START = "mainMenu";
+    public static final String SCOREBOARD = "scoreboard";
+    public static final String CHOOSE_CHARACTER = "chooseCharacter";
+    public static final String GAME = "game";
+    public static final String END_GAME = "endGame";
+    public static final String PAUSE = "pause";
+    public static final String SHOP = "shop";
+    public static final String UNLOCKABLE_CHARACTERS = "unlockableCharacters";
+    public static final String UNLOCKABLE_POWERUPS = "unlockablePowerups";
+    public static final String IN_GAME_POWERUPS = "inGamePowerups";
 
     private final String iconPath = "/images/icon.png";
     private final String backgroundPath = "/images/background.png";
+
+    private ActionListener startListener;
 
     public GameViewImpl(GameController controller) {
         this.controller = controller;
@@ -59,7 +63,7 @@ public class GameViewImpl implements GameView {
         this.initFrame();
         this.initPanels();
 
-        this.showScreen(GameViewImpl.SAVING_MENU);
+        this.showScreen(GameViewImpl.SAVE_MENU);
 
         new AudioManager();
     }
@@ -92,8 +96,8 @@ public class GameViewImpl implements GameView {
     }
 
     private void initPanels() {
-        this.panels.put(SAVING_MENU, new SavingMenuPanel(this));
-        this.panels.put(SAVING_SELECTION, new SavingSelectionPanel(this));
+        this.panels.put(SAVE_MENU, new SaveMenuPanel(this));
+        this.panels.put(SAVE_SELECTION, new SaveSelectionPanel(this));
         this.panels.put(START, new StartMenuPanel(this));
         this.panels.put(SCOREBOARD, new ScoreBoardPanel(this));
         this.panels.put(CHOOSE_CHARACTER, new ChooseCharacterPanel(this));
@@ -105,10 +109,6 @@ public class GameViewImpl implements GameView {
         this.panels.put(UNLOCKABLE_POWERUPS, new UnlockablePowerUpsPanel(this));
         this.panels.put(IN_GAME_POWERUPS, new InGamePowerUpPanel(this));
         this.panels.forEach((name, panel) -> cardPanel.add(panel, name));
-    }
-
-    public void showScreen(String name) {
-        this.cardLayout.show(this.cardPanel, name);
     }
 
     public Dimension getFrameSize() {
@@ -149,15 +149,52 @@ public class GameViewImpl implements GameView {
         return this.controller;
     }
 
-    void updateSavingsList() {
-        var loadSavingPanel = (SavingSelectionPanel) panels.get(SAVING_SELECTION);
-        loadSavingPanel.updateSavingsList();
-    }
-
     @Override
     public void update(GameData data) {
         var gamePanel = (GamePanel) panels.get(GAME);
         gamePanel.setData(data);
         gamePanel.repaint();
     }
+
+    @Override
+    public void updateSaveList(List<String> saveNames) {
+        var loadSavePanel = (SaveSelectionPanel) panels.get(SAVE_SELECTION);
+        loadSavePanel.updateSavesList(saveNames);
+    }
+
+    @Override
+    public void showScreen(String name) {
+        this.cardLayout.show(this.cardPanel, name);
+    }
+
+    @Override
+    public String getSelectedCharacter() {
+        return ((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).getSelectedCharacter();
+    }
+
+    @Override
+    public String getSelectedSave() {
+        return ((SaveSelectionPanel) panels.get(SAVE_SELECTION)).getSelectedSave();
+    }
+
+    @Override
+    public void setStartListener(ActionListener listener) {
+        this.startListener = listener;
+    }
+
+    @Override
+    public void setNewSaveListener(ActionListener listener) {
+        ((SaveMenuPanel) panels.get(SAVE_MENU)).setNewSaveListener(listener);
+    }
+
+    @Override
+    public void setShowSaveListener(ActionListener listener) {
+        ((SaveMenuPanel) panels.get(SAVE_MENU)).setShowSaveListener(listener);
+    }
+    
+    @Override
+    public void setChooseSaveListener(ActionListener listener) {
+        ((SaveSelectionPanel) panels.get(SAVE_SELECTION)).setChooseSaveListener(listener);
+    }
+
 }
