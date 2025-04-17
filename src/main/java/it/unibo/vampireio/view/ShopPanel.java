@@ -1,6 +1,7 @@
 package it.unibo.vampireio.view;
 
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
 
 class ShopPanel extends BasePanel {
 
@@ -12,19 +13,19 @@ class ShopPanel extends BasePanel {
         super(view);
 
         this.charactersButton = this.addButton("CHARACTERS", 0, 0);
-        this.charactersButton.addActionListener(e -> {
-            this.view.showScreen(GameViewImpl.UNLOCKABLE_CHARACTERS);
-        });
-
-
         this.powerUpsButton = this.addButton("POWER UPS", 0, 1);
-        this.powerUpsButton.addActionListener(e -> {
-            this.view.showScreen(GameViewImpl.UNLOCKABLE_POWERUPS);
-        });
-
         this.backButton = this.addButton("BACK", 0, 2);
-        this.backButton.addActionListener(e -> {
-            this.view.showScreen(GameViewImpl.START);
-        });
+    }
+
+    void setCharactersShopListener(ActionListener listener) {
+        this.charactersButton.addActionListener(listener);
+    }
+
+    void setPowerUpsShopListener(ActionListener listener) {
+        this.powerUpsButton.addActionListener(listener);
+    }
+
+    void setBackListener(ActionListener listener) {
+        this.backButton.addActionListener(listener);
     }
 }

@@ -2,6 +2,8 @@ package it.unibo.vampireio.controller;
 
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.stream.Collectors;
 import it.unibo.vampireio.model.AreaAttack;
@@ -26,33 +28,114 @@ public class GameControllerImpl implements GameController {
     private final int frameRate = 60;
     private final int tickRate = 60;
 
+    private final Deque<String> screenHistory = new ArrayDeque<>();
+
     public GameControllerImpl() {
         this.model = new GameWorld();
         this.view = new GameViewImpl(this);
+        this.setListeners();        
+    }
 
+    private void setListeners() {
+        //START MENU LISTENERS
         this.view.setStartListener(e -> {
-            this.startGame(this.view.getSelectedCharacter());
-            this.view.update(this.getData());
-            this.view.showScreen(GameViewImpl.GAME);
+            this.showScreen(GameViewImpl.CHOOSE_CHARACTER);
         });
 
+        this.view.setScoreboardListener(e -> {
+            this.view.setScoreList(this.getScores());
+            this.showScreen(GameViewImpl.SCOREBOARD);
+        });
+
+        this.view.setShopListener(e -> {
+            this.showScreen(GameViewImpl.SHOP);
+        });
+
+        this.view.setLoadSaveListener(e -> {
+            this.showScreen(GameViewImpl.SAVE_MENU);
+        });
+
+        //CHOOSE CHARACTER LISTENERS
+        this.view.setConfirmCharacterListener(e -> {
+            this.startGame(this.view.getSelectedCharacter());
+            this.view.update(this.getData());
+            this.showScreen(GameViewImpl.GAME);
+        });
+
+        //SAVE MENU LISTENERS
         this.view.setNewSaveListener(e -> {
             this.model.createNewSave();
-            this.view.showScreen(GameViewImpl.START);
+            this.showScreen(GameViewImpl.START);
         });
 
         this.view.setShowSaveListener(e -> {
             this.view.updateSaveList(this.model.getSaveNames());
-            this.view.showScreen(GameViewImpl.SAVE_SELECTION);
+            this.showScreen(GameViewImpl.SAVE_SELECTION);
         });
 
+        //SAVE SELECTION LISTENERS
         this.view.setChooseSaveListener(e -> {
             String selectedSave = this.view.getSelectedSave();
             if (selectedSave != null) {
                 this.model.loadSave(selectedSave);
-                this.view.showScreen(GameViewImpl.START);
+                this.showScreen(GameViewImpl.START);
             }
         });
+
+        //SHOP LISTENERS
+        this.view.setCharactersShopListener(e -> {
+            this.showScreen(GameViewImpl.UNLOCKABLE_CHARACTERS);
+        });
+
+        this.view.setPowerUpsShopListener(e -> {
+            this.showScreen(GameViewImpl.UNLOCKABLE_POWERUPS);
+        });
+
+        //UNLOCKABLE CHARACTERS LISTENERS
+        this.view.setBuyCharactersListener(e -> {
+            //TODO
+        });
+
+        //UNLOCKABLE POWERUPS LISTENERS
+        this.view.setBuyPowerUpsListener(e -> {
+            //TODO
+        });
+
+        //PAUSE LISTENERS
+        this.view.setContinueListener(e -> {
+            //DEVE FAR RIPARTIRE IL GIOCO
+            this.showScreen(GameViewImpl.GAME);
+        });
+
+        this.view.setExitListener(e -> {
+            //DEVE TERMINARE IL GIOCO
+            this.showScreen(GameViewImpl.END_GAME);
+        });
+
+        //ENDGAME LISTENERS
+        this.view.setReturnMenuListener(e -> {
+            this.showScreen(GameViewImpl.START);
+        });
+
+        this.view.setBackListener(e -> goBack());
+
+        this.view.setQuitListener(e -> {
+            System.exit(0);
+        });
+    }
+
+    private void showScreen(String newScreen) {
+        this.screenHistory.push(newScreen);
+        this.view.showScreen(newScreen);
+    }
+
+    private void goBack() {
+        if (!this.screenHistory.isEmpty()) {
+            this.screenHistory.pop();
+            if (!this.screenHistory.isEmpty()) {
+                this.view.showScreen(this.screenHistory.peek());
+            }
+        }
     }
 
     @Override
@@ -194,8 +277,7 @@ public class GameControllerImpl implements GameController {
         );
     }
 
-    @Override
-    public List<ScoreData> getScores() {
+    private List<ScoreData> getScores() {
         Save currentSave = this.model.getCurrentSave();
         if (currentSave == null) {
             return List.of();

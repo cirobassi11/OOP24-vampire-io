@@ -14,27 +14,22 @@ class ChooseCharacterPanel extends BasePanel {
     ChooseCharacterPanel(GameViewImpl view) {
         super(view);
 
-        this.characterList = this.addScrollableList(List.of("antonio"), 0, 0);//////////
+        List<String> characterNames = List.of("antonio");//prendere la lista dei personaggi
 
+        this.characterList = this.addScrollableList(characterNames, 0, 0);///////////////
         this.confirmButton = this.addButton("CONFIRM", 0, 1);
-
         this.backButton = this.addButton("BACK", 0, 2);
-        this.backButton.addActionListener(e -> {
-            this.view.showScreen(GameViewImpl.START);//////////////
-        });
     }
 
     String getSelectedCharacter() {
         return this.characterList.getSelectedValue();
     }
 
-    void setStartListener(ActionListener listener) {
+    void setConfirmCharacterListener(ActionListener listener) {
         this.confirmButton.addActionListener(listener);
     }
 
     void setBackListener(ActionListener listener) {
         this.backButton.addActionListener(listener);
     }
-
-
 }

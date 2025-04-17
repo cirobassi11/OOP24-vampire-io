@@ -12,13 +12,8 @@ class SaveMenuPanel extends BasePanel {
         super(view);
         
         this.newSaveButton = this.addButton("NEW GAME", 0, 0);
-
         this.loadButton = this.addButton("LOAD GAME", 0, 1);
-
         this.quitButton = this.addButton("QUIT", 0, 2);
-        this.quitButton.addActionListener(e -> {
-            this.view.quit();
-        });
     }
 
     void setNewSaveListener(ActionListener listener) {

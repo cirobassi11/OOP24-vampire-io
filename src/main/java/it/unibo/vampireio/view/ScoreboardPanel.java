@@ -1,22 +1,23 @@
 package it.unibo.vampireio.view;
 
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 import it.unibo.vampireio.controller.ScoreData;
 import javax.swing.JButton;
 
-class ScoreBoardPanel extends BasePanel {
+class ScoreboardPanel extends BasePanel {
     
     private JButton backButton;
+    private List<ScoreData> scores;
 
-    ScoreBoardPanel(GameViewImpl view) {
+    ScoreboardPanel(GameViewImpl view) {
         super(view);
 
-        List<ScoreData> scores = this.view.getController().getScores();
-        List<String> scoreNames = new LinkedList<>();
-        for (ScoreData score : scores) {
+        List<String> scoreNames = List.of();
+        /*for (ScoreData score : scores) {
             scoreNames.add(String.valueOf(score.getScore()));
-        }
+        }*/
 
         this.addScrollableList(scoreNames, 0, 0);
         
@@ -24,6 +25,13 @@ class ScoreBoardPanel extends BasePanel {
         this.backButton.addActionListener(e -> {
             this.view.showScreen(GameViewImpl.START);
         });
+    }
 
+    void setScoreList(List<ScoreData> scores) {
+        this.scores = scores;
+    }
+
+    void setBackListener(ActionListener listener) {
+        this.backButton.addActionListener(listener);
     }
 }

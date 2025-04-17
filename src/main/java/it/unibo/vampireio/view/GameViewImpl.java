@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import it.unibo.vampireio.controller.GameData;
+import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.GameController;
 
 public class GameViewImpl implements GameView {
@@ -97,7 +98,7 @@ public class GameViewImpl implements GameView {
         this.panels.put(SAVE_MENU, new SaveMenuPanel(this));
         this.panels.put(SAVE_SELECTION, new SaveSelectionPanel(this));
         this.panels.put(START, new StartMenuPanel(this));
-        this.panels.put(SCOREBOARD, new ScoreBoardPanel(this));
+        this.panels.put(SCOREBOARD, new ScoreboardPanel(this));
         this.panels.put(CHOOSE_CHARACTER, new ChooseCharacterPanel(this));
         this.panels.put(GAME, new GamePanel(this));
         this.panels.put(END_GAME, new EndGamePanel(this));
@@ -176,8 +177,8 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setStartListener(ActionListener listener) {
-        ((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).setStartListener(listener);
+    public void setConfirmCharacterListener(ActionListener listener) {
+        ((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).setConfirmCharacterListener(listener);
     }
 
     @Override
@@ -195,4 +196,79 @@ public class GameViewImpl implements GameView {
         ((SaveSelectionPanel) panels.get(SAVE_SELECTION)).setChooseSaveListener(listener);
     }
 
+    @Override
+    public void setCharactersShopListener(ActionListener listener) {
+        ((ShopPanel) panels.get(SHOP)).setCharactersShopListener(listener);
+    }
+
+    @Override
+    public void setPowerUpsShopListener(ActionListener listener) {
+        ((ShopPanel) panels.get(SHOP)).setPowerUpsShopListener(listener);
+    }
+
+    @Override
+    public void setStartListener(ActionListener listener) {
+        ((StartMenuPanel) panels.get(START)).setStartListener(listener);
+    }
+
+    @Override
+    public void setScoreboardListener(ActionListener listener) {
+        ((StartMenuPanel) panels.get(START)).setScoreboardListener(listener);
+    }
+
+    @Override
+    public void setShopListener(ActionListener listener) {
+        ((StartMenuPanel) panels.get(START)).setShopListener(listener);
+    }
+
+    @Override
+    public void setLoadSaveListener(ActionListener listener) {
+        ((StartMenuPanel) panels.get(START)).setLoadSaveListener(listener);
+    }
+
+    @Override
+    public void setBuyCharactersListener(ActionListener listener) {
+        ((UnlockableCharactersPanel) panels.get(UNLOCKABLE_CHARACTERS)).setBuyCharactersListener(listener);
+    }
+
+    @Override
+    public void setBuyPowerUpsListener(ActionListener listener) {
+        ((UnlockablePowerUpsPanel) panels.get(UNLOCKABLE_POWERUPS)).setBuyPowerUpsListener(listener);
+    }
+
+    @Override
+    public void setReturnMenuListener(ActionListener listener) {
+        ((EndGamePanel) panels.get(END_GAME)).setReturnMenuListener(listener);
+    }
+
+    @Override
+    public void setContinueListener(ActionListener listener) {
+        ((PausePanel) panels.get(PAUSE)).setContinueListener(listener);
+    }
+
+    @Override
+    public void setExitListener(ActionListener listener) {
+        ((PausePanel) panels.get(PAUSE)).setExitListener(listener);
+    }
+
+    @Override
+    public void setScoreList(List<ScoreData> scores) {
+        ((ScoreboardPanel) panels.get(SCOREBOARD)).setScoreList(scores);
+    }
+    
+    @Override
+    public void setBackListener(ActionListener listener) {
+        ((SaveSelectionPanel) panels.get(SAVE_SELECTION)).setBackListener(listener);
+        ((ScoreboardPanel) panels.get(SCOREBOARD)).setBackListener(listener);
+        ((ShopPanel) panels.get(SHOP)).setBackListener(listener);
+        ((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).setBackListener(listener);
+        ((UnlockableCharactersPanel) panels.get(UNLOCKABLE_CHARACTERS)).setBackListener(listener);
+        ((UnlockablePowerUpsPanel) panels.get(UNLOCKABLE_POWERUPS)).setBackListener(listener);
+    }
+
+    @Override
+    public void setQuitListener(ActionListener listener) {
+        ((SaveMenuPanel) panels.get(SAVE_MENU)).setQuitListener(listener);
+        ((StartMenuPanel) panels.get(START)).setQuitListener(listener);
+    }
 }

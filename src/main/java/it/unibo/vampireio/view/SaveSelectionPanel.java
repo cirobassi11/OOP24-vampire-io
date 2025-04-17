@@ -1,5 +1,6 @@
 package it.unibo.vampireio.view;
 
+import java.awt.Desktop.Action;
 import java.awt.event.ActionListener;
 import java.util.List;
 
@@ -17,19 +18,17 @@ class SaveSelectionPanel extends BasePanel {
     SaveSelectionPanel(GameViewImpl view) {
         super(view);
 
-        this.savesList = this.addScrollableList(List.of(), 0, 0);
-        
+        this.savesList = this.addScrollableList(List.of(), 0, 0);        
         this.selectButton = this.addButton("SELECT", 0, 1);
-
         this.backButton = this.addButton("BACK", 0, 2);
-        this.backButton.addActionListener(e -> {
-            this.view.showScreen(GameViewImpl.SAVE_MENU);
-        });
-
     }
 
     void setChooseSaveListener(ActionListener listener) {
         this.selectButton.addActionListener(listener);
+    }
+    
+    void setBackListener(ActionListener listener) {
+        this.backButton.addActionListener(listener);
     }
 
     void updateSavesList(List<String> saves) {

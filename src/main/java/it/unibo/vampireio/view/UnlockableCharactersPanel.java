@@ -3,6 +3,8 @@ package it.unibo.vampireio.view;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JList;
+import java.awt.event.ActionListener;
+
 class UnlockableCharactersPanel extends BasePanel {
     private JButton buyButton;
     private JButton backButton;
@@ -11,15 +13,20 @@ class UnlockableCharactersPanel extends BasePanel {
     UnlockableCharactersPanel(GameViewImpl view) {
         super(view);
         
-        /*scrollablelist con tutti i characters*/
-        this.charactersList = this.addScrollableList(List.of(), 0, 0);
+        List<String> unlockableCharacters = List.of();
 
-        this.buyButton = this.addButton("BUY", 0, 1);
-        this.buyButton.addActionListener(e -> {});
-        
+        /*scrollablelist con tutti i characters*/
+        this.charactersList = this.addScrollableList(unlockableCharacters, 0, 0);
+        this.buyButton = this.addButton("BUY", 0, 1);        
         this.backButton = this.addButton("BACK", 0, 2);
-        this.backButton.addActionListener(e -> {
-            this.view.showScreen(GameViewImpl.SHOP);
-        });
     }
+    
+    void setBuyCharactersListener(ActionListener listener) {
+        this.buyButton.addActionListener(listener);
+    }
+    
+    void setBackListener(ActionListener listener) {
+        this.backButton.addActionListener(listener);
+    }
+
 }

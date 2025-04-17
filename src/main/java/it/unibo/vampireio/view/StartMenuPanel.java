@@ -1,6 +1,7 @@
 package it.unibo.vampireio.view;
 
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
 
 class StartMenuPanel extends BasePanel {
     
@@ -14,29 +15,30 @@ class StartMenuPanel extends BasePanel {
         super(view);
 
         this.startButton = this.addButton("START", 1, 0);
-        this.startButton.addActionListener(e -> {
-            this.view.showScreen(GameViewImpl.CHOOSE_CHARACTER);
-        });
-
         this.scoreboardButton = this.addButton("SCOREBOARD", 0, 1);
-        this.scoreboardButton.addActionListener(e -> {
-            this.view.showScreen(GameViewImpl.SCOREBOARD);
-        });
-
-        this.shopButton = this.addButton("SHOP", 1, 1);
-        this.shopButton.addActionListener(e -> {
-            this.view.showScreen(GameViewImpl.SHOP);
-        });
-                
-        this.loadSaveButton = this.addButton("LOAD SAVE", 2, 1);
-        this.loadSaveButton.addActionListener(e -> {
-            //this.view.updateSavesList();
-            this.view.showScreen(GameViewImpl.SAVE_MENU);
-        });
-        
+        this.shopButton = this.addButton("SHOP", 1, 1);                
+        this.loadSaveButton = this.addButton("LOAD SAVE", 2, 1);        
         this.quitButton = this.addButton("QUIT", 1, 2);
-        this.quitButton.addActionListener(e -> {
-            this.view.quit();
-        });
     }
+    
+    void setStartListener(ActionListener listener) {
+        this.startButton.addActionListener(listener);
+    }
+
+    void setScoreboardListener(ActionListener listener) {
+        this.scoreboardButton.addActionListener(listener);
+    }
+
+    void setShopListener(ActionListener listener) {
+        this.shopButton.addActionListener(listener);
+    }
+
+    void setLoadSaveListener(ActionListener listener) {
+        this.loadSaveButton.addActionListener(listener);
+    }
+
+    void setQuitListener(ActionListener listener) {
+        this.quitButton.addActionListener(listener);
+    }
+
 }
