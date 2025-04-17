@@ -1,6 +1,5 @@
 package it.unibo.vampireio.view;
 
-import java.awt.Desktop.Action;
 import java.awt.event.ActionListener;
 import java.util.List;
 

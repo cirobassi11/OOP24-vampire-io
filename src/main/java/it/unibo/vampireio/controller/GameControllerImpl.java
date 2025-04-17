@@ -57,9 +57,13 @@ public class GameControllerImpl implements GameController {
 
         //CHOOSE CHARACTER LISTENERS
         this.view.setConfirmCharacterListener(e -> {
-            this.startGame(this.view.getSelectedCharacter());
-            this.view.update(this.getData());
-            this.showScreen(GameViewImpl.GAME);
+
+            String selectedCharaStringacter = this.view.getSelectedCharacter();
+            if (selectedCharaStringacter != null) {
+                this.startGame(this.view.getSelectedCharacter());
+                this.view.update(this.getData());
+                this.showScreen(GameViewImpl.GAME);
+            }
         });
 
         //SAVE MENU LISTENERS

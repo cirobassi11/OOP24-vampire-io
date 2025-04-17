@@ -1,7 +1,6 @@
 package it.unibo.vampireio.view;
 
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
 import java.util.List;
 import it.unibo.vampireio.controller.ScoreData;
 import javax.swing.JButton;
