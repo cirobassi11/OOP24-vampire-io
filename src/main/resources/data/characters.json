@@ -1,59 +1,62 @@
-{
-  "base_stats": {
-    "max_health": 100,
-    "armor": 0,
-    "speed": 1,
-    "move_speed": 1,
-    "recovery": 0,
-    "might": 0,
-    "area": 1,
-    "duration": 1,
-    "amount": 0,
-    "cooldown": 1,
-    "luck": 0,
-    "growth": 0,
-    "greed": 0,
-    "curse": 0,
-    "magnet": 1,
-    "revival": 0,
-    "reroll": 0,
-    "skip": 0,
-    "banish": 0,
-    "charm": 0,
-    "defang": 0
-  },
-  "characters": [
+[
     {
-      "id": 0,
+      "characterStats": {
+        "statsMap": {
+          "MAX_HEALTH": 100.0,
+          "ARMOR": 0.0,
+          "SPEED": 1.0,
+          "MOVE_SPEED": 1.0,
+          "RECOVERY": 1.0,
+          "MIGHT": 1.0,
+          "AREA": 1.0,
+          "DURATION": 1.0,
+          "AMOUNT": 1.0,
+          "COOLDOWN": 1.0,
+          "GROWTH": 1.0,
+          "GREED": 1.0,
+          "CURSE": 0.0,
+          "MAGNET": 1.0,
+          "REVIVAL": 0.0,
+          "REROLL": 0.0,
+          "SKIP": 0.0,
+          "BANISH": 0.0
+        }
+      },
+      "id": "characters/antonio",
       "name": "Antonio Belpaese",
-      "hitbox": { "width": 40, "height": 40 },
-      "modifiers": {
-        "max_health": 20,
-        "armor": 1
-      }
+      "description": "Il personaggio Antonio",
+      "price": 100,
+      "currentLevel": 0,
+      "maxLevel": 0
     },
     {
-      "id": 1,
+      "characterStats": {
+        "statsMap": {
+          "MAX_HEALTH": 100.0,
+          "ARMOR": 0.0,
+          "SPEED": 1.0,
+          "MOVE_SPEED": 1.0,
+          "RECOVERY": 1.0,
+          "MIGHT": 1.0,
+          "AREA": 1.0,
+          "DURATION": 1.0,
+          "AMOUNT": 1.0,
+          "COOLDOWN": 1.0,
+          "GROWTH": 1.0,
+          "GREED": 1.0,
+          "CURSE": 0.0,
+          "MAGNET": 1.0,
+          "REVIVAL": 0.0,
+          "REROLL": 0.0,
+          "SKIP": 0.0,
+          "BANISH": 0.0
+        }
+      },
+      "id": "characters/imelda",
       "name": "Imelda Belpaese",
-      "hitbox": { "width": 40, "height": 40 },
-      "modifiers": {}
-    },
-    {
-      "id": 2,
-      "name": "Pasqualina Belpaese",
-      "hitbox": { "width": 40, "height": 40 },
-      "modifiers": {
-        "speed": 0.1
-      }
-    },
-    {
-      "id": 3,
-      "name": "Gennaro Belpaese",
-      "hitbox": { "width": 40, "height": 40 },
-      "modifiers": {
-        "max_health": 20,
-        "amount": 1
-      }
+      "description": "Il personaggio Imelda",
+      "price": 120,
+      "currentLevel": 0,
+      "maxLevel": 0
     }
   ]
-}

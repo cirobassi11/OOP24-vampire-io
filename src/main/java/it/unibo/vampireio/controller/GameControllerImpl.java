@@ -39,7 +39,11 @@ public class GameControllerImpl implements GameController {
     private void setListeners() {
         //START MENU LISTENERS
         this.view.setStartListener(e -> {
-            this.showScreen(GameViewImpl.CHOOSE_CHARACTER);
+            List<CharacterData> charactersData = this.model.getUnlockableCharacters().stream()
+                    .map(character -> new CharacterData(character.getId(), character.getName()))
+                    .collect(Collectors.toList());
+            this.view.setCharactersData(charactersData);
+            this.showScreen(GameViewImpl.CHOOSE_CHARACTER);    
         });
 
         this.view.setScoreboardListener(e -> {

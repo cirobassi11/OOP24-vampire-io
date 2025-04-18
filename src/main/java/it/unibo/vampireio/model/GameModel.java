@@ -21,4 +21,5 @@ public interface GameModel {
     void createNewSave();
     void loadSave(String selectedSaving);
     Save getCurrentSave();
+    List<UnlockableCharacter> getUnlockableCharacters();
 }

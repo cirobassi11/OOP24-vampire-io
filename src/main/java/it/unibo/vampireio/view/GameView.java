@@ -4,11 +4,14 @@ import java.util.List;
 import java.awt.event.ActionListener;
 import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.ScoreData;
+import it.unibo.vampireio.controller.CharacterData;
 
 public interface GameView {
     void update(GameData data);
     void updateSaveList(List<String> saves);
     void showScreen(String name);
+    
+    /* Button action listeners */
     void setConfirmCharacterListener(ActionListener listener);
     void setNewSaveListener(ActionListener listener);
     void setShowSaveListener(ActionListener listener);
@@ -26,7 +29,13 @@ public interface GameView {
     void setReturnMenuListener(ActionListener listener);
     void setContinueListener(ActionListener listener);
     void setExitListener(ActionListener listener);
+
+    //Setta i dati dei punteggi (nella scoreboard)
     void setScoreList(List<ScoreData> scores);
+    
+    /* Setta i dati dei personaggi (da far vedere quando li scegli) */
+    void setCharactersData(List<CharacterData> characters);
+
     String getSelectedCharacter();
     String getSelectedSave();
 }

@@ -2,6 +2,7 @@ package it.unibo.vampireio.model;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,23 +12,18 @@ public class GameWorld implements GameModel {
     private List<ProjectileAttack> projectileAttacks;
     private List<AreaAttack> areaAttacks;
     private List<Collectible> collectibles;
-
     private EnemySpawner enemySpawner;
 
+    private DataManager dataManager = new DataManager();
     private SaveManager saveManager = new SaveManager();
-
     private final Dimension visualSize = new Dimension(1280, 720);
 
     @Override
     public void initGame(String selectedCharacter) {
         this.enemySpawner = new EnemySpawnerImpl(this);
-
-        this.character = new Character("characters/" + selectedCharacter, selectedCharacter, new Stats(), new Rectangle(50, 50));////////////
-        
+        this.character = new Character(selectedCharacter, selectedCharacter, new Stats(), new Rectangle(50, 50));////////////         
         this.enemies = new LinkedList<>();
-
         this.collectibles = new LinkedList<>();
-
         this.areaAttacks = new LinkedList<>();
         this.projectileAttacks = new LinkedList<>();
     }
@@ -107,8 +103,16 @@ public class GameWorld implements GameModel {
     }
 
     @Override
+    public List<UnlockableCharacter> getUnlockableCharacters() {
+        List<UnlockableCharacter> unlockableCharacters = this.dataManager.getCharacterLoader().loadAllCharacters();
+        return unlockableCharacters;
+    }
+
+    @Override
     public List<UnlockablePowerUp> getUnlockablePowerUps() {
-        return List.of(); ///////////////////// TODO
+        //chiama metodo lettura da json
+        List<UnlockablePowerUp> unlockablePowerUps = List.of();
+        return unlockablePowerUps;
     }
 
     @Override
