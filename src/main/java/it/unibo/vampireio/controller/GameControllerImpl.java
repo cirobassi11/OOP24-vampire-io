@@ -33,10 +33,22 @@ public class GameControllerImpl implements GameController {
     public GameControllerImpl() {
         this.model = new GameWorld();
         this.view = new GameViewImpl(this);
-        this.setListeners();        
+        this.setListeners();
+        this.showScreen(GameViewImpl.SAVE_MENU);
     }
 
     private void setListeners() {
+        //SAVE MENU LISTENERS
+        this.view.setNewSaveListener(e -> {
+            this.model.createNewSave();
+            this.showScreen(GameViewImpl.START);
+        });
+
+        this.view.setShowSaveListener(e -> {
+            this.view.updateSaveList(this.model.getSaveNames());
+            this.showScreen(GameViewImpl.SAVE_SELECTION);
+        });
+
         //START MENU LISTENERS
         this.view.setStartListener(e -> {
             List<CharacterData> charactersData = this.model.getUnlockableCharacters().stream()
@@ -61,24 +73,12 @@ public class GameControllerImpl implements GameController {
 
         //CHOOSE CHARACTER LISTENERS
         this.view.setConfirmCharacterListener(e -> {
-
             String selectedCharaStringacter = this.view.getSelectedCharacter();
             if (selectedCharaStringacter != null) {
                 this.startGame(this.view.getSelectedCharacter());
                 this.view.update(this.getData());
                 this.showScreen(GameViewImpl.GAME);
             }
-        });
-
-        //SAVE MENU LISTENERS
-        this.view.setNewSaveListener(e -> {
-            this.model.createNewSave();
-            this.showScreen(GameViewImpl.START);
-        });
-
-        this.view.setShowSaveListener(e -> {
-            this.view.updateSaveList(this.model.getSaveNames());
-            this.showScreen(GameViewImpl.SAVE_SELECTION);
         });
 
         //SAVE SELECTION LISTENERS
@@ -299,5 +299,10 @@ public class GameControllerImpl implements GameController {
                 score.getScore()
             ))
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public void showError(String message) {
+        this.view.showError(message);
     }
 }

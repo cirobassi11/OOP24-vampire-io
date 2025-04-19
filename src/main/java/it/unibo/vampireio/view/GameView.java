@@ -38,4 +38,6 @@ public interface GameView {
 
     String getSelectedCharacter();
     String getSelectedSave();
+
+    void showError(String message);
 }

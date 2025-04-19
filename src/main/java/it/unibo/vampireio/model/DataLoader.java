@@ -1,11 +1,11 @@
 package it.unibo.vampireio.model;
 
-public class DataManager {
+public class DataLoader {
 
     private final CharacterDataLoader characterLoader;
     private final PowerUpDataLoader powerUpLoader;
 
-    public DataManager() {
+    public DataLoader() {
         this.characterLoader = new CharacterDataLoader();
         this.powerUpLoader = new PowerUpDataLoader();
     }

@@ -1,12 +1,20 @@
 package it.unibo.vampireio.model;
 
+import java.awt.Shape;
+import java.awt.geom.Point2D;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class GameWorld implements GameModel {
+
+    private final Dimension visualSize = new Dimension(1280, 720);
+    static Shape ENTITY_SHAPE = new Rectangle(64, 64);
+
+    private List<UnlockableCharacter> unlockableCharacters;
+    private List<UnlockablePowerUp> unlockablePowerUps;
+
     private Character character;
     private List<Enemy> enemies;
     private List<ProjectileAttack> projectileAttacks;
@@ -14,14 +22,20 @@ public class GameWorld implements GameModel {
     private List<Collectible> collectibles;
     private EnemySpawner enemySpawner;
 
-    private DataManager dataManager = new DataManager();
+    private DataLoader dataLoader = new DataLoader();
     private SaveManager saveManager = new SaveManager();
-    private final Dimension visualSize = new Dimension(1280, 720);
-
+    
     @Override
     public void initGame(String selectedCharacter) {
         this.enemySpawner = new EnemySpawnerImpl(this);
-        this.character = new Character(selectedCharacter, selectedCharacter, new Stats(), new Rectangle(50, 50));////////////         
+
+        UnlockableCharacter selectedUnlockableCharacter = this.unlockableCharacters
+                .stream()
+                .filter(character -> character.getId().equals(selectedCharacter))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Character not found"));
+
+        this.character = new Character(selectedCharacter, selectedUnlockableCharacter.getName(), selectedUnlockableCharacter.getCharacterStats(), GameWorld.ENTITY_SHAPE);         
         this.enemies = new LinkedList<>();
         this.collectibles = new LinkedList<>();
         this.areaAttacks = new LinkedList<>();
@@ -29,13 +43,23 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public void update(long tickTime) { // TODO: add input
-        System.out.println("AGGIORNAMENTO MODELLOOO");
+    public void update(long tickTime) {
         synchronized(this) {
+            
             //muove il personaggio (non dovrebbe sovrapporsi a nemici)
-            //controlla collisioni con nemici o positionable
+            this.character.setDirection(new Point2D.Double(-0.2, 0.2));/////////
+            this.character.move(tickTime);
 
             // muove tutti i nemici (controllando anche che non si sovrappongano)
+            for (Enemy enemy : this.enemies) {
+                enemy.move(tickTime);
+                enemy.onCollision(this.character);
+            }
+
+            //controlla collisioni con collezionabili
+            for (Collectible collectible : this.collectibles) {
+                //TODO
+            }
 
             //spanwna i nemici FUORI DALLA VISUALE
             //this.enemySpawner.update(tickTime);
@@ -104,15 +128,16 @@ public class GameWorld implements GameModel {
 
     @Override
     public List<UnlockableCharacter> getUnlockableCharacters() {
-        List<UnlockableCharacter> unlockableCharacters = this.dataManager.getCharacterLoader().loadAllCharacters();
-        return unlockableCharacters;
+        List<UnlockableCharacter> unlockableCharacters = this.dataLoader.getCharacterLoader().loadAllCharacters();
+        this.unlockableCharacters = unlockableCharacters;
+        return List.copyOf(unlockableCharacters);
     }
 
     @Override
     public List<UnlockablePowerUp> getUnlockablePowerUps() {
-        //chiama metodo lettura da json
-        List<UnlockablePowerUp> unlockablePowerUps = List.of();
-        return unlockablePowerUps;
+        List<UnlockablePowerUp> unlockablePowerUps = this.dataLoader.getPowerUpLoader().loadAllPowerUps();
+        this.unlockablePowerUps = unlockablePowerUps;
+        return List.copyOf(unlockablePowerUps);
     }
 
     @Override

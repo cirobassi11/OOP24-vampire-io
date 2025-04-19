@@ -278,4 +278,9 @@ public class GameViewImpl implements GameView {
         ((StartMenuPanel) panels.get(START)).setQuitListener(listener);
     }
 
+    @Override
+    public void showError(String message) {
+        javax.swing.JOptionPane.showMessageDialog(frame, message, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+
 }
