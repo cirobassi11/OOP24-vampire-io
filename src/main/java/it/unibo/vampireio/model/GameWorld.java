@@ -47,7 +47,7 @@ public class GameWorld implements GameModel {
         synchronized(this) {
             
             //muove il personaggio (non dovrebbe sovrapporsi a nemici)
-            this.character.setDirection(new Point2D.Double(-0.2, 0.2));/////////
+            this.character.setDirection(new Point2D.Double(0.15, 0.15));/////////
             this.character.move(tickTime);
 
             // muove tutti i nemici (controllando anche che non si sovrappongano)
