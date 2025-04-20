@@ -14,8 +14,15 @@ class GamePanel extends JPanel {
 
     private GameViewImpl view;
     private GameData data;
-    private final int tileSize = 64;
+
     private ImageManager imageManager = new ImageManager();
+    
+    private final Dimension mapTileDimension = new Dimension(64, 64);
+    private final Dimension livingEntityDimension = new Dimension(64, 64);
+    private final Dimension projectileDimension = new Dimension(32, 32);
+    private final Dimension areaAttackDimension = new Dimension(64, 64);
+    private final Dimension collectibleDimension = new Dimension(32, 32);
+    private final Dimension healthBarDimension = new Dimension(42, 7);
 
     private String lastCharacterDirection = "l";
     private int currentCharacterFrame = 0;
@@ -42,45 +49,44 @@ class GamePanel extends JPanel {
 
         LivingEntityData character = this.data.getCharacterData();
 
-        int screenCenterX = this.getWidth() / 2 - this.tileSize / 2;
-        int screenCenterY = this.getHeight() / 2 - this.tileSize / 2;
+        int screenCenterX = this.getWidth() / 2 - this.livingEntityDimension.width / 2;
+        int screenCenterY = this.getHeight() / 2 - this.livingEntityDimension.height / 2;
 
         int cameraOffsetX = (int) (screenCenterX - character.getPosition().getX() * scale);
         int cameraOffsetY = (int) (screenCenterY - character.getPosition().getY() * scale);
 
         // Start map tile position
-        int startTileX = (int) Math.floor((character.getPosition().getX() - screenCenterX / scale) / tileSize);
-        int startTileY = (int) Math.floor((character.getPosition().getY() - screenCenterY / scale) / tileSize);
+        int startTileX = (int) Math.floor((character.getPosition().getX() - screenCenterX / scale) / this.livingEntityDimension.width);
+        int startTileY = (int) Math.floor((character.getPosition().getY() - screenCenterY / scale) / this.livingEntityDimension.height);
 
         // How many tiles to draw
-        int tilesNumX = (int) Math.ceil(fov.getWidth() / tileSize) + 2;
-        int tilesNumY = (int) Math.ceil(fov.getHeight() / tileSize) + 2;
+        int tilesNumX = (int) Math.ceil(fov.getWidth() / this.mapTileDimension.width) + 2;
+        int tilesNumY = (int) Math.ceil(fov.getHeight() / this.mapTileDimension.height) + 2;
 
         // Draw the tiles
         for (int y = 0; y < tilesNumY; y++) {
             for (int x = 0; x < tilesNumX; x++) {
-                int worldX = (startTileX + x) * tileSize;
-                int worldY = (startTileY + y) * tileSize;
+                int worldX = (startTileX + x) * this.mapTileDimension.width;
+                int worldY = (startTileY + y) * this.mapTileDimension.height;
 
                 int screenX = (int) (worldX * scale + cameraOffsetX);
                 int screenY = (int) (worldY * scale + cameraOffsetY);
 
                 Image tile = this.imageManager.getImage("map");
                 if (tile != null) {
-                    int drawSize = (int) (tileSize * scale) + 2;
-                    g.drawImage(tile, screenX - 1, screenY - 1, drawSize, drawSize, null);
+                    g.drawImage(tile, screenX - 1, screenY - 1, (int) (this.mapTileDimension.width * scale) + 2, (int) (this.mapTileDimension.height * scale) + 2, null);
                 }
             }
         }
 
         //Draws the collectibles
         for(PositionableData collectible : this.data.getCollectiblesData()) {
-            if(this.isVisible(collectible, fov, cameraOffsetX, cameraOffsetY)) {
+            if(this.isVisible(collectible, this.collectibleDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int collectibleX = (int) (collectible.getPosition().getX() * scale + cameraOffsetX);
                 int collectibleY = (int) (collectible.getPosition().getY() * scale + cameraOffsetY);
                 Image tile = this.imageManager.getImage(collectible.getId());
                 if(tile != null) {
-                    g.drawImage(tile, collectibleX, collectibleY, (int) (tileSize * scale), (int) (tileSize * scale), null);
+                    g.drawImage(tile, collectibleX, collectibleY, (int) (this.collectibleDimension.width * scale), (int) (this.collectibleDimension.height * scale), null); //TODO: ANIMAZION
                 }
             }
         }
@@ -88,13 +94,13 @@ class GamePanel extends JPanel {
         //Draws the projectiles
         Graphics2D g2d = (Graphics2D) g;
         for (PositionableData projectile : this.data.getProjectilesData()) { //TODO: ANIMAZIONI??
-            if(this.isVisible(projectile, fov, cameraOffsetX, cameraOffsetY)) {
+            if(this.isVisible(projectile, this.projectileDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int projectileX = (int) (projectile.getPosition().getX() * scale + cameraOffsetX);
                 int projectileY = (int) (projectile.getPosition().getY() * scale + cameraOffsetY);
                 Image tile = this.imageManager.getImage(projectile.getId());
-                if (tile != null) {                                                                 // DA CONTROLLARE
-                    int width = (int) (tileSize * scale);
-                    int height = (int) (tileSize * scale);
+                if (tile != null) {
+                    int width = (int) (this.projectileDimension.width * scale);
+                    int height = (int) (this.projectileDimension.height * scale);
                     double rotationAngle = Math.atan2(projectile.getDirection().getY(), projectile.getDirection().getX());
                     AffineTransform transform = new AffineTransform();
                     transform.translate(projectileX + width / 2, projectileY + height / 2);
@@ -107,25 +113,25 @@ class GamePanel extends JPanel {
 
         //Draws the area attacks
         for(PositionableData areaAttack : this.data.getAreaAttacksData()) {
-            if(this.isVisible(areaAttack, fov, cameraOffsetX, cameraOffsetY)) {
+            if(this.isVisible(areaAttack, this.areaAttackDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int areaAttackX = (int) (areaAttack.getPosition().getX() * scale + cameraOffsetX);
                 int areaAttackY = (int) (areaAttack.getPosition().getY() * scale + cameraOffsetY);
                 Image tile = this.imageManager.getImage(areaAttack.getId());
                 if(tile != null) {
-                    g.drawImage(tile, areaAttackX, areaAttackY, (int) (tileSize * scale), (int) (tileSize * scale), null); //TODO: ANIMAZIONI????
+                    g.drawImage(tile, areaAttackX, areaAttackY, (int) (this.areaAttackDimension.width * scale), (int) (this.areaAttackDimension.height * scale), null); //TODO: AN
                 }
             }
         }
 
         //Draws the enemies
         for(LivingEntityData enemy : this.data.getEnemiesData()) {
-            if(this.isVisible(enemy, fov, cameraOffsetX, cameraOffsetY)) {
+            if(this.isVisible(enemy, this.livingEntityDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int enemyX = (int) (enemy.getPosition().getX() * scale + cameraOffsetX);
                 int enemyY = (int) (enemy.getPosition().getY() * scale + cameraOffsetY);
                 String directionSuffix = "_" + (enemy.getDirection().getX() <= 0 ? "l" : "r");
                 Image tile = this.imageManager.getImage(enemy.getId() + directionSuffix);
                 if(tile != null) {
-                    g.drawImage(tile, enemyX, enemyY, (int) (tileSize * scale), (int) (tileSize * scale), null); //TODO: ANIMAZIONI??? + DIVENTANO BIANCHI SE COLPITI
+                    g.drawImage(tile, enemyX, enemyY, (int) (this.livingEntityDimension.width * scale), (int) (this.livingEntityDimension.height * scale), null); //TODO: ANIMAZIONI??? + DIVENTANO BIANCHI SE COLPITI
                 }
             }
         }
@@ -147,7 +153,7 @@ class GamePanel extends JPanel {
         }
         Image tile = this.imageManager.getImage(character.getId() + "/" + this.currentCharacterFrame + directionSuffix);
         if(tile != null) {
-            g.drawImage(tile, characterX, characterY, (int) (tileSize * scale), (int) (tileSize * scale), null); //TODO: DIVENTA ROSSO SE COLPITO
+            g.drawImage(tile, characterX, characterY, (int) (this.livingEntityDimension.width * scale), (int) (this.livingEntityDimension.height * scale), null); //TODO: DIVENTA ROSSO SE COLPITO
         }
         
         long elapsedTime = this.data.getElapsedTime();
@@ -155,10 +161,24 @@ class GamePanel extends JPanel {
             this.currentCharacterFrame = (this.currentCharacterFrame + 1) % this.characterFrames;
             this.lastCharacterFrameTime = elapsedTime;
         }
+
+        //Draws the HUD
+        //Healthbar
+        int healthPercent = (int) ((character.getHealth() / character.getMaxHealth()) * 100);
+        healthPercent = (int) Math.round(healthPercent / 25.0) * 25; // arrotonda a multiplo di di 25
+        Image healthBarImage = this.imageManager.getImage("hud/healthbar/" + healthPercent);
+        if (healthBarImage != null) {
+            g.drawImage(healthBarImage, characterX + (int) ((this.livingEntityDimension.width - this.healthBarDimension.width) * scale) / 2, characterY + (int) (this.livingEntityDimension.height * scale), (int) (this.healthBarDimension.width * scale), (int) (this.healthBarDimension.height * scale), null);
+        }
     }
 
-    private boolean isVisible(PositionableData positionable, Dimension fov, int cameraOffsetX, int cameraOffsetY) {
-        return true;
-        //TODO
+    // True if the object is visible on the screen
+    private boolean isVisible(PositionableData positionable, Dimension objectDimension, double scale, int cameraOffsetX, int cameraOffsetY) {
+        int screenX = (int) (positionable.getPosition().getX() * scale + cameraOffsetX);
+        int screenY = (int) (positionable.getPosition().getY() * scale + cameraOffsetY);
+        int width = (int) (objectDimension.width * scale);
+        int height = (int) (objectDimension.height * scale);
+
+        return !(screenX + width < 0 || screenX > this.getWidth() || screenY + height < 0 || screenY > this.getHeight());
     }
 }
