@@ -42,7 +42,7 @@ class ChooseCharacterPanel extends BasePanel {
         int selectedIndex = this.characterList.getSelectedIndex();
         if (selectedIndex < 0 || selectedIndex >= this.charactersData.size()) {
             return null;
-        }  
+        }
         return this.charactersData.get(selectedIndex).getId();
     }
 
