@@ -3,17 +3,21 @@ package it.unibo.vampireio.controller;
 import java.util.List;
 
 public class GameData {
-    private long elapsedTime;
     private VisibleMapSizeData VisibleMapSize;
+    private long elapsedTime;
+    private int level;
+    private int levelPercentage;
     private LivingEntityData character;
     private List<LivingEntityData> enemies;
     private List<PositionableData> projectiles;
     private List<PositionableData> areaAttacks;
     private List<PositionableData> collectibles;
 
-    public GameData(long elapsedTime, VisibleMapSizeData VisibleMapSize, LivingEntityData character, List<LivingEntityData> enemies, List<PositionableData> projectiles, List<PositionableData> areaAttacks, List<PositionableData> collectibles) {
-        this.elapsedTime = elapsedTime;
+    public GameData(VisibleMapSizeData VisibleMapSize, long elapsedTime, int level, int levelPercentage, LivingEntityData character, List<LivingEntityData> enemies, List<PositionableData> projectiles, List<PositionableData> areaAttacks, List<PositionableData> collectibles) {
         this.VisibleMapSize = VisibleMapSize;
+        this.elapsedTime = elapsedTime;
+        this.level = level;
+        this.levelPercentage = levelPercentage;
         this.character = character;
         this.enemies = enemies;
         this.projectiles = projectiles;
@@ -23,6 +27,14 @@ public class GameData {
 
     public long getElapsedTime() {
         return this.elapsedTime;
+    }
+
+    public int getLevel() {
+        return this.level;
+    }
+
+    public int getLevelPercentage() {
+        return this.levelPercentage;
     }
 
     public VisibleMapSizeData getVisibleMapSizeData() {

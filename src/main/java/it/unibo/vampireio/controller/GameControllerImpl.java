@@ -51,10 +51,10 @@ public class GameControllerImpl implements GameController {
 
         //START MENU LISTENERS
         this.view.setStartListener(e -> {
-            List<CharacterData> charactersData = this.model.getUnlockableCharacters().stream()
-                    .map(character -> new CharacterData(character.getId(), character.getName()))
+            List<UnlockableCharacterData> unlockableCharactersData = this.model.getUnlockableCharacters().stream()
+                    .map(character -> new UnlockableCharacterData(character.getId(), character.getName()))
                     .collect(Collectors.toList());
-            this.view.setCharactersData(charactersData);
+            this.view.setCharactersData(unlockableCharactersData);
             this.showScreen(GameViewImpl.CHOOSE_CHARACTER);    
         });
 
@@ -275,8 +275,10 @@ public class GameControllerImpl implements GameController {
             .collect(Collectors.toList());
 
         return new GameData(
-            this.getElapsedTime(),
             visibleMapSizeData, 
+            this.getElapsedTime(),
+            10, //TODO: level///////////////////////////////
+            50, //TODO: levelPercentage/////////////////////////////
             characterData, 
             enemiesData, 
             projectileAttacksData, 

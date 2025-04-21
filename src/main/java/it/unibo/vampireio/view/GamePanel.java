@@ -1,5 +1,7 @@
 package it.unibo.vampireio.view;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -165,11 +167,25 @@ class GamePanel extends JPanel {
         //Draws the HUD
         //Healthbar
         int healthPercent = (int) ((character.getHealth() / character.getMaxHealth()) * 100);
-        healthPercent = (int) Math.round(healthPercent / 25.0) * 25; // arrotonda a multiplo di di 25
+        healthPercent = (int) Math.round(healthPercent / 25.0) * 25;                            // arrotonda a multiplo di di 25
         Image healthBarImage = this.imageManager.getImage("hud/healthbar/" + healthPercent);
         if (healthBarImage != null) {
             g.drawImage(healthBarImage, characterX + (int) ((this.livingEntityDimension.width - this.healthBarDimension.width) * scale) / 2, characterY + (int) (this.livingEntityDimension.height * scale), (int) (this.healthBarDimension.width * scale), (int) (this.healthBarDimension.height * scale), null);
         }
+
+        //Level bar
+        int levelPercentage = this.data.getLevelPercentage();
+        g.setColor(Color.BLACK);
+        g.fillRect(0, (int) (2 * scale), this.getWidth(), (int) (20 * scale));
+        g.setColor(Color.BLUE);
+        g.fillRect(0, (int) (2 * scale), (int) ((this.getWidth() * levelPercentage) / 100), (int) (20 * scale));
+        g2d.setColor(Color.YELLOW);
+        g2d.setStroke(new BasicStroke((int) (3 * scale)));
+        g2d.drawRect(0, (int) (2 * scale), this.getWidth(), (int) (20 * scale));
+        g.setColor(Color.WHITE);
+        g.setFont(g.getFont().deriveFont((float) (15 * scale)));
+        g.drawString("LV " + this.data.getLevel(), (int) (this.getWidth() - 50 * scale), (int) (15 * scale));
+        
     }
 
     // True if the object is visible on the screen

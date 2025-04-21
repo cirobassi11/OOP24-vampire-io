@@ -4,7 +4,7 @@ import java.util.List;
 import java.awt.event.ActionListener;
 import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.ScoreData;
-import it.unibo.vampireio.controller.CharacterData;
+import it.unibo.vampireio.controller.UnlockableCharacterData;
 
 public interface GameView {
     void update(GameData data);
@@ -34,7 +34,7 @@ public interface GameView {
     void setScoreList(List<ScoreData> scores);
     
     /* Setta i dati dei personaggi (da far vedere quando li scegli) */
-    void setCharactersData(List<CharacterData> characters);
+    void setCharactersData(List<UnlockableCharacterData> unlockableCharactersData);
 
     String getSelectedCharacter();
     String getSelectedSave();

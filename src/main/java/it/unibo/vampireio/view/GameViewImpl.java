@@ -14,8 +14,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import it.unibo.vampireio.controller.GameData;
-import it.unibo.vampireio.controller.CharacterData;
 import it.unibo.vampireio.controller.ScoreData;
+import it.unibo.vampireio.controller.UnlockableCharacterData;
 import it.unibo.vampireio.controller.GameController;
 
 public class GameViewImpl implements GameView {
@@ -168,8 +168,8 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-	public void setCharactersData(List<CharacterData> characters) {
-		((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).setCharacterData(characters);
+	public void setCharactersData(List<UnlockableCharacterData> unlockableCharactersData) {
+		((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).setCharacterData(unlockableCharactersData);
 	}
 
     @Override

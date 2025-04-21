@@ -4,11 +4,11 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JList;
 import javax.swing.JButton;
-import it.unibo.vampireio.controller.CharacterData;
+import it.unibo.vampireio.controller.UnlockableCharacterData;
 
 class ChooseCharacterPanel extends BasePanel {
 
-    private List<CharacterData> charactersData = List.of();
+    private List<UnlockableCharacterData> unlockableCharactersData = List.of();
     private List<String> characterNames = List.of();
 
     private JButton confirmButton;
@@ -23,16 +23,16 @@ class ChooseCharacterPanel extends BasePanel {
         this.backButton = this.addButton("BACK", 0, 2);
     }
 
-    void setCharacterData(List<CharacterData> characters) {
-        this.charactersData = characters;
-        if(characters == null || characters.isEmpty()) {
+    void setCharacterData(List<UnlockableCharacterData> unlockableCharactersData) {
+        this.unlockableCharactersData = unlockableCharactersData;
+        if(unlockableCharactersData == null || unlockableCharactersData.isEmpty()) {
             this.characterNames = List.of();
             return;
         }
         else {
-            this.charactersData = characters;
-            this.characterNames = characters.stream()
-                    .map(CharacterData::getName)
+            this.unlockableCharactersData = unlockableCharactersData;
+            this.characterNames = unlockableCharactersData.stream()
+                    .map(UnlockableCharacterData::getName)
                     .toList();
             this.characterList.setListData(this.characterNames.toArray(new String[0]));
         }
@@ -40,10 +40,10 @@ class ChooseCharacterPanel extends BasePanel {
 
     String getSelectedCharacter() {
         int selectedIndex = this.characterList.getSelectedIndex();
-        if (selectedIndex < 0 || selectedIndex >= this.charactersData.size()) {
+        if (selectedIndex < 0 || selectedIndex >= this.unlockableCharactersData.size()) {
             return null;
         }
-        return this.charactersData.get(selectedIndex).getId();
+        return this.unlockableCharactersData.get(selectedIndex).getId();
     }
 
     void setConfirmCharacterListener(ActionListener listener) {

@@ -1,11 +1,11 @@
 package it.unibo.vampireio.controller;
 
-public class CharacterData {
+public class UnlockableCharacterData {
 
     private String id;
     private String name;
 
-    public CharacterData(String id, String name) {
+    public UnlockableCharacterData(String id, String name) {
         this.id = id;
         this.name = name;
     }
