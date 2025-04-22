@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 
 class UnlockablePowerUpsPanel extends BasePanel {
+    
     private JButton buyButton;
     private JButton backButton;
     private JList powerupList;

@@ -13,8 +13,8 @@ public class SaveManager {
     private Save currentSave;
     private List<String> savesNames;
 
-    private final String savingError = "An error occurred during saving of the file";
-    private final String readingError = "An error occurred during reading of the file";
+    private final String savingError = "An error occurred while saving the file";
+    private final String readingError = "An error occurred while reading the file";
 
     public SaveManager(GameController gameController) {
         this.gameController = gameController;

@@ -161,13 +161,13 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-	public void setCharactersData(List<UnlockableCharacterData> unlockableCharactersData) {
-		((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).setCharacterData(unlockableCharactersData);
+	public void setChoosableCharactersData(List<UnlockableCharacterData> choosableCharactersData) {
+		((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).setChoosableCharactersData(choosableCharactersData);
 	}
 
     @Override
-    public String getSelectedCharacter() {
-        return ((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).getSelectedCharacter();
+    public String getChoosedCharacter() {
+        return ((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).getChoosedCharacter();
     }
 
     @Override
@@ -223,6 +223,16 @@ public class GameViewImpl implements GameView {
     @Override
     public void setLoadSaveListener(ActionListener listener) {
         ((StartMenuPanel) panels.get(START)).setLoadSaveListener(listener);
+    }
+
+    @Override
+	public void setUnlockableCharactersData(List<UnlockableCharacterData> unlockableCharactersData) {
+		((UnlockableCharactersPanel) panels.get(UNLOCKABLE_CHARACTERS)).setUnlockableCharactersData(unlockableCharactersData);
+	}
+
+    @Override
+    public String getSelectedCharacter() {
+        return ((UnlockableCharactersPanel) panels.get(UNLOCKABLE_CHARACTERS)).getSelectedCharacter();
     }
 
     @Override

@@ -16,10 +16,11 @@ public interface GameModel {
     List<ProjectileAttack> getProjectileAttacks();
     List<AreaAttack> getAreaAttacks();
     List<Collectible> getCollectibles();
-    List<UnlockablePowerUp> getUnlockablePowerUps();
+    List<UnlockablePowerUp> getLockedPowerUps();
     List<String> getSaveNames();
     void createNewSave();
     void loadSave(String selectedSaving);
     Save getCurrentSave();
-    List<UnlockableCharacter> getUnlockableCharacters();
+    List<UnlockableCharacter> getChoosableCharacters();
+    List<UnlockableCharacter> getLockedCharacters();
 }

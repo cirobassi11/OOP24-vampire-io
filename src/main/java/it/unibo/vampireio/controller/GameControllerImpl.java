@@ -51,10 +51,10 @@ public class GameControllerImpl implements GameController {
 
         //START MENU LISTENERS
         this.view.setStartListener(e -> {
-            List<UnlockableCharacterData> unlockableCharactersData = this.model.getUnlockableCharacters().stream()
+            List<UnlockableCharacterData> choosableCharactersData = this.model.getChoosableCharacters().stream()
                     .map(character -> new UnlockableCharacterData(character.getId(), character.getName()))
                     .collect(Collectors.toList());
-            this.view.setCharactersData(unlockableCharactersData);
+            this.view.setChoosableCharactersData(choosableCharactersData);
             this.showScreen(GameViewImpl.CHOOSE_CHARACTER);    
         });
 
@@ -73,7 +73,7 @@ public class GameControllerImpl implements GameController {
 
         //CHOOSE CHARACTER LISTENERS
         this.view.setConfirmCharacterListener(e -> {
-            String selectedCharacter = this.view.getSelectedCharacter();
+            String selectedCharacter = this.view.getChoosedCharacter();
             if (selectedCharacter != null) {
                 this.startGame(selectedCharacter);
                 this.view.update(this.getData());
@@ -92,6 +92,10 @@ public class GameControllerImpl implements GameController {
 
         //SHOP LISTENERS
         this.view.setCharactersShopListener(e -> {
+            List<UnlockableCharacterData> unlockableCharactersData = this.model.getLockedCharacters().stream()
+                    .map(character -> new UnlockableCharacterData(character.getId(), character.getName()))
+                    .collect(Collectors.toList());
+            this.view.setUnlockableCharactersData(unlockableCharactersData);
             this.showScreen(GameViewImpl.UNLOCKABLE_CHARACTERS);
         });
 

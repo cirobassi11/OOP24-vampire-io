@@ -39,6 +39,7 @@ public class Save implements Serializable {
             0, 
             new LinkedList<Score>()
         );
+        this.unlockedCharacters.add(new UnlockableCharacter("characters/antonio", "Antonio Belpaese", "descrizione", 0, new Stats()));/////ANDREBBE LETTO DA JSON??
     }
     
     public String getSaveTime() {

@@ -15,9 +15,6 @@ public class GameWorld implements GameModel {
     private final Dimension visualSize = new Dimension(1280, 720);
     static Shape ENTITY_SHAPE = new Rectangle(64, 64);
 
-    private List<UnlockableCharacter> unlockableCharacters;
-    private List<UnlockablePowerUp> unlockablePowerUps;
-
     private Character character;
     private List<Enemy> enemies;
     private List<ProjectileAttack> projectileAttacks;
@@ -39,7 +36,7 @@ public class GameWorld implements GameModel {
     public void initGame(String selectedCharacter) {
         this.enemySpawner = new EnemySpawnerImpl(this);
 
-        UnlockableCharacter selectedUnlockableCharacter = this.unlockableCharacters
+        UnlockableCharacter selectedUnlockableCharacter = this.saveManager.getCurrentSave().getUnlockedCharacters() //SI POTREBBE FARE UN METODO DEL LOADER??
                 .stream()
                 .filter(character -> character.getId().equals(selectedCharacter))
                 .findFirst()
@@ -137,16 +134,28 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public List<UnlockableCharacter> getUnlockableCharacters() {
-        List<UnlockableCharacter> unlockableCharacters = this.dataLoader.getCharacterLoader().loadAllCharacters();
-        this.unlockableCharacters = unlockableCharacters;
-        return List.copyOf(unlockableCharacters);
+    public List<UnlockableCharacter> getChoosableCharacters() {
+        return List.copyOf(this.saveManager.getCurrentSave().getUnlockedCharacters());
     }
 
     @Override
-    public List<UnlockablePowerUp> getUnlockablePowerUps() {
+    public List<UnlockableCharacter> getLockedCharacters() {
+        List<UnlockableCharacter> unlockedCharacters = this.saveManager.getCurrentSave().getUnlockedCharacters();
+        List<UnlockableCharacter> unlockableCharacters = this.dataLoader.getCharacterLoader().loadAllCharacters();
+        
+        List<String> unlockedIds = unlockedCharacters.stream()
+            .map(UnlockableCharacter::getId)
+            .toList();
+
+        List<UnlockableCharacter> lockedCharacters = unlockableCharacters.stream()
+            .filter(c -> !unlockedIds.contains(c.getId()))
+            .toList();
+        return List.copyOf(lockedCharacters);
+    }
+
+    @Override
+    public List<UnlockablePowerUp> getLockedPowerUps() {
         List<UnlockablePowerUp> unlockablePowerUps = this.dataLoader.getPowerUpLoader().loadAllPowerUps();
-        this.unlockablePowerUps = unlockablePowerUps;
         return List.copyOf(unlockablePowerUps);
     }
 

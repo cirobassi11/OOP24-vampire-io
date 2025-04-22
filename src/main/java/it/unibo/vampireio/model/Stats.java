@@ -1,9 +1,10 @@
 package it.unibo.vampireio.model;
 
+import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class Stats {
+public class Stats implements Serializable {
     
     private final Map<StatType, Double> statsMap;
     

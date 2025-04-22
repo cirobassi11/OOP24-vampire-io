@@ -33,10 +33,14 @@ public interface GameView {
     //Setta i dati dei punteggi (nella scoreboard)
     void setScoreList(List<ScoreData> scores);
     
-    /* Setta i dati dei personaggi (da far vedere quando li scegli) */
-    void setCharactersData(List<UnlockableCharacterData> unlockableCharactersData);
+    //Choose character panel
+    void setChoosableCharactersData(List<UnlockableCharacterData> choosableCharactersData);
+    String getChoosedCharacter();
 
+    //Unlockable character panel
+    void setUnlockableCharactersData(List<UnlockableCharacterData> unlockableCharactersData);
     String getSelectedCharacter();
+    
     String getSelectedSave();
 
     void showError(String message);
