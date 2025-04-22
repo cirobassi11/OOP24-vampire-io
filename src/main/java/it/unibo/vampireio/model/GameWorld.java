@@ -1,5 +1,6 @@
 package it.unibo.vampireio.model;
 
+import it.unibo.vampireio.controller.GameController;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.Dimension;
@@ -8,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GameWorld implements GameModel {
+
+    private GameController gameController;
 
     private final Dimension visualSize = new Dimension(1280, 720);
     static Shape ENTITY_SHAPE = new Rectangle(64, 64);
@@ -22,9 +25,16 @@ public class GameWorld implements GameModel {
     private List<Collectible> collectibles;
     private EnemySpawner enemySpawner;
 
-    private DataLoader dataLoader = new DataLoader();
-    private SaveManager saveManager = new SaveManager();
+    private DataLoader dataLoader;
+    private SaveManager saveManager;
     
+    public GameWorld(GameController gameController) {
+        this.gameController = gameController;
+
+        this.dataLoader = new DataLoader(this.gameController);
+        this.saveManager = new SaveManager(this.gameController);
+    }
+
     @Override
     public void initGame(String selectedCharacter) {
         this.enemySpawner = new EnemySpawnerImpl(this);

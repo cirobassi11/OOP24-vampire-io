@@ -3,14 +3,20 @@ package it.unibo.vampireio.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import it.unibo.vampireio.controller.GameController;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.List;
 
 public class PowerUpDataLoader {
+    private GameController gameController;
     private final Gson gson;
+    
+    private final String loadError = "An error occurred while data loading";
 
-    public PowerUpDataLoader() {
+    public PowerUpDataLoader(GameController gameController) {
+        this.gameController = gameController;
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
@@ -20,8 +26,9 @@ public class PowerUpDataLoader {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/powerups.json");
 
         if (inputStream == null) {
-            System.out.println("File not found in resources: data/powerups.json");
+            this.gameController.showError(this.loadError);
             return List.of();
+            
         }
 
         try (InputStreamReader reader = new InputStreamReader(inputStream)) {
@@ -30,7 +37,7 @@ public class PowerUpDataLoader {
             List<UnlockablePowerUp> powerups = gson.fromJson(reader, listType);
             return powerups != null ? powerups : List.of();
         } catch (Exception e) {
-            e.printStackTrace();
+            this.gameController.showError(this.loadError);
             return List.of();
         }
     }

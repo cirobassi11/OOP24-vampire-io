@@ -1,5 +1,6 @@
 package it.unibo.vampireio.model;
 
+import it.unibo.vampireio.controller.GameController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -9,9 +10,13 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class CharacterDataLoader {
+    private GameController gameController;
     private final Gson gson;
 
-    public CharacterDataLoader() {
+    private final String loadError = "An error occurred while data loading";
+    
+    public CharacterDataLoader(GameController gameController) {
+        this.gameController = gameController;
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
@@ -21,7 +26,7 @@ public class CharacterDataLoader {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/characters.json");
 
         if (inputStream == null) {
-            System.out.println("File not found in resources: data/characters.json");
+            this.gameController.showError(this.loadError);
             return List.of();
         }
 
@@ -31,7 +36,7 @@ public class CharacterDataLoader {
             List<UnlockableCharacter> characters = gson.fromJson(reader, listType);
             return characters != null ? characters : List.of();
         } catch (Exception e) {
-            e.printStackTrace();
+            this.gameController.showError(this.loadError);
             return List.of();
         }
     }

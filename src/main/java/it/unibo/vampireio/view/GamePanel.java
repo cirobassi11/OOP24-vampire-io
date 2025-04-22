@@ -17,7 +17,7 @@ class GamePanel extends JPanel {
     private GameViewImpl view;
     private GameData data;
 
-    private ImageManager imageManager = new ImageManager();
+    private ImageManager imageManager;
     
     private final Dimension mapTileDimension = new Dimension(64, 64);
     private final Dimension livingEntityDimension = new Dimension(64, 64);
@@ -35,6 +35,7 @@ class GamePanel extends JPanel {
 
     GamePanel(GameViewImpl view) {
         this.view = view;
+        this.imageManager = new ImageManager(this.view);
     }
 
     void setData(GameData data) {

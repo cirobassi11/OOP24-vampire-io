@@ -1,20 +1,22 @@
 package it.unibo.vampireio.model;
 
+import it.unibo.vampireio.controller.GameController;
+
 public class DataLoader {
 
     private final CharacterDataLoader characterLoader;
     private final PowerUpDataLoader powerUpLoader;
 
-    public DataLoader() {
-        this.characterLoader = new CharacterDataLoader();
-        this.powerUpLoader = new PowerUpDataLoader();
+    public DataLoader(GameController gameController) {
+        this.characterLoader = new CharacterDataLoader(gameController);
+        this.powerUpLoader = new PowerUpDataLoader(gameController);
     }
 
     public CharacterDataLoader getCharacterLoader() {
-        return characterLoader;
+        return this.characterLoader;
     }
 
     public PowerUpDataLoader getPowerUpLoader() {
-        return powerUpLoader;
+        return this.powerUpLoader;
     }
 }

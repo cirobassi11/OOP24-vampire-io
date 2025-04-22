@@ -20,7 +20,6 @@ import it.unibo.vampireio.controller.GameController;
 
 public class GameViewImpl implements GameView {
 
-    private final GameController controller;
     private final JFrame frame;
     private final CardLayout cardLayout;
     private final JPanel cardPanel;
@@ -53,9 +52,7 @@ public class GameViewImpl implements GameView {
     private final String iconPath = "/images/icon.png";
     private final String backgroundPath = "/images/background.png";
 
-    public GameViewImpl(GameController controller) {
-        this.controller = controller;
-
+    public GameViewImpl() {
         this.frame = new JFrame(frameTitle);
         this.cardLayout = new CardLayout();
         this.cardPanel = new JPanel(this.cardLayout);
@@ -143,10 +140,6 @@ public class GameViewImpl implements GameView {
 
     public void quit() {
         System.exit(0);
-    }
-
-    GameController getController() {
-        return this.controller;
     }
 
     @Override

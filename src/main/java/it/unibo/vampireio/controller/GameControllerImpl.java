@@ -25,14 +25,14 @@ public class GameControllerImpl implements GameController {
 
     private boolean running = true;
 
-    private final int frameRate = 60;
-    private final int tickRate = 60;
+    private final int frameRate = 1;
+    private final int tickRate = 1;
 
     private final Deque<String> screenHistory = new ArrayDeque<>();
 
     public GameControllerImpl() {
-        this.model = new GameWorld();
-        this.view = new GameViewImpl(this);
+        this.view = new GameViewImpl();
+        this.model = new GameWorld(this);
         this.setListeners();
         this.showScreen(GameViewImpl.SAVE_MENU);
     }
