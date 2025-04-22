@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.UnlockableCharacterData;
-import it.unibo.vampireio.controller.GameController;
 
 public class GameViewImpl implements GameView {
 

@@ -14,7 +14,7 @@ public class Enemy extends LivingEntity {
 
     @Override
     public void onCollision(Collidable collidable) {
-        //TODO Auto-generated method stub
+        
     }
 
     public int getDamage() {
