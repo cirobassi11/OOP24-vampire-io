@@ -6,9 +6,13 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import it.unibo.vampireio.controller.GameData;
+import it.unibo.vampireio.controller.InputHandler;
 import it.unibo.vampireio.controller.PositionableData;
 import it.unibo.vampireio.controller.LivingEntityData;
 
@@ -36,6 +40,7 @@ class GamePanel extends JPanel {
     GamePanel(GameViewImpl view) {
         this.view = view;
         this.imageManager = new ImageManager(this.view);
+        setFocusable(true);
     }
 
     void setData(GameData data) {
@@ -175,7 +180,7 @@ class GamePanel extends JPanel {
         }
 
         //Level bar
-        int levelPercentage = this.data.getLevelPercentage();
+        double levelPercentage = this.data.getLevelPercentage();
         g.setColor(Color.BLACK);
         g.fillRect(0, (int) (2 * scale), this.getWidth(), (int) (20 * scale));
         g.setColor(Color.BLUE);
@@ -197,5 +202,17 @@ class GamePanel extends JPanel {
         int height = (int) (objectDimension.height * scale);
 
         return !(screenX + width < 0 || screenX > this.getWidth() || screenY + height < 0 || screenY > this.getHeight());
+    }
+
+    public void setPlayerInputListener(KeyListener inputListener) {
+        this.addKeyListener(inputListener);
+        this.setFocusable(true);
+        this.requestFocus();
+    }
+
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        SwingUtilities.invokeLater(this::requestFocusInWindow);
     }
 }

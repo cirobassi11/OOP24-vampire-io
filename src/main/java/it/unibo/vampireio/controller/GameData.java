@@ -6,14 +6,14 @@ public class GameData {
     private VisibleMapSizeData VisibleMapSize;
     private long elapsedTime;
     private int level;
-    private int levelPercentage;
+    private double levelPercentage;
     private LivingEntityData character;
     private List<LivingEntityData> enemies;
     private List<PositionableData> projectiles;
     private List<PositionableData> areaAttacks;
     private List<PositionableData> collectibles;
 
-    public GameData(VisibleMapSizeData VisibleMapSize, long elapsedTime, int level, int levelPercentage, LivingEntityData character, List<LivingEntityData> enemies, List<PositionableData> projectiles, List<PositionableData> areaAttacks, List<PositionableData> collectibles) {
+    public GameData(VisibleMapSizeData VisibleMapSize, long elapsedTime, int level, double levelPercentage, LivingEntityData character, List<LivingEntityData> enemies, List<PositionableData> projectiles, List<PositionableData> areaAttacks, List<PositionableData> collectibles) {
         this.VisibleMapSize = VisibleMapSize;
         this.elapsedTime = elapsedTime;
         this.level = level;
@@ -33,7 +33,7 @@ public class GameData {
         return this.level;
     }
 
-    public int getLevelPercentage() {
+    public double getLevelPercentage() {
         return this.levelPercentage;
     }
 

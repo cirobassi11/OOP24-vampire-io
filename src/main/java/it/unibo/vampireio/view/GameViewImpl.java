@@ -7,6 +7,7 @@ import java.awt.Taskbar;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import it.unibo.vampireio.controller.GameData;
+import it.unibo.vampireio.controller.InputHandler;
 import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.UnlockableCharacterData;
 
@@ -57,7 +59,6 @@ public class GameViewImpl implements GameView {
         this.cardPanel = new JPanel(this.cardLayout);
 
         this.initFrame();
-        this.initPanels();
 
         this.showScreen(GameViewImpl.SAVE_MENU);
 
@@ -89,6 +90,13 @@ public class GameViewImpl implements GameView {
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.add(this.cardPanel);
         this.frame.setVisible(true);
+        this.frame.setFocusable(true);
+        this.frame.requestFocus();
+
+        this.initPanels();
+        
+        ((GamePanel) panels.get(GAME)).setFocusable(true);
+        ((GamePanel) panels.get(GAME)).requestFocusInWindow();
     }
 
     private void initPanels() {
@@ -157,6 +165,11 @@ public class GameViewImpl implements GameView {
     @Override
     public void showScreen(String name) {
         this.cardLayout.show(this.cardPanel, name);
+    }
+
+    @Override
+    public void setPlayerInputListener(InputHandler listener) {
+        listener.setupKeyBindings((GamePanel) panels.get(GAME));
     }
 
     @Override
@@ -284,5 +297,4 @@ public class GameViewImpl implements GameView {
     public void showError(String message) {
         javax.swing.JOptionPane.showMessageDialog(frame, message, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-
 }

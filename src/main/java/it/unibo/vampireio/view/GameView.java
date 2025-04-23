@@ -2,7 +2,10 @@ package it.unibo.vampireio.view;
 
 import java.util.List;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+
 import it.unibo.vampireio.controller.GameData;
+import it.unibo.vampireio.controller.InputHandler;
 import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.UnlockableCharacterData;
 
@@ -10,7 +13,9 @@ public interface GameView {
     void update(GameData data);
     void updateSaveList(List<String> saves);
     void showScreen(String name);
-    
+
+    void setPlayerInputListener(InputHandler listener);
+
     /* Button action listeners */
     void setConfirmCharacterListener(ActionListener listener);
     void setNewSaveListener(ActionListener listener);
@@ -42,6 +47,6 @@ public interface GameView {
     String getSelectedCharacter();
     
     String getSelectedSave();
-
+    
     void showError(String message);
 }

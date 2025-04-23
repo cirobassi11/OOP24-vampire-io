@@ -1,7 +1,5 @@
 package it.unibo.vampireio.model;
 
-import java.io.Serializable;
-
 public class UnlockableCharacter extends UnlockableItem {
     private Stats characterStats;
 

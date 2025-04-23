@@ -7,6 +7,8 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
     private Point2D.Double direction;
     private double speed;
 
+    private static final double SPEED_MULTIPLIER = 0.21;
+
     protected MovableEntity(String id, Point2D.Double position, Shape hitbox, Point2D.Double direction, double speed) {
         super(id, position, hitbox);
         this.direction = direction;
@@ -30,14 +32,14 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
 
     @Override
     public double getSpeed() {
-        return speed;
+        return this.speed;
     }
 
     @Override
-    public void move(double frameTime) {
+    public void move(double tickTime) {
         this.setPosition(new Point2D.Double(
-            this.getPosition().getX() + this.getDirection().getX() * this.getSpeed() * frameTime, 
-            this.getPosition().getY() + this.getDirection().getY() * this.getSpeed() * frameTime
+            this.getPosition().getX() + this.getDirection().getX() * this.getSpeed() * tickTime * SPEED_MULTIPLIER, 
+            this.getPosition().getY() + this.getDirection().getY() * this.getSpeed() * tickTime * SPEED_MULTIPLIER
         ));
     }
 }

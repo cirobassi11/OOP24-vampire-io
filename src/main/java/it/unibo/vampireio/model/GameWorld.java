@@ -50,11 +50,11 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public void update(long tickTime) {
+    public void update(long tickTime, Point2D.Double characterDirection) {
         synchronized(this) {
             
-            //muove il personaggio (non dovrebbe sovrapporsi a nemici)
-            this.character.setDirection(new Point2D.Double(0.05, 0.05));/////////
+            // muove il personaggio (non dovrebbe sovrapporsi a nemici)
+            this.character.setDirection(characterDirection);
             this.character.move(tickTime);
 
             // muove tutti i nemici (controllando anche che non si sovrappongano)
@@ -63,12 +63,12 @@ public class GameWorld implements GameModel {
                 enemy.onCollision(this.character);
             }
 
-            //controlla collisioni con collezionabili
+            // controlla collisioni con collezionabili
             for (Collectible collectible : this.collectibles) {
                 //TODO
             }
 
-            //spanwna i nemici FUORI DALLA VISUALE
+            // spanwna i nemici FUORI DALLA VISUALE
             this.enemySpawner.update(tickTime);
         }
     }
@@ -79,22 +79,30 @@ public class GameWorld implements GameModel {
 
     @Override
     public void addEnemy(Enemy enemy) {
-        this.enemies.add(enemy);
+        synchronized (this.enemies) {
+            this.enemies.add(enemy);
+        }
     }
 
     @Override
     public void removeEnemy(Enemy enemy) {
-        this.enemies.remove(enemy);
+        synchronized (this.enemies) {
+            this.enemies.remove(enemy);
+        }
     }
 
     @Override
     public void addCollectible(Collectible collectible) {
-        this.collectibles.add(collectible);
+        synchronized (this.collectibles) {
+            this.collectibles.add(collectible);
+        }
     }
 
     @Override
     public void removeCollectible(Collectible collectible) {
-        this.collectibles.remove(collectible);
+        synchronized (this.collectibles) {
+            this.collectibles.remove(collectible);
+        }
     }
 
     @Override
@@ -135,6 +143,16 @@ public class GameWorld implements GameModel {
         synchronized (this.collectibles) {
             return this.collectibles.parallelStream().toList();
         }
+    }
+
+    @Override
+    public int getPlayerLevel() {
+        return this.character.getLevel();
+    }
+
+    @Override
+    public double getPlayerLevelPercentage() {
+        return this.character.getLevelPercentage();
     }
 
     @Override
@@ -179,9 +197,47 @@ public class GameWorld implements GameModel {
     }
 
     @Override
+    public List<UnlockablePowerUp> getUnlockedPowerUps(){
+        return List.copyOf(this.saveManager.getCurrentSave().getUnlockedPowerUps());
+    }
+
+    @Override
     public List<UnlockablePowerUp> getLockedPowerUps() {
+        List<UnlockablePowerUp> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
         List<UnlockablePowerUp> unlockablePowerUps = this.dataLoader.getPowerUpLoader().loadAllPowerUps();
-        return List.copyOf(unlockablePowerUps);
+        
+        List<String> unlockedIds = unlockedPowerUps.stream()
+            .map(UnlockablePowerUp::getId)
+            .toList();
+
+        List<UnlockablePowerUp> lockedPowerUps = unlockedPowerUps.stream()
+            .filter(c -> !unlockedIds.contains(c.getId()))
+            .toList();
+        return List.copyOf(lockedPowerUps);
+    }
+
+    @Override
+    public boolean buyPowerUp(String selectedPowerUp){
+        Save currentSave = this.saveManager.getCurrentSave();
+        UnlockablePowerUp selectedUnlockablePowerUp = this.getLockedPowerUps().stream()
+            .filter(c -> c.getId().equals(selectedPowerUp))
+            .findFirst()
+            .orElse(null);
+        if (selectedUnlockablePowerUp == null) {
+            this.gameController.showError("PowerUp not found");
+            return false;
+        }
+        if (currentSave.getMoneyAmount() < selectedUnlockablePowerUp.getPrice()) {
+            this.gameController.showError("You don't have enough coins!");
+            return false;
+        }
+        //if (currentSave.getUnlockedPowerUps()..... == /*max lvl*/ ) {
+            //stop
+        //}
+        currentSave.incrementMoneyAmount(- selectedUnlockablePowerUp.getPrice());
+        currentSave.addUnlockedPowerUp(selectedUnlockablePowerUp);
+        this.saveManager.saveCurrentSave();
+        return true;
     }
 
     @Override
@@ -203,5 +259,4 @@ public class GameWorld implements GameModel {
     public Save getCurrentSave() {
         return this.saveManager.getCurrentSave();
     }
-
 }

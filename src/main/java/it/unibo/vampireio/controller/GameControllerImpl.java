@@ -1,6 +1,7 @@
 package it.unibo.vampireio.controller;
 
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -20,6 +21,7 @@ import it.unibo.vampireio.view.GameViewImpl;
 public class GameControllerImpl implements GameController {
     private GameModel model;
     private GameView view;
+    private final InputHandler inputHandler = new InputHandler();
 
     private long startTime;
 
@@ -35,10 +37,11 @@ public class GameControllerImpl implements GameController {
         this.model = new GameWorld(this);
         this.setListeners();
         this.showScreen(GameViewImpl.SAVE_MENU);
+        this.view.setPlayerInputListener(this.inputHandler);
     }
 
     private void setListeners() {
-        //SAVE MENU LISTENERS
+        // SAVE MENU LISTENERS
         this.view.setNewSaveListener(e -> {
             this.model.createNewSave();
             this.showScreen(GameViewImpl.START);
@@ -49,7 +52,7 @@ public class GameControllerImpl implements GameController {
             this.showScreen(GameViewImpl.SAVE_SELECTION);
         });
 
-        //START MENU LISTENERS
+        // START MENU LISTENERS
         this.view.setStartListener(e -> {
             List<UnlockableCharacterData> choosableCharactersData = this.model.getChoosableCharacters().stream()
                     .map(character -> new UnlockableCharacterData(character.getId(), character.getName()))
@@ -71,7 +74,7 @@ public class GameControllerImpl implements GameController {
             this.showScreen(GameViewImpl.SAVE_MENU);
         });
 
-        //CHOOSE CHARACTER LISTENERS
+        // CHOOSE CHARACTER LISTENERS
         this.view.setConfirmCharacterListener(e -> {
             String selectedCharacter = this.view.getChoosedCharacter();
             if (selectedCharacter != null) {
@@ -81,7 +84,7 @@ public class GameControllerImpl implements GameController {
             }
         });
 
-        //SAVE SELECTION LISTENERS
+        // SAVE SELECTION LISTENERS
         this.view.setChooseSaveListener(e -> {
             String selectedSave = this.view.getSelectedSave();
             if (selectedSave != null) {
@@ -90,7 +93,7 @@ public class GameControllerImpl implements GameController {
             }
         });
 
-        //SHOP LISTENERS
+        // SHOP LISTENERS
         this.view.setCharactersShopListener(e -> {
             List<UnlockableCharacterData> unlockableCharactersData = this.model.getLockedCharacters().stream()
                     .map(character -> new UnlockableCharacterData(character.getId(), character.getName()))
@@ -103,7 +106,7 @@ public class GameControllerImpl implements GameController {
             this.showScreen(GameViewImpl.UNLOCKABLE_POWERUPS);
         });
 
-        //UNLOCKABLE CHARACTERS SHOP LISTENERS
+        // UNLOCKABLE CHARACTERS SHOP LISTENERS
         this.view.setBuyCharactersListener(e -> {
             String selectedCharacter = this.view.getSelectedCharacter();
             if(this.model.buyCharacter(selectedCharacter)) {
@@ -114,23 +117,23 @@ public class GameControllerImpl implements GameController {
             }
         });
 
-        //UNLOCKABLE POWERUPS SHOP LISTENERS
+        // UNLOCKABLE POWERUPS SHOP LISTENERS
         this.view.setBuyPowerUpsListener(e -> {
             //TODO
         });
 
-        //PAUSE LISTENERS
+        // PAUSE LISTENERS
         this.view.setContinueListener(e -> {
-            //DEVE FAR RIPARTIRE IL GIOCO
+            // DEVE FAR RIPARTIRE IL GIOCO
             this.showScreen(GameViewImpl.GAME);
         });
 
         this.view.setExitListener(e -> {
-            //DEVE TERMINARE IL GIOCO
+            // DEVE TERMINARE IL GIOCO
             this.showScreen(GameViewImpl.END_GAME);
         });
 
-        //ENDGAME LISTENERS
+        // ENDGAME LISTENERS
         this.view.setReturnMenuListener(e -> {
             this.showScreen(GameViewImpl.START);
         });
@@ -177,7 +180,24 @@ public class GameControllerImpl implements GameController {
     private void modelLoop() {
         long tickTime = 1000 / this.tickRate;
         while (this.isRunning()) {
-            this.model.update(tickTime); //Movement input should be passed.
+            Point2D.Double direction = new Point2D.Double(0, 0);
+            if (inputHandler.isKeyPressed(KeyEvent.VK_W) || inputHandler.isKeyPressed(KeyEvent.VK_UP)) {
+                direction.y -= 1;
+            }
+            if (inputHandler.isKeyPressed(KeyEvent.VK_S) || inputHandler.isKeyPressed(KeyEvent.VK_DOWN)) {
+                direction.y += 1;
+            }
+            if (inputHandler.isKeyPressed(KeyEvent.VK_A) || inputHandler.isKeyPressed(KeyEvent.VK_LEFT)) {
+                direction.x -= 1;
+            }
+            if (inputHandler.isKeyPressed(KeyEvent.VK_D) || inputHandler.isKeyPressed(KeyEvent.VK_RIGHT)) {
+                direction.x += 1;
+            }
+            double length = direction.distance(0, 0);
+            if (length > 0) {
+                direction = new Point2D.Double(direction.x / length, direction.y / length);
+            }
+            this.model.update(tickTime, direction); //Movement input should be passed.
             try {
                 Thread.sleep(tickTime);
             } catch (InterruptedException e) {
@@ -226,8 +246,8 @@ public class GameControllerImpl implements GameController {
             ),
             character.getHealth(),
             character.getMaxHealth(),
-            false,//character.isBeingAttacked(),
-            true//character.isMoving()
+            character.isBeingAttacked(),
+            character.isMoving()
         );
 
         List<LivingEntityData> enemiesData = enemies.stream()
@@ -287,12 +307,12 @@ public class GameControllerImpl implements GameController {
         return new GameData(
             visibleMapSizeData, 
             this.getElapsedTime(),
-            10, //TODO: level///////////////////////////////
-            50, //TODO: levelPercentage/////////////////////////////
-            characterData, 
-            enemiesData, 
-            projectileAttacksData, 
-            areaAttacksData, 
+            this.model.getPlayerLevel(),
+            this.model.getPlayerLevelPercentage(),
+            characterData,
+            enemiesData,
+            projectileAttacksData,
+            areaAttacksData,
             collectiblesData
         );
     }

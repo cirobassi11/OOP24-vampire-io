@@ -55,7 +55,7 @@ public class Save implements Serializable {
         return List.copyOf(this.unlockedCharacters);
     }
 
-    public List<UnlockablePowerUp> getUnlockedItems() {
+    public List<UnlockablePowerUp> getUnlockedPowerUps() {
         return List.copyOf(this.unlockedPowerUps);
     }
 

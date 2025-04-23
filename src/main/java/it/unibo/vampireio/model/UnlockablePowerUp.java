@@ -1,7 +1,5 @@
 package it.unibo.vampireio.model;
 
-import java.io.Serializable;
-
 public class UnlockablePowerUp extends UnlockableItem {
     private static final double MULTIPLIER_INCREMENT = 0.05;
 
