@@ -5,6 +5,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class Stats implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     private final Map<StatType, Double> statsMap;
     

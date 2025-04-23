@@ -1,6 +1,10 @@
 package it.unibo.vampireio.model;
 
-public class Score {
+import java.io.Serializable;
+
+public class Score implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String characterName;
     private double sessionTime;
     private int killCounter;

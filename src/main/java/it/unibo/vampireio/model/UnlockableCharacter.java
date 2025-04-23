@@ -2,7 +2,7 @@ package it.unibo.vampireio.model;
 
 import java.io.Serializable;
 
-public class UnlockableCharacter extends UnlockableItem implements Serializable {
+public class UnlockableCharacter extends UnlockableItem {
     private Stats characterStats;
 
     public UnlockableCharacter(String id, String name, String description, int price, Stats stats) {

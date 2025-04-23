@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Save implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
     
     private String saveTime;
@@ -39,7 +41,10 @@ public class Save implements Serializable {
             0, 
             new LinkedList<Score>()
         );
-        this.unlockedCharacters.add(new UnlockableCharacter("characters/antonio", "Antonio Belpaese", "descrizione", 0, new Stats()));/////ANDREBBE LETTO DA JSON??
+        
+        ///TESTTTTTTTT
+        this.unlockedCharacters.add(new UnlockableCharacter("characters/antonio", "Antonio Belpaese", "descrizione", 0, new Stats()));/////DEFAULT CHARACTER ANDREBBE LETTO DA JSON??
+        this.incrementMoneyAmount(200);
     }
     
     public String getSaveTime() {

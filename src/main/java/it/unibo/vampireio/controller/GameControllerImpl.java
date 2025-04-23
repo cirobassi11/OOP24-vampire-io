@@ -103,12 +103,18 @@ public class GameControllerImpl implements GameController {
             this.showScreen(GameViewImpl.UNLOCKABLE_POWERUPS);
         });
 
-        //UNLOCKABLE CHARACTERS LISTENERS
+        //UNLOCKABLE CHARACTERS SHOP LISTENERS
         this.view.setBuyCharactersListener(e -> {
-            //TODO
+            String selectedCharacter = this.view.getSelectedCharacter();
+            if(this.model.buyCharacter(selectedCharacter)) {
+                List<UnlockableCharacterData> unlockableCharactersData = this.model.getLockedCharacters().stream()
+                    .map(character -> new UnlockableCharacterData(character.getId(), character.getName()))
+                    .collect(Collectors.toList());
+                this.view.setUnlockableCharactersData(unlockableCharactersData);
+            }
         });
 
-        //UNLOCKABLE POWERUPS LISTENERS
+        //UNLOCKABLE POWERUPS SHOP LISTENERS
         this.view.setBuyPowerUpsListener(e -> {
             //TODO
         });

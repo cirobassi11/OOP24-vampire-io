@@ -1,6 +1,8 @@
 package it.unibo.vampireio.model;
 
-public interface Unlockable {
+import java.io.Serializable;
+
+public interface Unlockable extends Serializable {
     boolean isLocked();
     void enhance();
     String getId();

@@ -56,6 +56,7 @@ public class SaveManager {
             }
 
         } catch (IOException | ClassNotFoundException e) {
+            this.gameController.showError(this.readingError);
             e.printStackTrace();
         }
     }
@@ -88,6 +89,7 @@ public class SaveManager {
                 this.currentSave = (Save) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 this.gameController.showError(this.readingError);
+                e.printStackTrace();
             }
         } else {
             this.gameController.showError(this.readingError);

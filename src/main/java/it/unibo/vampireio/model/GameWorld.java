@@ -154,6 +154,27 @@ public class GameWorld implements GameModel {
     }
 
     @Override
+    public boolean buyCharacter(String selectedCharacter) {
+        Save currentSave = this.saveManager.getCurrentSave();
+        UnlockableCharacter selectedUnlockableCharacter = this.getLockedCharacters().stream()
+            .filter(c -> c.getId().equals(selectedCharacter))
+            .findFirst()
+            .orElse(null);
+        if (selectedUnlockableCharacter == null) {
+            this.gameController.showError("Character not found");
+            return false;
+        }
+        if (currentSave.getMoneyAmount() < selectedUnlockableCharacter.getPrice()) {
+            this.gameController.showError("You don't have enough coins!");
+            return false;
+        }
+        currentSave.incrementMoneyAmount(- selectedUnlockableCharacter.getPrice());
+        currentSave.addUnlockedCharacter(selectedUnlockableCharacter);
+        this.saveManager.saveCurrentSave();
+        return true;
+    }
+
+    @Override
     public List<UnlockablePowerUp> getLockedPowerUps() {
         List<UnlockablePowerUp> unlockablePowerUps = this.dataLoader.getPowerUpLoader().loadAllPowerUps();
         return List.copyOf(unlockablePowerUps);
@@ -178,4 +199,5 @@ public class GameWorld implements GameModel {
     public Save getCurrentSave() {
         return this.saveManager.getCurrentSave();
     }
+
 }

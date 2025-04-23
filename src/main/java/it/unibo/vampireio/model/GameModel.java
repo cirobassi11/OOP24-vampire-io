@@ -23,4 +23,5 @@ public interface GameModel {
     Save getCurrentSave();
     List<UnlockableCharacter> getChoosableCharacters();
     List<UnlockableCharacter> getLockedCharacters();
+    boolean buyCharacter(String selectedCharacter);
 }

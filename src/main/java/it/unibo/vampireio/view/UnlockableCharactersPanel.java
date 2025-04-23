@@ -27,15 +27,14 @@ class UnlockableCharactersPanel extends BasePanel {
         this.unlockableCharactersData = unlockableCharactersData;
         if(unlockableCharactersData == null || unlockableCharactersData.isEmpty()) {
             this.characterNames = List.of();
-            return;
         }
         else {
             this.unlockableCharactersData = unlockableCharactersData;
             this.characterNames = unlockableCharactersData.stream()
                     .map(UnlockableCharacterData::getName)
                     .toList();
-            this.charactersList.setListData(this.characterNames.toArray(new String[0]));
         }
+        this.charactersList.setListData(this.characterNames.toArray(new String[0]));
     }
 
     String getSelectedCharacter() {
