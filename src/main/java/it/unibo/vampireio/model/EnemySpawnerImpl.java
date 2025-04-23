@@ -1,7 +1,9 @@
 package it.unibo.vampireio.model;
 
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.geom.Point2D;
+import java.util.List;
 import java.util.Random;
 
 public class EnemySpawnerImpl implements EnemySpawner {
@@ -18,11 +20,14 @@ public class EnemySpawnerImpl implements EnemySpawner {
     private long timeSinceLastSpawn;
     private long timeSinceLastDecrement;
 
-    private GameModel gameWorld;
+    private List<EnemyData> enemies;
+
+    private GameWorld gameWorld;
     private Random random = new Random();
 
-    public EnemySpawnerImpl(GameModel gameWorld) {
+    public EnemySpawnerImpl(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
+        this.enemies = this.gameWorld.getDataLoader().getEnemyLoader().loadAllEnemies();
         this.spawnInterval = INITIAL_SPAWN_INTERVAL;
         this.timeSinceLastSpawn = 0;
         this.timeSinceLastDecrement = 0;
@@ -47,8 +52,17 @@ public class EnemySpawnerImpl implements EnemySpawner {
     private void spawnEnemy() {
         //andando avanti col gioco i nemici devono essere sempre più forti
         //crea un numero casuale di nemici
-        for (int i = 0; i < this.random.nextInt(MAX_ENEMY_SPAWN) + 1; i++) {
-            Enemy newEnemy = new Enemy("", this.getRandomSpawnPosition(), null, null, 0, 0, 0);
+        
+        int enemyToSpawn = this.random.nextInt(MAX_ENEMY_SPAWN) + 1;
+        
+        for (int i = 0; i < enemyToSpawn; i++) {
+            
+            EnemyData enemyData = this.enemies.get(0); //////////TODO
+
+            Point2D.Double spawnPosition = getRandomSpawnPosition();
+            ///controlla
+            Enemy newEnemy = new Enemy(enemyData.getId(), spawnPosition, new Rectangle(64, 64), new Point2D.Double(0, 0), enemyData.getSpeed(), enemyData.getHealth(), enemyData.getDamage());
+            ////////
             this.gameWorld.addEnemy(newEnemy);
         }
     }

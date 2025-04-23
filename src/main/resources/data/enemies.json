@@ -1,0 +1,10 @@
+[
+  {
+    "id": "enemies/bat",
+    "name": "Bat",
+    "level": 0,
+    "damage": 10,
+    "speed": 1,
+    "health": 10
+  }
+]

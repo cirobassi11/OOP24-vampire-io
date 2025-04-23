@@ -131,8 +131,8 @@ class GamePanel extends JPanel {
             if(this.isVisible(enemy, this.livingEntityDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int enemyX = (int) (enemy.getPosition().getX() * scale + cameraOffsetX);
                 int enemyY = (int) (enemy.getPosition().getY() * scale + cameraOffsetY);
-                String directionSuffix = "_" + (enemy.getDirection().getX() <= 0 ? "l" : "r");
-                Image tile = this.imageManager.getImage(enemy.getId() + directionSuffix);
+                String directionSuffix = enemy.getDirection().getX() <= 0 ? "l" : "r";
+                Image tile = this.imageManager.getImage(enemy.getId() + "/" + directionSuffix);
                 if(tile != null) {
                     g.drawImage(tile, enemyX, enemyY, (int) (this.livingEntityDimension.width * scale), (int) (this.livingEntityDimension.height * scale), null); //TODO: ANIMAZIONI??? + DIVENTANO BIANCHI SE COLPITI
                 }

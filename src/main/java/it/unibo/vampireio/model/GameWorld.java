@@ -40,7 +40,7 @@ public class GameWorld implements GameModel {
                 .stream()
                 .filter(character -> character.getId().equals(selectedCharacter))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Character not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Character not found"));///////////////////
 
         this.character = new Character(selectedCharacter, selectedUnlockableCharacter.getName(), selectedUnlockableCharacter.getCharacterStats(), GameWorld.ENTITY_SHAPE);         
         this.enemies = new LinkedList<>();
@@ -54,7 +54,7 @@ public class GameWorld implements GameModel {
         synchronized(this) {
             
             //muove il personaggio (non dovrebbe sovrapporsi a nemici)
-            this.character.setDirection(new Point2D.Double(0.15, 0.15));/////////
+            this.character.setDirection(new Point2D.Double(0.05, 0.05));/////////
             this.character.move(tickTime);
 
             // muove tutti i nemici (controllando anche che non si sovrappongano)
@@ -69,8 +69,12 @@ public class GameWorld implements GameModel {
             }
 
             //spanwna i nemici FUORI DALLA VISUALE
-            //this.enemySpawner.update(tickTime);
+            this.enemySpawner.update(tickTime);
         }
+    }
+
+    DataLoader getDataLoader() {
+        return this.dataLoader;   
     }
 
     @Override
