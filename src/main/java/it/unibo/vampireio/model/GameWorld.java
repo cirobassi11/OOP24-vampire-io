@@ -59,6 +59,15 @@ public class GameWorld implements GameModel {
 
             // muove tutti i nemici (controllando anche che non si sovrappongano)
             for (Enemy enemy : this.enemies) {
+                double deltaX = this.character.getPosition().getX() - enemy.getPosition().getX();
+                double deltaY = this.character.getPosition().getY() - enemy.getPosition().getY();
+                
+                double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                Point2D.Double enemyDirection = new Point2D.Double(deltaX / distance, deltaY / distance);
+                
+                enemy.setDirection(enemyDirection);
+
                 enemy.move(tickTime);
                 enemy.onCollision(this.character);
             }

@@ -4,7 +4,15 @@
     "name": "Bat",
     "level": 0,
     "damage": 10,
-    "speed": 1,
+    "speed": 0.5,
     "health": 10
+  },
+  {
+    "id": "enemies/skeleton",
+    "name": "Bat",
+    "level": 1,
+    "damage": 10,
+    "speed": 0.4,
+    "health": 20
   }
 ]

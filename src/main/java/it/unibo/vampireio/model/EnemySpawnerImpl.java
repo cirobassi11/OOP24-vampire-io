@@ -57,7 +57,7 @@ public class EnemySpawnerImpl implements EnemySpawner {
         
         for (int i = 0; i < enemyToSpawn; i++) {
             
-            EnemyData enemyData = this.enemies.get(0); //////////TODO
+            EnemyData enemyData = this.enemies.get(this.random.nextInt(2)); //////////TODO
 
             Point2D.Double spawnPosition = getRandomSpawnPosition();
             ///controlla

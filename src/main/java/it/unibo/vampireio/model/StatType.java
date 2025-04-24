@@ -1,8 +1,6 @@
 package it.unibo.vampireio.model;
 
-import java.io.Serializable;
-
-public enum StatType implements Serializable {
+public enum StatType {
     MAX_HEALTH,
     ARMOR,
     SPEED,

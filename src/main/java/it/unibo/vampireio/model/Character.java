@@ -26,8 +26,7 @@ public class Character extends LivingEntity {
     }
 
     public boolean isMoving() {
-        boolean isMoving = this.getDirection().getX() != 0 || this.getDirection().getY() != 0;
-        return isMoving;
+        return this.getDirection().getX() != 0 || this.getDirection().getY() != 0;
     }
 
     public boolean isBeingAttacked() {

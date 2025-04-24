@@ -2,8 +2,6 @@ package it.unibo.vampireio.view;
 
 import java.util.List;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-
 import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.InputHandler;
 import it.unibo.vampireio.controller.ScoreData;

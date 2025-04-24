@@ -5,10 +5,10 @@ public class EnemyData {
     private String name;
     private int level;
     private int damage;
-    private int speed;
+    private double speed;
     private int health;
 
-    public EnemyData(String id, String name, int level, int damage, int speed, int health) {
+    public EnemyData(String id, String name, int level, int damage, double speed, int health) {
         this.id = id;
         this.name = name;
         this.level = level;
@@ -33,7 +33,7 @@ public class EnemyData {
         return damage;
     }
     
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
     

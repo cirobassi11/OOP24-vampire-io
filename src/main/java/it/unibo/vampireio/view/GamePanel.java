@@ -10,9 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 import it.unibo.vampireio.controller.GameData;
-import it.unibo.vampireio.controller.InputHandler;
 import it.unibo.vampireio.controller.PositionableData;
 import it.unibo.vampireio.controller.LivingEntityData;
 
