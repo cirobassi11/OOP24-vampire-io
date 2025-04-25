@@ -12,13 +12,15 @@ public interface GameModel {
     void addCollectible(Collectible collectible);
     void removeCollectible(Collectible collectible);
     Dimension getVisualSize();
+    int getPlayerLevel();
+    double getPlayerLevelPercentage();
+    int getKillCounter();
+    int getCoinCounter();
     Character getCharacter();
     List<Enemy> getEnemies();
     List<ProjectileAttack> getProjectileAttacks();
     List<AreaAttack> getAreaAttacks();
     List<Collectible> getCollectibles();
-    int getPlayerLevel();
-    double getPlayerLevelPercentage();
     List<String> getSaveNames();
     void createNewSave();
     void loadSave(String selectedSaving);

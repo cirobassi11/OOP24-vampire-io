@@ -3,6 +3,7 @@ package it.unibo.vampireio.view;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -15,24 +16,49 @@ import it.unibo.vampireio.controller.LivingEntityData;
 
 class GamePanel extends JPanel {
 
+    private static final int TILE_WIDTH = 64;
+    private static final int TILE_HEIGHT = 64;
+    private static final int PROJECTILE_WIDTH = 32;
+    private static final int PROJECTILE_HEIGHT = 32;
+    private static final int AREA_ATTACK_WIDTH = 64;
+    private static final int AREA_ATTACK_HEIGHT = 64;
+    private static final int COLLECTIBLE_WIDTH = 32;
+    private static final int COLLECTIBLE_HEIGHT = 32;
+    private static final int HEALTH_BAR_WIDTH = 42;
+    private static final int HEALTH_BAR_HEIGHT = 7;
+
+    private static final int CHARACTER_FRAME_COUNT = 3;
+    private static final int CHARACTER_FRAME_RATE = 5;
+    private static final long CHARACTER_FRAME_DELAY = 1000 / CHARACTER_FRAME_RATE;
+
+    private static final int LEVEL_BAR_Y_OFFSET = 2;
+    private static final int LEVEL_BAR_HEIGHT = 20;
+    private static final int LEVEL_BAR_BORDER_WIDTH = 3;
+    private static final int LEVEL_TEXT_X_OFFSET = 50;
+    private static final int LEVEL_TEXT_Y_OFFSET = 17;
+    private static final int KILL_COUNTER_X_OFFSET = 170;
+    private static final int COUNTER_Y_OFFSET = 48;
+    private static final int KILL_ICON_X_OFFSET = 200;
+    private static final int ICON_Y_OFFSET = 30;
+    private static final int ICON_SIZE = 25;
+    private static final int COIN_COUNTER_X_OFFSET = 70;
+    private static final int COIN_ICON_X_OFFSET = 100;
+
     private GameViewImpl view;
     private GameData data;
 
     private ImageManager imageManager;
-    
-    private final Dimension mapTileDimension = new Dimension(64, 64);
-    private final Dimension livingEntityDimension = new Dimension(64, 64);
-    private final Dimension projectileDimension = new Dimension(32, 32);
-    private final Dimension areaAttackDimension = new Dimension(64, 64);
-    private final Dimension collectibleDimension = new Dimension(32, 32);
-    private final Dimension healthBarDimension = new Dimension(42, 7);
+
+    private final Dimension mapTileDimension = new Dimension(TILE_WIDTH, TILE_HEIGHT);
+    private final Dimension livingEntityDimension = new Dimension(TILE_WIDTH, TILE_HEIGHT);
+    private final Dimension projectileDimension = new Dimension(PROJECTILE_WIDTH, PROJECTILE_HEIGHT);
+    private final Dimension areaAttackDimension = new Dimension(AREA_ATTACK_WIDTH, AREA_ATTACK_HEIGHT);
+    private final Dimension collectibleDimension = new Dimension(COLLECTIBLE_WIDTH, COLLECTIBLE_HEIGHT);
+    private final Dimension healthBarDimension = new Dimension(HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT);
 
     private String lastCharacterDirection = "l";
     private int currentCharacterFrame = 0;
-    private final int characterFrames = 3;
     private long lastCharacterFrameTime = 0;
-    private final long characterFrameRate = 5;
-    private final long characterFrameDelay = 1000 / this.characterFrameRate;
 
     GamePanel(GameViewImpl view) {
         this.view = view;
@@ -51,9 +77,8 @@ class GamePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
+
         Dimension fov = this.data.getVisibleMapSizeData().getDimension();
-        
         double scale = this.view.getFrameSize().getWidth() / fov.getWidth();
 
         LivingEntityData character = this.data.getCharacterData();
@@ -89,13 +114,13 @@ class GamePanel extends JPanel {
         }
 
         //Draws the collectibles
-        for(PositionableData collectible : this.data.getCollectiblesData()) {
-            if(this.isVisible(collectible, this.collectibleDimension, scale, cameraOffsetX, cameraOffsetY)) {
+        for (PositionableData collectible : this.data.getCollectiblesData()) {
+            if (this.isVisible(collectible, this.collectibleDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int collectibleX = (int) (collectible.getPosition().getX() * scale + cameraOffsetX);
                 int collectibleY = (int) (collectible.getPosition().getY() * scale + cameraOffsetY);
                 Image tile = this.imageManager.getImage(collectible.getId());
-                if(tile != null) {
-                    g.drawImage(tile, collectibleX, collectibleY, (int) (this.collectibleDimension.width * scale), (int) (this.collectibleDimension.height * scale), null); //TODO: ANIMAZION
+                if (tile != null) {
+                    g.drawImage(tile, collectibleX, collectibleY, (int) (this.collectibleDimension.width * scale), (int) (this.collectibleDimension.height * scale), null);
                 }
             }
         }
@@ -103,7 +128,7 @@ class GamePanel extends JPanel {
         //Draws the projectiles
         Graphics2D g2d = (Graphics2D) g;
         for (PositionableData projectile : this.data.getProjectilesData()) { //TODO: ANIMAZIONI??
-            if(this.isVisible(projectile, this.projectileDimension, scale, cameraOffsetX, cameraOffsetY)) {
+            if (this.isVisible(projectile, this.projectileDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int projectileX = (int) (projectile.getPosition().getX() * scale + cameraOffsetX);
                 int projectileY = (int) (projectile.getPosition().getY() * scale + cameraOffsetY);
                 Image tile = this.imageManager.getImage(projectile.getId());
@@ -121,25 +146,25 @@ class GamePanel extends JPanel {
         }
 
         //Draws the area attacks
-        for(PositionableData areaAttack : this.data.getAreaAttacksData()) {
-            if(this.isVisible(areaAttack, this.areaAttackDimension, scale, cameraOffsetX, cameraOffsetY)) {
+        for (PositionableData areaAttack : this.data.getAreaAttacksData()) {
+            if (this.isVisible(areaAttack, this.areaAttackDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int areaAttackX = (int) (areaAttack.getPosition().getX() * scale + cameraOffsetX);
                 int areaAttackY = (int) (areaAttack.getPosition().getY() * scale + cameraOffsetY);
                 Image tile = this.imageManager.getImage(areaAttack.getId());
-                if(tile != null) {
-                    g.drawImage(tile, areaAttackX, areaAttackY, (int) (this.areaAttackDimension.width * scale), (int) (this.areaAttackDimension.height * scale), null); //TODO: AN
+                if (tile != null) {
+                    g.drawImage(tile, areaAttackX, areaAttackY, (int) (this.areaAttackDimension.width * scale), (int) (this.areaAttackDimension.height * scale), null); //TODO: ANIMAZIONI??
                 }
             }
         }
 
         //Draws the enemies
-        for(LivingEntityData enemy : this.data.getEnemiesData()) {
-            if(this.isVisible(enemy, this.livingEntityDimension, scale, cameraOffsetX, cameraOffsetY)) {
+        for (LivingEntityData enemy : this.data.getEnemiesData()) {
+            if (this.isVisible(enemy, this.livingEntityDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int enemyX = (int) (enemy.getPosition().getX() * scale + cameraOffsetX);
                 int enemyY = (int) (enemy.getPosition().getY() * scale + cameraOffsetY);
                 String directionSuffix = enemy.getDirection().getX() <= 0 ? "l" : "r";
                 Image tile = this.imageManager.getImage(enemy.getId() + "/" + directionSuffix);
-                if(tile != null) {
+                if (tile != null) {
                     g.drawImage(tile, enemyX, enemyY, (int) (this.livingEntityDimension.width * scale), (int) (this.livingEntityDimension.height * scale), null); //TODO: ANIMAZIONI??? + DIVENTANO BIANCHI SE COLPITI
                 }
             }
@@ -150,31 +175,33 @@ class GamePanel extends JPanel {
         int characterY = (int) (character.getPosition().getY() * scale + cameraOffsetY);
 
         String directionSuffix = "_";
-        if(character.getDirection().getX() < 0) {
+        if (character.getDirection().getX() < 0) {
             directionSuffix += "l";
             this.lastCharacterDirection = "l";
         } else if (character.getDirection().getX() > 0) {
             directionSuffix += "r";
             this.lastCharacterDirection = "r";
-        }
-        else {
+        } else {
             directionSuffix += this.lastCharacterDirection;
         }
+
         Image tile = this.imageManager.getImage(character.getId() + "/" + this.currentCharacterFrame + directionSuffix);
-        if(tile != null) {
+        if (tile != null) {
             g.drawImage(tile, characterX, characterY, (int) (this.livingEntityDimension.width * scale), (int) (this.livingEntityDimension.height * scale), null); //TODO: DIVENTA ROSSO SE COLPITO
         }
-        
+
         long elapsedTime = this.data.getElapsedTime();
-        if (character.isMoving() && elapsedTime - this.lastCharacterFrameTime >= this.characterFrameDelay) {
-            this.currentCharacterFrame = (this.currentCharacterFrame + 1) % this.characterFrames;
+        if (character.isMoving() && elapsedTime - this.lastCharacterFrameTime >= CHARACTER_FRAME_DELAY) {
+            this.currentCharacterFrame = (this.currentCharacterFrame + 1) % CHARACTER_FRAME_COUNT;
             this.lastCharacterFrameTime = elapsedTime;
         }
+
+        Font font = g.getFont().deriveFont((float) (15 * scale));
 
         //Draws the HUD
         //Healthbar
         int healthPercent = (int) ((character.getHealth() / character.getMaxHealth()) * 100);
-        healthPercent = (int) Math.round(healthPercent / 25.0) * 25;                            // arrotonda a multiplo di di 25
+        healthPercent = (int) Math.round(healthPercent / 25.0) * 25;
         Image healthBarImage = this.imageManager.getImage("hud/healthbar/" + healthPercent);
         if (healthBarImage != null) {
             g.drawImage(healthBarImage, characterX + (int) ((this.livingEntityDimension.width - this.healthBarDimension.width) * scale) / 2, characterY + (int) (this.livingEntityDimension.height * scale), (int) (this.healthBarDimension.width * scale), (int) (this.healthBarDimension.height * scale), null);
@@ -183,19 +210,35 @@ class GamePanel extends JPanel {
         //Level bar
         double levelPercentage = this.data.getLevelPercentage();
         g.setColor(Color.BLACK);
-        g.fillRect(0, (int) (2 * scale), this.getWidth(), (int) (20 * scale));
+        g.fillRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale), this.getWidth(), (int) (LEVEL_BAR_HEIGHT * scale));
         g.setColor(Color.BLUE);
-        g.fillRect(0, (int) (2 * scale), (int) ((this.getWidth() * levelPercentage) / 100), (int) (20 * scale));
+        g.fillRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale), (int) ((this.getWidth() * levelPercentage) / 100), (int) (LEVEL_BAR_HEIGHT * scale));
         g2d.setColor(Color.YELLOW);
-        g2d.setStroke(new BasicStroke((int) (3 * scale)));
-        g2d.drawRect(0, (int) (2 * scale), this.getWidth(), (int) (20 * scale));
+        g2d.setStroke(new BasicStroke((int) (LEVEL_BAR_BORDER_WIDTH * scale)));
+        g2d.drawRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale), this.getWidth(), (int) (LEVEL_BAR_HEIGHT * scale));
         g.setColor(Color.WHITE);
-        g.setFont(g.getFont().deriveFont((float) (15 * scale)));
-        g.drawString("LV " + this.data.getLevel(), (int) (this.getWidth() - 50 * scale), (int) (15 * scale));
-        
+        g.setFont(font);
+        g.drawString("LV " + this.data.getLevel(), (int) (this.getWidth() - LEVEL_TEXT_X_OFFSET * scale), (int) (LEVEL_TEXT_Y_OFFSET * scale));
+
+        g.setColor(Color.WHITE);
+        g.setFont(font);
+
+        //Kill counter
+        g.drawString(String.valueOf(this.data.getKillCounter()), (int) (this.getWidth() - KILL_COUNTER_X_OFFSET * scale), (int) (COUNTER_Y_OFFSET * scale));
+        Image killCounterImage = this.imageManager.getImage("hud/kill");
+        if (killCounterImage != null) {
+            g.drawImage(killCounterImage, (int) (this.getWidth() - KILL_ICON_X_OFFSET * scale), (int) (ICON_Y_OFFSET * scale), (int) (ICON_SIZE * scale), (int) (ICON_SIZE * scale), null);
+        }
+
+        //Coin counter
+        g.drawString(String.valueOf(this.data.getCoinCounter()), (int) (this.getWidth() - COIN_COUNTER_X_OFFSET * scale), (int) (COUNTER_Y_OFFSET * scale));
+        Image coinCounterImage = this.imageManager.getImage("hud/coin");
+        if (coinCounterImage != null) {
+            g.drawImage(coinCounterImage, (int) (this.getWidth() - COIN_ICON_X_OFFSET * scale), (int) (ICON_Y_OFFSET * scale), (int) (ICON_SIZE * scale), (int) (ICON_SIZE * scale), null);
+        }
+
     }
 
-    // True if the object is visible on the screen
     private boolean isVisible(PositionableData positionable, Dimension objectDimension, double scale, int cameraOffsetX, int cameraOffsetY) {
         int screenX = (int) (positionable.getPosition().getX() * scale + cameraOffsetX);
         int screenY = (int) (positionable.getPosition().getY() * scale + cameraOffsetY);

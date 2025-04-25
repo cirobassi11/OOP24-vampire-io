@@ -165,6 +165,16 @@ public class GameWorld implements GameModel {
     }
 
     @Override
+    public int getKillCounter() {
+        return 100000; //TODO
+    }
+
+    @Override
+    public int getCoinCounter() {
+        return 100000; //TODO
+    }
+
+    @Override
     public List<UnlockableCharacter> getChoosableCharacters() {
         return List.copyOf(this.saveManager.getCurrentSave().getUnlockedCharacters());
     }

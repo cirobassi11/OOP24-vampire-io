@@ -371,6 +371,8 @@ public class GameControllerImpl implements GameController {
             this.getElapsedTime(),
             this.model.getPlayerLevel(),
             this.model.getPlayerLevelPercentage(),
+            this.model.getKillCounter(),
+            this.model.getCoinCounter(),
             characterData,
             enemiesData,
             projectileAttacksData,
