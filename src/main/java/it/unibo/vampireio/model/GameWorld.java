@@ -62,7 +62,7 @@ public class GameWorld implements GameModel {
                 double deltaX = this.character.getPosition().getX() - enemy.getPosition().getX();
                 double deltaY = this.character.getPosition().getY() - enemy.getPosition().getY();
                 
-                double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                double distance = enemy.getDistance(this.character);
 
                 Point2D.Double enemyDirection = new Point2D.Double(deltaX / distance, deltaY / distance);
                 

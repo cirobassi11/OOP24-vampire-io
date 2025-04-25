@@ -20,5 +20,4 @@ public class Enemy extends LivingEntity {
     public int getDamage() {
         return this.damage;
     }
-
 }

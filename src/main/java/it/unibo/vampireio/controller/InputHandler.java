@@ -16,7 +16,8 @@ public class InputHandler {
 
         int[] keys = {
             KeyEvent.VK_W, KeyEvent.VK_A, KeyEvent.VK_S, KeyEvent.VK_D,
-            KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT
+            KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT,
+            KeyEvent.VK_ESCAPE
         };
 
         for (int key : keys) {
@@ -44,6 +45,10 @@ public class InputHandler {
     }
 
     public boolean isKeyPressed(int keyCode) {
-        return pressedKeys.contains(keyCode);
+        return this.pressedKeys.contains(keyCode);
+    }
+
+    public void clearPressedKeys() {
+        this.pressedKeys.clear();
     }
 }

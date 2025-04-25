@@ -9,7 +9,6 @@ import java.awt.Image;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.PositionableData;
 import it.unibo.vampireio.controller.LivingEntityData;
@@ -42,6 +41,10 @@ class GamePanel extends JPanel {
     }
 
     void setData(GameData data) {
+        if (this.data == null || data.getElapsedTime() < this.data.getElapsedTime()) {
+            this.currentCharacterFrame = 0;
+            this.lastCharacterFrameTime = 0;
+        }
         this.data = data;
     }
 
@@ -206,11 +209,5 @@ class GamePanel extends JPanel {
         this.addKeyListener(inputListener);
         this.setFocusable(true);
         this.requestFocus();
-    }
-
-    @Override
-    public void addNotify() {
-        super.addNotify();
-        SwingUtilities.invokeLater(this::requestFocusInWindow);
     }
 }

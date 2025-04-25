@@ -60,9 +60,9 @@ public class EnemySpawnerImpl implements EnemySpawner {
             EnemyData enemyData = this.enemies.get(this.random.nextInt(2)); //////////TODO
 
             Point2D.Double spawnPosition = getRandomSpawnPosition();
-            ///controlla
+            ///controllaaaaaaa
             Enemy newEnemy = new Enemy(enemyData.getId(), spawnPosition, new Rectangle(64, 64), new Point2D.Double(0, 0), enemyData.getSpeed(), enemyData.getHealth(), enemyData.getDamage());
-            ////////
+            //////////////////
             this.gameWorld.addEnemy(newEnemy);
         }
     }
@@ -70,9 +70,34 @@ public class EnemySpawnerImpl implements EnemySpawner {
     private Point2D.Double getRandomSpawnPosition() {
         Dimension visualSize = this.gameWorld.getVisualSize();
         Point2D.Double currentCharacterPosition = this.gameWorld.getCharacter().getPosition();
-        return new Point2D.Double(
-            currentCharacterPosition.getX() + visualSize.getWidth() / 2 + this.random.nextInt((int) visualSize.getWidth()),
-            currentCharacterPosition.getY() + visualSize.getHeight() / 2 + this.random.nextInt((int) visualSize.getHeight())
-        );
+
+        int spawnAreaWidth = visualSize.width * 2;  // Spawn area più larga della finestra
+        int spawnAreaHeight = visualSize.height * 2; // Spawn area più alta della finestra
+
+        int spawnSide = this.random.nextInt(4);  // 0 = sinistra, 1 = destra, 2 = sopra, 3 = sotto
+
+        double spawnX = 0;
+        double spawnY = 0;
+
+        switch (spawnSide) {
+            case 0: // Sinistra
+                spawnX = currentCharacterPosition.getX() - spawnAreaWidth - this.random.nextInt(spawnAreaWidth);
+                spawnY = currentCharacterPosition.getY() - spawnAreaHeight / 2 + this.random.nextInt(spawnAreaHeight);
+                break;
+            case 1: // Destra
+                spawnX = currentCharacterPosition.getX() + visualSize.getWidth() + this.random.nextInt(spawnAreaWidth);
+                spawnY = currentCharacterPosition.getY() - spawnAreaHeight / 2 + this.random.nextInt(spawnAreaHeight);
+                break;
+            case 2: // Sopra
+                spawnX = currentCharacterPosition.getX() - spawnAreaWidth / 2 + this.random.nextInt(spawnAreaWidth);
+                spawnY = currentCharacterPosition.getY() - spawnAreaHeight - this.random.nextInt(spawnAreaHeight);
+                break;
+            case 3: // Sotto
+                spawnX = currentCharacterPosition.getX() - spawnAreaWidth / 2 + this.random.nextInt(spawnAreaWidth);
+                spawnY = currentCharacterPosition.getY() + visualSize.getHeight() + this.random.nextInt(spawnAreaHeight);
+                break;
+        }
+
+        return new Point2D.Double(spawnX, spawnY);
     }
 }

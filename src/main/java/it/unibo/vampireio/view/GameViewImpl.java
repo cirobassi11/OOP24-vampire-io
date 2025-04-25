@@ -262,8 +262,8 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setContinueListener(ActionListener listener) {
-        ((PausePanel) panels.get(PAUSE)).setContinueListener(listener);
+    public void setResumeListener(ActionListener listener) {
+        ((PausePanel) panels.get(PAUSE)).setResumeListener(listener);
     }
 
     @Override

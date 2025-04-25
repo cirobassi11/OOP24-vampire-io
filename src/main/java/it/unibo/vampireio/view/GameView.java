@@ -30,7 +30,7 @@ public interface GameView {
     void setBuyCharactersListener(ActionListener listener);
     void setBuyPowerUpsListener(ActionListener listener);
     void setReturnMenuListener(ActionListener listener);
-    void setContinueListener(ActionListener listener);
+    void setResumeListener(ActionListener listener);
     void setExitListener(ActionListener listener);
 
     //Setta i dati dei punteggi (nella scoreboard)

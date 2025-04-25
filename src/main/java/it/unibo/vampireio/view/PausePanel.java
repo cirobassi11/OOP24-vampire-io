@@ -6,18 +6,18 @@ import javax.swing.JButton;
 
 class PausePanel extends BasePanel {
     
-    private JButton continueButton;
+    private JButton resumeButton;
     private JButton exitButton;
 
     PausePanel(GameViewImpl view) {
         super(view);
         
-        this.continueButton = this.addButton("CONTINUE", 0, 0);
+        this.resumeButton = this.addButton("RESUME", 0, 0);
         this.exitButton = this.addButton("EXIT", 0, 1);
     }
 
-    void setContinueListener(ActionListener listener) {
-        this.continueButton.addActionListener(listener);
+    void setResumeListener(ActionListener listener) {
+        this.resumeButton.addActionListener(listener);
     }
 
     void setExitListener(ActionListener listener) {

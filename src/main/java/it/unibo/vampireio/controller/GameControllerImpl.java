@@ -21,11 +21,16 @@ import it.unibo.vampireio.view.GameViewImpl;
 public class GameControllerImpl implements GameController {
     private GameModel model;
     private GameView view;
+
+    private Thread modelThread;
+    private Thread viewThread;
+
     private final InputHandler inputHandler = new InputHandler();
 
     private long startTime;
 
-    private boolean running = true;
+    private boolean running = false;
+    private boolean paused = false;
 
     private final int frameRate = 60;
     private final int tickRate = 60;
@@ -123,14 +128,14 @@ public class GameControllerImpl implements GameController {
         });
 
         // PAUSE LISTENERS
-        this.view.setContinueListener(e -> {
-            // DEVE FAR RIPARTIRE IL GIOCO
+        this.view.setResumeListener(e -> {
             this.showScreen(GameViewImpl.GAME);
+            this.resumeGame();
         });
 
         this.view.setExitListener(e -> {
-            // DEVE TERMINARE IL GIOCO
             this.showScreen(GameViewImpl.END_GAME);
+            new Thread(this::stop).start();
         });
 
         // ENDGAME LISTENERS
@@ -159,27 +164,62 @@ public class GameControllerImpl implements GameController {
         }
     }
 
-    @Override
-    public void setRunning(boolean running) {
-        this.running = running;
-    }
-
-    @Override
-    public boolean isRunning() {
-        return this.running;
-    }
-
-    @Override
     public void startGame(String selectedCharacter) {
         this.model.initGame(selectedCharacter);
         this.startTime = System.currentTimeMillis();
-        new Thread(this::modelLoop).start();
-        new Thread(this::viewLoop).start();
+        this.running = true;
+        this.paused = false;
+        
+        this.modelThread = new Thread(this::modelLoop);
+        this.viewThread = new Thread(this::viewLoop);
+
+        this.modelThread.start();
+        this.viewThread.start();
+    }
+
+    private synchronized void pauseGame() {
+        this.paused = true;
+    }
+
+    private synchronized void resumeGame() {
+        this.paused = false;
+        notifyAll();
+    }
+
+    private synchronized void stop() {
+        this.running = false;
+
+        if (modelThread != null) {
+            modelThread.interrupt();
+        }
+        if (viewThread != null) {
+            viewThread.interrupt();
+        }
     }
 
     private void modelLoop() {
         long tickTime = 1000 / this.tickRate;
-        while (this.isRunning()) {
+
+        while (this.running && !Thread.currentThread().isInterrupted()) {
+            synchronized (this) {
+                if (inputHandler.isKeyPressed(KeyEvent.VK_ESCAPE)) {
+                    this.pauseGame();
+                    this.inputHandler.clearPressedKeys();
+                    this.view.showScreen(GameViewImpl.PAUSE);
+                }
+                while (this.paused) {
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        return;
+                    }
+                }
+                if (!this.running) {
+                    return;
+                }
+            }
+
             Point2D.Double direction = new Point2D.Double(0, 0);
             if (inputHandler.isKeyPressed(KeyEvent.VK_W) || inputHandler.isKeyPressed(KeyEvent.VK_UP)) {
                 direction.y -= 1;
@@ -193,27 +233,49 @@ public class GameControllerImpl implements GameController {
             if (inputHandler.isKeyPressed(KeyEvent.VK_D) || inputHandler.isKeyPressed(KeyEvent.VK_RIGHT)) {
                 direction.x += 1;
             }
+
             double length = direction.distance(0, 0);
             if (length > 0) {
                 direction = new Point2D.Double(direction.x / length, direction.y / length);
             }
-            this.model.update(tickTime, direction); //Movement input should be passed.
+
+            this.model.update(tickTime, direction);
+
             try {
                 Thread.sleep(tickTime);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
+                return;
             }
         }
     }
 
     private void viewLoop() {
         long frameTime = 1000 / this.frameRate;
-        while (this.isRunning()) {            
+
+        while (this.running && !Thread.currentThread().isInterrupted()) {
+            synchronized (this) {
+                while (this.paused) {
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        return;
+                    }
+                }
+
+                if (!this.running) {
+                    return;
+                }
+            }
+
             this.view.update(this.getData());
+
             try {
                 Thread.sleep(frameTime);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
+                return;
             }
         }
     }
