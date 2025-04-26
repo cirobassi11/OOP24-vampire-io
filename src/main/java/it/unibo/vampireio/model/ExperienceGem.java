@@ -5,7 +5,7 @@ import java.awt.geom.Point2D.Double;
 public class ExperienceGem extends Lootable {
 
     protected ExperienceGem(Double position) {
-        super("xp", position); /// il nome va preso da un'altra parte??, ci sono più tipi di xp??
+        super("collectibles/experiencegem", position); /// il nome va preso da un'altra parte??, ci sono più tipi di xp??
     }
 
     @Override

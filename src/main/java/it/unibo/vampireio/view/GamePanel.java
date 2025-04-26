@@ -22,8 +22,8 @@ class GamePanel extends JPanel {
     private static final int PROJECTILE_HEIGHT = 32;
     private static final int AREA_ATTACK_WIDTH = 64;
     private static final int AREA_ATTACK_HEIGHT = 64;
-    private static final int COLLECTIBLE_WIDTH = 32;
-    private static final int COLLECTIBLE_HEIGHT = 32;
+    private static final int COLLECTIBLE_WIDTH = 16;
+    private static final int COLLECTIBLE_HEIGHT = 16;
     private static final int HEALTH_BAR_WIDTH = 42;
     private static final int HEALTH_BAR_HEIGHT = 7;
 
@@ -118,7 +118,7 @@ class GamePanel extends JPanel {
             if (this.isVisible(collectible, this.collectibleDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int collectibleX = (int) (collectible.getPosition().getX() * scale + cameraOffsetX);
                 int collectibleY = (int) (collectible.getPosition().getY() * scale + cameraOffsetY);
-                Image tile = this.imageManager.getImage(collectible.getId());
+                Image tile = this.imageManager.getImage(collectible.getId() + "/" + "0"); //////////////////
                 if (tile != null) {
                     g.drawImage(tile, collectibleX, collectibleY, (int) (this.collectibleDimension.width * scale), (int) (this.collectibleDimension.height * scale), null);
                 }
@@ -237,6 +237,13 @@ class GamePanel extends JPanel {
             g.drawImage(coinCounterImage, (int) (this.getWidth() - COIN_ICON_X_OFFSET * scale), (int) (ICON_Y_OFFSET * scale), (int) (ICON_SIZE * scale), (int) (ICON_SIZE * scale), null);
         }
 
+        //Timer
+        long elapsedSeconds = (elapsedTime / 1000) % 60;
+        long elapsedMinutes = (elapsedTime / 1000) / 60;
+
+        String timeString = String.format("%02d:%02d", elapsedMinutes, elapsedSeconds);
+        g.setColor(Color.WHITE);
+        g.drawString(timeString, (int) ((this.getWidth() - g.getFontMetrics().stringWidth(timeString)) / 2), (int) (LEVEL_BAR_Y_OFFSET * scale + LEVEL_BAR_HEIGHT * scale + 20 * scale));
     }
 
     private boolean isVisible(PositionableData positionable, Dimension objectDimension, double scale, int cameraOffsetX, int cameraOffsetY) {

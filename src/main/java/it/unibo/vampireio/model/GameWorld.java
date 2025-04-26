@@ -47,6 +47,12 @@ public class GameWorld implements GameModel {
         this.collectibles = new LinkedList<>();
         this.areaAttacks = new LinkedList<>();
         this.projectileAttacks = new LinkedList<>();
+
+        ////////
+        collectibles.add(new ExperienceGem(new Point2D.Double(100, 100)));
+        collectibles.add(new Coin(new Point2D.Double(200, 200)));
+        collectibles.add(new Food(new Point2D.Double(300, 300)));
+        ///////
     }
 
     @Override
