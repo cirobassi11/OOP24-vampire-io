@@ -6,6 +6,7 @@ import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.InputHandler;
 import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.UnlockableCharacterData;
+import it.unibo.vampireio.controller.UnlockablePowerupData;
 
 public interface GameView {
     void update(GameData data);
@@ -44,6 +45,11 @@ public interface GameView {
     void setUnlockableCharactersData(List<UnlockableCharacterData> unlockableCharactersData);
     String getSelectedCharacter();
     
+    //Unlockable powerup panel
+    void setUnlockablePowerupsData(List<UnlockablePowerupData> unlockablePowerupsData);
+    String getSelectedPowerup();
+
+    //Save Selection Panel
     String getSelectedSave();
     
     void showError(String message);

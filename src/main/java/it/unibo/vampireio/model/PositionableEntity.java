@@ -14,12 +14,12 @@ public abstract class PositionableEntity implements Positionable {
 
     @Override
     public String getId() {
-        return id;
+        return this.id;
     }
 
     @Override
     public Point2D.Double getPosition() {
-        return position;
+        return this.position;
     }
 
     @Override

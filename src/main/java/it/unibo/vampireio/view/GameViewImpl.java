@@ -17,6 +17,7 @@ import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.InputHandler;
 import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.UnlockableCharacterData;
+import it.unibo.vampireio.controller.UnlockablePowerupData;
 
 public class GameViewImpl implements GameView {
 
@@ -242,8 +243,18 @@ public class GameViewImpl implements GameView {
 	}
 
     @Override
+    public void setUnlockablePowerupsData(List<UnlockablePowerupData> unlockablePowerupsData) {
+		((UnlockablePowerUpsPanel) panels.get(UNLOCKABLE_POWERUPS)).setUnlockablePowerupsData(unlockablePowerupsData);
+	}
+
+    @Override
     public String getSelectedCharacter() {
         return ((UnlockableCharactersPanel) panels.get(UNLOCKABLE_CHARACTERS)).getSelectedCharacter();
+    }
+
+    @Override
+    public String getSelectedPowerup() {
+        return ((UnlockablePowerUpsPanel) panels.get(UNLOCKABLE_POWERUPS)).getSelectedPowerup();
     }
 
     @Override
