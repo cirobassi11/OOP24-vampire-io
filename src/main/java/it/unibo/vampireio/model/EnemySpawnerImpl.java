@@ -27,7 +27,7 @@ public class EnemySpawnerImpl implements EnemySpawner {
 
     public EnemySpawnerImpl(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
-        this.enemies = this.gameWorld.getDataLoader().getEnemyLoader().loadAllEnemies();
+        this.enemies = this.gameWorld.getDataLoader().getEnemyLoader().getAll();
         this.spawnInterval = INITIAL_SPAWN_INTERVAL;
         this.timeSinceLastSpawn = 0;
         this.timeSinceLastDecrement = 0;

@@ -1,6 +1,6 @@
 package it.unibo.vampireio.model;
 
-public abstract class UnlockableItem implements Unlockable {
+public abstract class UnlockableItem implements Unlockable, Identifiable {
     private static final long serialVersionUID = 1L;
 
     private final String id;

@@ -1,6 +1,6 @@
 package it.unibo.vampireio.model;
 
-public class EnemyData {
+public class EnemyData implements Identifiable {
     private String id;
     private String name;
     private int level;
