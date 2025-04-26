@@ -65,10 +65,27 @@ public class GameWorld implements GameModel {
                 double distance = enemy.getDistance(this.character);
 
                 Point2D.Double enemyDirection = new Point2D.Double(deltaX / distance, deltaY / distance);
-                
                 enemy.setDirection(enemyDirection);
 
-                enemy.move(tickTime);
+                boolean collision = false;
+                Point2D.Double enemyFuturePosition = enemy.getFuturePosition(tickTime);
+                
+                for (Enemy otherEnemy : this.enemies) {
+                    if (enemy != otherEnemy && enemyFuturePosition.distance(otherEnemy.getPosition()) < 15) {
+                        collision = true;
+                        break;
+                    }
+                }
+
+                //avoid collision with character
+                if (enemyFuturePosition.distance(this.character.getPosition()) < 50) {
+                    collision = true;
+                }
+
+                if (!collision) {
+                    enemy.move(tickTime);
+                }
+
                 enemy.onCollision(this.character);
             }
 

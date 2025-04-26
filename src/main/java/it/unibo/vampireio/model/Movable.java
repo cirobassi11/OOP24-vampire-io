@@ -1,5 +1,6 @@
 package it.unibo.vampireio.model;
 
+import java.awt.Shape;
 import java.awt.geom.Point2D;
 
 public interface Movable extends Positionable {
@@ -8,4 +9,6 @@ public interface Movable extends Positionable {
     void setSpeed(double speed);
     double getSpeed();
     void move(double tickTime);
+    Point2D.Double getFuturePosition(double tickTime);
+    Shape getFutureHitbox(double tickTime);
 }

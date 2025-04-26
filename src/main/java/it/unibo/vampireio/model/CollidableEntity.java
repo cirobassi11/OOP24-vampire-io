@@ -5,7 +5,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 
 public abstract class CollidableEntity extends PositionableEntity implements Collidable {
-    private Area hitBoxArea;
+    private Shape hitBoxArea;
     
     protected CollidableEntity(String id, Point2D.Double position, Shape hitbox) {
         super(id, position);
@@ -13,14 +13,14 @@ public abstract class CollidableEntity extends PositionableEntity implements Col
     }
 
     @Override
-    public Area getHitbox() {
+    public Shape getHitbox() {
         return this.hitBoxArea;
     }
 
     @Override
     public boolean collidesWith(Collidable collidable) {
         Area intersection = new Area(this.getHitbox());
-        intersection.intersect(collidable.getHitbox());
+        intersection.intersect(new Area(collidable.getHitbox()));
         return !intersection.isEmpty();
     }
 }
