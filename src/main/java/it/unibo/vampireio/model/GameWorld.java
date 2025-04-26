@@ -36,23 +36,13 @@ public class GameWorld implements GameModel {
     public void initGame(String selectedCharacter) {
         this.enemySpawner = new EnemySpawnerImpl(this);
 
-        UnlockableCharacter selectedUnlockableCharacter = this.saveManager.getCurrentSave().getUnlockedCharacters() //SI POTREBBE FARE UN METODO DEL LOADER??
-                .stream()
-                .filter(character -> character.getId().equals(selectedCharacter))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Character not found"));///////////////////
+        UnlockableCharacter selectedUnlockableCharacter = this.dataLoader.getCharacterLoader().get(selectedCharacter).get();
 
         this.character = new Character(selectedCharacter, selectedUnlockableCharacter.getName(), selectedUnlockableCharacter.getCharacterStats(), GameWorld.ENTITY_SHAPE);         
         this.enemies = new LinkedList<>();
         this.collectibles = new LinkedList<>();
         this.areaAttacks = new LinkedList<>();
         this.projectileAttacks = new LinkedList<>();
-
-        ////////
-        collectibles.add(new ExperienceGem(new Point2D.Double(100, 100)));
-        collectibles.add(new Coin(new Point2D.Double(200, 200)));
-        collectibles.add(new Food(new Point2D.Double(300, 300)));
-        ///////
     }
 
     @Override
@@ -205,7 +195,7 @@ public class GameWorld implements GameModel {
     @Override
     public List<UnlockableCharacter> getLockedCharacters() {
         List<UnlockableCharacter> unlockedCharacters = this.saveManager.getCurrentSave().getUnlockedCharacters();
-        List<UnlockableCharacter> unlockableCharacters = this.dataLoader.getCharacterLoader().loadAllCharacters();
+        List<UnlockableCharacter> unlockableCharacters = this.dataLoader.getCharacterLoader().getAll();
         
         List<String> unlockedIds = unlockedCharacters.stream()
             .map(UnlockableCharacter::getId)
@@ -246,7 +236,7 @@ public class GameWorld implements GameModel {
     @Override
     public List<UnlockablePowerUp> getLockedPowerUps() {
         List<UnlockablePowerUp> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
-        List<UnlockablePowerUp> unlockablePowerUps = this.dataLoader.getPowerUpLoader().loadAllPowerUps();
+        List<UnlockablePowerUp> unlockablePowerUps = this.dataLoader.getPowerUpLoader().getAll();
         
         List<String> unlockedIds = unlockedPowerUps.stream()
             .map(UnlockablePowerUp::getId)
