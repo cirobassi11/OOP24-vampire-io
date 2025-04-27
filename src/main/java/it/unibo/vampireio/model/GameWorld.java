@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class GameWorld implements GameModel {
 
@@ -93,10 +95,6 @@ public class GameWorld implements GameModel {
             // spanwna i nemici FUORI DALLA VISUALE
             this.enemySpawner.update(tickTime);
         }
-    }
-
-    DataLoader getDataLoader() {
-        return this.dataLoader;   
     }
 
     @Override
@@ -189,12 +187,17 @@ public class GameWorld implements GameModel {
 
     @Override
     public List<UnlockableCharacter> getChoosableCharacters() {
-        return List.copyOf(this.saveManager.getCurrentSave().getUnlockedCharacters());
+        List<UnlockableCharacter> unlockedCharacters = this.saveManager.getCurrentSave()
+            .getUnlockedCharacters().stream()
+            .map(id -> this.getDataLoader().getCharacterLoader().get(id).get())
+            .toList();
+            
+        return unlockedCharacters;
     }
 
     @Override
     public List<UnlockableCharacter> getLockedCharacters() {
-        List<UnlockableCharacter> unlockedCharacters = this.saveManager.getCurrentSave().getUnlockedCharacters();
+        List<UnlockableCharacter> unlockedCharacters = this.getChoosableCharacters();
         List<UnlockableCharacter> unlockableCharacters = this.dataLoader.getCharacterLoader().getAll();
         
         List<String> unlockedIds = unlockedCharacters.stream()
@@ -229,46 +232,29 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public List<UnlockablePowerUp> getUnlockedPowerUps(){
-        return List.copyOf(this.saveManager.getCurrentSave().getUnlockedPowerUps());
+    public List<UnlockablePowerUp> getUnlockablePowerups() {
+        List<UnlockablePowerUp> unlockablePowerups = this.dataLoader.getPowerUpLoader().getAll();
+        Map<String, Integer> unlockedPowerups = this.saveManager.getCurrentSave().getUnlockedPowerUps();
+
+        List<UnlockablePowerUp> levelAdjustedPowerups = unlockablePowerups.stream()
+            .peek(p -> p.setCurrentLevel(unlockedPowerups.getOrDefault(p.getId(), 0)))
+            .toList();
+        return levelAdjustedPowerups;
     }
 
     @Override
-    public List<UnlockablePowerUp> getLockedPowerUps() {
-        List<UnlockablePowerUp> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
-        List<UnlockablePowerUp> unlockablePowerUps = this.dataLoader.getPowerUpLoader().getAll();
+    public boolean buyPowerup(String selectedPowerUp) {
+        /*int currentLevel = this.getCurrentSave().getUnlockedPowerUps().get(selectedPowerUp).intValue();
+        Optional<UnlockablePowerUp> unlockablePowerup = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp);
         
-        List<String> unlockedIds = unlockedPowerUps.stream()
-            .map(UnlockablePowerUp::getId)
-            .toList();
-
-        List<UnlockablePowerUp> lockedPowerUps = unlockedPowerUps.stream()
-            .filter(c -> !unlockedIds.contains(c.getId()))
-            .toList();
-        return List.copyOf(lockedPowerUps);
-    }
-
-    @Override
-    public boolean buyPowerUp(String selectedPowerUp){
-        Save currentSave = this.saveManager.getCurrentSave();
-        UnlockablePowerUp selectedUnlockablePowerUp = this.getLockedPowerUps().stream()
-            .filter(c -> c.getId().equals(selectedPowerUp))
-            .findFirst()
-            .orElse(null);
-        if (selectedUnlockablePowerUp == null) {
-            this.gameController.showError("PowerUp not found");
+        if(!unlockablePowerup.isPresent()){
             return false;
         }
-        if (currentSave.getMoneyAmount() < selectedUnlockablePowerUp.getPrice()) {
-            this.gameController.showError("You don't have enough coins!");
-            return false;
-        }
-        //if (currentSave.getUnlockedPowerUps()..... == /*max lvl*/ ) {
-            //stop
-        //}
-        currentSave.incrementMoneyAmount(- selectedUnlockablePowerUp.getPrice());
-        currentSave.addUnlockedPowerUp(selectedUnlockablePowerUp);
-        this.saveManager.saveCurrentSave();
+        
+        int maxLevel = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getMaxLevel();
+        int price = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getPrice();
+        //unlockablePowerup.enhance();*/
+        
         return true;
     }
 
@@ -290,5 +276,9 @@ public class GameWorld implements GameModel {
     @Override
     public Save getCurrentSave() {
         return this.saveManager.getCurrentSave();
+    }
+
+    DataLoader getDataLoader() {
+        return this.dataLoader;   
     }
 }

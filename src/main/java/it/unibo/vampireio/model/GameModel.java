@@ -28,7 +28,6 @@ public interface GameModel {
     List<UnlockableCharacter> getChoosableCharacters();
     List<UnlockableCharacter> getLockedCharacters();
     boolean buyCharacter(String selectedCharacter);
-    List<UnlockablePowerUp> getUnlockedPowerUps();
-    List<UnlockablePowerUp> getLockedPowerUps();
-    boolean buyPowerUp(String selectedPowerup);
+    List<UnlockablePowerUp> getUnlockablePowerups();
+    boolean buyPowerup(String selectedPowerup);
 }

@@ -1,0 +1,10 @@
+[
+    {
+      "id": "powerups/armor",
+      "name": "Armor",
+      "description": "armaturaaaa",
+      "price": 10,
+      "currentLevel": 0,
+      "maxLevel": 5
+    }
+  ]

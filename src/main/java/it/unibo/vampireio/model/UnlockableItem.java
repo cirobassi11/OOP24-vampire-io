@@ -16,6 +16,7 @@ public abstract class UnlockableItem implements Unlockable, Identifiable {
         this.description = description;
         this.price = price;
         this.currentLevel = 0;
+        this.maxLevel = maxLevel;
     }
 
     @Override
@@ -24,13 +25,17 @@ public abstract class UnlockableItem implements Unlockable, Identifiable {
     }
 
     @Override
-    public void enhance() {
-        //controllare se l'item ha raggiunto livello massimo
-        //se non l'ha raggiunto, controllare se ha abbastanza soldi
-        //se si, sottrarli
-        //salvare salvataggio (dove va fatto??)
-        
+    public boolean enhance() {
+        if(this.currentLevel >= this.maxLevel) {
+            return false;
+        }
         this.currentLevel++;
+        return true;
+    }
+
+    @Override
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
     }
 
     @Override
@@ -54,8 +59,12 @@ public abstract class UnlockableItem implements Unlockable, Identifiable {
     }
 
     @Override
-    public int getLevel() {
+    public int getCurrentLevel() {
         return this.currentLevel;
     }
 
+    @Override
+    public int getMaxLevel() {
+        return this.maxLevel;
+    }
 }

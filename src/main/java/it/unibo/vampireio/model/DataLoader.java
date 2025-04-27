@@ -19,6 +19,7 @@ public class DataLoader {
     public GenericDataLoader<UnlockableCharacter> getCharacterLoader() {
         return this.characterLoader;
     }
+    
     public GenericDataLoader<EnemyData> getEnemyLoader() {
         return this.enemyLoader;
     }

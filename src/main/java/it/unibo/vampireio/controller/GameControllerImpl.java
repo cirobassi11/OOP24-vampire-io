@@ -108,6 +108,11 @@ public class GameControllerImpl implements GameController {
         });
 
         this.view.setPowerUpsShopListener(e -> {
+            List<UnlockablePowerupData> unlockablePowerupsData = this.model.getUnlockablePowerups().stream()
+                    .map(powerup -> new UnlockablePowerupData(powerup.getId(), powerup.getName(), 
+                    powerup.getDescription(), powerup.getCurrentLevel(), powerup.getMaxLevel()))
+                    .collect(Collectors.toList());
+            this.view.setUnlockablePowerupsData(unlockablePowerupsData);
             this.showScreen(GameViewImpl.UNLOCKABLE_POWERUPS);
         });
 

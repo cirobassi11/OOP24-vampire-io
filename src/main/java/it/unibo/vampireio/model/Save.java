@@ -3,8 +3,12 @@ package it.unibo.vampireio.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Save implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -12,16 +16,16 @@ public class Save implements Serializable {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
     
     private String saveTime;
-    private List<UnlockableCharacter> unlockedCharacters;
-    private List<UnlockablePowerUp> unlockedPowerUps;
+    private Set<String> unlockedCharacters;
+    private Map<String, Integer> unlockedPowerUps;
     private int moneyAmount;
     private List<Score> scores;
     
     // Salvataggio già esistente
     public Save(
         String saveTime, 
-        List<UnlockableCharacter> unlockedCharacters,
-        List<UnlockablePowerUp> unlockedPowerUps,
+        Set<String> unlockedCharacters,
+        Map<String, Integer> unlockedPowerUps,
         int moneyAmount,
         List<Score> scores
     ) {
@@ -36,51 +40,51 @@ public class Save implements Serializable {
     public Save() {
         this(
             generateSaveTimestamp(), 
-            new LinkedList<UnlockableCharacter>(), 
-            new LinkedList<UnlockablePowerUp>(), 
+            new HashSet<String>(), 
+            new HashMap<String, Integer>(), 
             0, 
             new LinkedList<Score>()
         );
         
         ///TESTTTTTTTT
-        this.unlockedCharacters.add(new UnlockableCharacter("characters/antonio", "Antonio Belpaese", "descrizione", 0, new Stats()));/////DEFAULT CHARACTER ANDREBBE LETTO DA JSON??
         this.incrementMoneyAmount(200);
+        //////////////
     }
     
     public String getSaveTime() {
         return this.saveTime;
     }
 
-    public List<UnlockableCharacter> getUnlockedCharacters() {
+    public List<String> getUnlockedCharacters() {
         return List.copyOf(this.unlockedCharacters);
     }
 
-    public List<UnlockablePowerUp> getUnlockedPowerUps() {
-        return List.copyOf(this.unlockedPowerUps);
+    public Map<String, Integer> getUnlockedPowerUps() {
+        return Map.copyOf(this.unlockedPowerUps);
     }
 
     public int getMoneyAmount() {
         return this.moneyAmount;
     }
 
+    public void incrementMoneyAmount(int moneyAmount) {
+        this.moneyAmount += moneyAmount;
+    }
+
     public List<Score> getScores() {
         return List.copyOf(this.scores);
     }
 
+    public void addScore(Score score) {
+        this.scores.add(score);
+    }
+
     public void addUnlockedCharacter(UnlockableCharacter unlockedCharacter) {
-        this.unlockedCharacters.add(unlockedCharacter);
+        this.unlockedCharacters.add(unlockedCharacter.getId());
     }
 
     public void addUnlockedPowerUp(UnlockablePowerUp unlockedPowerUp) {
-        this.unlockedPowerUps.add(unlockedPowerUp);
-    }
-
-    public void incrementMoneyAmount(int moneyAmount) {
-        this.moneyAmount += moneyAmount;
-    }
-    
-    public void addScore(Score score) {
-        this.scores.add(score);
+        this.unlockedPowerUps.put(unlockedPowerUp.getId(), unlockedPowerUp.getCurrentLevel());
     }
     
     // Generazione stringa data-ora dd-MM-yyyy_HH-mm-ss

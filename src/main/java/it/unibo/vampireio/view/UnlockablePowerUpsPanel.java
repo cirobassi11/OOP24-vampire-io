@@ -1,6 +1,8 @@
 package it.unibo.vampireio.view;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.swing.JList;
 import it.unibo.vampireio.controller.UnlockablePowerupData;
 import javax.swing.JButton;
@@ -26,15 +28,16 @@ class UnlockablePowerUpsPanel extends BasePanel {
 
     void setUnlockablePowerupsData(List<UnlockablePowerupData> unlockablePowerupsData) {
         this.unlockablePowerupsData = unlockablePowerupsData;
-        if(unlockablePowerupsData == null || unlockablePowerupsData.isEmpty()) {
-            this.powerupNames = List.of();
-        }
-        else {
-            this.unlockablePowerupsData = unlockablePowerupsData;
+        this.powerupNames = List.of();
+
+        if(unlockablePowerupsData != null && !unlockablePowerupsData.isEmpty()) {
             this.powerupNames = unlockablePowerupsData.stream()
-                    .map(UnlockablePowerupData::getName)
-                    .toList();
+            .map(powerup -> powerup.getName() + " [" 
+                        + powerup.getCurrentLevel() + "/" 
+                        + powerup.getMaxLevel() + "]")
+            .toList();
         }
+        
         this.powerupsList.setListData(this.powerupNames.toArray(new String[0]));
     }
 
