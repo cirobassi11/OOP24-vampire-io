@@ -17,6 +17,8 @@ public class GameWorld implements GameModel {
     private final Dimension visualSize = new Dimension(1280, 720);
     static Shape ENTITY_SHAPE = new Rectangle(64, 64);
 
+    private Score score;
+
     private Character character;
     private List<Enemy> enemies;
     private List<ProjectileAttack> projectileAttacks;
@@ -45,6 +47,8 @@ public class GameWorld implements GameModel {
         this.collectibles = new LinkedList<>();
         this.areaAttacks = new LinkedList<>();
         this.projectileAttacks = new LinkedList<>();
+
+        this.score = new Score(selectedUnlockableCharacter.getName());
     }
 
     @Override
@@ -177,12 +181,12 @@ public class GameWorld implements GameModel {
 
     @Override
     public int getKillCounter() {
-        return 100000; //TODO
+        return this.score.getKillCounter();
     }
 
     @Override
     public int getCoinCounter() {
-        return 100000; //TODO
+        return this.score.getCoinCounter();
     }
 
     @Override

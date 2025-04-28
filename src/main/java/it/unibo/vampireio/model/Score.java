@@ -8,21 +8,27 @@ public class Score implements Serializable {
     private String characterName;
     private double sessionTime;
     private int killCounter;
-    private int levelCounter;
+    private int level;
+    private int coinCounter;
 
     public Score(String characterName) {
         this.characterName = characterName;
         this.sessionTime = 0;
         this.killCounter = 0;
-        this.levelCounter = 0;
+        this.level = 0;
+        this.coinCounter = 0;
     }
 
     public void incrementKillCounter() {
         this.killCounter++;
     }
 
-    public void incrementLevelCounter() {
-        this.levelCounter++;
+    public void incrementCoinCounter() {
+        this.coinCounter++;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public void incrementSessionTime(double tickRate) {
@@ -37,8 +43,12 @@ public class Score implements Serializable {
         return this.killCounter;
     }
 
-    public int getLevelCounter() {
-        return this.levelCounter;
+    public int getLevel() {
+        return this.level;
+    }
+
+    public int getCoinCounter() {
+        return this.coinCounter;
     }
 
     public double getSessionTime() {
@@ -46,6 +56,6 @@ public class Score implements Serializable {
     }
 
     public int getScore() {
-        return getKillCounter() * getLevelCounter(); //LASCIAMO QUESTO??
+        return getKillCounter() * getLevel(); //LASCIAMO QUESTO??
     }
 }

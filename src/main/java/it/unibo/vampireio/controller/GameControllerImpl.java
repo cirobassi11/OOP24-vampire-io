@@ -396,7 +396,7 @@ public class GameControllerImpl implements GameController {
                 score.getCharacterName(),
                 score.getSessionTime(),
                 score.getKillCounter(),
-                score.getLevelCounter(),
+                score.getLevel(),
                 score.getScore()
             ))
             .collect(Collectors.toList());
