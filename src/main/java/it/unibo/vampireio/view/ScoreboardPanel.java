@@ -3,31 +3,37 @@ package it.unibo.vampireio.view;
 import java.awt.event.ActionListener;
 import java.util.List;
 import it.unibo.vampireio.controller.ScoreData;
+import it.unibo.vampireio.controller.UnlockableCharacterData;
+
 import javax.swing.JButton;
+import javax.swing.JList;
 
 class ScoreboardPanel extends BasePanel {
     
     private JButton backButton;
-    private List<ScoreData> scores;
+    private JList<String> scoresList;
+
+    private List<ScoreData> scoresData;
+    private List<String> scoreNames = List.of();
 
     ScoreboardPanel(GameViewImpl view) {
         super(view);
 
-        List<String> scoreNames = List.of();
-        /*for (ScoreData score : scores) {
-            scoreNames.add(String.valueOf(score.getScore()));
-        }*/
-
-        this.addScrollableList(scoreNames, 0, 0);
-        
+        this.scoresList = this.addScrollableList(this.scoreNames, 0, 0);
         this.backButton = this.addButton("BACK", 0, 1);
-        this.backButton.addActionListener(e -> {
-            this.view.showScreen(GameViewImpl.START);
-        });
     }
 
-    void setScoreList(List<ScoreData> scores) {
-        this.scores = scores;
+    void setScoresData(List<ScoreData> scoresData) {
+        this.scoresData = scoresData;
+        if(scoresData == null || scoresData.isEmpty()) {
+            this.scoreNames = List.of();
+        }
+        else {
+            this.scoreNames = scoresData.stream()
+                    .map(ScoreData::getCharacterName) /////
+                    .toList();
+        }
+        this.scoresList.setListData(this.scoreNames.toArray(new String[0]));
     }
 
     void setBackListener(ActionListener listener) {

@@ -17,7 +17,6 @@ class UnlockableCharactersPanel extends BasePanel {
     UnlockableCharactersPanel(GameViewImpl view) {
         super(view);
 
-        /*scrollablelist con tutti i characters*/
         this.charactersList = this.addScrollableList(characterNames, 0, 0);
         this.buyButton = this.addButton("BUY", 0, 1);        
         this.backButton = this.addButton("BACK", 0, 2);
@@ -29,7 +28,6 @@ class UnlockableCharactersPanel extends BasePanel {
             this.characterNames = List.of();
         }
         else {
-            this.unlockableCharactersData = unlockableCharactersData;
             this.characterNames = unlockableCharactersData.stream()
                     .map(UnlockableCharacterData::getName)
                     .toList();

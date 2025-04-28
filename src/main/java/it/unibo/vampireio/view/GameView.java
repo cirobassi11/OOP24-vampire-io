@@ -35,7 +35,7 @@ public interface GameView {
     void setExitListener(ActionListener listener);
 
     //Setta i dati dei punteggi (nella scoreboard)
-    void setScoreList(List<ScoreData> scores);
+    void setScoresData(List<ScoreData> scores);
     
     //Choose character panel
     void setChoosableCharactersData(List<UnlockableCharacterData> choosableCharactersData);

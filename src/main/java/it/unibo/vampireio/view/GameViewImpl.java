@@ -283,8 +283,8 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setScoreList(List<ScoreData> scores) {
-        ((ScoreboardPanel) panels.get(SCOREBOARD)).setScoreList(scores);
+    public void setScoresData(List<ScoreData> scores) {
+        ((ScoreboardPanel) panels.get(SCOREBOARD)).setScoresData(scores);
     }
     
     @Override

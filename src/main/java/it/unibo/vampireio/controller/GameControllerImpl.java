@@ -67,7 +67,7 @@ public class GameControllerImpl implements GameController {
         });
 
         this.view.setScoreboardListener(e -> {
-            this.view.setScoreList(this.getScores());
+            this.view.setScoresData(this.getScores());
             this.showScreen(GameViewImpl.SCOREBOARD);
         });
 
