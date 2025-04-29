@@ -248,17 +248,19 @@ public class GameWorld implements GameModel {
 
     @Override
     public boolean buyPowerup(String selectedPowerUp) {
-        /*int currentLevel = this.getCurrentSave().getUnlockedPowerUps().get(selectedPowerUp).intValue();
+        int currentLevel = this.getCurrentSave().getUnlockedPowerUps().get(selectedPowerUp).intValue();
+        int maxLevel = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getMaxLevel();
+        int powerupPrice = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getPrice();
+        int moneyAmount = this.saveManager.getCurrentSave().getMoneyAmount();
+        
         Optional<UnlockablePowerUp> unlockablePowerup = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp);
         
-        if(!unlockablePowerup.isPresent()){
+        if(!unlockablePowerup.isPresent() || powerupPrice > moneyAmount) {
             return false;
+        } else {
+            //unlockablePowerup.ifPresent(e -> e.enhance());
+            unlockablePowerup.ifPresent(UnlockablePowerUp::enhance);
         }
-        
-        int maxLevel = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getMaxLevel();
-        int price = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getPrice();
-        //unlockablePowerup.enhance();*/
-        
         return true;
     }
 
