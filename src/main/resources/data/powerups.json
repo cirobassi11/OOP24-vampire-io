@@ -6,5 +6,13 @@
       "price": 10,
       "currentLevel": 0,
       "maxLevel": 5
+    },
+    {
+      "id": "powerups/might",
+      "name": "Might",
+      "description": "mighttttt",
+      "price": 20,
+      "currentLevel": 0,
+      "maxLevel": 3
     }
   ]

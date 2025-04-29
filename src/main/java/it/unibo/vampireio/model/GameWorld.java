@@ -216,23 +216,26 @@ public class GameWorld implements GameModel {
 
     @Override
     public boolean buyCharacter(String selectedCharacter) {
-        Save currentSave = this.saveManager.getCurrentSave();
-        UnlockableCharacter selectedUnlockableCharacter = this.getLockedCharacters().stream()
-            .filter(c -> c.getId().equals(selectedCharacter))
-            .findFirst()
-            .orElse(null);
-        if (selectedUnlockableCharacter == null) {
-            this.gameController.showError("Character not found");
-            return false;
+        if(selectedCharacter != null) {
+            Save currentSave = this.saveManager.getCurrentSave();
+            UnlockableCharacter selectedUnlockableCharacter = this.getLockedCharacters().stream()
+                .filter(c -> c.getId().equals(selectedCharacter))
+                .findFirst()
+                .orElse(null);
+            if (selectedUnlockableCharacter == null) {
+                this.gameController.showError("Character not found");
+                return false;
+            }
+            if (currentSave.getMoneyAmount() < selectedUnlockableCharacter.getPrice()) {
+                this.gameController.showError("You don't have enough coins!");
+                return false;
+            }
+            currentSave.incrementMoneyAmount(- selectedUnlockableCharacter.getPrice());
+            currentSave.addUnlockedCharacter(selectedUnlockableCharacter);
+            this.saveManager.saveCurrentSave();
+            return true;
         }
-        if (currentSave.getMoneyAmount() < selectedUnlockableCharacter.getPrice()) {
-            this.gameController.showError("You don't have enough coins!");
-            return false;
-        }
-        currentSave.incrementMoneyAmount(- selectedUnlockableCharacter.getPrice());
-        currentSave.addUnlockedCharacter(selectedUnlockableCharacter);
-        this.saveManager.saveCurrentSave();
-        return true;
+        return false;
     }
 
     @Override
@@ -248,20 +251,38 @@ public class GameWorld implements GameModel {
 
     @Override
     public boolean buyPowerup(String selectedPowerUp) {
-        int currentLevel = this.getCurrentSave().getUnlockedPowerUps().get(selectedPowerUp).intValue();
-        int maxLevel = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getMaxLevel();
-        int powerupPrice = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getPrice();
-        int moneyAmount = this.saveManager.getCurrentSave().getMoneyAmount();
-        
-        Optional<UnlockablePowerUp> unlockablePowerup = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp);
-        
-        if(!unlockablePowerup.isPresent() || powerupPrice > moneyAmount) {
-            return false;
-        } else {
-            //unlockablePowerup.ifPresent(e -> e.enhance());
-            unlockablePowerup.ifPresent(UnlockablePowerUp::enhance);
+        if(selectedPowerUp != null) {
+            int currentLevel = 0;
+            Map<String, Integer> unlockedPowerups = this.getCurrentSave().getUnlockedPowerUps();
+            if(unlockedPowerups != null && unlockedPowerups.containsKey(selectedPowerUp)) {
+                currentLevel = unlockedPowerups.get(selectedPowerUp).intValue();
+            }
+            int maxLevel = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getMaxLevel();
+            int powerupPrice = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getPrice();
+            int moneyAmount = this.getCurrentSave().getMoneyAmount();
+            
+            Optional<UnlockablePowerUp> unlockablePowerup = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp);
+            
+            if(!unlockablePowerup.isPresent()) {
+                this.gameController.showError("Powerup not found!");
+                return false;
+            }
+
+            if(moneyAmount >= powerupPrice) {
+                boolean enhanced = unlockablePowerup.get().enhance();
+                this.getCurrentSave().enhancePowerup(unlockablePowerup.get());
+                if(!enhanced) {
+                    this.gameController.showError("Max level reached!");
+                    return false;
+                }
+                this.saveManager.saveCurrentSave();
+                return true;
+            }
+            else {
+                this.gameController.showError("You don't have enough coins!");
+            }
         }
-        return true;
+        return false;
     }
 
     @Override

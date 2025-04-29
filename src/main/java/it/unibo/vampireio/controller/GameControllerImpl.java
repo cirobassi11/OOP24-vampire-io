@@ -119,7 +119,7 @@ public class GameControllerImpl implements GameController {
         // UNLOCKABLE CHARACTERS SHOP LISTENERS
         this.view.setBuyCharactersListener(e -> {
             String selectedCharacter = this.view.getSelectedCharacter();
-            if(this.model.buyCharacter(selectedCharacter)) {
+            if(selectedCharacter != null && this.model.buyCharacter(selectedCharacter)) {
                 List<UnlockableCharacterData> unlockableCharactersData = this.model.getLockedCharacters().stream()
                     .map(character -> new UnlockableCharacterData(character.getId(), character.getName()))
                     .collect(Collectors.toList());
@@ -129,7 +129,14 @@ public class GameControllerImpl implements GameController {
 
         // UNLOCKABLE POWERUPS SHOP LISTENERS
         this.view.setBuyPowerUpsListener(e -> {
-            //TODO
+            String selectedPowerup = this.view.getSelectedPowerup();
+            if(selectedPowerup != null && this.model.buyPowerup(selectedPowerup)) {
+                List<UnlockablePowerupData> unlockablePowerupsData = this.model.getUnlockablePowerups().stream()
+                    .map(powerup -> new UnlockablePowerupData(powerup.getId(), powerup.getName(), 
+                    powerup.getDescription(), powerup.getCurrentLevel(), powerup.getMaxLevel()))
+                    .collect(Collectors.toList());
+                this.view.setUnlockablePowerupsData(unlockablePowerupsData);
+            }
         });
 
         // PAUSE LISTENERS

@@ -83,7 +83,7 @@ public class Save implements Serializable {
         this.unlockedCharacters.add(unlockedCharacter.getId());
     }
 
-    public void addUnlockedPowerUp(UnlockablePowerUp unlockedPowerUp) {
+    public void enhancePowerup(UnlockablePowerUp unlockedPowerUp) {
         this.unlockedPowerUps.put(unlockedPowerUp.getId(), unlockedPowerUp.getCurrentLevel());
     }
     
