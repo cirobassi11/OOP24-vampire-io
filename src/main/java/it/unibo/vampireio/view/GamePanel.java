@@ -43,6 +43,13 @@ class GamePanel extends JPanel {
     private static final int ICON_SIZE = 25;
     private static final int COIN_COUNTER_X_OFFSET = 70;
     private static final int COIN_ICON_X_OFFSET = 100;
+    private static final int TILE_BORDER_ADJUSTMENT = 1;
+    private static final int TILE_RENDER_PADDING = 2;
+    private static final int FONT_SIZE_BASE = 15;
+    private static final int TIMER_Y_EXTRA_OFFSET = 20;
+
+    private static final double ENEMY_OSCILLATION_MAX_ANGLE_RAD = Math.toRadians(10);
+    private static final double ENEMY_OSCILLATION_SPEED = 0.005;
 
     private GameViewImpl view;
     private GameData data;
@@ -89,15 +96,13 @@ class GamePanel extends JPanel {
         int cameraOffsetX = (int) (screenCenterX - character.getPosition().getX() * scale);
         int cameraOffsetY = (int) (screenCenterY - character.getPosition().getY() * scale);
 
-        // Start map tile position
         int startTileX = (int) Math.floor((character.getPosition().getX() - screenCenterX / scale) / this.livingEntityDimension.width);
         int startTileY = (int) Math.floor((character.getPosition().getY() - screenCenterY / scale) / this.livingEntityDimension.height);
 
-        // How many tiles to draw
         int tilesNumX = (int) Math.ceil(fov.getWidth() / this.mapTileDimension.width) + 2;
         int tilesNumY = (int) Math.ceil(fov.getHeight() / this.mapTileDimension.height) + 2;
 
-        // Draw the tiles
+        // Draws the map
         for (int y = 0; y < tilesNumY; y++) {
             for (int x = 0; x < tilesNumX; x++) {
                 int worldX = (startTileX + x) * this.mapTileDimension.width;
@@ -108,26 +113,30 @@ class GamePanel extends JPanel {
 
                 Image tile = this.imageManager.getImage("map");
                 if (tile != null) {
-                    g.drawImage(tile, screenX - 1, screenY - 1, (int) (this.mapTileDimension.width * scale) + 2, (int) (this.mapTileDimension.height * scale) + 2, null);
+                    g.drawImage(tile, screenX - TILE_BORDER_ADJUSTMENT, screenY - TILE_BORDER_ADJUSTMENT,
+                            (int) (this.mapTileDimension.width * scale) + TILE_RENDER_PADDING,
+                            (int) (this.mapTileDimension.height * scale) + TILE_RENDER_PADDING, null);
                 }
             }
         }
 
-        //Draws the collectibles
+        // Draws the collectibles
         for (PositionableData collectible : this.data.getCollectiblesData()) {
             if (this.isVisible(collectible, this.collectibleDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int collectibleX = (int) (collectible.getPosition().getX() * scale + cameraOffsetX);
                 int collectibleY = (int) (collectible.getPosition().getY() * scale + cameraOffsetY);
-                Image tile = this.imageManager.getImage(collectible.getId() + "/" + "0"); //////////////////
+                Image tile = this.imageManager.getImage(collectible.getId() + "/" + "0");
                 if (tile != null) {
-                    g.drawImage(tile, collectibleX, collectibleY, (int) (this.collectibleDimension.width * scale), (int) (this.collectibleDimension.height * scale), null);
+                    g.drawImage(tile, collectibleX, collectibleY,
+                            (int) (this.collectibleDimension.width * scale),
+                            (int) (this.collectibleDimension.height * scale), null);
                 }
             }
         }
 
-        //Draws the projectiles
+        // Draws the projectiles
         Graphics2D g2d = (Graphics2D) g;
-        for (PositionableData projectile : this.data.getProjectilesData()) { //TODO: ANIMAZIONI??
+        for (PositionableData projectile : this.data.getProjectilesData()) {
             if (this.isVisible(projectile, this.projectileDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int projectileX = (int) (projectile.getPosition().getX() * scale + cameraOffsetX);
                 int projectileY = (int) (projectile.getPosition().getY() * scale + cameraOffsetY);
@@ -145,32 +154,45 @@ class GamePanel extends JPanel {
             }
         }
 
-        //Draws the area attacks
+        // Draws the area attacks
         for (PositionableData areaAttack : this.data.getAreaAttacksData()) {
             if (this.isVisible(areaAttack, this.areaAttackDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int areaAttackX = (int) (areaAttack.getPosition().getX() * scale + cameraOffsetX);
                 int areaAttackY = (int) (areaAttack.getPosition().getY() * scale + cameraOffsetY);
                 Image tile = this.imageManager.getImage(areaAttack.getId());
                 if (tile != null) {
-                    g.drawImage(tile, areaAttackX, areaAttackY, (int) (this.areaAttackDimension.width * scale), (int) (this.areaAttackDimension.height * scale), null); //TODO: ANIMAZIONI??
+                    g.drawImage(tile, areaAttackX, areaAttackY,
+                            (int) (this.areaAttackDimension.width * scale),
+                            (int) (this.areaAttackDimension.height * scale), null);
                 }
             }
         }
 
-        //Draws the enemies
+        // Draws the enemies
         for (LivingEntityData enemy : this.data.getEnemiesData()) {
             if (this.isVisible(enemy, this.livingEntityDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int enemyX = (int) (enemy.getPosition().getX() * scale + cameraOffsetX);
                 int enemyY = (int) (enemy.getPosition().getY() * scale + cameraOffsetY);
+                int width = (int) (this.livingEntityDimension.width * scale);
+                int height = (int) (this.livingEntityDimension.height * scale);
+
                 String directionSuffix = enemy.getDirection().getX() <= 0 ? "l" : "r";
                 Image tile = this.imageManager.getImage(enemy.getId() + "/" + directionSuffix);
+
                 if (tile != null) {
-                    g.drawImage(tile, enemyX, enemyY, (int) (this.livingEntityDimension.width * scale), (int) (this.livingEntityDimension.height * scale), null); //TODO: ANIMAZIONI??? + DIVENTANO BIANCHI SE COLPITI
+                    double angle = Math.sin(this.data.getElapsedTime() * ENEMY_OSCILLATION_SPEED) * ENEMY_OSCILLATION_MAX_ANGLE_RAD;
+                    double centerX = enemyX + width / 2.0;
+                    double centerY = enemyY + height / 2.0;
+                    AffineTransform oldTransform = g2d.getTransform();
+
+                    g2d.rotate(angle, centerX, centerY);
+                    g2d.drawImage(tile, enemyX, enemyY, width, height, null);
+                    g2d.setTransform(oldTransform);
                 }
             }
         }
 
-        //Draws the character
+        // Draws the character
         int characterX = (int) (character.getPosition().getX() * scale + cameraOffsetX);
         int characterY = (int) (character.getPosition().getY() * scale + cameraOffsetY);
 
@@ -187,7 +209,9 @@ class GamePanel extends JPanel {
 
         Image tile = this.imageManager.getImage(character.getId() + "/" + this.currentCharacterFrame + directionSuffix);
         if (tile != null) {
-            g.drawImage(tile, characterX, characterY, (int) (this.livingEntityDimension.width * scale), (int) (this.livingEntityDimension.height * scale), null); //TODO: DIVENTA ROSSO SE COLPITO
+            g.drawImage(tile, characterX, characterY,
+                    (int) (this.livingEntityDimension.width * scale),
+                    (int) (this.livingEntityDimension.height * scale), null);
         }
 
         long elapsedTime = this.data.getElapsedTime();
@@ -196,18 +220,21 @@ class GamePanel extends JPanel {
             this.lastCharacterFrameTime = elapsedTime;
         }
 
-        Font font = g.getFont().deriveFont((float) (15 * scale));
+        Font font = g.getFont().deriveFont((float) (FONT_SIZE_BASE * scale));
 
-        //Draws the HUD
-        //Healthbar
+        // Draws the health bar
         int healthPercent = (int) ((character.getHealth() / character.getMaxHealth()) * 100);
         healthPercent = (int) Math.round(healthPercent / 25.0) * 25;
         Image healthBarImage = this.imageManager.getImage("hud/healthbar/" + healthPercent);
         if (healthBarImage != null) {
-            g.drawImage(healthBarImage, characterX + (int) ((this.livingEntityDimension.width - this.healthBarDimension.width) * scale) / 2, characterY + (int) (this.livingEntityDimension.height * scale), (int) (this.healthBarDimension.width * scale), (int) (this.healthBarDimension.height * scale), null);
+            g.drawImage(healthBarImage,
+                    characterX + (int) ((this.livingEntityDimension.width - this.healthBarDimension.width) * scale) / 2,
+                    characterY + (int) (this.livingEntityDimension.height * scale),
+                    (int) (this.healthBarDimension.width * scale),
+                    (int) (this.healthBarDimension.height * scale), null);
         }
 
-        //Level bar
+        // Draws the level bar
         double levelPercentage = this.data.getLevelPercentage();
         g.setColor(Color.BLACK);
         g.fillRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale), this.getWidth(), (int) (LEVEL_BAR_HEIGHT * scale));
@@ -223,27 +250,27 @@ class GamePanel extends JPanel {
         g.setColor(Color.WHITE);
         g.setFont(font);
 
-        //Kill counter
+        // Draws the kill counter
         g.drawString(String.valueOf(this.data.getKillCounter()), (int) (this.getWidth() - KILL_COUNTER_X_OFFSET * scale), (int) (COUNTER_Y_OFFSET * scale));
         Image killCounterImage = this.imageManager.getImage("hud/kill");
         if (killCounterImage != null) {
             g.drawImage(killCounterImage, (int) (this.getWidth() - KILL_ICON_X_OFFSET * scale), (int) (ICON_Y_OFFSET * scale), (int) (ICON_SIZE * scale), (int) (ICON_SIZE * scale), null);
         }
 
-        //Coin counter
+        // Draws the coin counter
         g.drawString(String.valueOf(this.data.getCoinCounter()), (int) (this.getWidth() - COIN_COUNTER_X_OFFSET * scale), (int) (COUNTER_Y_OFFSET * scale));
         Image coinCounterImage = this.imageManager.getImage("hud/coin");
         if (coinCounterImage != null) {
             g.drawImage(coinCounterImage, (int) (this.getWidth() - COIN_ICON_X_OFFSET * scale), (int) (ICON_Y_OFFSET * scale), (int) (ICON_SIZE * scale), (int) (ICON_SIZE * scale), null);
         }
 
-        //Timer
+        // Draws the timer
         long elapsedSeconds = (elapsedTime / 1000) % 60;
         long elapsedMinutes = (elapsedTime / 1000) / 60;
-
         String timeString = String.format("%02d:%02d", elapsedMinutes, elapsedSeconds);
         g.setColor(Color.WHITE);
-        g.drawString(timeString, (int) ((this.getWidth() - g.getFontMetrics().stringWidth(timeString)) / 2), (int) (LEVEL_BAR_Y_OFFSET * scale + LEVEL_BAR_HEIGHT * scale + 20 * scale));
+        g.setFont(font);
+        g.drawString(timeString, (int) ((this.getWidth() - g.getFontMetrics().stringWidth(timeString)) / 2), (int) (LEVEL_BAR_Y_OFFSET * scale + LEVEL_BAR_HEIGHT * scale + TIMER_Y_EXTRA_OFFSET * scale));
     }
 
     private boolean isVisible(PositionableData positionable, Dimension objectDimension, double scale, int cameraOffsetX, int cameraOffsetY) {
