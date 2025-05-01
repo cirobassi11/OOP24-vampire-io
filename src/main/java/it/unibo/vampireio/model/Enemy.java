@@ -14,7 +14,11 @@ public class Enemy extends LivingEntity {
 
     @Override
     public void onCollision(Collidable collidable) {
-        
+        if (collidable instanceof Character) {
+            Character character = (Character) collidable;
+            character.dealDamage(this.damage);
+            character.setGettingAttacked(true);
+        }
     }
 
     public int getDamage() {

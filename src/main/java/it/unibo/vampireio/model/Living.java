@@ -6,4 +6,6 @@ public interface Living {
     void setMaxHealth(double maxHealth);
     void dealDamage (double damage);
     void heal(double heal);
+    boolean isGettingAttacked();
+    void setGettingAttacked(boolean isGettingAttacked);
 }

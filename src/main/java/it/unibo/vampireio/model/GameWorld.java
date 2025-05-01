@@ -87,8 +87,9 @@ public class GameWorld implements GameModel {
                 if (!collision) {
                     enemy.move(tickTime);
                 }
-
-                enemy.onCollision(this.character);
+                if (collision) {
+                    enemy.onCollision(this.character);
+                }
             }
 
             // controlla collisioni con collezionabili

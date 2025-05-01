@@ -9,6 +9,7 @@ public interface Movable extends Positionable {
     void setSpeed(double speed);
     double getSpeed();
     void move(double tickTime);
+    boolean isMoving();
     Point2D.Double getFuturePosition(double tickTime);
     Shape getFutureHitbox(double tickTime);
 }

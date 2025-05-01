@@ -47,6 +47,11 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
     }
 
     @Override
+    public boolean isMoving() {
+        return this.getDirection().getX() != 0 || this.getDirection().getY() != 0;
+    }
+
+    @Override
     public Point2D.Double getFuturePosition(double tickTime) {
         double newX = this.getPosition().getX() + this.getDirection().getX() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
         double newY = this.getPosition().getY() + this.getDirection().getY() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;

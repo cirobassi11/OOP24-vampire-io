@@ -320,7 +320,7 @@ public class GameControllerImpl implements GameController {
             ),
             character.getHealth(),
             character.getMaxHealth(),
-            character.isBeingAttacked(),
+            character.isGettingAttacked(),
             character.isMoving()
         );
 
@@ -337,8 +337,8 @@ public class GameControllerImpl implements GameController {
                 ),
                 enemy.getHealth(),
                 enemy.getMaxHealth(),
-                false,//enemy.isBeingAttacked(),
-                true//enemy.isMoving()
+                enemy.isGettingAttacked(),
+                enemy.isMoving()
             ))
             .collect(Collectors.toList());
 

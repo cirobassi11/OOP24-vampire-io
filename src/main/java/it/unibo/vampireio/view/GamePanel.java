@@ -28,7 +28,7 @@ class GamePanel extends JPanel {
     private static final int HEALTH_BAR_HEIGHT = 7;
 
     private static final int CHARACTER_FRAME_COUNT = 3;
-    private static final int CHARACTER_FRAME_RATE = 5;
+    private static final int CHARACTER_FRAME_RATE = 8;
     private static final long CHARACTER_FRAME_DELAY = 1000 / CHARACTER_FRAME_RATE;
 
     private static final int LEVEL_BAR_Y_OFFSET = 2;
@@ -208,10 +208,10 @@ class GamePanel extends JPanel {
         }
 
         Image tile = this.imageManager.getImage(character.getId() + "/" + this.currentCharacterFrame + directionSuffix);
+        int characterWidth = (int) (this.livingEntityDimension.width * scale);
+        int characterHeight = (int) (this.livingEntityDimension.height * scale);
         if (tile != null) {
-            g.drawImage(tile, characterX, characterY,
-                    (int) (this.livingEntityDimension.width * scale),
-                    (int) (this.livingEntityDimension.height * scale), null);
+            g.drawImage(tile, characterX, characterY, characterWidth, characterHeight, null);
         }
 
         long elapsedTime = this.data.getElapsedTime();
@@ -223,16 +223,17 @@ class GamePanel extends JPanel {
         Font font = g.getFont().deriveFont((float) (FONT_SIZE_BASE * scale));
 
         // Draws the health bar
-        int healthPercent = (int) ((character.getHealth() / character.getMaxHealth()) * 100);
-        healthPercent = (int) Math.round(healthPercent / 25.0) * 25;
-        Image healthBarImage = this.imageManager.getImage("hud/healthbar/" + healthPercent);
-        if (healthBarImage != null) {
-            g.drawImage(healthBarImage,
-                    characterX + (int) ((this.livingEntityDimension.width - this.healthBarDimension.width) * scale) / 2,
-                    characterY + (int) (this.livingEntityDimension.height * scale),
-                    (int) (this.healthBarDimension.width * scale),
-                    (int) (this.healthBarDimension.height * scale), null);
-        }
+        int healthBarWidth = (int) (this.healthBarDimension.width * scale);
+        int healthBarHeight = (int) (this.healthBarDimension.height * scale);
+        int healthBarX = characterX + (characterWidth - healthBarWidth) / 2;
+        int healthBarY = characterY + characterHeight + (int)(4 * scale); // offset di 4px sotto il personaggio
+
+        g.setColor(Color.BLACK);
+        g.fillRect(healthBarX - 1, healthBarY - 1, healthBarWidth + 2, healthBarHeight + 2);
+
+        int filledWidth = (int) (healthBarWidth * character.getHealth() / character.getMaxHealth());
+        g.setColor(Color.RED);
+        g.fillRect(healthBarX, healthBarY, filledWidth, healthBarHeight);
 
         // Draws the level bar
         double levelPercentage = this.data.getLevelPercentage();
@@ -273,6 +274,7 @@ class GamePanel extends JPanel {
         g.drawString(timeString, (int) ((this.getWidth() - g.getFontMetrics().stringWidth(timeString)) / 2), (int) (LEVEL_BAR_Y_OFFSET * scale + LEVEL_BAR_HEIGHT * scale + TIMER_Y_EXTRA_OFFSET * scale));
     }
 
+    // Checks if the object is visible on the screen
     private boolean isVisible(PositionableData positionable, Dimension objectDimension, double scale, int cameraOffsetX, int cameraOffsetY) {
         int screenX = (int) (positionable.getPosition().getX() * scale + cameraOffsetX);
         int screenY = (int) (positionable.getPosition().getY() * scale + cameraOffsetY);
