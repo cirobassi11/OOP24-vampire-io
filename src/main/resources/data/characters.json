@@ -27,7 +27,8 @@
       "description": "Il personaggio Antonio",
       "price": 100,
       "currentLevel": 0,
-      "maxLevel": 0
+      "maxLevel": 0,
+      "defaultWeapon": "weapons/whip"
     },
     {
       "characterStats": {
@@ -57,7 +58,8 @@
       "description": "Il personaggio Imelda",
       "price": 120,
       "currentLevel": 0,
-      "maxLevel": 0
+      "maxLevel": 0,
+      "defaultWeapon": "weapons/magicWand"
     },
     {
       "characterStats": {
@@ -87,7 +89,8 @@
       "description": "Il personaggio Dommario",
       "price": 120,
       "currentLevel": 0,
-      "maxLevel": 0
+      "maxLevel": 0,
+      "defaultWeapon": "weapons/kingBible"
     },
     {
       "characterStats": {
@@ -117,6 +120,7 @@
       "description": "Il personaggio Gennaro",
       "price": 120,
       "currentLevel": 0,
-      "maxLevel": 0
+      "maxLevel": 0,
+      "defaultWeapon": "weapons/knife"
     }
   ]

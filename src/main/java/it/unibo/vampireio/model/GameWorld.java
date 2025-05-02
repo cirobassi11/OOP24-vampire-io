@@ -33,7 +33,7 @@ public class GameWorld implements GameModel {
         this.gameController = gameController;
 
         this.dataLoader = new DataLoader(this.gameController);
-        this.saveManager = new SaveManager(this.gameController);
+        this.saveManager = new SaveManager(this.gameController);        
     }
 
     @Override
@@ -42,7 +42,18 @@ public class GameWorld implements GameModel {
 
         UnlockableCharacter selectedUnlockableCharacter = this.dataLoader.getCharacterLoader().get(selectedCharacter).get();
 
-        this.character = new Character(selectedCharacter, selectedUnlockableCharacter.getName(), selectedUnlockableCharacter.getCharacterStats(), GameWorld.ENTITY_SHAPE);         
+        WeaponData defaultWeaponData = this.dataLoader.getWeaponLoader().get(selectedUnlockableCharacter.getDefaultWeapon()).get();
+
+        Weapon defaultWeapon = new WeaponImpl(this, defaultWeaponData.getId(), defaultWeaponData.getProjectileId(), defaultWeaponData.getDefaultCooldown(), defaultWeaponData.getProjectilePerCooldown());
+
+        this.character = new Character(
+            selectedUnlockableCharacter.getId(),
+            selectedUnlockableCharacter.getName(),
+            selectedUnlockableCharacter.getCharacterStats(),
+            GameWorld.ENTITY_SHAPE,
+            defaultWeapon
+        );
+        
         this.enemies = new LinkedList<>();
         this.collectibles = new LinkedList<>();
         this.areaAttacks = new LinkedList<>();
@@ -58,6 +69,7 @@ public class GameWorld implements GameModel {
             // muove il personaggio (non dovrebbe sovrapporsi a nemici)
             this.character.setDirection(characterDirection);
             this.character.move(tickTime);
+            this.character.updateWeapons(tickTime);
 
             // muove tutti i nemici (controllando anche che non si sovrappongano)
             for (Enemy enemy : this.enemies) {

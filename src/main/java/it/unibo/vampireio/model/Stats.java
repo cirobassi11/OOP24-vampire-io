@@ -22,7 +22,6 @@ public class Stats implements Serializable {
     }
     
     private void initializeDefaultStats() {
-        // Valori predefiniti per ogni statistica
         statsMap.put(StatType.MAX_HEALTH, 100.0);
         statsMap.put(StatType.ARMOR, 0.0);
         statsMap.put(StatType.SPEED, 1.0);
@@ -43,11 +42,9 @@ public class Stats implements Serializable {
         statsMap.put(StatType.BANISH, 0.0);
     }
     
-
     public double getStat(StatType type) {
         return statsMap.getOrDefault(type, 0.0);
     }
-    
 
     public void setStat(StatType type, double value) {
         statsMap.put(type, value);
