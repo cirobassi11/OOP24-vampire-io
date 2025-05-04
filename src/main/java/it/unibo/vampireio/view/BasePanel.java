@@ -67,7 +67,7 @@ abstract class BasePanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
         this.add(component, gbc);
-        allComponents.add(component);
+        this.allComponents.add(component);
     }
 
     protected JButton addButton(String text, int gridx, int gridy) {
@@ -89,7 +89,7 @@ abstract class BasePanel extends JPanel {
                 button.setBackground(BUTTON_BACKGROUND);
             }
         });
-        addComponent(button, gridx, gridy);
+        this.addComponent(button, gridx, gridy);
         return button;
     }
 
@@ -97,7 +97,11 @@ abstract class BasePanel extends JPanel {
         JLabel label = new JLabel(text);
         label.setFont(DEFAULT_FONT);
         label.setForeground(Color.WHITE);
-        addComponent(label, gridx, gridy);
+
+        label.setOpaque(true);
+        label.setBackground(new Color(100, 100, 100, 150));
+
+        this.addComponent(label, gridx, gridy);
         return label;
     }
 
@@ -107,7 +111,7 @@ abstract class BasePanel extends JPanel {
         comboBox.setBackground(COMBOBOX_BACKGROUND);
         comboBox.setForeground(Color.WHITE);
         comboBox.setBorder(BorderFactory.createLineBorder(COMBOBOX_BORDER, COMBOBOX_BORDER_THICKNESS));
-        addComponent(comboBox, gridx, gridy);
+        this.addComponent(comboBox, gridx, gridy);
         return comboBox;
     }
 
@@ -127,7 +131,7 @@ abstract class BasePanel extends JPanel {
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
 
-        addComponent(scrollPane, gridx, gridy);
+        this.addComponent(scrollPane, gridx, gridy);
         return list;
     }
 

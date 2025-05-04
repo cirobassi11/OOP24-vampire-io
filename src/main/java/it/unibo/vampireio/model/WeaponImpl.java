@@ -1,6 +1,6 @@
 package it.unibo.vampireio.model;
 
-public class WeaponImpl implements Weapon, Identifiable {
+public class WeaponImpl implements Weapon {
     private GameWorld gameWorld;
     private String id;
     private String projectileId;

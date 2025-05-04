@@ -15,6 +15,7 @@ import it.unibo.vampireio.model.GameModel;
 import it.unibo.vampireio.model.GameWorld;
 import it.unibo.vampireio.model.ProjectileAttack;
 import it.unibo.vampireio.model.Save;
+import it.unibo.vampireio.model.Score;
 import it.unibo.vampireio.view.GameView;
 import it.unibo.vampireio.view.GameViewImpl;
 
@@ -146,8 +147,17 @@ public class GameControllerImpl implements GameController {
         });
 
         this.view.setExitListener(e -> {
-            this.showScreen(GameViewImpl.END_GAME);
             new Thread(this::stop).start();
+            Score score = this.model.exitGame();
+            ScoreData scoreData = new ScoreData(
+                score.getCharacterName(),
+                score.getSessionTime(),
+                score.getKillCounter(),
+                score.getLevel(),
+                score.getScore()
+            );
+            this.view.setScore(scoreData);
+            this.showScreen(GameViewImpl.END_GAME);
         });
 
         // ENDGAME LISTENERS

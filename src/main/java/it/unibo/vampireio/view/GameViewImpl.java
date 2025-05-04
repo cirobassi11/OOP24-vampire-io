@@ -304,6 +304,11 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
+    public void setScore(ScoreData score) {
+        ((EndGamePanel) panels.get(END_GAME)).setScore(score);
+    }
+
+    @Override
     public void showError(String message) {
         javax.swing.JOptionPane.showMessageDialog(frame, message, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }

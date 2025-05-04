@@ -318,6 +318,13 @@ public class GameWorld implements GameModel {
         return this.saveManager.getCurrentSave();
     }
 
+    @Override
+    public Score exitGame() {
+        this.saveManager.getCurrentSave().addScore(this.score);
+        this.saveManager.saveCurrentSave();
+        return this.score;
+    }
+
     DataLoader getDataLoader() {
         return this.dataLoader;   
     }

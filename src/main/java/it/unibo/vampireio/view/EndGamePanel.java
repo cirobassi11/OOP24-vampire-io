@@ -1,9 +1,8 @@
 package it.unibo.vampireio.view;
 
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
-
+import javax.swing.JLabel;
 import it.unibo.vampireio.controller.ScoreData;
 
 class EndGamePanel extends BasePanel {
@@ -11,19 +10,25 @@ class EndGamePanel extends BasePanel {
     private ScoreData score;
 
     private JButton returnMenuButton;
+    private JLabel scoreLabel;
 
     EndGamePanel(GameViewImpl view) {
         super(view);
 
-        if(this.score != null) {
-            //stampa le informazioni di score
-        }
+        this.scoreLabel = this.addLabel("", 0, 0);
 
-        this.returnMenuButton = addButton("CONTINUE", 0, 0);
+        this.returnMenuButton = addButton("CONTINUE", 0, 1);
     }
 
-    public void setScore(ScoreData score) {
+    void setScore(ScoreData score) {
         this.score = score;
+        this.scoreLabel.setText(
+            "<html>Score: " + score.getScore() +
+            "<br>Character: " + score.getCharacterName() +
+            "<br>Level: " + score.getLevelCounter() +
+            "<br>Kills: " + score.getKillCounter() +
+            "<br>Time: " + String.format("%.2f", score.getSessionTime()) + "</html>"
+        );
     }
 
     void setReturnMenuListener(ActionListener listener) {

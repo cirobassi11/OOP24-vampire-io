@@ -51,6 +51,9 @@ public interface GameView {
 
     //Save Selection Panel
     String getSelectedSave();
+
+    //Set game score
+    void setScore(ScoreData score);
     
     void showError(String message);
 }

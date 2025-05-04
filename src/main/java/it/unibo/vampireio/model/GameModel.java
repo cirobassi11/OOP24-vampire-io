@@ -30,4 +30,5 @@ public interface GameModel {
     boolean buyCharacter(String selectedCharacter);
     List<UnlockablePowerUp> getUnlockablePowerups();
     boolean buyPowerup(String selectedPowerup);
+    Score exitGame();
 }
