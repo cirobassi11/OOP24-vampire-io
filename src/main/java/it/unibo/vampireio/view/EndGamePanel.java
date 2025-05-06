@@ -23,11 +23,13 @@ class EndGamePanel extends BasePanel {
     void setScore(ScoreData score) {
         this.score = score;
         this.scoreLabel.setText(
-            "<html>Score: " + score.getScore() +
+            "<html>"+
+            "Score: " + score.getScore() +
             "<br>Character: " + score.getCharacterName() +
             "<br>Level: " + score.getLevelCounter() +
             "<br>Kills: " + score.getKillCounter() +
-            "<br>Time: " + String.format("%.2f", score.getSessionTime()) + "</html>"
+            "<br>Time: " + (int) score.getSessionTime() / 1000 / 60 + "min " + (int) score.getSessionTime() / 1000 % 60 + "sec" +
+            "</html>"
         );
     }
 

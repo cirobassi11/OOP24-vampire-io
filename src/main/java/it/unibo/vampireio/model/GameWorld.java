@@ -39,11 +39,8 @@ public class GameWorld implements GameModel {
     @Override
     public void initGame(String selectedCharacter) {
         this.enemySpawner = new EnemySpawnerImpl(this);
-
         UnlockableCharacter selectedUnlockableCharacter = this.dataLoader.getCharacterLoader().get(selectedCharacter).get();
-
         WeaponData defaultWeaponData = this.dataLoader.getWeaponLoader().get(selectedUnlockableCharacter.getDefaultWeapon()).get();
-
         Weapon defaultWeapon = new WeaponImpl(this, defaultWeaponData.getId(), defaultWeaponData.getProjectileId(), defaultWeaponData.getDefaultCooldown(), defaultWeaponData.getProjectilePerCooldown());
 
         this.character = new Character(
@@ -65,6 +62,7 @@ public class GameWorld implements GameModel {
     @Override
     public void update(long tickTime, Point2D.Double characterDirection) {
         synchronized(this) {
+            this.score.incrementSessionTime(tickTime);
             
             // muove il personaggio (non dovrebbe sovrapporsi a nemici)
             this.character.setDirection(characterDirection);
