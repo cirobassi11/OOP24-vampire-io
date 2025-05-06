@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Iterator;
 
 public class GameWorld implements GameModel {
 
@@ -60,6 +61,21 @@ public class GameWorld implements GameModel {
         this.projectileAttacks = new LinkedList<>();
 
         this.score = new Score(selectedUnlockableCharacter.getName());
+
+        this.addCollectible(new Coin(new Point2D.Double(100, 100), 1));
+        this.addCollectible(new Coin(new Point2D.Double(200, 100), 1));
+        this.addCollectible(new Coin(new Point2D.Double(300, 100), 1));
+        this.addCollectible(new Coin(new Point2D.Double(400, 100), 1));
+
+
+
+        this.addCollectible(new ExperienceGem(new Point2D.Double(200, 200), 75));
+        this.addCollectible(new ExperienceGem(new Point2D.Double(300, 200), 75));
+        this.addCollectible(new ExperienceGem(new Point2D.Double(400, 200), 75));
+        this.addCollectible(new ExperienceGem(new Point2D.Double(500, 200), 75));
+
+
+        this.addCollectible(new Food(new Point2D.Double(300, 300), 200));
     }
 
     @Override
@@ -113,15 +129,19 @@ public class GameWorld implements GameModel {
             }
 
             // controlla collisioni con collezionabili
-            for (Collectible collectible : this.collectibles) {
-                //TODO
+            Iterator<Collectible> iterator = this.collectibles.iterator();
+            while (iterator.hasNext()) {
+                Collectible collectible = iterator.next();
+                if (collectible.getPosition().distance(this.character.getPosition()) <= 50 * this.character.getStats().getStat(StatType.MAGNET)) {
+                    character.collect(collectible);
+                    iterator.remove();
+                }
             }
 
             if(this.character.getHealth() <= 0) {
                 this.isGameOver = true;
             }
 
-            // spanwna i nemici FUORI DALLA VISUALE
             this.enemySpawner.update(tickTime);
         }
     }
@@ -211,7 +231,7 @@ public class GameWorld implements GameModel {
 
     @Override
     public int getCoinCounter() {
-        return this.score.getCoinCounter();
+        return this.character.getCoinCounter();
     }
 
     @Override
@@ -340,6 +360,9 @@ public class GameWorld implements GameModel {
 
     @Override
     public Score exitGame() {
+        this.score.setLevel(this.character.getLevel());
+        this.score.setCoinCounter(this.character.getCoinCounter());
+        this.saveManager.getCurrentSave().incrementMoneyAmount(getCoinCounter());
         this.saveManager.getCurrentSave().addScore(this.score);
         this.saveManager.saveCurrentSave();
         return this.score;

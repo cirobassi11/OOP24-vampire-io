@@ -5,13 +5,15 @@ public class ScoreData {
     private double sessionTime;
     private int killCounter;
     private int levelCounter;
+    private int coinCounter;
     private int score;
 
-    public ScoreData(String characterName, double sessionTime, int killCounter, int levelCounter, int score) {
+    public ScoreData(String characterName, double sessionTime, int killCounter, int levelCounter, int coinCounter, int score) {
         this.characterName = characterName;
         this.sessionTime = sessionTime;
         this.killCounter = killCounter;
         this.levelCounter = levelCounter;
+        this.coinCounter = coinCounter;
         this.score = score;
     }
 
@@ -29,6 +31,10 @@ public class ScoreData {
 
     public double getSessionTime() {
         return this.sessionTime;
+    }
+
+    public int getCoinCounter() {
+        return this.coinCounter;
     }
 
     public int getScore() {

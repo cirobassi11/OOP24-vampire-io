@@ -4,13 +4,7 @@ import java.awt.geom.Point2D.Double;
 
 public class Food extends Lootable {
 
-    protected Food(Double position) {
-        super("collectibles/food", position); //il nome lo prendiamo da un'altra parte?? ci sono più tipi di cibo?
-    }
-
-    @Override
-    public void collect() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'collect'");
+    protected Food(Double position, int value) {
+        super("collectibles/food", position, value); //il nome lo prendiamo da un'altra parte?? ci sono più tipi di cibo?
     }
 }

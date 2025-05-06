@@ -4,13 +4,7 @@ import java.awt.geom.Point2D.Double;
 
 public class Coin extends Lootable {
 
-    protected Coin(Double position) {
-        super("collectibles/coin", position); /// il nome va preso da un'altra parte??
-    }
-
-    @Override
-    public void collect() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'collect'");
+    protected Coin(Double position, int value) {
+        super("collectibles/coin", position, value);
     }
 }

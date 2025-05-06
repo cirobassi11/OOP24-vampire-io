@@ -152,6 +152,7 @@ public class GameControllerImpl implements GameController {
                 score.getSessionTime(),
                 score.getKillCounter(),
                 score.getLevel(),
+                score.getCoinCounter(),
                 score.getScore()
             );
             this.view.setScore(scoreData);
@@ -229,6 +230,7 @@ public class GameControllerImpl implements GameController {
                     score.getSessionTime(),
                     score.getKillCounter(),
                     score.getLevel(),
+                    score.getCoinCounter(),
                     score.getScore()
                 );
                 this.view.setScore(scoreData);
@@ -423,6 +425,7 @@ public class GameControllerImpl implements GameController {
                 score.getSessionTime(),
                 score.getKillCounter(),
                 score.getLevel(),
+                score.getCoinCounter(),
                 score.getScore()
             ))
             .collect(Collectors.toList());

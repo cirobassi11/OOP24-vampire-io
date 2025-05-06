@@ -33,7 +33,7 @@
     {
       "characterStats": {
         "statsMap": {
-          "MAX_HEALTH": 100.0,
+          "MAX_HEALTH": 1000.0,
           "ARMOR": 0.0,
           "SPEED": 1.0,
           "MOVE_SPEED": 1.0,
@@ -64,7 +64,7 @@
     {
       "characterStats": {
         "statsMap": {
-          "MAX_HEALTH": 100.0,
+          "MAX_HEALTH": 1000.0,
           "ARMOR": 0.0,
           "SPEED": 1.0,
           "MOVE_SPEED": 1.0,
@@ -95,7 +95,7 @@
     {
       "characterStats": {
         "statsMap": {
-          "MAX_HEALTH": 100.0,
+          "MAX_HEALTH": 1000.0,
           "ARMOR": 0.0,
           "SPEED": 1.0,
           "MOVE_SPEED": 1.0,

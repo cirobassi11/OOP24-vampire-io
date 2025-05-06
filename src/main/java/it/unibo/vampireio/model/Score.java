@@ -23,8 +23,8 @@ public class Score implements Serializable {
         this.killCounter++;
     }
 
-    public void incrementCoinCounter() {
-        this.coinCounter++;
+    public void setCoinCounter(int coinCounter) {
+        this.coinCounter = coinCounter;
     }
 
     public void setLevel(int level) {

@@ -28,6 +28,7 @@ class EndGamePanel extends BasePanel {
             "<br>Character: " + score.getCharacterName() +
             "<br>Level: " + score.getLevelCounter() +
             "<br>Kills: " + score.getKillCounter() +
+            "<br>Coins: " + score.getCoinCounter() +
             "<br>Time: " + (int) score.getSessionTime() / 1000 / 60 + "min " + (int) score.getSessionTime() / 1000 % 60 + "sec" +
             "</html>"
         );

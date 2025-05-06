@@ -98,9 +98,6 @@ abstract class BasePanel extends JPanel {
         label.setFont(DEFAULT_FONT);
         label.setForeground(Color.WHITE);
 
-        label.setOpaque(true);
-        label.setBackground(new Color(100, 100, 100, 150));
-
         this.addComponent(label, gridx, gridy);
         return label;
     }
