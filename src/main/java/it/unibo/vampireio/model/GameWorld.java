@@ -13,10 +13,14 @@ import java.util.Optional;
 public class GameWorld implements GameModel {
 
     private GameController gameController;
+    
+    private DataLoader dataLoader;
+    private SaveManager saveManager;
 
     private final Dimension visualSize = new Dimension(1280, 720);
-    static Shape ENTITY_SHAPE = new Rectangle(64, 64);
+    private static Shape ENTITY_SHAPE = new Rectangle(64, 64);
 
+    private boolean isGameOver;
     private Score score;
 
     private Character character;
@@ -26,8 +30,6 @@ public class GameWorld implements GameModel {
     private List<Collectible> collectibles;
     private EnemySpawner enemySpawner;
 
-    private DataLoader dataLoader;
-    private SaveManager saveManager;
     
     public GameWorld(GameController gameController) {
         this.gameController = gameController;
@@ -38,6 +40,7 @@ public class GameWorld implements GameModel {
 
     @Override
     public void initGame(String selectedCharacter) {
+        this.isGameOver = false;
         this.enemySpawner = new EnemySpawnerImpl(this);
         UnlockableCharacter selectedUnlockableCharacter = this.dataLoader.getCharacterLoader().get(selectedCharacter).get();
         WeaponData defaultWeaponData = this.dataLoader.getWeaponLoader().get(selectedUnlockableCharacter.getDefaultWeapon()).get();
@@ -60,9 +63,15 @@ public class GameWorld implements GameModel {
     }
 
     @Override
+    public boolean isGameOver() {
+        return this.isGameOver;
+    }
+
+    @Override
     public void update(long tickTime, Point2D.Double characterDirection) {
         synchronized(this) {
             this.score.incrementSessionTime(tickTime);
+            this.character.setGettingAttacked(false);
             
             // muove il personaggio (non dovrebbe sovrapporsi a nemici)
             this.character.setDirection(characterDirection);
@@ -71,6 +80,8 @@ public class GameWorld implements GameModel {
 
             // muove tutti i nemici (controllando anche che non si sovrappongano)
             for (Enemy enemy : this.enemies) {
+                enemy.setGettingAttacked(false);
+
                 double deltaX = this.character.getPosition().getX() - enemy.getPosition().getX();
                 double deltaY = this.character.getPosition().getY() - enemy.getPosition().getY();
                 
@@ -79,25 +90,24 @@ public class GameWorld implements GameModel {
                 Point2D.Double enemyDirection = new Point2D.Double(deltaX / distance, deltaY / distance);
                 enemy.setDirection(enemyDirection);
 
-                boolean collision = false;
+                boolean collisionWithEnemies = false;
                 Point2D.Double enemyFuturePosition = enemy.getFuturePosition(tickTime);
                 
                 for (Enemy otherEnemy : this.enemies) {
                     if (enemy != otherEnemy && enemyFuturePosition.distance(otherEnemy.getPosition()) < 15) {
-                        collision = true;
+                        collisionWithEnemies = true;
                         break;
                     }
                 }
 
                 //avoid collision with character
-                if (enemyFuturePosition.distance(this.character.getPosition()) < 50) {
-                    collision = true;
-                }
-
-                if (!collision) {
+                boolean collisionWithCharacter = (enemyFuturePosition.distance(this.character.getPosition()) < 50);
+                if (!collisionWithEnemies && !collisionWithCharacter) {
                     enemy.move(tickTime);
                 }
-                if (collision) {
+
+                //attack the character
+                if (collisionWithCharacter) {
                     enemy.onCollision(this.character);
                 }
             }
@@ -105,6 +115,10 @@ public class GameWorld implements GameModel {
             // controlla collisioni con collezionabili
             for (Collectible collectible : this.collectibles) {
                 //TODO
+            }
+
+            if(this.character.getHealth() <= 0) {
+                this.isGameOver = true;
             }
 
             // spanwna i nemici FUORI DALLA VISUALE
@@ -314,6 +328,14 @@ public class GameWorld implements GameModel {
     @Override
     public Save getCurrentSave() {
         return this.saveManager.getCurrentSave();
+    }
+
+    @Override
+    public long getElapsedTime() {
+        if(this.score == null) {
+            return 0;
+        }
+        return this.score.getSessionTime();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package it.unibo.vampireio.view;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,6 +10,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+
 import javax.swing.JPanel;
 import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.PositionableData;
@@ -210,8 +213,18 @@ class GamePanel extends JPanel {
         Image tile = this.imageManager.getImage(character.getId() + "/" + this.currentCharacterFrame + directionSuffix);
         int characterWidth = (int) (this.livingEntityDimension.width * scale);
         int characterHeight = (int) (this.livingEntityDimension.height * scale);
-        if (tile != null) {
+
+        if (!character.isBeingAttacked()) {
             g.drawImage(tile, characterX, characterY, characterWidth, characterHeight, null);
+        } else { // red image if the character is being attacked
+            BufferedImage redImage = new BufferedImage(characterWidth, characterHeight, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D redG = redImage.createGraphics();
+            redG.drawImage(tile.getScaledInstance(characterWidth, characterHeight, Image.SCALE_SMOOTH), 0, 0, null);
+            redG.setComposite(AlphaComposite.SrcAtop);
+            redG.setColor(new Color(255, 0, 0, 150));
+            redG.fillRect(0, 0, characterWidth, characterHeight);
+            redG.dispose();
+            g.drawImage(redImage, characterX, characterY, null);
         }
 
         long elapsedTime = this.data.getElapsedTime();

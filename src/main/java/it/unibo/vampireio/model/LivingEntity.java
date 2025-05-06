@@ -34,9 +34,6 @@ public abstract class LivingEntity extends MovableEntity implements Living {
     @Override
     public void dealDamage(double damage) {
         this.health = Math.max(this.health - ((damage < 0) ? 0 : damage), 0);
-        if(this.health == 0) {
-            //death
-        }
     }
 
     @Override
@@ -46,11 +43,7 @@ public abstract class LivingEntity extends MovableEntity implements Living {
 
     @Override
     public boolean isGettingAttacked() {
-        if(this.isGettingAttacked) {
-            this.isGettingAttacked = false;
-            return true;
-        }
-        return false;
+        return this.isGettingAttacked;
     }
 
     @Override

@@ -28,8 +28,6 @@ public class GameControllerImpl implements GameController {
 
     private final InputHandler inputHandler = new InputHandler();
 
-    private long startTime;
-
     private boolean running = false;
     private boolean paused = false;
 
@@ -188,7 +186,6 @@ public class GameControllerImpl implements GameController {
 
     public void startGame(String selectedCharacter) {
         this.model.initGame(selectedCharacter);
-        this.startTime = System.currentTimeMillis();
         this.running = true;
         this.paused = false;
         
@@ -223,6 +220,22 @@ public class GameControllerImpl implements GameController {
         long tickTime = 1000 / this.tickRate;
 
         while (this.running && !Thread.currentThread().isInterrupted()) {
+            if (this.model.isGameOver()) {
+                this.running = false;
+
+                Score score = this.model.exitGame();
+                ScoreData scoreData = new ScoreData(
+                    score.getCharacterName(),
+                    score.getSessionTime(),
+                    score.getKillCounter(),
+                    score.getLevel(),
+                    score.getScore()
+                );
+                this.view.setScore(scoreData);
+                this.view.showScreen(GameViewImpl.END_GAME);
+                this.inputHandler.clearPressedKeys();
+                return;
+            }
             synchronized (this) {
                 if (inputHandler.isKeyPressed(KeyEvent.VK_ESCAPE)) {
                     this.pauseGame();
@@ -243,16 +256,16 @@ public class GameControllerImpl implements GameController {
             }
 
             Point2D.Double direction = new Point2D.Double(0, 0);
-            if (inputHandler.isKeyPressed(KeyEvent.VK_W) || inputHandler.isKeyPressed(KeyEvent.VK_UP)) {
+            if (this.inputHandler.isKeyPressed(KeyEvent.VK_W) || this.inputHandler.isKeyPressed(KeyEvent.VK_UP)) {
                 direction.y -= 1;
             }
-            if (inputHandler.isKeyPressed(KeyEvent.VK_S) || inputHandler.isKeyPressed(KeyEvent.VK_DOWN)) {
+            if (this.inputHandler.isKeyPressed(KeyEvent.VK_S) || this.inputHandler.isKeyPressed(KeyEvent.VK_DOWN)) {
                 direction.y += 1;
             }
-            if (inputHandler.isKeyPressed(KeyEvent.VK_A) || inputHandler.isKeyPressed(KeyEvent.VK_LEFT)) {
+            if (this.inputHandler.isKeyPressed(KeyEvent.VK_A) || this.inputHandler.isKeyPressed(KeyEvent.VK_LEFT)) {
                 direction.x -= 1;
             }
-            if (inputHandler.isKeyPressed(KeyEvent.VK_D) || inputHandler.isKeyPressed(KeyEvent.VK_RIGHT)) {
+            if (this.inputHandler.isKeyPressed(KeyEvent.VK_D) || this.inputHandler.isKeyPressed(KeyEvent.VK_RIGHT)) {
                 direction.x += 1;
             }
 
@@ -300,10 +313,6 @@ public class GameControllerImpl implements GameController {
                 return;
             }
         }
-    }
-
-    private long getElapsedTime() {
-        return System.currentTimeMillis() - this.startTime;
     }
 
     private GameData getData() {
@@ -390,7 +399,7 @@ public class GameControllerImpl implements GameController {
 
         return new GameData(
             visibleMapSizeData, 
-            this.getElapsedTime(),
+            this.model.getElapsedTime(),
             this.model.getPlayerLevel(),
             this.model.getPlayerLevelPercentage(),
             this.model.getKillCounter(),

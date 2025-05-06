@@ -6,7 +6,7 @@ public class Score implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String characterName;
-    private double sessionTime;
+    private long sessionTime;
     private int killCounter;
     private int level;
     private int coinCounter;
@@ -51,7 +51,7 @@ public class Score implements Serializable {
         return this.coinCounter;
     }
 
-    public double getSessionTime() {
+    public long getSessionTime() {
         return this.sessionTime;
     }
 
