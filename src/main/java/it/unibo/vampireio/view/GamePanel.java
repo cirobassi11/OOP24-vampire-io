@@ -189,7 +189,22 @@ class GamePanel extends JPanel {
                     AffineTransform oldTransform = g2d.getTransform();
 
                     g2d.rotate(angle, centerX, centerY);
-                    g2d.drawImage(tile, enemyX, enemyY, width, height, null);
+
+                    if(enemy.isBeingAttacked()) { // white image if the enemy is being attacked
+                        BufferedImage whiteImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+                        Graphics2D whiteG = whiteImage.createGraphics();
+                        whiteG.drawImage(tile.getScaledInstance(width, height, Image.SCALE_SMOOTH), 0, 0, null);
+                        whiteG.setComposite(AlphaComposite.SrcAtop);
+                        whiteG.setColor(new Color(255, 255, 255, 150));
+                        whiteG.fillRect(0, 0, width, height);
+                        whiteG.dispose();
+                        g2d.drawImage(whiteImage, enemyX, enemyY, null);
+                    }
+
+                    else {
+                        g2d.drawImage(tile, enemyX, enemyY, width, height, null);
+                    }
+                    
                     g2d.setTransform(oldTransform);
                 }
             }
@@ -214,19 +229,22 @@ class GamePanel extends JPanel {
         int characterWidth = (int) (this.livingEntityDimension.width * scale);
         int characterHeight = (int) (this.livingEntityDimension.height * scale);
 
-        if (!character.isBeingAttacked()) {
-            g.drawImage(tile, characterX, characterY, characterWidth, characterHeight, null);
-        } else { // red image if the character is being attacked
-            BufferedImage redImage = new BufferedImage(characterWidth, characterHeight, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D redG = redImage.createGraphics();
-            redG.drawImage(tile.getScaledInstance(characterWidth, characterHeight, Image.SCALE_SMOOTH), 0, 0, null);
-            redG.setComposite(AlphaComposite.SrcAtop);
-            redG.setColor(new Color(255, 0, 0, 150));
-            redG.fillRect(0, 0, characterWidth, characterHeight);
-            redG.dispose();
-            g.drawImage(redImage, characterX, characterY, null);
+        if(tile != null) {
+            if(character.isBeingAttacked()) { // red image if the character is being attacked
+                BufferedImage redImage = new BufferedImage(characterWidth, characterHeight, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D redG = redImage.createGraphics();
+                redG.drawImage(tile.getScaledInstance(characterWidth, characterHeight, Image.SCALE_SMOOTH), 0, 0, null);
+                redG.setComposite(AlphaComposite.SrcAtop);
+                redG.setColor(new Color(255, 0, 0, 150));
+                redG.fillRect(0, 0, characterWidth, characterHeight);
+                redG.dispose();
+                g.drawImage(redImage, characterX, characterY, null);
+            }
+            else {
+                g.drawImage(tile, characterX, characterY, characterWidth, characterHeight, null);
+            }
         }
-
+        
         long elapsedTime = this.data.getElapsedTime();
         if (character.isMoving() && elapsedTime - this.lastCharacterFrameTime >= CHARACTER_FRAME_DELAY) {
             this.currentCharacterFrame = (this.currentCharacterFrame + 1) % CHARACTER_FRAME_COUNT;
@@ -239,7 +257,7 @@ class GamePanel extends JPanel {
         int healthBarWidth = (int) (this.healthBarDimension.width * scale);
         int healthBarHeight = (int) (this.healthBarDimension.height * scale);
         int healthBarX = characterX + (characterWidth - healthBarWidth) / 2;
-        int healthBarY = characterY + characterHeight + (int)(4 * scale); // offset di 4px sotto il personaggio
+        int healthBarY = characterY + characterHeight + (int) (4 * scale);
 
         g.setColor(Color.BLACK);
         g.fillRect(healthBarX - 1, healthBarY - 1, healthBarWidth + 2, healthBarHeight + 2);

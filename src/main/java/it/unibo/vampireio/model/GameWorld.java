@@ -61,21 +61,6 @@ public class GameWorld implements GameModel {
         this.projectileAttacks = new LinkedList<>();
 
         this.score = new Score(selectedUnlockableCharacter.getName());
-
-        this.addCollectible(new Coin(new Point2D.Double(100, 100), 1));
-        this.addCollectible(new Coin(new Point2D.Double(200, 100), 1));
-        this.addCollectible(new Coin(new Point2D.Double(300, 100), 1));
-        this.addCollectible(new Coin(new Point2D.Double(400, 100), 1));
-
-
-
-        this.addCollectible(new ExperienceGem(new Point2D.Double(200, 200), 75));
-        this.addCollectible(new ExperienceGem(new Point2D.Double(300, 200), 75));
-        this.addCollectible(new ExperienceGem(new Point2D.Double(400, 200), 75));
-        this.addCollectible(new ExperienceGem(new Point2D.Double(500, 200), 75));
-
-
-        this.addCollectible(new Food(new Point2D.Double(300, 300), 200));
     }
 
     @Override
