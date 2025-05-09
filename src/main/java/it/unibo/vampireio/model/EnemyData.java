@@ -18,26 +18,30 @@ public class EnemyData implements Identifiable {
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
     
     public int getLevel() {
-        return level;
+        return this.level;
     }
     
     public int getDamage() {
-        return damage;
+        return this.damage;
     }
     
     public double getSpeed() {
-        return speed;
+        return this.speed;
     }
     
     public int getHealth() {
-        return health;
+        return this.health;
+    }
+
+    public double getRadius() {
+        return 10; // Default radius, can be overridden
     }
 }

@@ -1,7 +1,5 @@
 package it.unibo.vampireio.model;
 
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 public abstract class MovableEntity extends CollidableEntity implements Movable {
@@ -10,8 +8,8 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
 
     private static final double SPEED_MULTIPLIER = 0.21;
 
-    protected MovableEntity(String id, Point2D.Double position, Shape hitbox, Point2D.Double direction, double speed) {
-        super(id, position, hitbox);
+    protected MovableEntity(String id, Point2D.Double position, double radius, Point2D.Double direction, double speed) {
+        super(id, position, radius);
         this.direction = direction;
         this.speed = speed;
     }
@@ -56,13 +54,5 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
         double newX = this.getPosition().getX() + this.getDirection().getX() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
         double newY = this.getPosition().getY() + this.getDirection().getY() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
         return new Point2D.Double(newX, newY);
-    }
-
-    @Override
-    public Shape getFutureHitbox(double tickTime) {
-        double newX = this.getPosition().getX() + this.getDirection().getX() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
-        double newY = this.getPosition().getY() + this.getDirection().getY() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
-        AffineTransform transform = AffineTransform.getTranslateInstance(newX, newY);
-        return transform.createTransformedShape(this.getHitbox());
     }
 }

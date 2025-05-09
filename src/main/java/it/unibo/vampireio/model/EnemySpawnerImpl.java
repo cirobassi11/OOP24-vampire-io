@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model;
 
 import java.awt.Dimension;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Random;
@@ -61,12 +60,7 @@ public class EnemySpawnerImpl implements EnemySpawner {
         Enemy newEnemy = new Enemy(
             enemyData.getId(),
             spawnPosition,
-            new Ellipse2D.Double(
-                spawnPosition.getX(),
-                spawnPosition.getY(),
-                64,
-                64
-            ),
+            enemyData.getRadius(),
             new Point2D.Double(0, 0),
             enemyData.getSpeed(),
             enemyData.getHealth(),

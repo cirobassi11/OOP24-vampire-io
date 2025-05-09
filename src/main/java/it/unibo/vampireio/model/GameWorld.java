@@ -1,10 +1,8 @@
 package it.unibo.vampireio.model;
 
 import it.unibo.vampireio.controller.GameController;
-import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.Dimension;
-import java.awt.Rectangle;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +17,6 @@ public class GameWorld implements GameModel {
     private SaveManager saveManager;
 
     private final Dimension visualSize = new Dimension(1280, 720);
-    private static Shape ENTITY_SHAPE = new Rectangle(64, 64);
 
     private boolean isGameOver;
     private Score score;
@@ -51,7 +48,7 @@ public class GameWorld implements GameModel {
             selectedUnlockableCharacter.getId(),
             selectedUnlockableCharacter.getName(),
             selectedUnlockableCharacter.getCharacterStats(),
-            GameWorld.ENTITY_SHAPE,
+            64, //DEFAULT RADIUS
             defaultWeapon
         );
         
@@ -61,6 +58,13 @@ public class GameWorld implements GameModel {
         this.projectileAttacks = new LinkedList<>();
 
         this.score = new Score(selectedUnlockableCharacter.getName());
+
+        this.addCollectible(new Coin(new Point2D.Double(100, 100), 69));
+        this.addCollectible(new Coin(new Point2D.Double(200, 200), 69));
+        this.addCollectible(new Coin(new Point2D.Double(300, 300), 69));
+        this.addCollectible(new Coin(new Point2D.Double(400, 400), 69));
+        this.addCollectible(new Coin(new Point2D.Double(500, 500), 69));
+        this.addCollectible(new Coin(new Point2D.Double(600, 600), 69));
     }
 
     @Override
@@ -117,7 +121,7 @@ public class GameWorld implements GameModel {
             Iterator<Collectible> iterator = this.collectibles.iterator();
             while (iterator.hasNext()) {
                 Collectible collectible = iterator.next();
-                if (collectible.getPosition().distance(this.character.getPosition()) <= 50 * this.character.getStats().getStat(StatType.MAGNET)) {
+                if (collectible.getDistance(this.character) <= 50 * this.character.getStats().getStat(StatType.MAGNET)) {
                     character.collect(collectible);
                     iterator.remove();
                 }

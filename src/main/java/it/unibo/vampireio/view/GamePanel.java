@@ -214,6 +214,9 @@ class GamePanel extends JPanel {
         int characterX = (int) (character.getPosition().getX() * scale + cameraOffsetX);
         int characterY = (int) (character.getPosition().getY() * scale + cameraOffsetY);
 
+        int characterWidth = (int) (this.livingEntityDimension.width * scale);
+        int characterHeight = (int) (this.livingEntityDimension.height * scale);
+
         String directionSuffix = "_";
         if (character.getDirection().getX() < 0) {
             directionSuffix += "l";
@@ -226,8 +229,6 @@ class GamePanel extends JPanel {
         }
 
         Image tile = this.imageManager.getImage(character.getId() + "/" + this.currentCharacterFrame + directionSuffix);
-        int characterWidth = (int) (this.livingEntityDimension.width * scale);
-        int characterHeight = (int) (this.livingEntityDimension.height * scale);
 
         if(tile != null) {
             if(character.isBeingAttacked()) { // red image if the character is being attacked

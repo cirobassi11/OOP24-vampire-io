@@ -1,14 +1,13 @@
 package it.unibo.vampireio.model;
 
-import java.awt.Shape;
 import java.awt.geom.Point2D;
 
 public class Enemy extends LivingEntity {
 
     private int damage;
 
-    public Enemy(String id, Point2D.Double position, Shape hitbox, Point2D.Double direction, double speed, int maxHealth, int damage) {
-        super(id, position, hitbox, direction, speed, maxHealth);
+    public Enemy(String id, Point2D.Double position, double radius, Point2D.Double direction, double speed, int maxHealth, int damage) {
+        super(id, position, radius, direction, speed, maxHealth);
         this.damage = damage;
     }
 

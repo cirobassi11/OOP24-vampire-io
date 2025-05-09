@@ -1,6 +1,5 @@
 package it.unibo.vampireio.model;
 
-import java.awt.Shape;
 import java.awt.geom.Point2D;
 
 public abstract class LivingEntity extends MovableEntity implements Living {
@@ -9,8 +8,8 @@ public abstract class LivingEntity extends MovableEntity implements Living {
     private double health;
     private boolean isGettingAttacked;
 
-    protected LivingEntity(String id, Point2D.Double position, Shape hitbox, Point2D.Double direction, double speed, double maxHealth) {
-        super(id, position, hitbox, direction, speed);
+    protected LivingEntity(String id, Point2D.Double position, double radius, Point2D.Double direction, double speed, double maxHealth) {
+        super(id, position, radius, direction, speed);
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.isGettingAttacked = false;
