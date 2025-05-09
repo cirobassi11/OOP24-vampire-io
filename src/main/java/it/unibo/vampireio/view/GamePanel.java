@@ -93,8 +93,8 @@ class GamePanel extends JPanel {
 
         LivingEntityData character = this.data.getCharacterData();
 
-        int screenCenterX = this.getWidth() / 2 - this.livingEntityDimension.width / 2;
-        int screenCenterY = this.getHeight() / 2 - this.livingEntityDimension.height / 2;
+        int screenCenterX = (int) (this.getWidth() / 2);
+        int screenCenterY = (int) (this.getHeight() / 2);
 
         int cameraOffsetX = (int) (screenCenterX - character.getPosition().getX() * scale);
         int cameraOffsetY = (int) (screenCenterY - character.getPosition().getY() * scale);
@@ -126,8 +126,8 @@ class GamePanel extends JPanel {
         // Draws the collectibles
         for (PositionableData collectible : this.data.getCollectiblesData()) {
             if (this.isVisible(collectible, this.collectibleDimension, scale, cameraOffsetX, cameraOffsetY)) {
-                int collectibleX = (int) (collectible.getPosition().getX() * scale + cameraOffsetX);
-                int collectibleY = (int) (collectible.getPosition().getY() * scale + cameraOffsetY);
+                int collectibleX = (int) (collectible.getPosition().getX() * scale + cameraOffsetX - this.collectibleDimension.width / 2);
+                int collectibleY = (int) (collectible.getPosition().getY() * scale + cameraOffsetY - this.collectibleDimension.height / 2);
                 Image tile = this.imageManager.getImage(collectible.getId() + "/" + "0");
                 if (tile != null) {
                     g.drawImage(tile, collectibleX, collectibleY,
@@ -141,8 +141,8 @@ class GamePanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         for (PositionableData projectile : this.data.getProjectilesData()) {
             if (this.isVisible(projectile, this.projectileDimension, scale, cameraOffsetX, cameraOffsetY)) {
-                int projectileX = (int) (projectile.getPosition().getX() * scale + cameraOffsetX);
-                int projectileY = (int) (projectile.getPosition().getY() * scale + cameraOffsetY);
+                int projectileX = (int) (projectile.getPosition().getX() * scale + cameraOffsetX - this.projectileDimension.width / 2);
+                int projectileY = (int) (projectile.getPosition().getY() * scale + cameraOffsetY - this.projectileDimension.height / 2);
                 Image tile = this.imageManager.getImage(projectile.getId());
                 if (tile != null) {
                     int width = (int) (this.projectileDimension.width * scale);
@@ -160,8 +160,8 @@ class GamePanel extends JPanel {
         // Draws the area attacks
         for (PositionableData areaAttack : this.data.getAreaAttacksData()) {
             if (this.isVisible(areaAttack, this.areaAttackDimension, scale, cameraOffsetX, cameraOffsetY)) {
-                int areaAttackX = (int) (areaAttack.getPosition().getX() * scale + cameraOffsetX);
-                int areaAttackY = (int) (areaAttack.getPosition().getY() * scale + cameraOffsetY);
+                int areaAttackX = (int) (areaAttack.getPosition().getX() * scale + cameraOffsetX - this.areaAttackDimension.width / 2);
+                int areaAttackY = (int) (areaAttack.getPosition().getY() * scale + cameraOffsetY - this.areaAttackDimension.height / 2);
                 Image tile = this.imageManager.getImage(areaAttack.getId());
                 if (tile != null) {
                     g.drawImage(tile, areaAttackX, areaAttackY,
@@ -174,8 +174,8 @@ class GamePanel extends JPanel {
         // Draws the enemies
         for (LivingEntityData enemy : this.data.getEnemiesData()) {
             if (this.isVisible(enemy, this.livingEntityDimension, scale, cameraOffsetX, cameraOffsetY)) {
-                int enemyX = (int) (enemy.getPosition().getX() * scale + cameraOffsetX);
-                int enemyY = (int) (enemy.getPosition().getY() * scale + cameraOffsetY);
+                int enemyX = (int) (enemy.getPosition().getX() * scale + cameraOffsetX - this.livingEntityDimension.width / 2);
+                int enemyY = (int) (enemy.getPosition().getY() * scale + cameraOffsetY - this.livingEntityDimension.height / 2);
                 int width = (int) (this.livingEntityDimension.width * scale);
                 int height = (int) (this.livingEntityDimension.height * scale);
 
@@ -211,8 +211,8 @@ class GamePanel extends JPanel {
         }
 
         // Draws the character
-        int characterX = (int) (character.getPosition().getX() * scale + cameraOffsetX);
-        int characterY = (int) (character.getPosition().getY() * scale + cameraOffsetY);
+        int characterX = (int) (character.getPosition().getX() * scale + cameraOffsetX - this.livingEntityDimension.width / 2);
+        int characterY = (int) (character.getPosition().getY() * scale + cameraOffsetY - this.livingEntityDimension.height / 2);
 
         int characterWidth = (int) (this.livingEntityDimension.width * scale);
         int characterHeight = (int) (this.livingEntityDimension.height * scale);

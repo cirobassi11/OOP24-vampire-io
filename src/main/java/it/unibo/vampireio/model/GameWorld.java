@@ -58,13 +58,6 @@ public class GameWorld implements GameModel {
         this.projectileAttacks = new LinkedList<>();
 
         this.score = new Score(selectedUnlockableCharacter.getName());
-
-        this.addCollectible(new Coin(new Point2D.Double(100, 100), 69));
-        this.addCollectible(new Coin(new Point2D.Double(200, 200), 69));
-        this.addCollectible(new Coin(new Point2D.Double(300, 300), 69));
-        this.addCollectible(new Coin(new Point2D.Double(400, 400), 69));
-        this.addCollectible(new Coin(new Point2D.Double(500, 500), 69));
-        this.addCollectible(new Coin(new Point2D.Double(600, 600), 69));
     }
 
     @Override
