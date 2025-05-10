@@ -97,6 +97,16 @@ public class GameControllerImpl implements GameController {
             }
         });
 
+        // ITEM SELECTION LISTENERS
+        this.view.setChooseItemListener(e -> {
+            String selectedItem = this.view.getSelectedItem();
+            if (selectedItem != null) {
+                //this.model.levelUpItem(selectedItem);
+                this.resumeGame();
+                this.view.showScreen(GameViewImpl.GAME);
+            }
+        });
+
         // SHOP LISTENERS
         this.view.setCharactersShopListener(e -> {
             List<UnlockableCharacterData> unlockableCharactersData = this.model.getLockedCharacters().stream()
@@ -199,6 +209,7 @@ public class GameControllerImpl implements GameController {
 
     private synchronized void pauseGame() {
         this.paused = true;
+        this.inputHandler.clearPressedKeys();
     }
 
     private synchronized void resumeGame() {
@@ -238,10 +249,21 @@ public class GameControllerImpl implements GameController {
                 this.inputHandler.clearPressedKeys();
                 return;
             }
+            if(this.model.hasJustLevelledUp()) {
+                this.pauseGame();
+                /*this.view.setItemsData(this.model.getLevelUpItems().stream()
+                    .map(item -> new ItemData(
+                        item.getId(),
+                        item.getName(),
+                        item.getDescription(),
+                        item.getCurrentLevel(),
+                        item.getMaxLevel()))
+                    .collect(Collectors.toList()));*/
+                this.view.showScreen(GameViewImpl.ITEM_SELECTION);
+            }
             synchronized (this) {
                 if (inputHandler.isKeyPressed(KeyEvent.VK_ESCAPE)) {
                     this.pauseGame();
-                    this.inputHandler.clearPressedKeys();
                     this.view.showScreen(GameViewImpl.PAUSE);
                 }
                 while (this.paused) {

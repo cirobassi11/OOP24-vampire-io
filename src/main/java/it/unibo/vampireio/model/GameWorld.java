@@ -341,6 +341,11 @@ public class GameWorld implements GameModel {
     }
 
     @Override
+    public boolean hasJustLevelledUp() {
+        return this.character.hasJustLevelledUp();
+    }
+
+    @Override
     public Score exitGame() {
         this.score.setLevel(this.character.getLevel());
         this.score.setCoinCounter(this.character.getCoinCounter());

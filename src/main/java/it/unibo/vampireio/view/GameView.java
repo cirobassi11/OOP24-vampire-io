@@ -4,6 +4,7 @@ import java.util.List;
 import java.awt.event.ActionListener;
 import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.InputHandler;
+import it.unibo.vampireio.controller.ItemData;
 import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.UnlockableCharacterData;
 import it.unibo.vampireio.controller.UnlockablePowerupData;
@@ -20,6 +21,7 @@ public interface GameView {
     void setNewSaveListener(ActionListener listener);
     void setShowSaveListener(ActionListener listener);
     void setChooseSaveListener(ActionListener listener);
+    void setChooseItemListener(ActionListener listener);
     void setCharactersShopListener(ActionListener listener);
     void setPowerUpsShopListener(ActionListener listener);
     void setBackListener(ActionListener listener);
@@ -34,25 +36,29 @@ public interface GameView {
     void setResumeListener(ActionListener listener);
     void setExitListener(ActionListener listener);
 
-    //Setta i dati dei punteggi (nella scoreboard)
+    // Setta i dati dei punteggi (nella scoreboard)
     void setScoresData(List<ScoreData> scores);
     
-    //Choose character panel
+    // Choose character panel
     void setChoosableCharactersData(List<UnlockableCharacterData> choosableCharactersData);
     String getChoosedCharacter();
 
-    //Unlockable character panel
+    // Unlockable character panel
     void setUnlockableCharactersData(List<UnlockableCharacterData> unlockableCharactersData);
     String getSelectedCharacter();
     
-    //Unlockable powerup panel
+    // Unlockable powerup panel
     void setUnlockablePowerupsData(List<UnlockablePowerupData> unlockablePowerupsData);
     String getSelectedPowerup();
 
-    //Save Selection Panel
+    // Save Selection Panel
     String getSelectedSave();
 
-    //Set game score
+    // Item Selection Panel
+    void setItemsData(List<ItemData> itemsData);
+    String getSelectedItem();
+
+    // Set game score
     void setScore(ScoreData score);
     
     void showError(String message);

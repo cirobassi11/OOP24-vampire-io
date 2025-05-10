@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.InputHandler;
+import it.unibo.vampireio.controller.ItemData;
 import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.UnlockableCharacterData;
 import it.unibo.vampireio.controller.UnlockablePowerupData;
@@ -43,6 +44,7 @@ public class GameViewImpl implements GameView {
     public static final String SCOREBOARD = "scoreboard";
     public static final String CHOOSE_CHARACTER = "chooseCharacter";
     public static final String GAME = "game";
+    public static final String ITEM_SELECTION = "itemSelection";
     public static final String END_GAME = "endGame";
     public static final String PAUSE = "pause";
     public static final String SHOP = "shop";
@@ -106,6 +108,7 @@ public class GameViewImpl implements GameView {
         this.panels.put(SCOREBOARD, new ScoreboardPanel(this));
         this.panels.put(CHOOSE_CHARACTER, new ChooseCharacterPanel(this));
         this.panels.put(GAME, new GamePanel(this));
+        this.panels.put(ITEM_SELECTION, new ItemSelectionPanel(this));
         this.panels.put(END_GAME, new EndGamePanel(this));
         this.panels.put(PAUSE, new PausePanel(this));
         this.panels.put(SHOP, new ShopPanel(this));
@@ -188,6 +191,16 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
+    public String getSelectedItem() {
+        return ((ItemSelectionPanel) panels.get(ITEM_SELECTION)).getSelectedItem();
+    }
+
+    @Override
+    public void setItemsData(List<ItemData> itemsData) {
+        ((ItemSelectionPanel) panels.get(ITEM_SELECTION)).setItemsData(itemsData);
+    }
+
+    @Override
     public void setConfirmCharacterListener(ActionListener listener) {
         ((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).setConfirmCharacterListener(listener);
     }
@@ -205,6 +218,11 @@ public class GameViewImpl implements GameView {
     @Override
     public void setChooseSaveListener(ActionListener listener) {
         ((SaveSelectionPanel) panels.get(SAVE_SELECTION)).setChooseSaveListener(listener);
+    }
+
+    @Override
+    public void setChooseItemListener(ActionListener listener) {
+        ((ItemSelectionPanel) panels.get(ITEM_SELECTION)).setChooseItemListener(listener);
     }
 
     @Override

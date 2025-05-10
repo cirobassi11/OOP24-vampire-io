@@ -13,6 +13,8 @@ public class Character extends LivingEntity {
     private double levelPercentage;
     private int coinCounter;
 
+    private boolean hasJustLevelledUp;
+
     private List<Weapon> weapons = new LinkedList<>();
 
     public Character(String id, String name, Stats stats, double radius, Weapon weapon) {
@@ -21,6 +23,7 @@ public class Character extends LivingEntity {
         this.level = 1;
         this.levelPercentage = 0;
         this.coinCounter = 0;
+        this.hasJustLevelledUp = false;
         this.addWeapon(weapon);
     }
 
@@ -69,7 +72,14 @@ public class Character extends LivingEntity {
             if(this.levelPercentage >= 100) {
                 this.levelPercentage -= 100;
                 this.level++;
+                this.hasJustLevelledUp = true;
             }
         }
+    }
+
+    public boolean hasJustLevelledUp() {
+        boolean result = this.hasJustLevelledUp;
+        this.hasJustLevelledUp = false;
+        return result;
     }
 }

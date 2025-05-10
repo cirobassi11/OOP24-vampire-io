@@ -67,27 +67,6 @@ public class Stats implements Serializable {
     public Map<StatType, Double> getAllStats() {
         return new EnumMap<>(statsMap);
     }
-    
-    private void initDefault() {
-        statsMap.put(StatType.MAX_HEALTH, 100.0);
-        statsMap.put(StatType.ARMOR, 0.0);
-        statsMap.put(StatType.SPEED, 1.0);
-        statsMap.put(StatType.MOVE_SPEED, 1.0);
-        statsMap.put(StatType.RECOVERY, 0.0);
-        statsMap.put(StatType.MIGHT, 1.0);
-        statsMap.put(StatType.AREA, 1.0);
-        statsMap.put(StatType.DURATION, 1.0);
-        statsMap.put(StatType.AMOUNT, 1.0);
-        statsMap.put(StatType.COOLDOWN, 1.0);
-        statsMap.put(StatType.GROWTH, 1.0);
-        statsMap.put(StatType.GREED, 1.0);
-        statsMap.put(StatType.CURSE, 1.0);
-        statsMap.put(StatType.MAGNET, 1.0);
-        statsMap.put(StatType.REVIVAL, 0.0);
-        statsMap.put(StatType.REROLL, 0.0);
-        statsMap.put(StatType.SKIP, 0.0);
-        statsMap.put(StatType.BANISH, 0.0);
-    }
 
     public void resetStat(StatType type) {
         switch (type) {
