@@ -113,6 +113,7 @@ public class GameControllerImpl implements GameController {
                     .map(character -> new UnlockableCharacterData(character.getId(), character.getName()))
                     .collect(Collectors.toList());
             this.view.setUnlockableCharactersData(unlockableCharactersData);
+            this.view.setCoinsAmount(this.model.getCurrentSave().getMoneyAmount());
             this.showScreen(GameViewImpl.UNLOCKABLE_CHARACTERS);
         });
 
@@ -122,6 +123,7 @@ public class GameControllerImpl implements GameController {
                     powerup.getDescription(), powerup.getCurrentLevel(), powerup.getMaxLevel()))
                     .collect(Collectors.toList());
             this.view.setUnlockablePowerupsData(unlockablePowerupsData);
+            this.view.setCoinsAmount(this.model.getCurrentSave().getMoneyAmount());
             this.showScreen(GameViewImpl.UNLOCKABLE_POWERUPS);
         });
 
@@ -133,6 +135,7 @@ public class GameControllerImpl implements GameController {
                     .map(character -> new UnlockableCharacterData(character.getId(), character.getName()))
                     .collect(Collectors.toList());
                 this.view.setUnlockableCharactersData(unlockableCharactersData);
+                this.view.setCoinsAmount(this.model.getCurrentSave().getMoneyAmount());
             }
         });
 
@@ -145,6 +148,7 @@ public class GameControllerImpl implements GameController {
                     powerup.getDescription(), powerup.getCurrentLevel(), powerup.getMaxLevel()))
                     .collect(Collectors.toList());
                 this.view.setUnlockablePowerupsData(unlockablePowerupsData);
+                this.view.setCoinsAmount(this.model.getCurrentSave().getMoneyAmount());
             }
         });
 

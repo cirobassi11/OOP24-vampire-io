@@ -43,6 +43,9 @@ public interface GameView {
     void setChoosableCharactersData(List<UnlockableCharacterData> choosableCharactersData);
     String getChoosedCharacter();
 
+    // Shop panel
+    void setCoinsAmount(int coins);
+
     // Unlockable character panel
     void setUnlockableCharactersData(List<UnlockableCharacterData> unlockableCharactersData);
     String getSelectedCharacter();

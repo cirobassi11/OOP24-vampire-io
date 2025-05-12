@@ -295,13 +295,16 @@ public class GameWorld implements GameModel {
                 return false;
             }
 
+            Save currentSave = this.getCurrentSave();
+
             if(moneyAmount >= powerupPrice) {
                 boolean enhanced = unlockablePowerup.get().enhance();
-                this.getCurrentSave().enhancePowerup(unlockablePowerup.get());
+                currentSave.enhancePowerup(unlockablePowerup.get());
                 if(!enhanced) {
                     this.gameController.showError("Max level reached!");
                     return false;
                 }
+                currentSave.incrementMoneyAmount(- unlockablePowerup.get().getPrice());
                 this.saveManager.saveCurrentSave();
                 return true;
             }

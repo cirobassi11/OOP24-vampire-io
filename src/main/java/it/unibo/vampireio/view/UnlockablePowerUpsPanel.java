@@ -1,11 +1,12 @@
 package it.unibo.vampireio.view;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.swing.JList;
 import it.unibo.vampireio.controller.UnlockablePowerupData;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+
 import java.awt.event.ActionListener;
 
 class UnlockablePowerUpsPanel extends BasePanel {
@@ -15,15 +16,17 @@ class UnlockablePowerUpsPanel extends BasePanel {
     private JButton buyButton;
     private JButton backButton;
     private JList<String> powerupsList;
+    private JLabel coinsLabel;
 
     UnlockablePowerUpsPanel(GameViewImpl view) {
         super(view);
         
         List<String> powerupNames = List.of();
 
-        this.powerupsList = this.addScrollableList(powerupNames, 0, 0);
-        this.buyButton = this.addButton("BUY", 0, 1);
-        this.backButton = this.addButton("BACK", 0, 2);
+        this.coinsLabel = this.addLabel("", 0, 0);
+        this.powerupsList = this.addScrollableList(powerupNames, 0, 1);
+        this.buyButton = this.addButton("BUY", 0, 2);
+        this.backButton = this.addButton("BACK", 0, 3);
     }
 
     void setUnlockablePowerupsData(List<UnlockablePowerupData> unlockablePowerupsData) {
@@ -55,6 +58,10 @@ class UnlockablePowerUpsPanel extends BasePanel {
     
     void setBackListener(ActionListener listener) {
         this.backButton.addActionListener(listener);
+    }
+
+    void setCoinsAmount(int coins) {
+        this.coinsLabel.setText("Coins: " + coins);
     }
 
 }

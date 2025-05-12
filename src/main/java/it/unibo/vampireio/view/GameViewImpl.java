@@ -256,6 +256,12 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
+    public void setCoinsAmount(int coins) {
+        ((UnlockableCharactersPanel) panels.get(UNLOCKABLE_CHARACTERS)).setCoinsAmount(coins);
+        ((UnlockablePowerUpsPanel) panels.get(UNLOCKABLE_POWERUPS)).setCoinsAmount(coins);
+    }
+
+    @Override
 	public void setUnlockableCharactersData(List<UnlockableCharacterData> unlockableCharactersData) {
 		((UnlockableCharactersPanel) panels.get(UNLOCKABLE_CHARACTERS)).setUnlockableCharactersData(unlockableCharactersData);
 	}
