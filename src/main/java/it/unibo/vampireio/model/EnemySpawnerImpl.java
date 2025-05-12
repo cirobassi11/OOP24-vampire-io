@@ -9,7 +9,7 @@ public class EnemySpawnerImpl implements EnemySpawner {
 
     private static final int INITIAL_SPAWN_INTERVAL = 2000;
     private static final int MIN_SPAWN_INTERVAL = 300;
-    private static final int DECREMENT_INTERVAL = 2000;
+    private static final int DECREMENT_INTERVAL = 500;
     private static final int DECREMENT = 10;
     private static final int RANDOM_SPAWN_INTERVAL = 500;
     private static final int MIN_SPAWN_DISTANCE = 100;
@@ -50,26 +50,36 @@ public class EnemySpawnerImpl implements EnemySpawner {
     }
 
     private void spawnEnemy() {
-    int enemyToSpawn = this.random.nextInt(MAX_ENEMY_SPAWN) + 1;
+        int enemyToSpawn = this.random.nextInt(MAX_ENEMY_SPAWN) + 1;
 
-    for (int i = 0; i < enemyToSpawn; i++) {
-        EnemyData enemyData = this.enemies.get(this.random.nextInt(2)); /////TODO
+        for (int i = 0; i < enemyToSpawn; i++) {
+            EnemyData enemyData = this.enemies.get(this.random.nextInt(2)); /////TODO
 
-        Point2D.Double spawnPosition = getRandomSpawnPosition();
+            Point2D.Double spawnPosition = null;
+            int maxTries = 10;
 
-        Enemy newEnemy = new Enemy(
-            enemyData.getId(),
-            spawnPosition,
-            enemyData.getRadius(),
-            new Point2D.Double(0, 0),
-            enemyData.getSpeed(),
-            enemyData.getHealth(),
-            enemyData.getDamage()
-        );
+            for (int attempts = 0; attempts < maxTries; attempts++) {
+                Point2D.Double candidate = getRandomSpawnPosition();
+                if (isPositionFree(candidate, enemyData.getRadius())) {
+                    spawnPosition = candidate;
+                    break;
+                }
+            }
 
-        this.gameWorld.addEnemy(newEnemy);
+            if (spawnPosition != null) {
+                Enemy newEnemy = new Enemy(
+                    enemyData.getId(),
+                    spawnPosition,
+                    enemyData.getRadius(),
+                    new Point2D.Double(0, 0),
+                    enemyData.getSpeed(),
+                    enemyData.getHealth(),
+                    enemyData.getDamage()
+                );
+                this.gameWorld.addEnemy(newEnemy);
+            }
+        }
     }
-}
 
     private Point2D.Double getRandomSpawnPosition() {
         Dimension visualSize = this.gameWorld.getVisualSize();
@@ -102,4 +112,14 @@ public class EnemySpawnerImpl implements EnemySpawner {
 
         return new Point2D.Double(spawnX, spawnY);
     }
+
+    private boolean isPositionFree(Point2D.Double pos, double radius) {
+    for (Enemy e : gameWorld.getEnemies()) {
+        double distance = pos.distance(e.getPosition());
+        if (distance < radius + e.getRadius()) { // Si sovrappongono
+            return false;
+        }
+    }
+    return true;
+}
 }
