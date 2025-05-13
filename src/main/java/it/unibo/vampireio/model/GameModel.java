@@ -12,6 +12,10 @@ public interface GameModel {
     void removeEnemy(Enemy enemy);
     void addCollectible(Collectible collectible);
     void removeCollectible(Collectible collectible);
+    void addProjectileAttack(ProjectileAttack projectileAttack);
+    void removeProjectileAttack(ProjectileAttack projectileAttack);
+    void addAreaAttack(AreaAttack areaAttack);
+    void removeAreaAttack(AreaAttack areaAttack);
     Dimension getVisualSize();
     long getElapsedTime();
     int getPlayerLevel();

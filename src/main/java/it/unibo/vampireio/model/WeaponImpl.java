@@ -1,29 +1,27 @@
 package it.unibo.vampireio.model;
 
+import java.awt.geom.Point2D;
+
 public class WeaponImpl implements Weapon {
-    private GameWorld gameWorld;
-    private String id;
-    private String projectileId;
+    private final GameWorld gameWorld;
+    private final String id;
     private double cooldown;
     private int projectilePerCooldown;
     private double timeSinceLastAttack;
-
-    private Attack attack;
+    private final AttackFactory attackFactory;
     
-    public WeaponImpl(GameWorld gameWorld, String id, String projectileId, double cooldown, int projectilePerCooldown) {
+    public WeaponImpl(GameWorld gameWorld, String id, double cooldown, int projectilePerCooldown/*factory*/) {
         this.gameWorld = gameWorld;
         this.id = id;
-        this.projectileId = projectileId;
         this.cooldown = cooldown;
         this.projectilePerCooldown = projectilePerCooldown;
         this.timeSinceLastAttack = 0;
-        //this.attack=boh
+        this.attackFactory = null; /////////
     }
-
+    
     @Override
     public void update(double tickTime) {
         this.timeSinceLastAttack += tickTime;
-
         if (this.timeSinceLastAttack >= this.cooldown) {
             for (int i = 0; i < this.projectilePerCooldown; i++) {
                 this.spawnAttack();
@@ -31,17 +29,28 @@ public class WeaponImpl implements Weapon {
             this.timeSinceLastAttack = 0;
         }
     }
-
+    
     @Override
     public String getId() {
         return this.id;
     }
-
+    
     public void multiplyCooldown(double multiplier) {
         this.cooldown *= multiplier;
     }
-
+    
     private void spawnAttack() {
-        System.out.println("Spawning attack with id: " + this.projectileId);
+        Attack attack = attackFactory.createAttack();
+
+        Point2D.Double currentCharacterPosition = gameWorld.getCharacter().getPosition();
+        Point2D.Double currentCharacterDirection = gameWorld.getCharacter().getDirection();
+        
+        if (attack instanceof ProjectileAttack) {
+            gameWorld.addProjectileAttack((ProjectileAttack) attack);
+        } else if (attack instanceof AreaAttack) {
+            gameWorld.addAreaAttack((AreaAttack) attack);
+        }
+
+        attack.execute(currentCharacterPosition, currentCharacterDirection);
     }
 }

@@ -3,7 +3,6 @@
     "id": "weapons/whip",
     "name": "Whip",
     "description": "uip",
-    "projectileId": "projectiles/whip",
     "defaultCooldown": 1000.0,
     "projectilePerCooldown": 1
   },
@@ -11,7 +10,6 @@
     "id": "weapons/magicWand",
     "name": "Magic Wand",
     "description": "megic uand",
-    "projectileId": "projectiles/magicWand",
     "defaultCooldown": 1000.0,
     "projectilePerCooldown": 1
   },
@@ -19,7 +17,6 @@
     "id": "weapons/kingBible",
     "name": "King Bible",
     "description": "ching baibol",
-    "projectileId": "projectiles/kingBible",
     "defaultCooldown": 1000.0,
     "projectilePerCooldown": 1
   },
@@ -27,7 +24,6 @@
     "id": "weapons/knife",
     "name": "Knife",
     "description": "naif",
-    "projectileId": "projectiles/knife",
     "defaultCooldown": 1000.0,
     "projectilePerCooldown": 1
   }

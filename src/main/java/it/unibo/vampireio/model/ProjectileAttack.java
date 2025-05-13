@@ -1,6 +1,7 @@
 package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 
 public class ProjectileAttack extends MovableEntity implements Attack {
 
@@ -11,6 +12,11 @@ public class ProjectileAttack extends MovableEntity implements Attack {
         super(id, position, radius, direction, speed);
         this.damage = damage;
         this.type = type;
+    }
+
+    @Override
+    public void execute(Double position, Double direction) {
+        System.out.println("ecsechiut");
     }
 
     @Override
@@ -27,5 +33,4 @@ public class ProjectileAttack extends MovableEntity implements Attack {
     public String getType() {
         return this.type;
     }
-    
 }

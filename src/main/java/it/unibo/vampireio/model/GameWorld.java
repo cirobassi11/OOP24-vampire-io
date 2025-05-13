@@ -42,7 +42,8 @@ public class GameWorld implements GameModel {
         this.enemySpawner = new EnemySpawnerImpl(this);
         UnlockableCharacter selectedUnlockableCharacter = this.dataLoader.getCharacterLoader().get(selectedCharacter).get();
         WeaponData defaultWeaponData = this.dataLoader.getWeaponLoader().get(selectedUnlockableCharacter.getDefaultWeapon()).get();
-        Weapon defaultWeapon = new WeaponImpl(this, defaultWeaponData.getId(), defaultWeaponData.getProjectileId(), defaultWeaponData.getDefaultCooldown(), defaultWeaponData.getProjectilePerCooldown());
+        
+        Weapon defaultWeapon = new WeaponImpl(this, defaultWeaponData.getId(), defaultWeaponData.getDefaultCooldown(), defaultWeaponData.getDefaultAttacksPerCooldown());
 
         this.character = new Character(
             selectedUnlockableCharacter.getId(),
@@ -153,6 +154,34 @@ public class GameWorld implements GameModel {
     public void removeCollectible(Collectible collectible) {
         synchronized (this.collectibles) {
             this.collectibles.remove(collectible);
+        }
+    }
+
+    @Override
+    public void addProjectileAttack(ProjectileAttack projectileAttack) {
+        synchronized (this.projectileAttacks) {
+            this.projectileAttacks.add(projectileAttack);
+        }
+    }
+
+    @Override
+    public void removeProjectileAttack(ProjectileAttack projectileAttack) {
+        synchronized (this.projectileAttacks) {
+            this.projectileAttacks.remove(projectileAttack);
+        }
+    }
+    
+    @Override
+    public void addAreaAttack(AreaAttack areaAttack) {
+        synchronized (this.projectileAttacks) {
+            this.areaAttacks.add(areaAttack);
+        }
+    }
+
+    @Override
+    public void removeAreaAttack(AreaAttack areaAttack) {
+        synchronized (this.projectileAttacks) {
+            this.areaAttacks.remove(areaAttack);
         }
     }
 

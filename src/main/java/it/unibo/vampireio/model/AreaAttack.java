@@ -1,6 +1,7 @@
 package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 
 public class AreaAttack extends CollidableEntity implements Attack {
 
@@ -11,6 +12,11 @@ public class AreaAttack extends CollidableEntity implements Attack {
         super(id, position, radius);
         this.damage = damage;
         this.type = type;
+    }
+
+    @Override
+    public void execute(Double position, Double direction) {
+        System.out.println("ecsechiut");
     }
 
     @Override
