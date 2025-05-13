@@ -21,8 +21,8 @@ class GamePanel extends JPanel {
 
     private static final int TILE_WIDTH = 64;
     private static final int TILE_HEIGHT = 64;
-    private static final int PROJECTILE_WIDTH = 32;
-    private static final int PROJECTILE_HEIGHT = 32;
+    private static final int PROJECTILE_WIDTH = 16;
+    private static final int PROJECTILE_HEIGHT = 16;
     private static final int AREA_ATTACK_WIDTH = 64;
     private static final int AREA_ATTACK_HEIGHT = 64;
     private static final int COLLECTIBLE_WIDTH = 16;
@@ -117,8 +117,10 @@ class GamePanel extends JPanel {
                 Image tile = this.imageManager.getImage("map");
                 if (tile != null) {
                     g.drawImage(tile, screenX - TILE_BORDER_ADJUSTMENT, screenY - TILE_BORDER_ADJUSTMENT,
-                            (int) (this.mapTileDimension.width * scale) + TILE_RENDER_PADDING,
-                            (int) (this.mapTileDimension.height * scale) + TILE_RENDER_PADDING, null);
+                        (int) (this.mapTileDimension.width * scale) + TILE_RENDER_PADDING,
+                        (int) (this.mapTileDimension.height * scale) + TILE_RENDER_PADDING,
+                        null
+                    );
                 }
             }
         }
@@ -128,11 +130,13 @@ class GamePanel extends JPanel {
             if (this.isVisible(collectible, this.collectibleDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 int collectibleX = (int) (collectible.getPosition().getX() * scale + cameraOffsetX - this.collectibleDimension.width / 2);
                 int collectibleY = (int) (collectible.getPosition().getY() * scale + cameraOffsetY - this.collectibleDimension.height / 2);
-                Image tile = this.imageManager.getImage(collectible.getId() + "/" + "0");
+                Image tile = this.imageManager.getImage(collectible.getId());
                 if (tile != null) {
                     g.drawImage(tile, collectibleX, collectibleY,
-                            (int) (this.collectibleDimension.width * scale),
-                            (int) (this.collectibleDimension.height * scale), null);
+                        (int) (this.collectibleDimension.width * scale),
+                        (int) (this.collectibleDimension.height * scale),
+                        null
+                    );
                 }
             }
         }
@@ -152,7 +156,7 @@ class GamePanel extends JPanel {
                     transform.translate(projectileX + width / 2, projectileY + height / 2);
                     transform.rotate(rotationAngle);
                     transform.translate(-width / 2, -height / 2);
-                    g2d.drawImage(tile, transform, null);
+                    g2d.drawImage(tile.getScaledInstance(width, height, Image.SCALE_SMOOTH), transform, null);
                 }
             }
         }

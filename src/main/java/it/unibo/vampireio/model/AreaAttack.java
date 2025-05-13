@@ -6,12 +6,10 @@ import java.awt.geom.Point2D.Double;
 public class AreaAttack extends CollidableEntity implements Attack {
 
     private int damage;
-    private String type;
 
-    public AreaAttack(String id, Point2D.Double position, double radius, int damage, String type) {
+    public AreaAttack(String id, Point2D.Double position, double radius, int damage) {
         super(id, position, radius);
         this.damage = damage;
-        this.type = type;
     }
 
     @Override
@@ -27,11 +25,5 @@ public class AreaAttack extends CollidableEntity implements Attack {
     @Override
     public int getDamage() {
         return this.damage;
-    }
-
-    @Override
-    public String getType() {
-        return this.type;
-    }
-    
+    }    
 }

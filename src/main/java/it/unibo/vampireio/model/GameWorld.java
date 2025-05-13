@@ -3,6 +3,7 @@ package it.unibo.vampireio.model;
 import it.unibo.vampireio.controller.GameController;
 import java.awt.geom.Point2D;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,9 @@ public class GameWorld implements GameModel {
         this.projectileAttacks = new LinkedList<>();
 
         this.score = new Score(selectedUnlockableCharacter.getName());
+
+        this.addProjectileAttack(new ProjectileAttack("projectiles/magicWand", new Point2D.Double(100, 100), 32, new Point2D.Double(100, 100), 1, 1));
+        this.addCollectible(new Coin(new Point2D.Double(200, 200), 1));
     }
 
     @Override

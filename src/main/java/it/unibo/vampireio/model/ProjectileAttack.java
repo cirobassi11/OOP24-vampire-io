@@ -6,12 +6,10 @@ import java.awt.geom.Point2D.Double;
 public class ProjectileAttack extends MovableEntity implements Attack {
 
     private int damage;
-    private String type;
 
-    public ProjectileAttack(String id, Point2D.Double position, double radius, Point2D.Double direction, double speed, int damage, String type) {
+    public ProjectileAttack(String id, Point2D.Double position, double radius, Point2D.Double direction, double speed, int damage) {
         super(id, position, radius, direction, speed);
         this.damage = damage;
-        this.type = type;
     }
 
     @Override
@@ -27,10 +25,5 @@ public class ProjectileAttack extends MovableEntity implements Attack {
     @Override
     public int getDamage() {
         return this.damage;
-    }
-
-    @Override
-    public String getType() {
-        return this.type;
     }
 }
