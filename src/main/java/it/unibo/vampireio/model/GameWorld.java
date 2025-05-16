@@ -60,9 +60,14 @@ public class GameWorld implements GameModel {
         this.projectileAttacks = new LinkedList<>();
 
         this.score = new Score(selectedUnlockableCharacter.getName());
-
-        this.addProjectileAttack(new ProjectileAttack("projectiles/magicWand", new Point2D.Double(100, 100), 32, new Point2D.Double(100, 100), 1, 1));
+        
+        ///////
+        this.addProjectileAttack(new ProjectileAttack("projectiles/magicWand", new Point2D.Double(100, 100), 32, new Point2D.Double(0, 0), 1, 1));
+        this.addProjectileAttack(new ProjectileAttack("projectiles/knife", new Point2D.Double(-100, -100), 32, new Point2D.Double(1, 0), 1, 1));
+        this.addProjectileAttack(new ProjectileAttack("projectiles/knife", new Point2D.Double(100, -100), 32, new Point2D.Double(0, 1), 1, 1));
+        this.addAreaAttack(new AreaAttack("areaattacks/areaattacktest", new Point2D.Double(200, 200), 64, 1));
         this.addCollectible(new Coin(new Point2D.Double(200, 200), 1));
+        ///////
     }
 
     @Override
