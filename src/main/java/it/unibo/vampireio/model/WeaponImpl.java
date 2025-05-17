@@ -10,13 +10,13 @@ public class WeaponImpl implements Weapon {
     private double timeSinceLastAttack;
     private final AttackFactory attackFactory;
     
-    public WeaponImpl(GameWorld gameWorld, String id, double cooldown, int projectilePerCooldown/*factory*/) {
+    public WeaponImpl(GameWorld gameWorld, String id, double cooldown, int projectilePerCooldown, AttackFactory attackFactory) {
         this.gameWorld = gameWorld;
         this.id = id;
         this.cooldown = cooldown;
         this.projectilePerCooldown = projectilePerCooldown;
         this.timeSinceLastAttack = 0;
-        this.attackFactory = null; /////////
+        this.attackFactory = attackFactory;
     }
     
     @Override
@@ -50,7 +50,5 @@ public class WeaponImpl implements Weapon {
         } else if (attack instanceof AreaAttack) {
             gameWorld.addAreaAttack((AreaAttack) attack);
         }
-
-        attack.execute(currentCharacterPosition, currentCharacterDirection);
     }
 }

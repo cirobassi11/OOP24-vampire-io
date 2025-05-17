@@ -5,15 +5,12 @@ import java.awt.geom.Point2D.Double;
 
 public class AreaAttack extends CollidableEntity implements Attack {
 
-    private int damage;
-
     public AreaAttack(String id, Point2D.Double position, double radius, int damage) {
         super(id, position, radius);
-        this.damage = damage;
     }
 
     @Override
-    public void execute(Double position, Double direction) {
+    public void execute() {
         System.out.println("ecsechiut");
     }
 
@@ -21,9 +18,4 @@ public class AreaAttack extends CollidableEntity implements Attack {
     public void onCollision(Collidable collidable) {
         //DANNO AL NEMICO
     }
-
-    @Override
-    public int getDamage() {
-        return this.damage;
-    }    
 }

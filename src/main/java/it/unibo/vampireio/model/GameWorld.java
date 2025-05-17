@@ -43,8 +43,13 @@ public class GameWorld implements GameModel {
         this.enemySpawner = new EnemySpawnerImpl(this);
         UnlockableCharacter selectedUnlockableCharacter = this.dataLoader.getCharacterLoader().get(selectedCharacter).get();
         WeaponData defaultWeaponData = this.dataLoader.getWeaponLoader().get(selectedUnlockableCharacter.getDefaultWeapon()).get();
-        
-        Weapon defaultWeapon = new WeaponImpl(this, defaultWeaponData.getId(), defaultWeaponData.getDefaultCooldown(), defaultWeaponData.getDefaultAttacksPerCooldown());
+        AttackFactory attackFactory = null;
+
+        switch(defaultWeaponData.getId()) {
+            case "weapons/magicWand" -> attackFactory = new MagicWandFactory(this);
+        }
+
+        Weapon defaultWeapon = new WeaponImpl(this, defaultWeaponData.getId(), defaultWeaponData.getDefaultCooldown(), defaultWeaponData.getDefaultAttacksPerCooldown(), attackFactory);
 
         this.character = new Character(
             selectedUnlockableCharacter.getId(),
@@ -60,14 +65,6 @@ public class GameWorld implements GameModel {
         this.projectileAttacks = new LinkedList<>();
 
         this.score = new Score(selectedUnlockableCharacter.getName());
-        
-        ///////
-        this.addProjectileAttack(new ProjectileAttack("projectiles/magicWand", new Point2D.Double(100, 100), 32, new Point2D.Double(0, 0), 1, 1));
-        this.addProjectileAttack(new ProjectileAttack("projectiles/knife", new Point2D.Double(-100, -100), 32, new Point2D.Double(1, 0), 1, 1));
-        this.addProjectileAttack(new ProjectileAttack("projectiles/knife", new Point2D.Double(100, -100), 32, new Point2D.Double(0, 1), 1, 1));
-        this.addAreaAttack(new AreaAttack("areaattacks/areaattacktest", new Point2D.Double(200, 200), 64, 1));
-        this.addCollectible(new Coin(new Point2D.Double(200, 200), 1));
-        ///////
     }
 
     @Override
@@ -85,6 +82,15 @@ public class GameWorld implements GameModel {
             this.character.setDirection(characterDirection);
             this.character.move(tickTime);
             this.character.updateWeapons(tickTime);
+
+            for (ProjectileAttack projectileAttack : this.projectileAttacks) {
+                projectileAttack.execute();
+                projectileAttack.move(tickTime);
+            }
+
+            for (AreaAttack areaAttack : this.areaAttacks) {
+                
+            }
 
             // muove tutti i nemici (controllando anche che non si sovrappongano)
             for (Enemy enemy : this.enemies) {

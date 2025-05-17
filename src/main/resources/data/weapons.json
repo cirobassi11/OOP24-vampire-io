@@ -4,27 +4,27 @@
     "name": "Whip",
     "description": "uip",
     "defaultCooldown": 1000.0,
-    "projectilePerCooldown": 1
+    "defaultAttacksPerCooldown": 1
   },
   {
     "id": "weapons/magicWand",
     "name": "Magic Wand",
     "description": "megic uand",
     "defaultCooldown": 1000.0,
-    "projectilePerCooldown": 1
+    "defaultAttacksPerCooldown": 1
   },
   {
     "id": "weapons/kingBible",
     "name": "King Bible",
     "description": "ching baibol",
     "defaultCooldown": 1000.0,
-    "projectilePerCooldown": 1
+    "defaultAttacksPerCooldown": 1
   },
   {
     "id": "weapons/knife",
     "name": "Knife",
     "description": "naif",
     "defaultCooldown": 1000.0,
-    "projectilePerCooldown": 1
+    "defaultAttacksPerCooldown": 1
   }
 ]
