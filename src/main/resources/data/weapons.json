@@ -1,8 +1,8 @@
 [
   {
-    "id": "weapons/whip",
-    "name": "Whip",
-    "description": "uip",
+    "id": "weapons/garlic",
+    "name": "Garlic",
+    "description": "garlic",
     "defaultCooldown": 1000.0,
     "defaultAttacksPerCooldown": 1
   },
@@ -14,9 +14,9 @@
     "defaultAttacksPerCooldown": 1
   },
   {
-    "id": "weapons/kingBible",
-    "name": "King Bible",
-    "description": "ching baibol",
+    "id": "weapons/santaWater",
+    "name": "Santa Water",
+    "description": "santa uoter",
     "defaultCooldown": 1000.0,
     "defaultAttacksPerCooldown": 1
   },

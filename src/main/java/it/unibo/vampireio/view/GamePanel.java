@@ -23,8 +23,8 @@ class GamePanel extends JPanel {
     private static final int TILE_HEIGHT = 64;
     private static final int PROJECTILE_WIDTH = 16;
     private static final int PROJECTILE_HEIGHT = 16;
-    private static final int AREA_ATTACK_WIDTH = 64;
-    private static final int AREA_ATTACK_HEIGHT = 64;
+    private static final int AREA_ATTACK_WIDTH = 128;
+    private static final int AREA_ATTACK_HEIGHT = 128;
     private static final int COLLECTIBLE_WIDTH = 16;
     private static final int COLLECTIBLE_HEIGHT = 16;
     private static final int HEALTH_BAR_WIDTH = 42;

@@ -22,13 +22,13 @@
           "BANISH": 0.0
         }
       },
-      "id": "characters/antonio",
-      "name": "Antonio Belpaese",
-      "description": "Il personaggio Antonio",
+      "id": "characters/poe",
+      "name": "Poe Ratcho",
+      "description": "Il personaggio Poe",
       "price": 100,
       "currentLevel": 0,
       "maxLevel": 0,
-      "defaultWeapon": "weapons/whip"
+      "defaultWeapon": "weapons/garlic"
     },
     {
       "characterStats": {
@@ -84,13 +84,13 @@
           "BANISH": 0.0
         }
       },
-      "id": "characters/dommario",
-      "name": "Dommario",
-      "description": "Il personaggio Dommario",
+      "id": "characters/clerici",
+      "name": "Suor Clerici",
+      "description": "Il personaggio Clerici",
       "price": 120,
       "currentLevel": 0,
       "maxLevel": 0,
-      "defaultWeapon": "weapons/kingBible"
+      "defaultWeapon": "weapons/santaWater"
     },
     {
       "characterStats": {
