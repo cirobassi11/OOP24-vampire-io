@@ -1,7 +1,5 @@
 package it.unibo.vampireio.model;
 
-import java.awt.geom.Point2D;
-
 public class WeaponImpl implements Weapon {
     private final GameWorld gameWorld;
     private final String id;
@@ -41,9 +39,6 @@ public class WeaponImpl implements Weapon {
     
     private void spawnAttack() {
         Attack attack = attackFactory.createAttack();
-
-        Point2D.Double currentCharacterPosition = gameWorld.getCharacter().getPosition();
-        Point2D.Double currentCharacterDirection = gameWorld.getCharacter().getDirection();
         
         if (attack instanceof ProjectileAttack) {
             gameWorld.addProjectileAttack((ProjectileAttack) attack);

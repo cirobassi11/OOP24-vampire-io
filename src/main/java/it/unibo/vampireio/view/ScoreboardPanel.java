@@ -3,8 +3,6 @@ package it.unibo.vampireio.view;
 import java.awt.event.ActionListener;
 import java.util.List;
 import it.unibo.vampireio.controller.ScoreData;
-import it.unibo.vampireio.controller.UnlockableCharacterData;
-
 import javax.swing.JButton;
 import javax.swing.JList;
 

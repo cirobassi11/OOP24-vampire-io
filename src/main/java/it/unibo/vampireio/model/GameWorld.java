@@ -3,7 +3,6 @@ package it.unibo.vampireio.model;
 import it.unibo.vampireio.controller.GameController;
 import java.awt.geom.Point2D;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -83,15 +82,6 @@ public class GameWorld implements GameModel {
             this.character.move(tickTime);
             this.character.updateWeapons(tickTime);
 
-            for (ProjectileAttack projectileAttack : this.projectileAttacks) {
-                projectileAttack.execute();
-                projectileAttack.move(tickTime);
-            }
-
-            for (AreaAttack areaAttack : this.areaAttacks) {
-                
-            }
-
             // muove tutti i nemici (controllando anche che non si sovrappongano)
             for (Enemy enemy : this.enemies) {
                 enemy.setGettingAttacked(false);
@@ -126,13 +116,32 @@ public class GameWorld implements GameModel {
                 }
             }
 
+            for (ProjectileAttack projectileAttack : this.projectileAttacks) {
+                projectileAttack.execute();
+                projectileAttack.move(tickTime);
+            }
+
+            for (AreaAttack areaAttack : this.areaAttacks) {
+                areaAttack.execute();
+                //move?
+            }
+
             // controlla collisioni con collezionabili
-            Iterator<Collectible> iterator = this.collectibles.iterator();
-            while (iterator.hasNext()) {
-                Collectible collectible = iterator.next();
+            Iterator<Collectible> collectibleIterator = this.collectibles.iterator();
+            while (collectibleIterator.hasNext()) {
+                Collectible collectible = collectibleIterator.next();
                 if (collectible.getDistance(this.character) <= 50 * this.character.getStats().getStat(StatType.MAGNET)) {
                     character.collect(collectible);
-                    iterator.remove();
+                    collectibleIterator.remove();
+                }
+            }
+
+            //elimina nemici morti
+            Iterator<Enemy> enemyIterator = this.enemies.iterator();
+            while (enemyIterator.hasNext()) {
+                Enemy enemy = enemyIterator.next();
+                if (enemy.getHealth() <= 0) {
+                    enemyIterator.remove();
                 }
             }
 

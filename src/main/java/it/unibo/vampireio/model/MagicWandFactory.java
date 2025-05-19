@@ -1,9 +1,7 @@
 package it.unibo.vampireio.model;
 
-import java.awt.geom.Point2D;
-
 public class MagicWandFactory extends AttackFactory {
-    private final String attackID = "magicWand";
+    private static final String attackID = "projectiles/magicWand";
     
     public MagicWandFactory(GameWorld gameWorld) {
         super(gameWorld);
@@ -12,11 +10,11 @@ public class MagicWandFactory extends AttackFactory {
     @Override
     public Attack createAttack() {
         double radius = 5.0; // DA LEGGERE DA FILE
-        double speed = 4.5;
-        int damage = 10;
+        double speed = 2;
+        int damage = 20;
         
         Character character = this.gameWorld.getCharacter();
 
-        return new MagicWandProjectile("projectiles/magicWand", character.getPosition(), radius, character.getDirection(), speed, damage, gameWorld);
+        return new MagicWandProjectile(attackID, character.getPosition(), radius, character.getDirection(), speed, damage, gameWorld);
     }
 }

@@ -7,8 +7,6 @@ import it.unibo.vampireio.controller.ScoreData;
 
 class EndGamePanel extends BasePanel {
 
-    private ScoreData score;
-
     private JButton returnMenuButton;
     private JLabel scoreLabel;
 
@@ -16,12 +14,10 @@ class EndGamePanel extends BasePanel {
         super(view);
 
         this.scoreLabel = this.addLabel("", 0, 0);
-
         this.returnMenuButton = addButton("CONTINUE", 0, 1);
     }
 
     void setScore(ScoreData score) {
-        this.score = score;
         this.scoreLabel.setText(
             "<html>"+
             "Score: " + score.getScore() +

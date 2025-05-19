@@ -58,6 +58,7 @@ public class MagicWandProjectile extends ProjectileAttack {
     public void onCollision(Collidable collidable) {
         if (collidable instanceof Enemy) {
             Enemy enemy = (Enemy) collidable;
+            enemy.setGettingAttacked(true);
             enemy.dealDamage(this.damage);
             gameWorld.removeProjectileAttack(this);
         }
