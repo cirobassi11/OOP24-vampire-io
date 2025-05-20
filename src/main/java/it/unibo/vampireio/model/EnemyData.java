@@ -7,14 +7,16 @@ public class EnemyData implements Identifiable {
     private int damage;
     private double speed;
     private int health;
+    private double radius;
 
-    public EnemyData(String id, String name, int level, int damage, double speed, int health) {
+    public EnemyData(String id, String name, int level, int damage, double speed, int health, double radius) {
         this.id = id;
         this.name = name;
         this.level = level;
         this.damage = damage;
         this.speed = speed;
         this.health = health;
+        this.radius = radius;
     }
 
     public String getId() {
@@ -42,6 +44,6 @@ public class EnemyData implements Identifiable {
     }
 
     public double getRadius() {
-        return 10; // Default radius, can be overridden
+        return this.radius;
     }
 }

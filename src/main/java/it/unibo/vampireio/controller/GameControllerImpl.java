@@ -365,6 +365,7 @@ public class GameControllerImpl implements GameController {
                 character.getDirection().getX(), 
                 character.getDirection().getY()
             ),
+            character.getRadius(),
             character.getHealth(),
             character.getMaxHealth(),
             character.isGettingAttacked(),
@@ -382,6 +383,7 @@ public class GameControllerImpl implements GameController {
                     enemy.getDirection().getX(),
                     enemy.getDirection().getY()
                 ),
+                enemy.getRadius(),
                 enemy.getHealth(),
                 enemy.getMaxHealth(),
                 enemy.isGettingAttacked(),
@@ -399,7 +401,8 @@ public class GameControllerImpl implements GameController {
                 new Point2D.Double(
                     projectileAttack.getDirection().getX(),
                     projectileAttack.getDirection().getY()
-                )
+                ),
+                projectileAttack.getRadius()
             ))
             .collect(Collectors.toList());
 
@@ -410,7 +413,8 @@ public class GameControllerImpl implements GameController {
                     areaAttack.getPosition().getX(),
                     areaAttack.getPosition().getY()
                 ),
-                new Point2D.Double(0, 0)
+                new Point2D.Double(0, 0),
+                areaAttack.getRadius()
             ))
             .collect(Collectors.toList());
 
@@ -421,7 +425,8 @@ public class GameControllerImpl implements GameController {
                     collectible.getPosition().getX(),
                     collectible.getPosition().getY()
                 ),
-                new Point2D.Double(0, 0)
+                new Point2D.Double(0, 0),
+                16 //???????
             ))
             .collect(Collectors.toList());
 

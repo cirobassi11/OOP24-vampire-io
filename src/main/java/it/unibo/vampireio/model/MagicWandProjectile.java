@@ -28,7 +28,7 @@ public class MagicWandProjectile extends ProjectileAttack {
                 setDirection(new Point2D.Double(dx / length, dy / length));
             }
 
-            if(length < getRadius() + targetEnemy.getRadius()) {
+            if(length < getRadius()) {
                 this.onCollision(targetEnemy);
             }
         }

@@ -54,7 +54,7 @@ public class GameWorld implements GameModel {
             selectedUnlockableCharacter.getId(),
             selectedUnlockableCharacter.getName(),
             selectedUnlockableCharacter.getCharacterStats(),
-            64, //DEFAULT RADIUS
+            32, //DEFAULT RADIUS
             defaultWeapon
         );
         
@@ -123,25 +123,29 @@ public class GameWorld implements GameModel {
 
             for (AreaAttack areaAttack : this.areaAttacks) {
                 areaAttack.execute();
-                //move?
             }
 
             // controlla collisioni con collezionabili
-            Iterator<Collectible> collectibleIterator = this.collectibles.iterator();
-            while (collectibleIterator.hasNext()) {
-                Collectible collectible = collectibleIterator.next();
-                if (collectible.getDistance(this.character) <= 50 * this.character.getStats().getStat(StatType.MAGNET)) {
-                    character.collect(collectible);
-                    collectibleIterator.remove();
+            synchronized(this.collectibles) {
+                Iterator<Collectible> collectibleIterator = this.collectibles.iterator();
+                while (collectibleIterator.hasNext()) {
+                    Collectible collectible = collectibleIterator.next();
+                    if (collectible.getDistance(this.character) <= 50 * this.character.getStats().getStat(StatType.MAGNET)) {
+                        character.collect(collectible);
+                        collectibleIterator.remove();
+                    }
                 }
             }
 
             //elimina nemici morti
-            Iterator<Enemy> enemyIterator = this.enemies.iterator();
-            while (enemyIterator.hasNext()) {
-                Enemy enemy = enemyIterator.next();
-                if (enemy.getHealth() <= 0) {
-                    enemyIterator.remove();
+            synchronized (this.enemies) {
+                Iterator<Enemy> enemyIterator = this.enemies.iterator();
+                while (enemyIterator.hasNext()) {
+                    Enemy enemy = enemyIterator.next();
+                    if (enemy.getHealth() <= 0) {
+                        enemyIterator.remove();
+                        this.score.incrementKillCounter();
+                    }
                 }
             }
 
