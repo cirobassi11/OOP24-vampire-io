@@ -35,7 +35,7 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
     }
 
     @Override
-    public void move(double tickTime) {
+    public void move(long tickTime) {
         double dx = this.getDirection().getX() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
         double dy = this.getDirection().getY() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
         this.setPosition(new Point2D.Double(

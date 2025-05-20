@@ -12,6 +12,7 @@ public class Character extends LivingEntity {
     private int level;
     private double levelPercentage;
     private int coinCounter;
+    private Point2D.Double lastDirection = new Point2D.Double(1, 0);
 
     private boolean hasJustLevelledUp;
 
@@ -19,12 +20,24 @@ public class Character extends LivingEntity {
 
     public Character(String id, String name, Stats stats, double radius, Weapon weapon) {
         super(id, new Point2D.Double(0, 0), radius, new Point2D.Double(1, 0), stats.getStat(StatType.MOVE_SPEED), stats.getStat(StatType.MAX_HEALTH));
-        this.stats = stats;//????
+        this.stats = stats;
         this.level = 1;
         this.levelPercentage = 0;
         this.coinCounter = 0;
         this.hasJustLevelledUp = false;
         this.addWeapon(weapon);
+    }
+
+    @Override
+    public void setDirection(Point2D.Double direction) {
+        if(direction.getX() != 0 || direction.getY() != 0) {
+            lastDirection = direction;
+        }
+        super.setDirection(direction);
+    }
+
+    public Point2D.Double getLastDirection() {
+        return this.lastDirection;
     }
 
     public Stats getStats() {

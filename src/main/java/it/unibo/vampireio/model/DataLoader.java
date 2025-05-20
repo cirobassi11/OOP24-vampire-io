@@ -6,18 +6,16 @@ public class DataLoader {
 
     private final GenericDataLoader<UnlockableCharacter> characterLoader;
     private final GenericDataLoader<EnemyData> enemyLoader;
-    private final GenericDataLoader<WeaponData> weaponDataLoader;
-    private final GenericDataLoader<ProjectileAttack> projectileAttackLoader;
-    private final GenericDataLoader<AreaAttack> areaAttackLoader;
+    private final GenericDataLoader<WeaponData> weaponLoader;
+    private final GenericDataLoader<AttackData> attackLoader;
     private final GenericDataLoader<UnlockablePowerUp> powerUpLoader;
     private final GenericDataLoader<Lootable> lootableLoader;
 
     public DataLoader(GameController gameController) {
         this.characterLoader = new GenericDataLoader<>(gameController, "data/characters.json", UnlockableCharacter.class);
         this.enemyLoader = new GenericDataLoader<>(gameController, "data/enemies.json", EnemyData.class);
-        this.weaponDataLoader = new GenericDataLoader<>(gameController, "data/weapons.json", WeaponData.class);
-        this.projectileAttackLoader = new GenericDataLoader<>(gameController, "data/projectiles.json", ProjectileAttack.class);
-        this.areaAttackLoader = new GenericDataLoader<>(gameController, "data/areaattacks.json", AreaAttack.class);
+        this.weaponLoader = new GenericDataLoader<>(gameController, "data/weapons.json", WeaponData.class);
+        this.attackLoader = new GenericDataLoader<>(gameController, "data/attacks.json", AttackData.class);
         this.powerUpLoader = new GenericDataLoader<>(gameController, "data/powerups.json", UnlockablePowerUp.class);
         this.lootableLoader = new GenericDataLoader<>(gameController, "data/lootables.json", Lootable.class);
     }
@@ -31,15 +29,11 @@ public class DataLoader {
     }
 
     public GenericDataLoader<WeaponData> getWeaponLoader() {
-        return this.weaponDataLoader;
+        return this.weaponLoader;
     }
 
-    public GenericDataLoader<ProjectileAttack> getProjectileAttackLoader() {
-        return this.projectileAttackLoader;
-    }
-
-    public GenericDataLoader<AreaAttack> getAreaAttackLoader() {
-        return this.areaAttackLoader;
+    public GenericDataLoader<AttackData> getAttackLoader() {
+        return this.attackLoader;
     }
     
     public GenericDataLoader<UnlockablePowerUp> getPowerUpLoader() {

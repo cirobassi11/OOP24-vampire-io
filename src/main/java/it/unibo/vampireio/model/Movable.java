@@ -7,7 +7,7 @@ public interface Movable extends Positionable {
     Point2D.Double getDirection();
     void setSpeed(double speed);
     double getSpeed();
-    void move(double tickTime);
+    void move(long tickTime);
     boolean isMoving();
     Point2D.Double getFuturePosition(double tickTime);
 }

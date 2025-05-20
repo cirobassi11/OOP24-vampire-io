@@ -7,13 +7,13 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 import java.util.stream.Collectors;
-import it.unibo.vampireio.model.AreaAttack;
+
 import it.unibo.vampireio.model.Character;
-import it.unibo.vampireio.model.Enemy;
+import it.unibo.vampireio.model.Attack;
 import it.unibo.vampireio.model.Collectible;
+import it.unibo.vampireio.model.Enemy;
 import it.unibo.vampireio.model.GameModel;
 import it.unibo.vampireio.model.GameWorld;
-import it.unibo.vampireio.model.ProjectileAttack;
 import it.unibo.vampireio.model.Save;
 import it.unibo.vampireio.model.Score;
 import it.unibo.vampireio.view.GameView;
@@ -33,6 +33,7 @@ public class GameControllerImpl implements GameController {
 
     private final int frameRate = 60;
     private final int tickRate = 60;
+    
 
     private final Deque<String> screenHistory = new ArrayDeque<>();
 
@@ -81,10 +82,12 @@ public class GameControllerImpl implements GameController {
         // CHOOSE CHARACTER LISTENERS
         this.view.setConfirmCharacterListener(e -> {
             String selectedCharacter = this.view.getChoosedCharacter();
-            if (selectedCharacter != null) {
-                this.startGame(selectedCharacter);
+            if (selectedCharacter != null && this.startGame(selectedCharacter)) {
                 this.view.update(this.getData());
                 this.showScreen(GameViewImpl.GAME);
+            }
+            else {
+                this.view.showError("Error");
             }
         });
 
@@ -199,16 +202,20 @@ public class GameControllerImpl implements GameController {
         }
     }
 
-    public void startGame(String selectedCharacter) {
-        this.model.initGame(selectedCharacter);
-        this.running = true;
-        this.paused = false;
-        
-        this.modelThread = new Thread(this::modelLoop);
-        this.viewThread = new Thread(this::viewLoop);
+    public boolean startGame(String selectedCharacter) {
+        if(this.model.initGame(selectedCharacter)) {
+            this.running = true;
+            this.paused = false;
+            
+            this.modelThread = new Thread(this::modelLoop);
+            this.viewThread = new Thread(this::viewLoop);
 
-        this.modelThread.start();
-        this.viewThread.start();
+            this.modelThread.start();
+            this.viewThread.start();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private synchronized void pauseGame() {
@@ -347,8 +354,7 @@ public class GameControllerImpl implements GameController {
         Dimension visualSize = this.model.getVisualSize();
         Character character = this.model.getCharacter();
         List<Enemy> enemies = this.model.getEnemies();
-        List<ProjectileAttack> projectileAttacks = this.model.getProjectileAttacks();
-        List<AreaAttack> areaAttacks = this.model.getAreaAttacks();
+        List<Attack> attacks = this.model.getAttacks();
         List<Collectible> collectibles = this.model.getCollectibles();
 
         VisibleMapSizeData visibleMapSizeData = new VisibleMapSizeData(
@@ -391,30 +397,18 @@ public class GameControllerImpl implements GameController {
             ))
             .collect(Collectors.toList());
 
-        List<PositionableData> projectileAttacksData = projectileAttacks.stream()
-            .map(projectileAttack -> new PositionableData(
-                projectileAttack.getId(),
+        List<PositionableData> attacksData = attacks.stream()
+            .map(attack -> new PositionableData(
+                attack.getId(),
                 new Point2D.Double(
-                    projectileAttack.getPosition().getX(),
-                    projectileAttack.getPosition().getY()
+                    attack.getPosition().getX(),
+                    attack.getPosition().getY()
                 ),
                 new Point2D.Double(
-                    projectileAttack.getDirection().getX(),
-                    projectileAttack.getDirection().getY()
+                    attack.getDirection().getX(),
+                    attack.getDirection().getY()
                 ),
-                projectileAttack.getRadius()
-            ))
-            .collect(Collectors.toList());
-
-        List<PositionableData> areaAttacksData = areaAttacks.stream()
-            .map(areaAttack -> new PositionableData(
-                areaAttack.getId(),
-                new Point2D.Double(
-                    areaAttack.getPosition().getX(),
-                    areaAttack.getPosition().getY()
-                ),
-                new Point2D.Double(0, 0),
-                areaAttack.getRadius()
+                attack.getRadius()
             ))
             .collect(Collectors.toList());
 
@@ -439,8 +433,7 @@ public class GameControllerImpl implements GameController {
             this.model.getCoinCounter(),
             characterData,
             enemiesData,
-            projectileAttacksData,
-            areaAttacksData,
+            attacksData,
             collectiblesData
         );
     }

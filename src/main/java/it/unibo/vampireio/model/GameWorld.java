@@ -18,13 +18,14 @@ public class GameWorld implements GameModel {
 
     private final Dimension visualSize = new Dimension(1280, 720);
 
+    private static double CHARACTER_RADIUS = 32;
+
     private boolean isGameOver;
     private Score score;
 
     private Character character;
     private List<Enemy> enemies;
-    private List<ProjectileAttack> projectileAttacks;
-    private List<AreaAttack> areaAttacks;
+    private List<Attack> attacks;
     private List<Collectible> collectibles;
     private EnemySpawner enemySpawner;
 
@@ -37,15 +38,28 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public void initGame(String selectedCharacter) {
+    public boolean initGame(String selectedCharacter) {
         this.isGameOver = false;
         this.enemySpawner = new EnemySpawnerImpl(this);
-        UnlockableCharacter selectedUnlockableCharacter = this.dataLoader.getCharacterLoader().get(selectedCharacter).get();
+        
+        Optional<UnlockableCharacter> optionalSelectedUnlockableCharacter = this.dataLoader.getCharacterLoader().get(selectedCharacter);
+        if(!optionalSelectedUnlockableCharacter.isPresent()) {
+            return false;
+        }
+        UnlockableCharacter selectedUnlockableCharacter = optionalSelectedUnlockableCharacter.get();
+        
         WeaponData defaultWeaponData = this.dataLoader.getWeaponLoader().get(selectedUnlockableCharacter.getDefaultWeapon()).get();
         AttackFactory attackFactory = null;
 
         switch(defaultWeaponData.getId()) {
             case "weapons/magicWand" -> attackFactory = new MagicWandFactory(this);
+            case "weapons/santaWater" -> attackFactory = new SantaWaterFactory(this);
+            case "weapons/garlic" -> attackFactory = new GarlicFactory(this);
+            case "weapons/knife" -> attackFactory = new KnifeFactory(this);
+            default -> {
+                this.gameController.showError("Weapon not found");
+                return false;
+            }
         }
 
         Weapon defaultWeapon = new WeaponImpl(this, defaultWeaponData.getId(), defaultWeaponData.getDefaultCooldown(), defaultWeaponData.getDefaultAttacksPerCooldown(), attackFactory);
@@ -54,16 +68,17 @@ public class GameWorld implements GameModel {
             selectedUnlockableCharacter.getId(),
             selectedUnlockableCharacter.getName(),
             selectedUnlockableCharacter.getCharacterStats(),
-            32, //DEFAULT RADIUS
+            CHARACTER_RADIUS,
             defaultWeapon
         );
         
         this.enemies = new LinkedList<>();
         this.collectibles = new LinkedList<>();
-        this.areaAttacks = new LinkedList<>();
-        this.projectileAttacks = new LinkedList<>();
+        this.attacks = new LinkedList<>();
 
         this.score = new Score(selectedUnlockableCharacter.getName());
+
+        return true;
     }
 
     @Override
@@ -115,14 +130,21 @@ public class GameWorld implements GameModel {
                     enemy.onCollision(this.character);
                 }
             }
-
-            for (ProjectileAttack projectileAttack : this.projectileAttacks) {
-                projectileAttack.execute();
-                projectileAttack.move(tickTime);
+            
+            synchronized(this.attacks) {
+                for (Attack attack : this.attacks) {
+                    attack.execute(tickTime);
+                }
             }
-
-            for (AreaAttack areaAttack : this.areaAttacks) {
-                areaAttack.execute();
+            
+            synchronized(this.attacks) {
+                Iterator<Attack> attackIterator = this.attacks.iterator();
+                while (attackIterator.hasNext()) {
+                    Attack attack = attackIterator.next();
+                    if (attack.isExpired()) {
+                        attackIterator.remove();
+                    }
+                }
             }
 
             // controlla collisioni con collezionabili
@@ -186,30 +208,16 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public void addProjectileAttack(ProjectileAttack projectileAttack) {
-        synchronized (this.projectileAttacks) {
-            this.projectileAttacks.add(projectileAttack);
+    public void addAttack(Attack attack) {
+        synchronized (this.attacks) {
+            this.attacks.add(attack);
         }
     }
 
     @Override
-    public void removeProjectileAttack(ProjectileAttack projectileAttack) {
-        synchronized (this.projectileAttacks) {
-            this.projectileAttacks.remove(projectileAttack);
-        }
-    }
-    
-    @Override
-    public void addAreaAttack(AreaAttack areaAttack) {
-        synchronized (this.projectileAttacks) {
-            this.areaAttacks.add(areaAttack);
-        }
-    }
-
-    @Override
-    public void removeAreaAttack(AreaAttack areaAttack) {
-        synchronized (this.projectileAttacks) {
-            this.areaAttacks.remove(areaAttack);
+    public void removeAttack(Attack attack) {
+        synchronized (this.attacks) {
+            this.attacks.remove(attack);
         }
     }
 
@@ -233,16 +241,9 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public List<ProjectileAttack> getProjectileAttacks() {
-        synchronized (this.projectileAttacks) {
-            return this.projectileAttacks.parallelStream().toList();
-        }
-    }
-
-    @Override
-    public List<AreaAttack> getAreaAttacks() {
-        synchronized (this.areaAttacks) {
-            return this.areaAttacks.parallelStream().toList();
+    public List<Attack> getAttacks() {
+        synchronized (this.attacks) {
+            return this.attacks.parallelStream().toList();
         }
     }
 
@@ -336,12 +337,7 @@ public class GameWorld implements GameModel {
     @Override
     public boolean buyPowerup(String selectedPowerUp) {
         if(selectedPowerUp != null) {
-            int currentLevel = 0;
             Map<String, Integer> unlockedPowerups = this.getCurrentSave().getUnlockedPowerUps();
-            if(unlockedPowerups != null && unlockedPowerups.containsKey(selectedPowerUp)) {
-                currentLevel = unlockedPowerups.get(selectedPowerUp).intValue();
-            }
-            int maxLevel = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getMaxLevel();
             int powerupPrice = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getPrice();
             int moneyAmount = this.getCurrentSave().getMoneyAmount();
             

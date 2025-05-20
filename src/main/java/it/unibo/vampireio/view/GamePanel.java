@@ -131,40 +131,23 @@ class GamePanel extends JPanel {
             }
         }
 
-        // Draws the projectiles
+        // Draws attacks
         Graphics2D g2d = (Graphics2D) g;
-        for (PositionableData projectile : this.data.getProjectilesData()) {
-            Dimension projectileDimension = new Dimension((int) (projectile.getRadius() * 2), (int) (projectile.getRadius() * 2));
-            if (this.isVisible(projectile, projectileDimension, scale, cameraOffsetX, cameraOffsetY)) {
-                int projectileX = (int) (projectile.getPosition().getX() * scale + cameraOffsetX - projectileDimension.width / 2);
-                int projectileY = (int) (projectile.getPosition().getY() * scale + cameraOffsetY - projectileDimension.height / 2);
-                Image tile = this.imageManager.getImage(projectile.getId());
+        for (PositionableData attack : this.data.getAttacksData()) {
+            Dimension attackDimension = new Dimension((int) (attack.getRadius() * 2), (int) (attack.getRadius() * 2));
+            if (this.isVisible(attack, attackDimension, scale, cameraOffsetX, cameraOffsetY)) {
+                int projectileX = (int) (attack.getPosition().getX() * scale + cameraOffsetX - attackDimension.width / 2);
+                int projectileY = (int) (attack.getPosition().getY() * scale + cameraOffsetY - attackDimension.height / 2);
+                Image tile = this.imageManager.getImage(attack.getId());
                 if (tile != null) {
-                    int width = (int) (projectileDimension.width * scale);
-                    int height = (int) (projectileDimension.height * scale);
-                    double rotationAngle = Math.atan2(projectile.getDirection().getY(), projectile.getDirection().getX());
+                    int width = (int) (attackDimension.width * scale);
+                    int height = (int) (attackDimension.height * scale);
+                    double rotationAngle = Math.atan2(attack.getDirection().getY(), attack.getDirection().getX());
                     AffineTransform transform = new AffineTransform();
                     transform.translate(projectileX + width / 2, projectileY + height / 2);
                     transform.rotate(rotationAngle);
                     transform.translate(-width / 2, -height / 2);
                     g2d.drawImage(tile.getScaledInstance(width, height, Image.SCALE_SMOOTH), transform, null);
-                }
-            }
-        }
-
-        // Draws the area attacks
-        for (PositionableData areaAttack : this.data.getAreaAttacksData()) {
-            Dimension areaAttackDimension = new Dimension((int) (areaAttack.getRadius() * 2), (int) (areaAttack.getRadius() * 2));
-            if (this.isVisible(areaAttack, areaAttackDimension, scale, cameraOffsetX, cameraOffsetY)) {
-                int areaAttackX = (int) (areaAttack.getPosition().getX() * scale + cameraOffsetX - areaAttackDimension.width / 2);
-                int areaAttackY = (int) (areaAttack.getPosition().getY() * scale + cameraOffsetY - areaAttackDimension.height / 2);
-                Image tile = this.imageManager.getImage(areaAttack.getId());
-                if (tile != null) {
-                    g.drawImage(tile, areaAttackX, areaAttackY,
-                        (int) (areaAttackDimension.width * scale),
-                        (int) (areaAttackDimension.height * scale), 
-                        null
-                    );
                 }
             }
         }

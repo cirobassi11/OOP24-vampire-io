@@ -5,17 +5,15 @@ import java.awt.geom.Point2D;
 import java.util.List;
 
 public interface GameModel {
-    void initGame(String selectedCharacter);
+    boolean initGame(String selectedCharacter);
     boolean isGameOver();
     void update(long tickTime, Point2D.Double characterDirection);
     void addEnemy(Enemy enemy);
     void removeEnemy(Enemy enemy);
     void addCollectible(Collectible collectible);
     void removeCollectible(Collectible collectible);
-    void addProjectileAttack(ProjectileAttack projectileAttack);
-    void removeProjectileAttack(ProjectileAttack projectileAttack);
-    void addAreaAttack(AreaAttack areaAttack);
-    void removeAreaAttack(AreaAttack areaAttack);
+    void addAttack(Attack attack);
+    void removeAttack(Attack attack);
     Dimension getVisualSize();
     long getElapsedTime();
     int getPlayerLevel();
@@ -24,8 +22,7 @@ public interface GameModel {
     int getCoinCounter();
     Character getCharacter();
     List<Enemy> getEnemies();
-    List<ProjectileAttack> getProjectileAttacks();
-    List<AreaAttack> getAreaAttacks();
+    List<Attack> getAttacks();
     List<Collectible> getCollectibles();
     List<String> getSaveNames();
     void createNewSave();

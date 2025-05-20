@@ -40,10 +40,6 @@ public class WeaponImpl implements Weapon {
     private void spawnAttack() {
         Attack attack = attackFactory.createAttack();
         
-        if (attack instanceof ProjectileAttack) {
-            gameWorld.addProjectileAttack((ProjectileAttack) attack);
-        } else if (attack instanceof AreaAttack) {
-            gameWorld.addAreaAttack((AreaAttack) attack);
-        }
+        gameWorld.addAttack(attack);
     }
 }
