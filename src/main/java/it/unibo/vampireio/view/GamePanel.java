@@ -39,7 +39,7 @@ class GamePanel extends JPanel {
     private static final int COUNTER_Y_OFFSET = 48;
     private static final int KILL_ICON_X_OFFSET = 200;
     private static final int ICON_Y_OFFSET = 30;
-    private static final int ICON_SIZE = 32;
+    private static final int ICON_SIZE = 25;
     private static final int COIN_COUNTER_X_OFFSET = 70;
     private static final int COIN_ICON_X_OFFSET = 100;
     private static final int TILE_BORDER_ADJUSTMENT = 1;

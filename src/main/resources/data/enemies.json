@@ -1,7 +1,7 @@
 [
   {
-    "id": "enemies/bat",
-    "name": "Bat",
+    "id": "enemies/pipeestrello",
+    "name": "Pipeestrello",
     "level": 0,
     "damage": 1,
     "speed": 0.5,
@@ -10,11 +10,56 @@
   },
   {
     "id": "enemies/skeleton",
-    "name": "Bat",
+    "name": "Skeleton",
     "level": 1,
-    "damage": 2,
+    "damage": 1,
     "speed": 0.4,
     "health": 20,
+    "radius": 32
+  },
+  {
+    "id": "enemies/giant-bat",
+    "name": "Giant Bat",
+    "level": 2,
+    "damage": 1,
+    "speed": 0.5,
+    "health": 10,
+    "radius": 32
+  },
+  {
+    "id": "enemies/zombie",
+    "name": "Zombie",
+    "level": 3,
+    "damage": 1,
+    "speed": 0.5,
+    "health": 10,
+    "radius": 32
+  },
+  {
+    "id": "enemies/mantichana",
+    "name": "Mantichana",
+    "level": 4,
+    "damage": 1,
+    "speed": 0.5,
+    "health": 10,
+    "radius": 32
+  }
+  ,{
+    "id": "enemies/sig.ra-rossi",
+    "name": "Sig.ra Rossi",
+    "level": 5,
+    "damage": 1,
+    "speed": 0.5,
+    "health": 10,
+    "radius": 32
+  },
+  {
+    "id": "enemies/sad-molisano",
+    "name": "Sad Molisano",
+    "level": 6,
+    "damage": 1,
+    "speed": 0.5,
+    "health": 10,
     "radius": 32
   }
 ]

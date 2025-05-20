@@ -16,7 +16,7 @@ public class EnemySpawnerImpl implements EnemySpawner {
     private static final int MAX_SPAWN_DISTANCE = 300;
     private static final int MAX_ENEMY_SPAWN = 4;
     private static final int LEVEL_INTERVAL = 30_000;
-    private static final int MAX_LEVEL = 1;
+    private static final int MAX_LEVEL = 6;
 
     private long spawnInterval;
     private long timeSinceLastSpawn;
@@ -31,6 +31,7 @@ public class EnemySpawnerImpl implements EnemySpawner {
     public EnemySpawnerImpl(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
         this.enemiesData = this.gameWorld.getDataLoader().getEnemyLoader().getAll();
+        this.enemiesData.sort((e1, e2) -> Integer.compare(e1.getLevel(), e2.getLevel()));
         this.spawnInterval = INITIAL_SPAWN_INTERVAL;
         this.timeSinceLastSpawn = 0;
         this.timeSinceLastDecrement = 0;
