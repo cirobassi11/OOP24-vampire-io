@@ -1,7 +1,5 @@
 package it.unibo.vampireio.model;
 
-import java.awt.geom.Point2D;
-
 public class KnifeFactory extends AttackFactory {
     private static final String attackID = "attacks/knife";
 

@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 import it.unibo.vampireio.controller.GameData;
+import it.unibo.vampireio.controller.ItemData;
 import it.unibo.vampireio.controller.PositionableData;
 import it.unibo.vampireio.controller.LivingEntityData;
 
@@ -38,7 +39,7 @@ class GamePanel extends JPanel {
     private static final int COUNTER_Y_OFFSET = 48;
     private static final int KILL_ICON_X_OFFSET = 200;
     private static final int ICON_Y_OFFSET = 30;
-    private static final int ICON_SIZE = 25;
+    private static final int ICON_SIZE = 32;
     private static final int COIN_COUNTER_X_OFFSET = 70;
     private static final int COIN_ICON_X_OFFSET = 100;
     private static final int TILE_BORDER_ADJUSTMENT = 1;
@@ -287,6 +288,19 @@ class GamePanel extends JPanel {
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString(timeString, (int) ((this.getWidth() - g.getFontMetrics().stringWidth(timeString)) / 2), (int) (LEVEL_BAR_Y_OFFSET * scale + LEVEL_BAR_HEIGHT * scale + TIMER_Y_EXTRA_OFFSET * scale));
+
+        // Draws the weapons
+
+        //disegna icone armi in alto a sinistra
+        int weaponIconX = 1;
+        int weaponIconY = LEVEL_BAR_HEIGHT + LEVEL_BAR_BORDER_WIDTH + 1;
+        for(ItemData item : this.data.getItemsData()) {
+            Image itemIcon = this.imageManager.getImage(item.getId());
+            if (itemIcon != null) {
+                g.drawImage(itemIcon, (int) (weaponIconX * scale), (int) (weaponIconY * scale),  (int) (ICON_SIZE * scale), (int) (ICON_SIZE * scale), null);
+                weaponIconX += ICON_SIZE + 1;
+            }
+        }
     }
 
     // Checks if the object is visible on the screen

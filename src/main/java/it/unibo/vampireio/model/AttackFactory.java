@@ -1,7 +1,5 @@
 package it.unibo.vampireio.model;
 
-import java.util.Optional;
-
 public abstract class AttackFactory {
     protected final GameWorld gameWorld;
     

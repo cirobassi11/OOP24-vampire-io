@@ -424,6 +424,8 @@ public class GameControllerImpl implements GameController {
             ))
             .collect(Collectors.toList());
 
+        List<ItemData> itemsData = List.of(new ItemData("weapons/magicWand", "", "", 1, 2), new ItemData("weapons/santaWater", "", "", 1, 2));/////////
+
         return new GameData(
             visibleMapSizeData, 
             this.model.getElapsedTime(),
@@ -434,7 +436,8 @@ public class GameControllerImpl implements GameController {
             characterData,
             enemiesData,
             attacksData,
-            collectiblesData
+            collectiblesData,
+            itemsData
         );
     }
 

@@ -14,7 +14,6 @@ public class SantaWaterFactory extends AttackFactory {
     @Override
     public Attack createAttack() {
         double radius = 69.0; // TODO: read from file
-        double speed = 0.0; // TODO: read from file
         int damage = 20;
         long duration = 3000;
 

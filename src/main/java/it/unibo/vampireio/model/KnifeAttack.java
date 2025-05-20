@@ -1,12 +1,9 @@
 package it.unibo.vampireio.model;
 
-import java.util.List;
 import java.awt.geom.Point2D;
 
 public class KnifeAttack extends AbstractAttack {
     
-    private Enemy targetEnemy;
-
     public KnifeAttack(String id, Point2D.Double position, double radius, Point2D.Double direction, double speed, int damage, long duration, GameWorld gameWorld) {
         super(id, position, radius, direction, speed, damage, duration, gameWorld);
     }

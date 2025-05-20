@@ -16,7 +16,7 @@ class AudioManager {
             backingTrack.open(backingTrackAudio);
 
             FloatControl volume = (FloatControl) backingTrack.getControl(FloatControl.Type.MASTER_GAIN);
-            volume.setValue(-10.0f);
+            volume.setValue(-25.0f);
 
             backingTrack.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | IllegalArgumentException e) {

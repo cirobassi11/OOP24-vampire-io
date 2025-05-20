@@ -337,7 +337,6 @@ public class GameWorld implements GameModel {
     @Override
     public boolean buyPowerup(String selectedPowerUp) {
         if(selectedPowerUp != null) {
-            Map<String, Integer> unlockedPowerups = this.getCurrentSave().getUnlockedPowerUps();
             int powerupPrice = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getPrice();
             int moneyAmount = this.getCurrentSave().getMoneyAmount();
             

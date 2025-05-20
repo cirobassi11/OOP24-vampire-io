@@ -2,14 +2,18 @@ package it.unibo.vampireio.view;
 
 import java.awt.event.ActionListener;
 import java.util.List;
-import it.unibo.vampireio.controller.ScoreData;
+
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 
+import it.unibo.vampireio.controller.ScoreData;
+
 class ScoreboardPanel extends BasePanel {
-    
-    private JButton backButton;
-    private JList<String> scoresList;
+
+    private final JButton backButton;
+    private final JList<String> scoresList;
+    private final JLabel scoreLabel;
 
     private List<ScoreData> scoresData;
     private List<String> scoreNames = List.of();
@@ -18,20 +22,53 @@ class ScoreboardPanel extends BasePanel {
         super(view);
 
         this.scoresList = this.addScrollableList(this.scoreNames, 0, 0);
-        this.backButton = this.addButton("BACK", 0, 1);
+        this.scoreLabel = this.addLabel("", 0, 1);
+        this.backButton = this.addButton("BACK", 0, 2);
+
+        // Aggiorna i dettagli appena si seleziona un salvataggio
+        this.scoresList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                updateSelectedScoreDetails();
+            }
+        });
     }
 
     void setScoresData(List<ScoreData> scoresData) {
         this.scoresData = scoresData;
-        if(scoresData == null || scoresData.isEmpty()) {
+
+        if (scoresData == null || scoresData.isEmpty()) {
             this.scoreNames = List.of();
-        }
-        else {
+            this.scoreLabel.setText("");
+        } else {
             this.scoreNames = scoresData.stream()
-                    .map(ScoreData::getCharacterName) /////
-                    .toList();
+                .map(ScoreData::getCharacterName)
+                .toList();
         }
+
         this.scoresList.setListData(this.scoreNames.toArray(new String[0]));
+
+        // Seleziona automaticamente il primo elemento
+        if (!this.scoreNames.isEmpty()) {
+            this.scoresList.setSelectedIndex(0);
+            updateSelectedScoreDetails();
+        }
+    }
+
+    private void updateSelectedScoreDetails() {
+        int index = this.scoresList.getSelectedIndex();
+        if (index >= 0 && index < this.scoresData.size()) {
+            ScoreData selected = this.scoresData.get(index);
+            String details = String.format(
+                "<html>Character: %s<br>Session Time: %.2f seconds<br>Kills: %d<br>Level: %d<br>Coins: %d<br>Score: %d</html>",
+                selected.getCharacterName(),
+                selected.getSessionTime() / 1000.0,
+                selected.getKillCounter(),
+                selected.getLevelCounter(),
+                selected.getCoinCounter(),
+                selected.getScore()
+            );
+            this.scoreLabel.setText(details);
+        }
     }
 
     void setBackListener(ActionListener listener) {
