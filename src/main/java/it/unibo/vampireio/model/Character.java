@@ -12,7 +12,7 @@ public class Character extends LivingEntity {
     private int level;
     private double levelPercentage;
     private int coinCounter;
-    private Point2D.Double lastDirection = new Point2D.Double(1, 0);
+    private Point2D.Double lastDirection = new Point2D.Double(-1, 0);
 
     private boolean hasJustLevelledUp;
 
@@ -94,5 +94,9 @@ public class Character extends LivingEntity {
         boolean result = this.hasJustLevelledUp;
         this.hasJustLevelledUp = false;
         return result;
+    }
+
+    public List<Weapon> getWeapons() {
+        return List.copyOf(this.weapons);
     }
 }

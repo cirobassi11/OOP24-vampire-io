@@ -23,6 +23,7 @@ public interface GameModel {
     Character getCharacter();
     List<Enemy> getEnemies();
     List<Attack> getAttacks();
+    List<Weapon> getWeapons();
     List<Collectible> getCollectibles();
     List<String> getSaveNames();
     void createNewSave();

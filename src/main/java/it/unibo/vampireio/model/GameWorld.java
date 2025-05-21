@@ -248,6 +248,13 @@ public class GameWorld implements GameModel {
     }
 
     @Override
+    public List<Weapon> getWeapons() {
+        synchronized (this.character) {
+            return this.character.getWeapons();
+        }
+    }
+
+    @Override
     public List<Collectible> getCollectibles() {
         synchronized (this.collectibles) {
             return this.collectibles.parallelStream().toList();

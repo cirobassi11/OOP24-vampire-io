@@ -424,7 +424,15 @@ public class GameControllerImpl implements GameController {
             ))
             .collect(Collectors.toList());
 
-        List<ItemData> itemsData = List.of(new ItemData("weapons/magicWand", "", "", 1, 2), new ItemData("weapons/santaWater", "", "", 1, 2));/////////
+        List<ItemData> itemsData = this.model.getWeapons().stream()
+            .map(item -> new ItemData( ///////
+                item.getId(),
+                "",                
+                "",
+                item.getCurrentLevel(),
+                0 //?????
+            ))
+            .collect(Collectors.toList());
 
         return new GameData(
             visibleMapSizeData, 
