@@ -61,5 +61,14 @@
     "speed": 0.5,
     "health": 10,
     "radius": 32
+  },
+  {
+    "id": "enemies/reaper",
+    "name": "The Reaper",
+    "level": 7,
+    "damage": 10000,
+    "speed": 3,
+    "health": 10000,
+    "radius": 69
   }
 ]

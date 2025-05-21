@@ -12,17 +12,18 @@ public class EnemySpawnerImpl implements EnemySpawner {
     private static final int DECREMENT_INTERVAL = 500;
     private static final int DECREMENT = 10;
     private static final int RANDOM_SPAWN_INTERVAL = 500;
-    private static final int MIN_SPAWN_DISTANCE = 100;
-    private static final int MAX_SPAWN_DISTANCE = 300;
     private static final int MAX_ENEMY_SPAWN = 4;
     private static final int LEVEL_INTERVAL = 30_000;
     private static final int MAX_LEVEL = 6;
+    private static final long MAX_GAME_DURATION = 300_000;
 
     private long spawnInterval;
     private long timeSinceLastSpawn;
     private long timeSinceLastDecrement;
     private long timeSinceLevelUp;
+    private long timeRemaining;
     private int currentLevel;
+    private boolean reaperSpawned = false;
 
     private final List<EnemyData> enemiesData;
     private final GameWorld gameWorld;
@@ -32,15 +33,18 @@ public class EnemySpawnerImpl implements EnemySpawner {
         this.gameWorld = gameWorld;
         this.enemiesData = this.gameWorld.getDataLoader().getEnemyLoader().getAll();
         this.enemiesData.sort((e1, e2) -> Integer.compare(e1.getLevel(), e2.getLevel()));
+
         this.spawnInterval = INITIAL_SPAWN_INTERVAL;
         this.timeSinceLastSpawn = 0;
         this.timeSinceLastDecrement = 0;
         this.timeSinceLevelUp = 0;
+        this.timeRemaining = MAX_GAME_DURATION;
         this.currentLevel = 0;
     }
 
     @Override
     public void update(long tickTime) {
+        this.timeRemaining -= tickTime;
         this.timeSinceLastSpawn += tickTime;
         this.timeSinceLastDecrement += tickTime;
         this.timeSinceLevelUp += tickTime;
@@ -55,75 +59,85 @@ public class EnemySpawnerImpl implements EnemySpawner {
             this.timeSinceLevelUp = 0;
         }
 
-        if (this.timeSinceLastSpawn >= (this.spawnInterval + this.random.nextInt(RANDOM_SPAWN_INTERVAL))) {
-            this.spawnEnemy();
+        if (this.timeSinceLastSpawn >= spawnInterval + random.nextInt(RANDOM_SPAWN_INTERVAL)) {
+            spawnEnemy();
             this.timeSinceLastSpawn = 0;
         }
     }
 
     private void spawnEnemy() {
-        int enemyToSpawn = this.random.nextInt(MAX_ENEMY_SPAWN) + 1;
+        if (!reaperSpawned && timeRemaining <= 0) {
+            spawnSpecificEnemy(this.enemiesData.getLast());
+            reaperSpawned = true;
+            return;
+        }
 
-        for (int i = 0; i < enemyToSpawn; i++) {
-            int levelCap = Math.min(this.currentLevel + 1, this.enemiesData.size());
-            EnemyData enemyData = this.enemiesData.get(this.random.nextInt(levelCap));
+        int enemiesToSpawn = random.nextInt(MAX_ENEMY_SPAWN) + 1;
+        int levelCap = Math.min(currentLevel + 1, enemiesData.size());
 
-            Point2D.Double spawnPosition = null;
-            int maxTries = 10;
+        for (int i = 0; i < enemiesToSpawn; i++) {
+            EnemyData enemyData = enemiesData.get(random.nextInt(levelCap));
+            spawnSpecificEnemy(enemyData);
+        }
+    }
 
-            for (int attempts = 0; attempts < maxTries; attempts++) {
-                Point2D.Double candidatePosition = getRandomSpawnPosition();
-                if (isPositionFree(candidatePosition, enemyData.getRadius())) {
-                    spawnPosition = candidatePosition;
-                    break;
-                }
-            }
-
-            if (spawnPosition != null) {
+    private void spawnSpecificEnemy(EnemyData enemyData) {
+        final double radius = enemyData.getRadius();
+        for (int attempts = 0; attempts < 10; attempts++) {
+            Point2D.Double pos = getRandomSpawnPosition(radius);
+            if (isPositionFree(pos, radius)) {
                 Enemy newEnemy = new Enemy(
                     enemyData.getId(),
-                    spawnPosition,
-                    enemyData.getRadius(),
+                    pos,
+                    radius,
                     new Point2D.Double(0, 0),
                     enemyData.getSpeed(),
                     enemyData.getHealth(),
                     enemyData.getDamage()
                 );
-                this.gameWorld.addEnemy(newEnemy);
+                gameWorld.addEnemy(newEnemy);
+                break;
             }
         }
     }
 
-    private Point2D.Double getRandomSpawnPosition() {
-        Dimension visualSize = this.gameWorld.getVisualSize();
-        Point2D.Double playerPos = this.gameWorld.getCharacter().getPosition();
+    private Point2D.Double getRandomSpawnPosition(double radius) {
+        Dimension visualSize = gameWorld.getVisualSize();
+        Point2D.Double playerPos = gameWorld.getCharacter().getPosition();
 
-        double spawnX = 0;
-        double spawnY = 0;
+        double halfWidth = visualSize.getWidth() / 2.0;
+        double halfHeight = visualSize.getHeight() / 2.0;
 
-        int side = this.random.nextInt(4);
-        int distance = MIN_SPAWN_DISTANCE + this.random.nextInt(MAX_SPAWN_DISTANCE - MIN_SPAWN_DISTANCE);
+        int side = random.nextInt(4);
+        int margin = (int) (radius * 2);
+
+        double x = playerPos.getX();
+        double y = playerPos.getY();
 
         switch (side) {
-            case 0: // Sinistra
-                spawnX = playerPos.getX() - visualSize.width / 2 - distance;
-                spawnY = playerPos.getY() - visualSize.height / 2 + this.random.nextInt(visualSize.height);
+            case 0: // Left
+                x -= halfWidth + margin;
+                y -= halfHeight;
+                y += random.nextInt(visualSize.height);
                 break;
-            case 1: // Destra
-                spawnX = playerPos.getX() + visualSize.width / 2 + distance;
-                spawnY = playerPos.getY() - visualSize.height / 2 + this.random.nextInt(visualSize.height);
+            case 1: // Right
+                x += halfWidth + margin;
+                y -= halfHeight;
+                y += random.nextInt(visualSize.height);
                 break;
-            case 2: // Sopra
-                spawnX = playerPos.getX() - visualSize.width / 2 + this.random.nextInt(visualSize.width);
-                spawnY = playerPos.getY() - visualSize.height / 2 - distance;
+            case 2: // Top
+                y -= halfHeight + margin;
+                x -= halfWidth;
+                x += random.nextInt(visualSize.width);
                 break;
-            case 3: // Sotto
-                spawnX = playerPos.getX() - visualSize.width / 2 + this.random.nextInt(visualSize.width);
-                spawnY = playerPos.getY() + visualSize.height / 2 + distance;
+            case 3: // Bottom
+                y += halfHeight + margin;
+                x -= halfWidth;
+                x += random.nextInt(visualSize.width);
                 break;
         }
 
-        return new Point2D.Double(spawnX, spawnY);
+        return new Point2D.Double(x, y);
     }
 
     private boolean isPositionFree(Point2D.Double pos, double radius) {
