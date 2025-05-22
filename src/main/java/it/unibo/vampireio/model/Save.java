@@ -20,34 +20,17 @@ public class Save implements Serializable {
     private Map<String, Integer> unlockedPowerUps;
     private int moneyAmount;
     private List<Score> scores;
-    
-    // Salvataggio già esistente
-    public Save(
-        String saveTime, 
-        Set<String> unlockedCharacters,
-        Map<String, Integer> unlockedPowerUps,
-        int moneyAmount,
-        List<Score> scores
-    ) {
-        this.saveTime = saveTime;
-        this.unlockedCharacters = unlockedCharacters;
-        this.unlockedPowerUps = unlockedPowerUps;
-        this.moneyAmount = moneyAmount;
-        this.scores = scores;
-    }
 
     // Nuovo salvataggio vuoto
     public Save() {
-        this(
-            generateSaveTimestamp(), 
-            new HashSet<String>(), 
-            new HashMap<String, Integer>(), 
-            0, 
-            new LinkedList<Score>()
-        );
-        
+        this.saveTime = generateSaveTimestamp();
+        this.unlockedCharacters = new HashSet<String>();
+        this.unlockedPowerUps = new HashMap<String, Integer>(); 
+        this.moneyAmount = 0;
+        this.scores = new LinkedList<Score>();
+    
         ///TESTTTTTTTT
-        this.incrementMoneyAmount(200);
+        this.incrementMoneyAmount(696969);
         //////////////
     }
     

@@ -5,18 +5,11 @@ public enum StatType {
     ARMOR,
     SPEED,
     MOVE_SPEED,
-    RECOVERY,
     MIGHT,
-    AREA,
-    DURATION,
     AMOUNT,
     COOLDOWN,
     GROWTH,
     GREED,
     CURSE,
-    MAGNET,
-    REVIVAL,
-    REROLL,
-    SKIP,
-    BANISH
+    MAGNET
 }

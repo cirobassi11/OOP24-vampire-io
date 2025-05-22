@@ -1,18 +1,90 @@
 [
     {
+      "id": "powerups/maxhealth",
+      "name": "Health",
+      "description": "Increase character max health",
+      "price": 10,
+      "maxLevel": 3,
+      "statToModify": "MAX_HEALTH"
+    },
+    {
       "id": "powerups/armor",
       "name": "Armor",
-      "description": "armaturaaaa",
+      "description": "Decrease damage taken",
       "price": 10,
-      "currentLevel": 0,
-      "maxLevel": 5
+      "maxLevel": 3,
+      "statToModify": "ARMOR"
+    },
+    {
+      "id": "powerups/speed",
+      "name": "Projectile Speed",
+      "description": "Increase projectile movement speed",
+      "price": 10,
+      "maxLevel": 2,
+      "statToModify": "SPEED"
+    },
+    {
+      "id": "powerups/movespeed",
+      "name": "Movement Speed",
+      "description": "Increase character movement speed",
+      "price": 10,
+      "maxLevel": 2,
+      "statToModify": "MOVE_SPEED"
     },
     {
       "id": "powerups/might",
       "name": "Might",
-      "description": "mighttttt",
+      "description": "Increase character damage",
       "price": 20,
-      "currentLevel": 0,
-      "maxLevel": 3
+      "maxLevel": 5,
+      "statToModify": "MIGHT"
+    },
+    {
+      "id": "powerups/amount",
+      "name": "Amount",
+      "description": "Increase projectile shooted",
+      "price": 10,
+      "maxLevel": 3,
+      "statToModify": "AMOUNT"
+    },
+    {
+      "id": "powerups/cooldown",
+      "name": "Cooldown",
+      "description": "Decrease time between the shots",
+      "price": 10,
+      "maxLevel": 3,
+      "statToModify": "COOLDOWN"
+    },
+    {
+      "id": "powerups/growth",
+      "name": "Growth",
+      "description": "Increase experience per gem",
+      "price": 100,
+      "maxLevel": 5,
+      "statToModify": "GROWTH"
+    },
+    {
+      "id": "powerups/greed",
+      "name": "Greed",
+      "description": "Increase money per coin",
+      "price": 300,
+      "maxLevel": 5,
+      "statToModify": "GREED"
+    },
+    {
+      "id": "powerups/curse",
+      "name": "Curse",
+      "description": "Increase enemy speed, health, spawn frequency and quantity",
+      "price": 1,
+      "maxLevel": 5,
+      "statToModify": "CURSE"
+    },
+    {
+      "id": "powerups/magnet",
+      "name": "Magnet",
+      "description": "Increase the radius inside which Experience Gems and pickups will be picked up",
+      "price": 100,
+      "maxLevel": 3,
+      "statToModify": "MAGNET"
     }
   ]

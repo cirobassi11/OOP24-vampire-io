@@ -64,10 +64,12 @@ public class GameWorld implements GameModel {
 
         Weapon defaultWeapon = new WeaponImpl(this, defaultWeaponData.getId(), defaultWeaponData.getDefaultCooldown(), defaultWeaponData.getDefaultAttacksPerCooldown(), attackFactory);
 
+        Stats stats = applyBuffs(selectedUnlockableCharacter.getCharacterStats());
+
         this.character = new Character(
             selectedUnlockableCharacter.getId(),
             selectedUnlockableCharacter.getName(),
-            selectedUnlockableCharacter.getCharacterStats(),
+            stats,
             CHARACTER_RADIUS,
             defaultWeapon
         );
@@ -372,6 +374,28 @@ public class GameWorld implements GameModel {
             }
         }
         return false;
+    }
+
+    private Stats applyBuffs(Stats baseStats) {
+        Stats modifiedStats = new Stats(baseStats);
+        Map<String, Integer> unlockedPowerUps = saveManager.getCurrentSave().getUnlockedPowerUps();
+
+        for (Map.Entry<String, Integer> entry : unlockedPowerUps.entrySet()) {
+            
+            String powerupID = entry.getKey();
+            int currentLevel = entry.getValue();
+
+            Optional<UnlockablePowerUp> powerup = dataLoader.getPowerUpLoader().get(powerupID);
+        
+           if (powerup.isPresent()) {
+                UnlockablePowerUp unlockablePowerup = powerup.get();
+                double multiplier = unlockablePowerup.getMultiplier();
+                StatType statToModify = unlockablePowerup.getStatToModify();
+                unlockablePowerup.setCurrentLevel(currentLevel);
+                modifiedStats.multiplyStat(statToModify, currentLevel);
+            }
+        }   
+        return modifiedStats;
     }
 
     @Override
