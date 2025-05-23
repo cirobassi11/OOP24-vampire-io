@@ -1,10 +1,11 @@
 package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D.Double;
+import java.util.Random;
 
 public class ExperienceGem extends Lootable {
 
-    protected ExperienceGem(Double position, int value) {
-        super("collectibles/experiencegem/0", position, value); /// il nome va preso da un'altra parte??, ci sono più tipi di xp?? /0
+    protected ExperienceGem(Double position) {
+        super("collectibles/experienceGem", position, new Random().nextInt(50));
     }
 }

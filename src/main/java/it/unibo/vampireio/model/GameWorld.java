@@ -64,6 +64,12 @@ public class GameWorld implements GameModel {
 
         Weapon defaultWeapon = new WeaponImpl(this, defaultWeaponData.getId(), defaultWeaponData.getDefaultCooldown(), defaultWeaponData.getDefaultAttacksPerCooldown(), attackFactory);
 
+        Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
+        for (Map.Entry<String, Integer> entry : unlockedPowerUps.entrySet()) {
+            Optional<UnlockablePowerUp> powerupOpt = this.dataLoader.getPowerUpLoader().get(entry.getKey());
+            powerupOpt.ifPresent(p -> p.setCurrentLevel(entry.getValue()));
+        }
+
         Stats stats = applyBuffs(selectedUnlockableCharacter.getCharacterStats());
 
         this.character = new Character(
@@ -167,6 +173,7 @@ public class GameWorld implements GameModel {
                 while (enemyIterator.hasNext()) {
                     Enemy enemy = enemyIterator.next();
                     if (enemy.getHealth() <= 0) {
+                        this.spawnRandomCollectible(enemy.getPosition());
                         enemyIterator.remove();
                         this.score.incrementKillCounter();
                     }
@@ -377,25 +384,41 @@ public class GameWorld implements GameModel {
     }
 
     private Stats applyBuffs(Stats baseStats) {
-        Stats modifiedStats = new Stats(baseStats);
-        Map<String, Integer> unlockedPowerUps = saveManager.getCurrentSave().getUnlockedPowerUps();
+    Stats modifiedStats = new Stats(baseStats);
+    Map<String, Integer> unlockedPowerUps = saveManager.getCurrentSave().getUnlockedPowerUps();
 
-        for (Map.Entry<String, Integer> entry : unlockedPowerUps.entrySet()) {
-            
-            String powerupID = entry.getKey();
-            int currentLevel = entry.getValue();
+    for (Map.Entry<String, Integer> entry : unlockedPowerUps.entrySet()) {
+        String powerupID = entry.getKey();
 
-            Optional<UnlockablePowerUp> powerup = dataLoader.getPowerUpLoader().get(powerupID);
-        
-           if (powerup.isPresent()) {
-                UnlockablePowerUp unlockablePowerup = powerup.get();
-                double multiplier = unlockablePowerup.getMultiplier();
-                StatType statToModify = unlockablePowerup.getStatToModify();
-                unlockablePowerup.setCurrentLevel(currentLevel);
-                modifiedStats.multiplyStat(statToModify, currentLevel);
-            }
-        }   
-        return modifiedStats;
+        dataLoader.getPowerUpLoader().get(powerupID).ifPresent(unlockablePowerup -> {
+            double multiplier = unlockablePowerup.getMultiplier();
+            StatType statToModify = unlockablePowerup.getStatToModify();
+            modifiedStats.multiplyStat(statToModify, multiplier);
+        });
+    }
+
+    return modifiedStats;
+}
+
+    private void spawnRandomCollectible(Point2D.Double position) {
+        if(position == null) {
+            return;
+        }
+
+        if(Math.random() < 0.5) {
+            return;
+        }
+
+        int random = (int) (Math.random() * 3);
+        Collectible collectible = null;
+        switch (random) {
+            case 0 -> collectible = new Coin(position);
+            case 1 -> collectible = new Food(position);
+            case 2 -> collectible = new ExperienceGem(position);
+        }
+        if (collectible != null) {
+            this.addCollectible(collectible);
+        }
     }
 
     @Override

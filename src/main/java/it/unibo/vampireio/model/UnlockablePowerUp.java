@@ -10,7 +10,7 @@ public class UnlockablePowerUp extends UnlockableItem {
     }
 
     public double getMultiplier() {
-        return this.getCurrentLevel() * MULTIPLIER_INCREMENT;
+        return 1 + this.getCurrentLevel() * MULTIPLIER_INCREMENT;
     }
     
     public StatType getStatToModify() {
