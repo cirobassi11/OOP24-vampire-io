@@ -2,26 +2,22 @@ package it.unibo.vampireio.model;
 
 public class KnifeFactory extends AttackFactory {
     private static final String attackID = "attacks/knife";
-    
+    AttackData attackData = this.getAttackDataById(attackID);
+
     public KnifeFactory(GameWorld gameWorld) {
         super(gameWorld);
     }
     
     @Override
     public Attack createAttack() {
-        double radius = 16;
-        double speed = 3;
-        int damage = 20;
-        long duration = 10000;
-        
         Character character = this.gameWorld.getCharacter();
-
-        return new KnifeAttack(attackID, character.getPosition(), radius, character.getLastDirection(), speed, damage, duration, gameWorld);
+        return new KnifeAttack(attackData.getId(), character.getPosition(), attackData.getRadius(), character.getLastDirection(), attackData.getSpeed(), attackData.getDamage(), attackData.getDuration(), gameWorld);
     }
 
     @Override
     public void increaseLevel() {
         super.increaseLevel();
-        //diminuisce il cooldown
+        Weapon weapon = this.gameWorld.getWeaponById("weapons/knife");
+        weapon.multiplyCooldown(0.90);
     }
 }

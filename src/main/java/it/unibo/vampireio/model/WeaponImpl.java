@@ -35,10 +35,12 @@ public class WeaponImpl implements Weapon {
         return this.id;
     }
 
+    @Override
     public int getCurrentLevel() {
         return this.currentLevel;
     }
     
+    @Override
     public void multiplyCooldown(double multiplier) {
         this.cooldown *= multiplier;
     }
@@ -48,6 +50,7 @@ public class WeaponImpl implements Weapon {
         this.gameWorld.addAttack(attack);
     }
 
+    @Override
     public void levelUp() {
         this.currentLevel++;
         this.attackFactory.increaseLevel();

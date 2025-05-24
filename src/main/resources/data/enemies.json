@@ -58,7 +58,7 @@
     "name": "Sad Molisano",
     "level": 6,
     "damage": 1,
-    "speed": 0.5,
+    "speed": 0,
     "health": 10,
     "radius": 32
   },

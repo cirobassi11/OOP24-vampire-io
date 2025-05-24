@@ -6,6 +6,6 @@ import java.util.Random;
 public class Coin extends Lootable {
 
     protected Coin(Double position) {
-        super("collectibles/coin", position, new Random().nextInt(50));
+        super("collectibles/coin", position, new Random().nextInt(9) + 1);
     }
 }

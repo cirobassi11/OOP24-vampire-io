@@ -6,6 +6,6 @@ import java.util.Random;
 public class ExperienceGem extends Lootable {
 
     protected ExperienceGem(Double position) {
-        super("collectibles/experienceGem", position, new Random().nextInt(50));
+        super("collectibles/experienceGem", position, 50);
     }
 }

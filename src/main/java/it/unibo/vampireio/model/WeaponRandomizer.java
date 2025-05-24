@@ -8,23 +8,32 @@ import java.util.stream.Collectors;
 
 public class WeaponRandomizer {
     private List<String> weaponsList;
+    private Character character;
     
-    public WeaponRandomizer(List<String> weaponsList){
+    public WeaponRandomizer(List<String> weaponsList, Character character) {
         this.weaponsList = weaponsList;
+        this.character = character;
     }
 
     private List<String> randomize(int numberOfWeapons) {
-        if (weaponsList.size() < numberOfWeapons) {
+        if (this.weaponsList.size() < numberOfWeapons) {
             return null;
         }
 
-        return weaponsList.stream()
-            .sorted((a, b) -> Math.random() < 0.5 ? -1 : 1) // random shuffle
+        return this.weaponsList.stream()
+            .sorted((a, b) -> Math.random() < 0.5 ? -1 : 1)
             .limit(numberOfWeapons)
             .collect(Collectors.toList());
     }
 
     public List<String> getRandomWeapons(int numberOfWeapons){
-        return this.randomize(numberOfWeapons);
+        if(!this.character.hasMaxWeapons()) {
+            return this.randomize(numberOfWeapons);
+        }
+        return character.getWeapons().stream()
+        .sorted((a, b) -> Math.random() < 0.5 ? -1 : 1)
+        .limit(numberOfWeapons)
+        .map(weapon -> weapon.getId())
+        .collect(Collectors.toList());
     }
 }

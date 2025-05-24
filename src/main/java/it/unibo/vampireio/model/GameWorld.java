@@ -42,7 +42,6 @@ public class GameWorld implements GameModel {
     public boolean initGame(String selectedCharacter) {
         this.isGameOver = false;
         this.enemySpawner = new EnemySpawnerImpl(this);
-        this.weaponRandomizer = new WeaponRandomizer(this.dataLoader.getWeaponLoader().getAll().stream().map(WeaponData::getId).toList());
         
         Optional<UnlockableCharacter> optionalSelectedUnlockableCharacter = this.dataLoader.getCharacterLoader().get(selectedCharacter);
         if(!optionalSelectedUnlockableCharacter.isPresent()) {
@@ -70,6 +69,8 @@ public class GameWorld implements GameModel {
             CHARACTER_RADIUS,
             defaultWeapon
         );
+        
+        this.weaponRandomizer = new WeaponRandomizer(this.dataLoader.getWeaponLoader().getAll().stream().map(WeaponData::getId).toList(), this.character);
         
         this.enemies = new LinkedList<>();
         this.collectibles = new LinkedList<>();
@@ -395,21 +396,19 @@ public class GameWorld implements GameModel {
         if(position == null) {
             return;
         }
-
-        if(Math.random() < 0.5) {
+        if(Math.random() < 0.269) { //read from json
             return;
         }
-
-        int random = (int) (Math.random() * 3);
-        Collectible collectible = null;
-        switch (random) {
-            case 0 -> collectible = new Coin(position);
-            case 1 -> collectible = new Food(position);
-            case 2 -> collectible = new ExperienceGem(position);
+        double rand = Math.random();
+        Collectible collectible;
+        if (rand < 0.169) {
+            collectible = new Coin(position);
+        } else if (rand < 0.069) {
+            collectible = new Food(position);
+        } else {
+            collectible = new ExperienceGem(position);
         }
-        if (collectible != null) {
-            this.addCollectible(collectible);
-        }
+        this.addCollectible(collectible);
     }
 
     @Override
@@ -447,7 +446,7 @@ public class GameWorld implements GameModel {
 
     @Override
     public List<WeaponData> getRandomLevelUpWeapons() {
-        return weaponRandomizer.getRandomWeapons(this.LEVELUP_WEAPONS_NUMBER).stream()
+        return this.weaponRandomizer.getRandomWeapons(this.LEVELUP_WEAPONS_NUMBER).stream()
             .map(weaponID -> this.dataLoader.getWeaponLoader().get(weaponID).orElse(null))
             .filter(data -> data != null)
             .toList();
@@ -484,6 +483,16 @@ public class GameWorld implements GameModel {
             case "weapons/knife" -> new KnifeFactory(this);
             default -> null;
         };
+    }
+
+    Weapon getWeaponById(String weaponId) {
+        List<Weapon> weapons = this.character.getWeapons();
+        for (Weapon weapon : weapons) {
+            if(weapon.getId().equals(weaponId)) {
+                return weapon;
+            }
+        }
+        return null;
     }
     
     @Override

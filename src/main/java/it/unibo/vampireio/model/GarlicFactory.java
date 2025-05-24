@@ -2,6 +2,7 @@ package it.unibo.vampireio.model;
 
 public class GarlicFactory extends AttackFactory {
     private static final String attackID = "attacks/garlic";
+    AttackData attackData = this.getAttackDataById(attackID);
     
     public GarlicFactory(GameWorld gameWorld) {
         super(gameWorld);
@@ -9,18 +10,15 @@ public class GarlicFactory extends AttackFactory {
     
     @Override
     public Attack createAttack() {
-        double radius = 64.0;
-        int damage = 20;
-        long duration = 1000;
-        
         Character character = this.gameWorld.getCharacter();
-
-        return new GarlicAttack(attackID, character.getPosition(), radius, damage, duration, gameWorld);
+        return new GarlicAttack(attackData.getId(), character.getPosition(), attackData.getRadius(), attackData.getDamage(), attackData.getDuration(), gameWorld);
     }
 
     @Override
     public void increaseLevel() {
         super.increaseLevel();
-        // TODO: aumenta area o 
+        double currentRadius = this.attackData.getRadius();
+        double newRadius = currentRadius * 1.1;
+        this.attackData.setRadius(newRadius);
     }
 }

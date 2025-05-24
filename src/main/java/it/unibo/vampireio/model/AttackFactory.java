@@ -11,7 +11,7 @@ public abstract class AttackFactory {
     
     public abstract Attack createAttack();
 
-    protected AttackData getDataAttackById(String id) {
+    protected AttackData getAttackDataById(String id) {
         AttackData attackData = gameWorld.getDataLoader().getAttackLoader().get(id).get();
         return attackData;
     }

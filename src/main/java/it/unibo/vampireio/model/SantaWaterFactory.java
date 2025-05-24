@@ -6,6 +6,7 @@ import java.awt.Dimension;
 public class SantaWaterFactory extends AttackFactory {
     private static final String attackID = "attacks/santaWater";
     private final double SPAWN_AREA_PERCENTAGE = 0.8;
+    AttackData attackData = this.getAttackDataById(attackID);
     
     public SantaWaterFactory(GameWorld gameWorld) {
         super(gameWorld);
@@ -13,11 +14,7 @@ public class SantaWaterFactory extends AttackFactory {
     
     @Override
     public Attack createAttack() {
-        double radius = 69.0; // TODO: read from file
-        int damage = 20;
-        long duration = 3000;
-
-        return new SantaWaterAttack(attackID, this.getRandomPosition(), radius, damage, duration, gameWorld);
+        return new SantaWaterAttack(attackData.getId(), this.getRandomPosition(), attackData.getRadius(), attackData.getDamage(), attackData.getDuration(), gameWorld);
     }
 
     private Point2D.Double getRandomPosition() {
@@ -31,6 +28,8 @@ public class SantaWaterFactory extends AttackFactory {
     @Override
     public void increaseLevel() {
         super.increaseLevel();
-        //fanno piu danno
+        int currentDamage = this.attackData.getDamage();
+        int newDamage = (int) (currentDamage * 1.5);
+        this.attackData.setRadius(newDamage);
     }
 }

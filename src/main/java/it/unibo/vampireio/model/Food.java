@@ -6,6 +6,6 @@ import java.util.Random;
 public class Food extends Lootable {
 
     protected Food(Double position) {
-        super("collectibles/food", position, new Random().nextInt(50));
+        super("collectibles/food", position, new Random().nextInt(51) + 50);
     }
 }

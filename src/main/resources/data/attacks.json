@@ -1,3 +1,31 @@
 [
+    {
+        "id": "attacks/magicWand",
+        "radius": 5.0,
+        "speed": 2.0,
+        "damage": 20,
+        "duration": 5000
+    },
+    {
+        "id": "attacks/garlic",
+        "radius": 64.0,
+        "speed": 0,
+        "damage": 20,
+        "duration": 1000
+    },
+    {
+        "id": "attacks/santaWater",
+        "radius": 60.0,
+        "speed": 0,
+        "damage": 20,
+        "duration": 5000
+    },
+    {
+        "id": "attacks/knife",
+        "radius": 16.0,
+        "speed": 3.0,
+        "damage": 20,
+        "duration": 10000
+    }
     
 ]

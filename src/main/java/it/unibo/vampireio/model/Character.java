@@ -81,7 +81,8 @@ public class Character extends LivingEntity {
             this.heal(collectible.getValue());
         }
         else if(collectible instanceof ExperienceGem) {
-            this.levelPercentage += collectible.getValue() / Math.pow(this.level, 0.10);
+            this.levelPercentage += collectible.getValue() * 
+            Math.log(20 + level) / (1 + Math.pow(level, 5)); //////////// DA TARARE
             if(this.levelPercentage >= 100) {
                 this.levelPercentage -= 100;
                 this.level++;
@@ -98,5 +99,9 @@ public class Character extends LivingEntity {
 
     public List<Weapon> getWeapons() {
         return List.copyOf(this.weapons);
+    }
+
+    public boolean hasMaxWeapons() {
+        return this.weapons.size() >= MAX_WEAPONS;
     }
 }
