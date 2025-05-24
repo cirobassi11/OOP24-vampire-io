@@ -29,8 +29,6 @@ public class Stats implements Serializable {
         this.statsMap.put(StatType.MIGHT, 1.0);
         this.statsMap.put(StatType.AMOUNT, 1.0);
         this.statsMap.put(StatType.COOLDOWN, 1.0);
-        this.statsMap.put(StatType.GROWTH, 1.0);
-        this.statsMap.put(StatType.GREED, 1.0);
         this.statsMap.put(StatType.CURSE, 0.0);
         this.statsMap.put(StatType.MAGNET, 1.0);
     }

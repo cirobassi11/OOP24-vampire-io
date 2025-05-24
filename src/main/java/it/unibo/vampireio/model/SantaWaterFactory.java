@@ -27,4 +27,10 @@ public class SantaWaterFactory extends AttackFactory {
         double y = characterPosition.getY() + (Math.random() * dimension.getHeight() * SPAWN_AREA_PERCENTAGE) - (dimension.getHeight() * SPAWN_AREA_PERCENTAGE / 2);
         return new Point2D.Double(x, y);
     }
+    
+    @Override
+    public void increaseLevel() {
+        super.increaseLevel();
+        //fanno piu danno
+    }
 }

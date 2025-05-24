@@ -56,6 +56,6 @@ public class Score implements Serializable {
     }
 
     public int getScore() {
-        return getKillCounter() * getLevel(); //LASCIAMO QUESTO??
+        return getKillCounter() * getLevel() * (int) (getSessionTime() / 20);
     }
 }

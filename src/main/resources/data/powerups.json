@@ -56,22 +56,6 @@
       "statToModify": "COOLDOWN"
     },
     {
-      "id": "powerups/growth",
-      "name": "Growth",
-      "description": "Increase experience per gem",
-      "price": 100,
-      "maxLevel": 5,
-      "statToModify": "GROWTH"
-    },
-    {
-      "id": "powerups/greed",
-      "name": "Greed",
-      "description": "Increase money per coin",
-      "price": 300,
-      "maxLevel": 5,
-      "statToModify": "GREED"
-    },
-    {
       "id": "powerups/curse",
       "name": "Curse",
       "description": "Increase enemy speed, health, spawn frequency and quantity",

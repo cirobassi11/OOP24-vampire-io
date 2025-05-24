@@ -104,7 +104,7 @@ public class GameControllerImpl implements GameController {
         this.view.setChooseItemListener(e -> {
             String selectedItem = this.view.getSelectedItem();
             if (selectedItem != null) {
-                //this.model.levelUpItem(selectedItem);
+                this.model.levelUpWeapon(selectedItem);
                 this.resumeGame();
                 this.view.showScreen(GameViewImpl.GAME);
             }
@@ -262,15 +262,15 @@ public class GameControllerImpl implements GameController {
             }
             if(this.model.hasJustLevelledUp()) {
                 this.pauseGame();
-                /*this.view.setItemsData(this.model.getLevelUpItems().stream()
+                this.view.showScreen(GameViewImpl.ITEM_SELECTION);
+
+                this.view.setItemsData(this.model.getRandomLevelUpWeapons().stream()
                     .map(item -> new ItemData(
                         item.getId(),
                         item.getName(),
-                        item.getDescription(),
-                        item.getCurrentLevel(),
-                        item.getMaxLevel()))
-                    .collect(Collectors.toList()));*/
-                this.view.showScreen(GameViewImpl.ITEM_SELECTION);
+                        item.getDescription()
+                        ))
+                    .collect(Collectors.toList()));
             }
             synchronized (this) {
                 if (inputHandler.isKeyPressed(KeyEvent.VK_ESCAPE)) {
@@ -420,17 +420,15 @@ public class GameControllerImpl implements GameController {
                     collectible.getPosition().getY()
                 ),
                 new Point2D.Double(0, 0),
-                16 //???????
+                10 //???????
             ))
             .collect(Collectors.toList());
 
         List<ItemData> itemsData = this.model.getWeapons().stream()
-            .map(item -> new ItemData( ///////
+            .map(item -> new ItemData(
                 item.getId(),
                 "",                
-                "",
-                item.getCurrentLevel(),
-                0 //?????
+                ""
             ))
             .collect(Collectors.toList());
 

@@ -8,8 +8,6 @@ public enum StatType {
     MIGHT,
     AMOUNT,
     COOLDOWN,
-    GROWTH,
-    GREED,
     CURSE,
     MAGNET
 }

@@ -44,8 +44,12 @@ public class WeaponImpl implements Weapon {
     }
     
     private void spawnAttack() {
-        Attack attack = attackFactory.createAttack();
-        
-        gameWorld.addAttack(attack);
+        Attack attack = attackFactory.createAttack();        
+        this.gameWorld.addAttack(attack);
+    }
+
+    public void levelUp() {
+        this.currentLevel++;
+        this.attackFactory.increaseLevel();
     }
 }

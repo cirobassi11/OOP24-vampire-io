@@ -2,7 +2,6 @@ package it.unibo.vampireio.model;
 
 public class KnifeFactory extends AttackFactory {
     private static final String attackID = "attacks/knife";
-
     
     public KnifeFactory(GameWorld gameWorld) {
         super(gameWorld);
@@ -18,5 +17,11 @@ public class KnifeFactory extends AttackFactory {
         Character character = this.gameWorld.getCharacter();
 
         return new KnifeAttack(attackID, character.getPosition(), radius, character.getLastDirection(), speed, damage, duration, gameWorld);
+    }
+
+    @Override
+    public void increaseLevel() {
+        super.increaseLevel();
+        //diminuisce il cooldown
     }
 }

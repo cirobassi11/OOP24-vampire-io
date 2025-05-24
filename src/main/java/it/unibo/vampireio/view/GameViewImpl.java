@@ -72,7 +72,7 @@ public class GameViewImpl implements GameView {
         this.setBackgroundImage(this.backgroundPath);
         this.setResolution(DEFAULT_RESOLUTION);
         this.frame.setLocationRelativeTo(null);
-        this.frame.setResizable(true); // Allow resizing
+        this.frame.setResizable(true);
 
         // Blocca aspect ratio
         this.frame.addComponentListener(new ComponentAdapter() {
@@ -97,8 +97,8 @@ public class GameViewImpl implements GameView {
 
         this.initPanels();
         
-        ((GamePanel) panels.get(GAME)).setFocusable(true);
-        ((GamePanel) panels.get(GAME)).requestFocusInWindow();
+        ((GamePanel) this.panels.get(GAME)).setFocusable(true);
+        ((GamePanel) this.panels.get(GAME)).requestFocusInWindow();
     }
 
     private void initPanels() {
@@ -154,14 +154,14 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void update(GameData data) {
-        var gamePanel = (GamePanel) panels.get(GAME);
+        var gamePanel = (GamePanel) this.panels.get(GAME);
         gamePanel.setData(data);
         gamePanel.repaint();
     }
 
     @Override
     public void updateSaveList(List<String> saveNames) {
-        var loadSavePanel = (SaveSelectionPanel) panels.get(SAVE_SELECTION);
+        var loadSavePanel = (SaveSelectionPanel) this.panels.get(SAVE_SELECTION);
         loadSavePanel.updateSavesList(saveNames);
     }
 
@@ -172,164 +172,164 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void setPlayerInputListener(InputHandler listener) {
-        listener.setupKeyBindings((GamePanel) panels.get(GAME));
+        listener.setupKeyBindings((GamePanel) this.panels.get(GAME));
     }
 
     @Override
 	public void setChoosableCharactersData(List<UnlockableCharacterData> choosableCharactersData) {
-		((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).setChoosableCharactersData(choosableCharactersData);
+		((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setChoosableCharactersData(choosableCharactersData);
 	}
 
     @Override
     public String getChoosedCharacter() {
-        return ((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).getChoosedCharacter();
+        return ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).getChoosedCharacter();
     }
 
     @Override
     public String getSelectedSave() {
-        return ((SaveSelectionPanel) panels.get(SAVE_SELECTION)).getSelectedSave();
+        return ((SaveSelectionPanel) this.panels.get(SAVE_SELECTION)).getSelectedSave();
     }
 
     @Override
     public String getSelectedItem() {
-        return ((ItemSelectionPanel) panels.get(ITEM_SELECTION)).getSelectedItem();
+        return ((ItemSelectionPanel) this.panels.get(ITEM_SELECTION)).getSelectedItem();
     }
 
     @Override
     public void setItemsData(List<ItemData> itemsData) {
-        ((ItemSelectionPanel) panels.get(ITEM_SELECTION)).setItemsData(itemsData);
+        ((ItemSelectionPanel) this.panels.get(ITEM_SELECTION)).setItemsData(itemsData);
     }
 
     @Override
     public void setConfirmCharacterListener(ActionListener listener) {
-        ((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).setConfirmCharacterListener(listener);
+        ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setConfirmCharacterListener(listener);
     }
 
     @Override
     public void setNewSaveListener(ActionListener listener) {
-        ((SaveMenuPanel) panels.get(SAVE_MENU)).setNewSaveListener(listener);
+        ((SaveMenuPanel) this.panels.get(SAVE_MENU)).setNewSaveListener(listener);
     }
 
     @Override
     public void setShowSaveListener(ActionListener listener) {
-        ((SaveMenuPanel) panels.get(SAVE_MENU)).setShowSaveListener(listener);
+        ((SaveMenuPanel) this.panels.get(SAVE_MENU)).setShowSaveListener(listener);
     }
     
     @Override
     public void setChooseSaveListener(ActionListener listener) {
-        ((SaveSelectionPanel) panels.get(SAVE_SELECTION)).setChooseSaveListener(listener);
+        ((SaveSelectionPanel) this.panels.get(SAVE_SELECTION)).setChooseSaveListener(listener);
     }
 
     @Override
     public void setChooseItemListener(ActionListener listener) {
-        ((ItemSelectionPanel) panels.get(ITEM_SELECTION)).setChooseItemListener(listener);
+        ((ItemSelectionPanel) this.panels.get(ITEM_SELECTION)).setChooseItemListener(listener);
     }
 
     @Override
     public void setCharactersShopListener(ActionListener listener) {
-        ((ShopPanel) panels.get(SHOP)).setCharactersShopListener(listener);
+        ((ShopPanel) this.panels.get(SHOP)).setCharactersShopListener(listener);
     }
 
     @Override
     public void setPowerUpsShopListener(ActionListener listener) {
-        ((ShopPanel) panels.get(SHOP)).setPowerUpsShopListener(listener);
+        ((ShopPanel) this.panels.get(SHOP)).setPowerUpsShopListener(listener);
     }
 
     @Override
     public void setStartListener(ActionListener listener) {
-        ((StartMenuPanel) panels.get(START)).setStartListener(listener);
+        ((StartMenuPanel) this.panels.get(START)).setStartListener(listener);
     }
 
     @Override
     public void setScoreboardListener(ActionListener listener) {
-        ((StartMenuPanel) panels.get(START)).setScoreboardListener(listener);
+        ((StartMenuPanel) this.panels.get(START)).setScoreboardListener(listener);
     }
 
     @Override
     public void setShopListener(ActionListener listener) {
-        ((StartMenuPanel) panels.get(START)).setShopListener(listener);
+        ((StartMenuPanel) this.panels.get(START)).setShopListener(listener);
     }
 
     @Override
     public void setLoadSaveListener(ActionListener listener) {
-        ((StartMenuPanel) panels.get(START)).setLoadSaveListener(listener);
+        ((StartMenuPanel) this.panels.get(START)).setLoadSaveListener(listener);
     }
 
     @Override
     public void setCoinsAmount(int coins) {
-        ((UnlockableCharactersPanel) panels.get(UNLOCKABLE_CHARACTERS)).setCoinsAmount(coins);
-        ((UnlockablePowerUpsPanel) panels.get(UNLOCKABLE_POWERUPS)).setCoinsAmount(coins);
+        ((UnlockableCharactersPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setCoinsAmount(coins);
+        ((UnlockablePowerUpsPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setCoinsAmount(coins);
     }
 
     @Override
 	public void setUnlockableCharactersData(List<UnlockableCharacterData> unlockableCharactersData) {
-		((UnlockableCharactersPanel) panels.get(UNLOCKABLE_CHARACTERS)).setUnlockableCharactersData(unlockableCharactersData);
+		((UnlockableCharactersPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setUnlockableCharactersData(unlockableCharactersData);
 	}
 
     @Override
     public void setUnlockablePowerupsData(List<UnlockablePowerupData> unlockablePowerupsData) {
-		((UnlockablePowerUpsPanel) panels.get(UNLOCKABLE_POWERUPS)).setUnlockablePowerupsData(unlockablePowerupsData);
+		((UnlockablePowerUpsPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setUnlockablePowerupsData(unlockablePowerupsData);
 	}
 
     @Override
     public String getSelectedCharacter() {
-        return ((UnlockableCharactersPanel) panels.get(UNLOCKABLE_CHARACTERS)).getSelectedCharacter();
+        return ((UnlockableCharactersPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).getSelectedCharacter();
     }
 
     @Override
     public String getSelectedPowerup() {
-        return ((UnlockablePowerUpsPanel) panels.get(UNLOCKABLE_POWERUPS)).getSelectedPowerup();
+        return ((UnlockablePowerUpsPanel) this.panels.get(UNLOCKABLE_POWERUPS)).getSelectedPowerup();
     }
 
     @Override
     public void setBuyCharactersListener(ActionListener listener) {
-        ((UnlockableCharactersPanel) panels.get(UNLOCKABLE_CHARACTERS)).setBuyCharactersListener(listener);
+        ((UnlockableCharactersPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setBuyCharactersListener(listener);
     }
 
     @Override
     public void setBuyPowerUpsListener(ActionListener listener) {
-        ((UnlockablePowerUpsPanel) panels.get(UNLOCKABLE_POWERUPS)).setBuyPowerUpsListener(listener);
+        ((UnlockablePowerUpsPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setBuyPowerUpsListener(listener);
     }
 
     @Override
     public void setReturnMenuListener(ActionListener listener) {
-        ((EndGamePanel) panels.get(END_GAME)).setReturnMenuListener(listener);
+        ((EndGamePanel) this.panels.get(END_GAME)).setReturnMenuListener(listener);
     }
 
     @Override
     public void setResumeListener(ActionListener listener) {
-        ((PausePanel) panels.get(PAUSE)).setResumeListener(listener);
+        ((PausePanel) this.panels.get(PAUSE)).setResumeListener(listener);
     }
 
     @Override
     public void setExitListener(ActionListener listener) {
-        ((PausePanel) panels.get(PAUSE)).setExitListener(listener);
+        ((PausePanel) this.panels.get(PAUSE)).setExitListener(listener);
     }
 
     @Override
     public void setScoresData(List<ScoreData> scores) {
-        ((ScoreboardPanel) panels.get(SCOREBOARD)).setScoresData(scores);
+        ((ScoreboardPanel) this.panels.get(SCOREBOARD)).setScoresData(scores);
     }
     
     @Override
     public void setBackListener(ActionListener listener) {
-        ((SaveSelectionPanel) panels.get(SAVE_SELECTION)).setBackListener(listener);
-        ((ScoreboardPanel) panels.get(SCOREBOARD)).setBackListener(listener);
-        ((ShopPanel) panels.get(SHOP)).setBackListener(listener);
-        ((ChooseCharacterPanel) panels.get(CHOOSE_CHARACTER)).setBackListener(listener);
-        ((UnlockableCharactersPanel) panels.get(UNLOCKABLE_CHARACTERS)).setBackListener(listener);
-        ((UnlockablePowerUpsPanel) panels.get(UNLOCKABLE_POWERUPS)).setBackListener(listener);
+        ((SaveSelectionPanel) this.panels.get(SAVE_SELECTION)).setBackListener(listener);
+        ((ScoreboardPanel) this.panels.get(SCOREBOARD)).setBackListener(listener);
+        ((ShopPanel) this.panels.get(SHOP)).setBackListener(listener);
+        ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setBackListener(listener);
+        ((UnlockableCharactersPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setBackListener(listener);
+        ((UnlockablePowerUpsPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setBackListener(listener);
     }
 
     @Override
     public void setQuitListener(ActionListener listener) {
-        ((SaveMenuPanel) panels.get(SAVE_MENU)).setQuitListener(listener);
-        ((StartMenuPanel) panels.get(START)).setQuitListener(listener);
+        ((SaveMenuPanel) this.panels.get(SAVE_MENU)).setQuitListener(listener);
+        ((StartMenuPanel) this.panels.get(START)).setQuitListener(listener);
     }
 
     @Override
     public void setScore(ScoreData score) {
-        ((EndGamePanel) panels.get(END_GAME)).setScore(score);
+        ((EndGamePanel) this.panels.get(END_GAME)).setScore(score);
     }
 
     @Override

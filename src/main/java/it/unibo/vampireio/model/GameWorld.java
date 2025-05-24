@@ -19,6 +19,7 @@ public class GameWorld implements GameModel {
     private final Dimension visualSize = new Dimension(1280, 720);
 
     private static double CHARACTER_RADIUS = 32;
+    private static final int LEVELUP_WEAPONS_NUMBER = 3;
 
     private boolean isGameOver;
     private Score score;
@@ -28,7 +29,7 @@ public class GameWorld implements GameModel {
     private List<Attack> attacks;
     private List<Collectible> collectibles;
     private EnemySpawner enemySpawner;
-
+    private WeaponRandomizer weaponRandomizer;
     
     public GameWorld(GameController gameController) {
         this.gameController = gameController;
@@ -41,6 +42,7 @@ public class GameWorld implements GameModel {
     public boolean initGame(String selectedCharacter) {
         this.isGameOver = false;
         this.enemySpawner = new EnemySpawnerImpl(this);
+        this.weaponRandomizer = new WeaponRandomizer(this.dataLoader.getWeaponLoader().getAll().stream().map(WeaponData::getId).toList());
         
         Optional<UnlockableCharacter> optionalSelectedUnlockableCharacter = this.dataLoader.getCharacterLoader().get(selectedCharacter);
         if(!optionalSelectedUnlockableCharacter.isPresent()) {
@@ -49,18 +51,7 @@ public class GameWorld implements GameModel {
         UnlockableCharacter selectedUnlockableCharacter = optionalSelectedUnlockableCharacter.get();
         
         WeaponData defaultWeaponData = this.dataLoader.getWeaponLoader().get(selectedUnlockableCharacter.getDefaultWeapon()).get();
-        AttackFactory attackFactory = null;
-
-        switch(defaultWeaponData.getId()) {
-            case "weapons/magicWand" -> attackFactory = new MagicWandFactory(this);
-            case "weapons/santaWater" -> attackFactory = new SantaWaterFactory(this);
-            case "weapons/garlic" -> attackFactory = new GarlicFactory(this);
-            case "weapons/knife" -> attackFactory = new KnifeFactory(this);
-            default -> {
-                this.gameController.showError("Weapon not found");
-                return false;
-            }
-        }
+        AttackFactory attackFactory = this.getAttackFactory(defaultWeaponData.getId());
 
         Weapon defaultWeapon = new WeaponImpl(this, defaultWeaponData.getId(), defaultWeaponData.getDefaultCooldown(), defaultWeaponData.getDefaultAttacksPerCooldown(), attackFactory);
 
@@ -454,6 +445,47 @@ public class GameWorld implements GameModel {
         return this.character.hasJustLevelledUp();
     }
 
+    @Override
+    public List<WeaponData> getRandomLevelUpWeapons() {
+        return weaponRandomizer.getRandomWeapons(this.LEVELUP_WEAPONS_NUMBER).stream()
+            .map(weaponID -> this.dataLoader.getWeaponLoader().get(weaponID).orElse(null))
+            .filter(data -> data != null)
+            .toList();
+    }
+
+    @Override
+    public void levelUpWeapon(String selectedWeapon) {
+        Weapon weaponToLevelup = null;
+        for (Weapon weapon : this.character.getWeapons()) {
+            if(weapon.getId().equals(selectedWeapon)) {
+                weaponToLevelup = weapon;
+            }
+        }
+        if(weaponToLevelup != null) {
+            weaponToLevelup.levelUp();
+        } else {
+            WeaponData newWeaponData = this.dataLoader.getWeaponLoader().get(selectedWeapon).orElse(null);
+            Weapon newWeapon = new WeaponImpl(
+                this,
+                newWeaponData.getId(),
+                newWeaponData.getDefaultCooldown(),
+                newWeaponData.getDefaultAttacksPerCooldown(),
+                this.getAttackFactory(newWeaponData.getId())
+            );
+            this.character.addWeapon(newWeapon);
+        }
+    }
+
+    private AttackFactory getAttackFactory(String weaponID) {
+        return switch (weaponID) {
+            case "weapons/magicWand" -> new MagicWandFactory(this);
+            case "weapons/santaWater" -> new SantaWaterFactory(this);
+            case "weapons/garlic" -> new GarlicFactory(this);
+            case "weapons/knife" -> new KnifeFactory(this);
+            default -> null;
+        };
+    }
+    
     @Override
     public Score exitGame() {
         this.score.setLevel(this.character.getLevel());

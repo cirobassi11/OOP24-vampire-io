@@ -18,4 +18,10 @@ public class MagicWandFactory extends AttackFactory {
 
         return new MagicWandAttack(attackID, character.getPosition(), radius, character.getDirection(), speed, damage, duration, gameWorld);
     }
+
+    @Override
+    public void increaseLevel() {
+        super.increaseLevel();
+        //spawna un proiettile in più
+    }
 }

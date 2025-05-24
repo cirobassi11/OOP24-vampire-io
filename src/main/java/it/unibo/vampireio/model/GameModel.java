@@ -35,5 +35,7 @@ public interface GameModel {
     List<UnlockablePowerUp> getUnlockablePowerups();
     boolean buyPowerup(String selectedPowerup);
     boolean hasJustLevelledUp();
+    List<WeaponData> getRandomLevelUpWeapons();
+    void levelUpWeapon(String selectedWeapon);
     Score exitGame();
 }

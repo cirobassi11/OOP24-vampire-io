@@ -41,6 +41,10 @@ class ItemSelectionPanel extends BasePanel {
     }
 
     public String getSelectedItem() {
-        return this.itemList.getSelectedValue();
+        int selectedIndex = this.itemList.getSelectedIndex();
+        if (selectedIndex >= 0 && selectedIndex < this.itemsData.size()) {
+            return this.itemsData.get(selectedIndex).getId();
+        }
+        return null;
     }
 }

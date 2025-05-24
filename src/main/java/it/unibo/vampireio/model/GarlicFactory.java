@@ -17,4 +17,10 @@ public class GarlicFactory extends AttackFactory {
 
         return new GarlicAttack(attackID, character.getPosition(), radius, damage, duration, gameWorld);
     }
+
+    @Override
+    public void increaseLevel() {
+        super.increaseLevel();
+        // TODO: aumenta area o 
+    }
 }

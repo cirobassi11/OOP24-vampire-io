@@ -6,9 +6,9 @@ import java.awt.geom.Point2D;
 
 public class Character extends LivingEntity {
 
-    private static final int MAX_WEAPONS = 6;
-    private Stats stats;
+    private static final int MAX_WEAPONS = 3; //TODO: read from config
     
+    private Stats stats;
     private int level;
     private double levelPercentage;
     private int coinCounter;
@@ -57,7 +57,7 @@ public class Character extends LivingEntity {
     }
 
     @Override
-    public void onCollision(Collidable collidable) { }  ///////////
+    public void onCollision(Collidable collidable) { }
 
     public boolean addWeapon(Weapon weapon) {
         if(this.weapons.size() >= MAX_WEAPONS) {
@@ -81,7 +81,7 @@ public class Character extends LivingEntity {
             this.heal(collectible.getValue());
         }
         else if(collectible instanceof ExperienceGem) {
-            this.levelPercentage += collectible.getValue() / Math.pow(this.level, 0.10); //DA CAMBIARE?
+            this.levelPercentage += collectible.getValue() / Math.pow(this.level, 0.10);
             if(this.levelPercentage >= 100) {
                 this.levelPercentage -= 100;
                 this.level++;
