@@ -18,7 +18,7 @@ public class SantaWaterFactory extends AttackFactory {
         Stats stats = character.getStats();
         return new SantaWaterAttack(
             attackData.getId(),
-            character.getPosition(),
+            this.getRandomPosition(),
             attackData.getRadius(),
             (int) (attackData.getDamage() * stats.getStat(StatType.MIGHT)),
             attackData.getDuration(),
@@ -39,6 +39,6 @@ public class SantaWaterFactory extends AttackFactory {
         super.increaseLevel();
         int currentDamage = this.attackData.getDamage();
         int newDamage = (int) (currentDamage * 1.5);
-        this.attackData.setRadius(newDamage);
+        this.attackData.setDamage(newDamage);
     }
 }

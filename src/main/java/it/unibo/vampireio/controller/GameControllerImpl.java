@@ -467,5 +467,6 @@ public class GameControllerImpl implements GameController {
     @Override
     public void showError(String message) {
         this.view.showError(message);
+        System.exit(1);
     }
 }

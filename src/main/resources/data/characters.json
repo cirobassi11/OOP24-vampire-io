@@ -17,6 +17,7 @@
       "price": 100,
       "currentLevel": 0,
       "maxLevel": 0,
+      "radius": 32.0,
       "defaultWeapon": "weapons/garlic"
     },
     {
@@ -37,6 +38,7 @@
       "price": 120,
       "currentLevel": 0,
       "maxLevel": 0,
+      "radius": 32.0,
       "defaultWeapon": "weapons/magicWand"
     },
     {
@@ -57,6 +59,7 @@
       "price": 120,
       "currentLevel": 0,
       "maxLevel": 0,
+      "radius": 32.0,
       "defaultWeapon": "weapons/santaWater"
     },
     {
@@ -77,6 +80,7 @@
       "price": 120,
       "currentLevel": 0,
       "maxLevel": 0,
+      "radius": 32.0,
       "defaultWeapon": "weapons/knife"
     }
   ]

@@ -4,12 +4,12 @@ import it.unibo.vampireio.controller.GameController;
 
 public class DataLoader {
 
+    private final GenericDataLoader<ConfigData> configLoader;
     private final GenericDataLoader<UnlockableCharacter> characterLoader;
     private final GenericDataLoader<EnemyData> enemyLoader;
     private final GenericDataLoader<WeaponData> weaponLoader;
     private final GenericDataLoader<AttackData> attackLoader;
     private final GenericDataLoader<UnlockablePowerUp> powerUpLoader;
-    private final GenericDataLoader<Lootable> lootableLoader;
 
     public DataLoader(GameController gameController) {
         this.characterLoader = new GenericDataLoader<>(gameController, "data/characters.json", UnlockableCharacter.class);
@@ -17,7 +17,7 @@ public class DataLoader {
         this.weaponLoader = new GenericDataLoader<>(gameController, "data/weapons.json", WeaponData.class);
         this.attackLoader = new GenericDataLoader<>(gameController, "data/attacks.json", AttackData.class);
         this.powerUpLoader = new GenericDataLoader<>(gameController, "data/powerups.json", UnlockablePowerUp.class);
-        this.lootableLoader = new GenericDataLoader<>(gameController, "data/lootables.json", Lootable.class);
+        this.configLoader = new GenericDataLoader<>(gameController, "data/config.json", ConfigData.class);
     }
 
     public GenericDataLoader<UnlockableCharacter> getCharacterLoader() {
@@ -40,12 +40,7 @@ public class DataLoader {
         return this.powerUpLoader;
     }
 
-    public GenericDataLoader<Lootable> getLootableLoader() {
-        return this.lootableLoader;
+    public GenericDataLoader<ConfigData> getConfigLoader() {
+        return this.configLoader;
     }
-
-    public GenericDataLoader<Lootable> getLootabLoader() {
-        return this.lootableLoader;
-    }
-    
 }

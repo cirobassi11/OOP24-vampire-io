@@ -81,8 +81,7 @@ public class Character extends LivingEntity {
             this.heal(collectible.getValue());
         }
         else if(collectible instanceof ExperienceGem) {
-            this.levelPercentage += collectible.getValue() * 
-            (Math.log(level + 2) / Math.pow(level + 1, 0.6)); // TODO: calculate a better formula
+            this.levelPercentage += collectible.getValue() * (1.0 / Math.pow(level + 1, 0.7)); // TODO: calculate a better formula
             if(this.levelPercentage >= 100) {
                 this.levelPercentage -= 100;
                 this.level++;

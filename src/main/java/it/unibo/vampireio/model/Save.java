@@ -28,10 +28,6 @@ public class Save implements Serializable {
         this.unlockedPowerUps = new HashMap<String, Integer>(); 
         this.moneyAmount = 0;
         this.scores = new LinkedList<Score>();
-    
-        ///TESTTTTTTTT
-        this.incrementMoneyAmount(696969);
-        //////////////
     }
     
     public String getSaveTime() {

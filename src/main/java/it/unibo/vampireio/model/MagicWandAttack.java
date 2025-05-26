@@ -20,10 +20,10 @@ public class MagicWandAttack extends AbstractAttack {
         
         for (Enemy enemy : gameWorld.getEnemies()) {
             Point2D.Double enemyPos = enemy.getPosition();
-            Point2D.Double characterPos = getPosition();
+            Point2D.Double currentPos = this.getPosition();
             
-            double dx = enemyPos.x - characterPos.x;
-            double dy = enemyPos.y - characterPos.y;
+            double dx = enemyPos.x - currentPos.x;
+            double dy = enemyPos.y - currentPos.y;
             double distance = Math.sqrt(dx * dx + dy * dy);
             
             if (distance < minDistance) {
@@ -53,17 +53,17 @@ public class MagicWandAttack extends AbstractAttack {
     protected void update(long tickTime) {
         if (this.targetEnemy != null) {
             Point2D.Double enemyPos = targetEnemy.getPosition();
-            Point2D.Double characterPos = getPosition();
+            Point2D.Double currentPos = this.getPosition();
             
-            double dx = enemyPos.x - characterPos.x;
-            double dy = enemyPos.y - characterPos.y;
+            double dx = enemyPos.x - currentPos.x;
+            double dy = enemyPos.y - currentPos.y;
             double length = Math.sqrt(dx * dx + dy * dy);
             
             if (length > 0) {
                 setDirection(new Point2D.Double(dx / length, dy / length));
             }
 
-            if(length < getRadius()) {
+            if(length < this.getRadius()) {
                 this.onCollision(targetEnemy);
             }
         }

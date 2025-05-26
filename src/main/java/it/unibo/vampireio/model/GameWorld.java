@@ -18,11 +18,10 @@ public class GameWorld implements GameModel {
 
     private final Dimension visualSize = new Dimension(1280, 720);
 
-    private static double CHARACTER_RADIUS = 32;
-    private static final int LEVELUP_WEAPONS_NUMBER = 3;
-
     private boolean isGameOver;
     private Score score;
+
+    private ConfigData configData;
 
     private Character character;
     private List<Enemy> enemies;
@@ -30,12 +29,21 @@ public class GameWorld implements GameModel {
     private List<Collectible> collectibles;
     private EnemySpawner enemySpawner;
     private WeaponRandomizer weaponRandomizer;
+
+    private static final int LEVELUP_CHOICES = 3;
     
     public GameWorld(GameController gameController) {
         this.gameController = gameController;
 
         this.dataLoader = new DataLoader(this.gameController);
-        this.saveManager = new SaveManager(this.gameController);        
+        this.saveManager = new SaveManager(this.gameController);
+
+        ConfigData configData = this.dataLoader.getConfigLoader().get("").orElse(null);
+        if (configData != null) {
+            this.configData = configData;
+        } else {
+            this.gameController.showError("Config data not found!");
+        }
     }
 
     @Override
@@ -62,7 +70,7 @@ public class GameWorld implements GameModel {
 
         Weapon defaultWeapon = new WeaponImpl(this,
                 defaultWeaponData.getId(),
-                (long) (defaultWeaponData.getDefaultCooldown() - defaultWeaponData.getDefaultCooldown() * stats.getStat(StatType.COOLDOWN)),
+                (long) (defaultWeaponData.getDefaultCooldown() * (2 - stats.getStat(StatType.COOLDOWN))),
                 defaultWeaponData.getDefaultAttacksPerCooldown(),
                 attackFactory
             );
@@ -71,7 +79,7 @@ public class GameWorld implements GameModel {
             selectedUnlockableCharacter.getId(),
             selectedUnlockableCharacter.getName(),
             stats,
-            CHARACTER_RADIUS,
+            selectedUnlockableCharacter.getRadius(),
             defaultWeapon
         );
         
@@ -419,7 +427,11 @@ public class GameWorld implements GameModel {
 
     @Override
     public void createNewSave() {
-        this.saveManager.createNewSave();
+        UnlockableCharacter defaultCharacter = this.dataLoader.getCharacterLoader().get(this.configData.getDefaultCharacterId()).orElse(null);
+        if (defaultCharacter == null) {
+            this.gameController.showError("Default character not found in config data!");
+        }
+        this.saveManager.createNewSave(defaultCharacter);
     }
 
     @Override
@@ -447,7 +459,7 @@ public class GameWorld implements GameModel {
 
     @Override
     public List<WeaponData> getRandomLevelUpWeapons() {
-        return this.weaponRandomizer.getRandomWeapons(this.LEVELUP_WEAPONS_NUMBER).stream()
+        return this.weaponRandomizer.getRandomWeapons(LEVELUP_CHOICES).stream()
             .map(weaponID -> this.dataLoader.getWeaponLoader().get(weaponID).orElse(null))
             .filter(data -> data != null)
             .toList();

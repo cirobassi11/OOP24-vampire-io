@@ -74,9 +74,10 @@ public class SaveManager {
         return List.copyOf(this.savesNames);
     }
 
-    public void createNewSave() {
+    public void createNewSave(UnlockableCharacter defaultCharacter) {
         this.currentSave = new Save();
         this.savesNames.add(this.currentSave.getSaveTime());
+        this.currentSave.addUnlockedCharacter(defaultCharacter);
         this.saveCurrentSave();
         this.saveIndex();
     }
