@@ -14,7 +14,16 @@ public class SantaWaterFactory extends AttackFactory {
     
     @Override
     public Attack createAttack() {
-        return new SantaWaterAttack(attackData.getId(), this.getRandomPosition(), attackData.getRadius(), attackData.getDamage(), attackData.getDuration(), gameWorld);
+        Character character = this.gameWorld.getCharacter();
+        Stats stats = character.getStats();
+        return new SantaWaterAttack(
+            attackData.getId(),
+            character.getPosition(),
+            attackData.getRadius(),
+            (int) (attackData.getDamage() * stats.getStat(StatType.MIGHT)),
+            attackData.getDuration(),
+            gameWorld
+        );
     }
 
     private Point2D.Double getRandomPosition() {

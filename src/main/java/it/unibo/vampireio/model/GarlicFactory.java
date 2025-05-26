@@ -11,7 +11,15 @@ public class GarlicFactory extends AttackFactory {
     @Override
     public Attack createAttack() {
         Character character = this.gameWorld.getCharacter();
-        return new GarlicAttack(attackData.getId(), character.getPosition(), attackData.getRadius(), attackData.getDamage(), attackData.getDuration(), gameWorld);
+        Stats stats = character.getStats();
+        return new GarlicAttack(
+            attackData.getId(),
+            character.getPosition(),
+            attackData.getRadius(),
+            (int) (attackData.getDamage() * stats.getStat(StatType.MIGHT)),
+            attackData.getDuration(),
+            gameWorld
+        );
     }
 
     @Override

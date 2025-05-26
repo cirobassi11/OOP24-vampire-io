@@ -37,8 +37,9 @@ dependencies {
 
     // JUnit API and testing engine
     val jUnitVersion = "5.11.4"
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$jUnitVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
+    testImplementation(platform("org.junit:junit-bom:$jUnitVersion"))
+	testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // Gson library
     implementation("com.google.code.gson:gson:2.12.1")

@@ -37,7 +37,8 @@ class UnlockablePowerUpsPanel extends BasePanel {
             this.powerupNames = unlockablePowerupsData.stream()
             .map(powerup -> powerup.getName() + " [" 
                         + powerup.getCurrentLevel() + "/" 
-                        + powerup.getMaxLevel() + "]")
+                        + powerup.getMaxLevel() + "]: "
+                        + powerup.getDescription())
             .toList();
         }
         

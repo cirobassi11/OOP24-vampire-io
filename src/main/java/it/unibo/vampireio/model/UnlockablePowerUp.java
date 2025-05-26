@@ -1,7 +1,7 @@
 package it.unibo.vampireio.model;
 
 public class UnlockablePowerUp extends UnlockableItem {
-    private static final double MULTIPLIER_INCREMENT = 1.05;
+    private static final double MULTIPLIER_INCREMENT = 0.10;
     private StatType statToModify;
 
     public UnlockablePowerUp(String id, String name, String description, int price, int maxLevel, StatType statToModify) {

@@ -11,7 +11,17 @@ public class KnifeFactory extends AttackFactory {
     @Override
     public Attack createAttack() {
         Character character = this.gameWorld.getCharacter();
-        return new KnifeAttack(attackData.getId(), character.getPosition(), attackData.getRadius(), character.getLastDirection(), attackData.getSpeed(), attackData.getDamage(), attackData.getDuration(), gameWorld);
+        Stats stats = character.getStats();
+        return new KnifeAttack(
+            attackData.getId(),
+            character.getPosition(),
+            attackData.getRadius(),
+            character.getLastDirection(),
+            attackData.getSpeed() * stats.getStat(StatType.SPEED),
+            (int) (attackData.getDamage() * stats.getStat(StatType.MIGHT)),
+            attackData.getDuration(),
+            gameWorld
+        );
     }
 
     @Override

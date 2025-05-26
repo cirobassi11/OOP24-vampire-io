@@ -11,7 +11,6 @@ public class Stats implements Serializable {
     
     public Stats() {
         this.statsMap = new EnumMap<>(StatType.class);
-        initializeDefaultStats();
     }
     
     public Stats(Stats other) {
@@ -19,18 +18,6 @@ public class Stats implements Serializable {
         for (StatType type : StatType.values()) {
             this.statsMap.put(type, other.getStat(type));
         }
-    }
-    
-    private void initializeDefaultStats() {
-        this.statsMap.put(StatType.MAX_HEALTH, 100.0);
-        this.statsMap.put(StatType.ARMOR, 0.0);
-        this.statsMap.put(StatType.SPEED, 1.0);
-        this.statsMap.put(StatType.MOVE_SPEED, 1.0);
-        this.statsMap.put(StatType.MIGHT, 1.0);
-        this.statsMap.put(StatType.AMOUNT, 1.0);
-        this.statsMap.put(StatType.COOLDOWN, 1.0);
-        this.statsMap.put(StatType.CURSE, 0.0);
-        this.statsMap.put(StatType.MAGNET, 1.0);
     }
     
     public double getStat(StatType type) {
@@ -53,23 +40,5 @@ public class Stats implements Serializable {
         
     public Map<StatType, Double> getAllStats() {
         return new EnumMap<>(this.statsMap);
-    }
-
-    public void resetStat(StatType type) {
-        switch (type) {
-            case MAX_HEALTH:
-                setStat(type, 100.0);
-                break;
-            case ARMOR:
-                setStat(type, 0.0);
-                break;
-            default:
-                setStat(type, 1.0);
-                break;
-        }
-    }
-    
-    public void resetAllStats() {
-        initializeDefaultStats();
     }
 }

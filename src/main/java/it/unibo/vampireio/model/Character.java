@@ -82,7 +82,7 @@ public class Character extends LivingEntity {
         }
         else if(collectible instanceof ExperienceGem) {
             this.levelPercentage += collectible.getValue() * 
-            Math.log(20 + level) / (1 + Math.pow(level, 5)); //////////// DA TARARE
+            (Math.log(level + 2) / Math.pow(level + 1, 0.6)); // TODO: calculate a better formula
             if(this.levelPercentage >= 100) {
                 this.levelPercentage -= 100;
                 this.level++;
@@ -103,5 +103,11 @@ public class Character extends LivingEntity {
 
     public boolean hasMaxWeapons() {
         return this.weapons.size() >= MAX_WEAPONS;
+    }
+
+    @Override
+    public void dealDamage(double damage) {
+        double reducedDamage = damage - damage * (this.stats.getStat(StatType.ARMOR) - 1);
+        super.dealDamage(reducedDamage);
     }
 }

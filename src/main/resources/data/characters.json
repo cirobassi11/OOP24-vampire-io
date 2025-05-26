@@ -3,13 +3,11 @@
       "characterStats": {
         "statsMap": {
           "MAX_HEALTH": 1000.0,
-          "ARMOR": 0.0,
+          "ARMOR": 1.0,
           "SPEED": 1.0,
           "MOVE_SPEED": 1.0,
           "MIGHT": 1.0,
-          "AMOUNT": 1.0,
           "COOLDOWN": 1.0,
-          "CURSE": 0.0,
           "MAGNET": 1.0
         }
       },
@@ -25,13 +23,11 @@
       "characterStats": {
         "statsMap": {
           "MAX_HEALTH": 1000.0,
-          "ARMOR": 0.0,
+          "ARMOR": 1.0,
           "SPEED": 1.0,
           "MOVE_SPEED": 1.0,
           "MIGHT": 1.0,
-          "AMOUNT": 1.0,
           "COOLDOWN": 1.0,
-          "CURSE": 0.0,
           "MAGNET": 1.0
         }
       },
@@ -47,13 +43,11 @@
       "characterStats": {
         "statsMap": {
           "MAX_HEALTH": 1000.0,
-          "ARMOR": 0.0,
+          "ARMOR": 1.0,
           "SPEED": 1.0,
           "MOVE_SPEED": 1.0,
           "MIGHT": 1.0,
-          "AMOUNT": 1.0,
           "COOLDOWN": 1.0,
-          "CURSE": 0.0,
           "MAGNET": 1.0
         }
       },
@@ -69,13 +63,11 @@
       "characterStats": {
         "statsMap": {
           "MAX_HEALTH": 1000.0,
-          "ARMOR": 0.0,
+          "ARMOR": 1.0,
           "SPEED": 1.0,
           "MOVE_SPEED": 1.0,
           "MIGHT": 1.0,
-          "AMOUNT": 1.0,
           "COOLDOWN": 1.0,
-          "CURSE": 0.0,
           "MAGNET": 1.0
         }
       },

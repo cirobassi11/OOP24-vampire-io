@@ -6,8 +6,6 @@ public enum StatType {
     SPEED,
     MOVE_SPEED,
     MIGHT,
-    AMOUNT,
     COOLDOWN,
-    CURSE,
     MAGNET
 }

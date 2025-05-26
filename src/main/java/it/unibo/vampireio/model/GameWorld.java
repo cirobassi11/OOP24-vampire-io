@@ -49,11 +49,6 @@ public class GameWorld implements GameModel {
         }
         UnlockableCharacter selectedUnlockableCharacter = optionalSelectedUnlockableCharacter.get();
         
-        WeaponData defaultWeaponData = this.dataLoader.getWeaponLoader().get(selectedUnlockableCharacter.getDefaultWeapon()).get();
-        AttackFactory attackFactory = this.getAttackFactory(defaultWeaponData.getId());
-
-        Weapon defaultWeapon = new WeaponImpl(this, defaultWeaponData.getId(), defaultWeaponData.getDefaultCooldown(), defaultWeaponData.getDefaultAttacksPerCooldown(), attackFactory);
-
         Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
         for (Map.Entry<String, Integer> entry : unlockedPowerUps.entrySet()) {
             Optional<UnlockablePowerUp> powerupOpt = this.dataLoader.getPowerUpLoader().get(entry.getKey());
@@ -61,6 +56,16 @@ public class GameWorld implements GameModel {
         }
 
         Stats stats = applyBuffs(selectedUnlockableCharacter.getCharacterStats());
+
+        WeaponData defaultWeaponData = this.dataLoader.getWeaponLoader().get(selectedUnlockableCharacter.getDefaultWeapon()).get();
+        AttackFactory attackFactory = this.getAttackFactory(defaultWeaponData.getId());
+
+        Weapon defaultWeapon = new WeaponImpl(this,
+                defaultWeaponData.getId(),
+                (long) (defaultWeaponData.getDefaultCooldown() - defaultWeaponData.getDefaultCooldown() * stats.getStat(StatType.COOLDOWN)),
+                defaultWeaponData.getDefaultAttacksPerCooldown(),
+                attackFactory
+            );
 
         this.character = new Character(
             selectedUnlockableCharacter.getId(),
@@ -92,12 +97,10 @@ public class GameWorld implements GameModel {
             this.score.incrementSessionTime(tickTime);
             this.character.setGettingAttacked(false);
             
-            // muove il personaggio (non dovrebbe sovrapporsi a nemici)
             this.character.setDirection(characterDirection);
             this.character.move(tickTime);
             this.character.updateWeapons(tickTime);
 
-            // muove tutti i nemici (controllando anche che non si sovrappongano)
             for (Enemy enemy : this.enemies) {
                 enemy.setGettingAttacked(false);
 
@@ -119,13 +122,11 @@ public class GameWorld implements GameModel {
                     }
                 }
 
-                //avoid collision with character
                 boolean collisionWithCharacter = (enemyFuturePosition.distance(this.character.getPosition()) < 50);
                 if (!collisionWithEnemies && !collisionWithCharacter) {
                     enemy.move(tickTime);
                 }
 
-                //attack the character
                 if (collisionWithCharacter) {
                     enemy.onCollision(this.character);
                 }

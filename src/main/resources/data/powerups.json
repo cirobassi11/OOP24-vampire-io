@@ -4,7 +4,7 @@
       "name": "Health",
       "description": "Increase character max health",
       "price": 10,
-      "maxLevel": 3,
+      "maxLevel": 5,
       "statToModify": "MAX_HEALTH"
     },
     {
@@ -12,7 +12,7 @@
       "name": "Armor",
       "description": "Decrease damage taken",
       "price": 10,
-      "maxLevel": 3,
+      "maxLevel": 5,
       "statToModify": "ARMOR"
     },
     {
@@ -20,7 +20,7 @@
       "name": "Projectile Speed",
       "description": "Increase projectile movement speed",
       "price": 10,
-      "maxLevel": 2,
+      "maxLevel": 5,
       "statToModify": "SPEED"
     },
     {
@@ -28,7 +28,7 @@
       "name": "Movement Speed",
       "description": "Increase character movement speed",
       "price": 10,
-      "maxLevel": 2,
+      "maxLevel": 3,
       "statToModify": "MOVE_SPEED"
     },
     {
@@ -40,28 +40,12 @@
       "statToModify": "MIGHT"
     },
     {
-      "id": "powerups/amount",
-      "name": "Amount",
-      "description": "Increase projectile shooted",
-      "price": 10,
-      "maxLevel": 3,
-      "statToModify": "AMOUNT"
-    },
-    {
       "id": "powerups/cooldown",
       "name": "Cooldown",
       "description": "Decrease time between the shots",
       "price": 10,
       "maxLevel": 3,
       "statToModify": "COOLDOWN"
-    },
-    {
-      "id": "powerups/curse",
-      "name": "Curse",
-      "description": "Increase enemy speed, health, spawn frequency and quantity",
-      "price": 1,
-      "maxLevel": 5,
-      "statToModify": "CURSE"
     },
     {
       "id": "powerups/magnet",
