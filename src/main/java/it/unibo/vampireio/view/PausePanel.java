@@ -16,11 +16,11 @@ class PausePanel extends BasePanel {
         this.exitButton = this.addButton("EXIT", 0, 1);
     }
 
-    void setResumeListener(ActionListener listener) {
+    void setResumeListener(final ActionListener listener) {
         this.resumeButton.addActionListener(listener);
     }
 
-    void setExitListener(ActionListener listener) {
+    void setExitListener(final ActionListener listener) {
         this.exitButton.addActionListener(listener);
     }
 

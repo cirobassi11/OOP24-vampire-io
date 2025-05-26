@@ -8,7 +8,7 @@ class SaveMenuPanel extends BasePanel {
     private JButton loadButton;
     private JButton quitButton;
     
-    SaveMenuPanel(GameViewImpl view) {
+    SaveMenuPanel(final GameViewImpl view) {
         super(view);
         
         this.newSaveButton = this.addButton("NEW GAME", 0, 0);
@@ -16,15 +16,16 @@ class SaveMenuPanel extends BasePanel {
         this.quitButton = this.addButton("QUIT", 0, 2);
     }
 
-    void setNewSaveListener(ActionListener listener) {
+    void setNewSaveListener(final ActionListener listener) {
         this.newSaveButton.addActionListener(listener);
     }
 
-    void setShowSaveListener(ActionListener listener) {
+    void setShowSaveListener(final ActionListener listener) {
         this.loadButton.addActionListener(listener);
     }
 
-    void setQuitListener(ActionListener listener) {
+    void setQuitListener(final ActionListener listener) {
         this.quitButton.addActionListener(listener);
     }
+
 }

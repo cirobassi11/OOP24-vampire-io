@@ -14,7 +14,7 @@ class SaveSelectionPanel extends BasePanel {
     private List<String> saves;
     private JList<String> savesList;
 
-    SaveSelectionPanel(GameViewImpl view) {
+    SaveSelectionPanel(final GameViewImpl view) {
         super(view);
 
         this.savesList = this.addScrollableList(List.of(), 0, 0);        
@@ -22,15 +22,15 @@ class SaveSelectionPanel extends BasePanel {
         this.backButton = this.addButton("BACK", 0, 2);
     }
 
-    void setChooseSaveListener(ActionListener listener) {
+    void setChooseSaveListener(final ActionListener listener) {
         this.selectButton.addActionListener(listener);
     }
     
-    void setBackListener(ActionListener listener) {
+    void setBackListener(final ActionListener listener) {
         this.backButton.addActionListener(listener);
     }
 
-    void updateSavesList(List<String> saves) {
+    void updateSavesList(final List<String> saves) {
         this.saves = saves;
         this.savesList.setListData(this.saves.toArray(new String[0]));
     }
@@ -38,4 +38,5 @@ class SaveSelectionPanel extends BasePanel {
 	public String getSelectedSave() {
 		return this.savesList.getSelectedValue();
     }
+
 }

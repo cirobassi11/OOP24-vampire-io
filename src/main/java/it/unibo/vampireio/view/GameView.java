@@ -10,6 +10,7 @@ import it.unibo.vampireio.controller.UnlockableCharacterData;
 import it.unibo.vampireio.controller.UnlockablePowerupData;
 
 public interface GameView {
+    
     void update(GameData data);
     void updateSaveList(List<String> saves);
     void showScreen(String name);

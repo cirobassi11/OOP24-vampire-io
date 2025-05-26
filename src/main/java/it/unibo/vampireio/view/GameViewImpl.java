@@ -77,12 +77,12 @@ public class GameViewImpl implements GameView {
         // Blocca aspect ratio
         this.frame.addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e) {
-                int width = Math.max(frame.getWidth(), MIN_RESOLUTION.width);
-                int height = Math.max((int) (width / ASPECT_RATIO), MIN_RESOLUTION.height);
+            public void componentResized(final ComponentEvent e) {
+                final int width = Math.max(frame.getWidth(), MIN_RESOLUTION.width);
+                final int height = Math.max((int) (width / ASPECT_RATIO), MIN_RESOLUTION.height);
                 setResolution(new Dimension(width, height));
-                for (var panel : panels.values()) {
-                    if(panel instanceof BasePanel) {
+                for (final var panel : panels.values()) {
+                    if (panel instanceof BasePanel) {
                         ((BasePanel) panel).updateComponentSize();
                     }
                 }
@@ -122,12 +122,12 @@ public class GameViewImpl implements GameView {
         return this.currentFrameSize;
     }
 
-    private void setResolution(Dimension resolution) {
+    private void setResolution(final Dimension resolution) {
         this.frame.setSize(resolution);
         this.currentFrameSize = resolution;
     }
 
-    private void setIcon(String path) {
+    private void setIcon(final String path) {
         final Image image = new ImageIcon(getClass().getResource(path)).getImage();
         try {
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
@@ -135,12 +135,12 @@ public class GameViewImpl implements GameView {
             } else {
                 Taskbar.getTaskbar().setIconImage(image);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void setBackgroundImage(String path) {
+    private void setBackgroundImage(final String path) {
         this.backgroundImage = new ImageIcon(getClass().getResource(path)).getImage();
     }
 
@@ -153,30 +153,30 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void update(GameData data) {
-        var gamePanel = (GamePanel) this.panels.get(GAME);
+    public void update(final GameData data) {
+        final var gamePanel = (GamePanel) this.panels.get(GAME);
         gamePanel.setData(data);
         gamePanel.repaint();
     }
 
     @Override
-    public void updateSaveList(List<String> saveNames) {
-        var loadSavePanel = (SaveSelectionPanel) this.panels.get(SAVE_SELECTION);
+    public void updateSaveList(final List<String> saveNames) {
+        final var loadSavePanel = (SaveSelectionPanel) this.panels.get(SAVE_SELECTION);
         loadSavePanel.updateSavesList(saveNames);
     }
 
     @Override
-    public void showScreen(String name) {
+    public void showScreen(final String name) {
         this.cardLayout.show(this.cardPanel, name);
     }
 
     @Override
-    public void setPlayerInputListener(InputHandler listener) {
+    public void setPlayerInputListener(final InputHandler listener) {
         listener.setupKeyBindings((GamePanel) this.panels.get(GAME));
     }
 
     @Override
-	public void setChoosableCharactersData(List<UnlockableCharacterData> choosableCharactersData) {
+	public void setChoosableCharactersData(final List<UnlockableCharacterData> choosableCharactersData) {
 		((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setChoosableCharactersData(choosableCharactersData);
 	}
 
@@ -196,79 +196,83 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setItemsData(List<ItemData> itemsData) {
+    public void setItemsData(final List<ItemData> itemsData) {
         ((ItemSelectionPanel) this.panels.get(ITEM_SELECTION)).setItemsData(itemsData);
     }
 
     @Override
-    public void setConfirmCharacterListener(ActionListener listener) {
+    public void setConfirmCharacterListener(final ActionListener listener) {
         ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setConfirmCharacterListener(listener);
     }
 
     @Override
-    public void setNewSaveListener(ActionListener listener) {
+    public void setNewSaveListener(final ActionListener listener) {
         ((SaveMenuPanel) this.panels.get(SAVE_MENU)).setNewSaveListener(listener);
     }
 
     @Override
-    public void setShowSaveListener(ActionListener listener) {
+    public void setShowSaveListener(final ActionListener listener) {
         ((SaveMenuPanel) this.panels.get(SAVE_MENU)).setShowSaveListener(listener);
     }
     
     @Override
-    public void setChooseSaveListener(ActionListener listener) {
+    public void setChooseSaveListener(final ActionListener listener) {
         ((SaveSelectionPanel) this.panels.get(SAVE_SELECTION)).setChooseSaveListener(listener);
     }
 
     @Override
-    public void setChooseItemListener(ActionListener listener) {
+    public void setChooseItemListener(final ActionListener listener) {
         ((ItemSelectionPanel) this.panels.get(ITEM_SELECTION)).setChooseItemListener(listener);
     }
 
     @Override
-    public void setCharactersShopListener(ActionListener listener) {
+    public void setCharactersShopListener(final ActionListener listener) {
         ((ShopPanel) this.panels.get(SHOP)).setCharactersShopListener(listener);
     }
 
     @Override
-    public void setPowerUpsShopListener(ActionListener listener) {
+    public void setPowerUpsShopListener(final ActionListener listener) {
         ((ShopPanel) this.panels.get(SHOP)).setPowerUpsShopListener(listener);
     }
 
     @Override
-    public void setStartListener(ActionListener listener) {
+    public void setStartListener(final ActionListener listener) {
         ((StartMenuPanel) this.panels.get(START)).setStartListener(listener);
     }
 
     @Override
-    public void setScoreboardListener(ActionListener listener) {
+    public void setScoreboardListener(final ActionListener listener) {
         ((StartMenuPanel) this.panels.get(START)).setScoreboardListener(listener);
     }
 
     @Override
-    public void setShopListener(ActionListener listener) {
+    public void setShopListener(final ActionListener listener) {
         ((StartMenuPanel) this.panels.get(START)).setShopListener(listener);
     }
 
     @Override
-    public void setLoadSaveListener(ActionListener listener) {
+    public void setLoadSaveListener(final ActionListener listener) {
         ((StartMenuPanel) this.panels.get(START)).setLoadSaveListener(listener);
     }
 
     @Override
-    public void setCoinsAmount(int coins) {
+    public void setCoinsAmount(final int coins) {
         ((UnlockableCharactersPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setCoinsAmount(coins);
         ((UnlockablePowerUpsPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setCoinsAmount(coins);
     }
 
     @Override
-	public void setUnlockableCharactersData(List<UnlockableCharacterData> unlockableCharactersData) {
-		((UnlockableCharactersPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setUnlockableCharactersData(unlockableCharactersData);
+	public void setUnlockableCharactersData(final List<UnlockableCharacterData> unlockableCharactersData) {
+		((UnlockableCharactersPanel) this.panels
+        .get(UNLOCKABLE_CHARACTERS))
+        .setUnlockableCharactersData(unlockableCharactersData);
 	}
 
     @Override
-    public void setUnlockablePowerupsData(List<UnlockablePowerupData> unlockablePowerupsData) {
-		((UnlockablePowerUpsPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setUnlockablePowerupsData(unlockablePowerupsData);
+    public void setUnlockablePowerupsData(final List<UnlockablePowerupData> unlockablePowerupsData) {
+		((UnlockablePowerUpsPanel) this.panels
+        .get(UNLOCKABLE_POWERUPS))
+        .setUnlockablePowerupsData(unlockablePowerupsData);
 	}
 
     @Override

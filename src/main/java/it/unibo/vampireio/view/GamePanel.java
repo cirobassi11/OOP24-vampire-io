@@ -304,16 +304,16 @@ class GamePanel extends JPanel {
     }
 
     // Checks if the object is visible on the screen
-    private boolean isVisible(PositionableData positionable, Dimension objectDimension, double scale, int cameraOffsetX, int cameraOffsetY) {
-        int screenX = (int) (positionable.getPosition().getX() * scale + cameraOffsetX);
-        int screenY = (int) (positionable.getPosition().getY() * scale + cameraOffsetY);
-        int width = (int) (objectDimension.width * scale);
-        int height = (int) (objectDimension.height * scale);
+    private boolean isVisible(final PositionableData positionable, final Dimension objectDimension, final double scale, final int cameraOffsetX, final int cameraOffsetY) {
+        final int screenX = (int) (positionable.getPosition().getX() * scale + cameraOffsetX);
+        final int screenY = (int) (positionable.getPosition().getY() * scale + cameraOffsetY);
+        final int width = (int) (objectDimension.width * scale);
+        final int height = (int) (objectDimension.height * scale);
 
         return !(screenX + width < 0 || screenX > this.getWidth() || screenY + height < 0 || screenY > this.getHeight());
     }
 
-    public void setPlayerInputListener(KeyListener inputListener) {
+    public void setPlayerInputListener(final KeyListener inputListener) {
         this.addKeyListener(inputListener);
         this.setFocusable(true);
         this.requestFocus();

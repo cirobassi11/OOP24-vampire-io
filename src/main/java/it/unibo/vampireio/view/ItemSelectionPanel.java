@@ -21,13 +21,13 @@ class ItemSelectionPanel extends BasePanel {
         this.itemList = this.addScrollableList(List.of(), 0, 0);
     }
 
-    public void setChooseItemListener(ActionListener listener) {
+    public void setChooseItemListener(final ActionListener listener) {
         this.chooseItemButton.addActionListener(listener);
     }
 
-    void setItemsData(List<ItemData> itemsData) {
+    void setItemsData(final List<ItemData> itemsData) {
         this.itemsData = itemsData;
-        if(itemsData == null || itemsData.isEmpty()) {
+        if (itemsData == null || itemsData.isEmpty()) {
             this.itemNames = List.of();
             return;
         }
@@ -41,7 +41,7 @@ class ItemSelectionPanel extends BasePanel {
     }
 
     public String getSelectedItem() {
-        int selectedIndex = this.itemList.getSelectedIndex();
+        final int selectedIndex = this.itemList.getSelectedIndex();
         if (selectedIndex >= 0 && selectedIndex < this.itemsData.size()) {
             return this.itemsData.get(selectedIndex).getId();
         }

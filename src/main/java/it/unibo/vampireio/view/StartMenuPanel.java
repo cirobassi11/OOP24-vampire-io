@@ -11,7 +11,7 @@ class StartMenuPanel extends BasePanel {
     private JButton loadSaveButton;
     private JButton quitButton;
 
-    StartMenuPanel(GameViewImpl view) {
+    StartMenuPanel(final GameViewImpl view) {
         super(view);
 
         this.startButton = this.addButton("START", 1, 0);
@@ -21,23 +21,23 @@ class StartMenuPanel extends BasePanel {
         this.quitButton = this.addButton("QUIT", 1, 2);
     }
     
-    void setStartListener(ActionListener listener) {
+    void setStartListener(final ActionListener listener) {
         this.startButton.addActionListener(listener);
     }
 
-    void setScoreboardListener(ActionListener listener) {
+    void setScoreboardListener(final ActionListener listener) {
         this.scoreboardButton.addActionListener(listener);
     }
 
-    void setShopListener(ActionListener listener) {
+    void setShopListener(final ActionListener listener) {
         this.shopButton.addActionListener(listener);
     }
 
-    void setLoadSaveListener(ActionListener listener) {
+    void setLoadSaveListener(final ActionListener listener) {
         this.loadSaveButton.addActionListener(listener);
     }
 
-    void setQuitListener(ActionListener listener) {
+    void setQuitListener(final ActionListener listener) {
         this.quitButton.addActionListener(listener);
     }
 

@@ -9,7 +9,7 @@ class ShopPanel extends BasePanel {
     private JButton powerUpsButton;
     private JButton backButton;
 
-    ShopPanel(GameViewImpl view) {
+    ShopPanel(final GameViewImpl view) {
         super(view);
 
         this.charactersButton = this.addButton("CHARACTERS", 0, 0);
@@ -17,15 +17,15 @@ class ShopPanel extends BasePanel {
         this.backButton = this.addButton("BACK", 0, 2);
     }
 
-    void setCharactersShopListener(ActionListener listener) {
+    void setCharactersShopListener(final ActionListener listener) {
         this.charactersButton.addActionListener(listener);
     }
 
-    void setPowerUpsShopListener(ActionListener listener) {
+    void setPowerUpsShopListener(final ActionListener listener) {
         this.powerUpsButton.addActionListener(listener);
     }
 
-    void setBackListener(ActionListener listener) {
+    void setBackListener(final ActionListener listener) {
         this.backButton.addActionListener(listener);
     }
 }

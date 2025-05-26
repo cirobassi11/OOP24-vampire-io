@@ -18,7 +18,7 @@ class ScoreboardPanel extends BasePanel {
     private List<ScoreData> scoresData;
     private List<String> scoreNames = List.of();
 
-    ScoreboardPanel(GameViewImpl view) {
+    ScoreboardPanel(final GameViewImpl view) {
         super(view);
 
         this.scoresList = this.addScrollableList(this.scoreNames, 0, 0);
@@ -33,7 +33,7 @@ class ScoreboardPanel extends BasePanel {
         });
     }
 
-    void setScoresData(List<ScoreData> scoresData) {
+    void setScoresData(final List<ScoreData> scoresData) {
         this.scoresData = scoresData;
 
         if (scoresData == null || scoresData.isEmpty()) {
@@ -71,7 +71,8 @@ class ScoreboardPanel extends BasePanel {
         }
     }
 
-    void setBackListener(ActionListener listener) {
+    void setBackListener(final ActionListener listener) {
         this.backButton.addActionListener(listener);
     }
+
 }
