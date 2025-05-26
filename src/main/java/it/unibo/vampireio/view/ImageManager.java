@@ -17,11 +17,11 @@ class ImageManager {
 
     private final String loadingError = "An error occurred while loading image";
 
-    public ImageManager(GameViewImpl view) {
+    public ImageManager(final GameViewImpl view) {
         this.view = view;
     }
 
-    Image getImage(String key) {
+    Image getImage(final String key) {
         if (this.images.containsKey(key)) {
             return this.images.get(key);
         }
@@ -31,7 +31,7 @@ class ImageManager {
         }
 
         try {
-            Image img = ImageIO.read(ImageManager.class.getResource("/images/" + key + ".png"));
+            final Image img = ImageIO.read(ImageManager.class.getResource("/images/" + key + ".png"));
             this.images.put(key, img);
             return img;
         } catch (IOException | IllegalArgumentException e) {

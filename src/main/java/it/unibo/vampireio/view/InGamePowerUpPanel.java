@@ -1,7 +1,7 @@
 package it.unibo.vampireio.view;
 
 class InGamePowerUpPanel extends BasePanel {
-    InGamePowerUpPanel(GameViewImpl view) {
+    InGamePowerUpPanel(final GameViewImpl view) {
         super(view);
     }
 }

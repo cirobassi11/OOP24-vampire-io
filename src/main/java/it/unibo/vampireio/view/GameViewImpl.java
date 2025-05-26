@@ -286,37 +286,37 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setBuyCharactersListener(ActionListener listener) {
+    public void setBuyCharactersListener(final ActionListener listener) {
         ((UnlockableCharactersPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setBuyCharactersListener(listener);
     }
 
     @Override
-    public void setBuyPowerUpsListener(ActionListener listener) {
+    public void setBuyPowerUpsListener(final ActionListener listener) {
         ((UnlockablePowerUpsPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setBuyPowerUpsListener(listener);
     }
 
     @Override
-    public void setReturnMenuListener(ActionListener listener) {
+    public void setReturnMenuListener(final ActionListener listener) {
         ((EndGamePanel) this.panels.get(END_GAME)).setReturnMenuListener(listener);
     }
 
     @Override
-    public void setResumeListener(ActionListener listener) {
+    public void setResumeListener(final ActionListener listener) {
         ((PausePanel) this.panels.get(PAUSE)).setResumeListener(listener);
     }
 
     @Override
-    public void setExitListener(ActionListener listener) {
+    public void setExitListener(final ActionListener listener) {
         ((PausePanel) this.panels.get(PAUSE)).setExitListener(listener);
     }
 
     @Override
-    public void setScoresData(List<ScoreData> scores) {
+    public void setScoresData(final List<ScoreData> scores) {
         ((ScoreboardPanel) this.panels.get(SCOREBOARD)).setScoresData(scores);
     }
     
     @Override
-    public void setBackListener(ActionListener listener) {
+    public void setBackListener(final ActionListener listener) {
         ((SaveSelectionPanel) this.panels.get(SAVE_SELECTION)).setBackListener(listener);
         ((ScoreboardPanel) this.panels.get(SCOREBOARD)).setBackListener(listener);
         ((ShopPanel) this.panels.get(SHOP)).setBackListener(listener);
@@ -326,18 +326,18 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setQuitListener(ActionListener listener) {
+    public void setQuitListener(final ActionListener listener) {
         ((SaveMenuPanel) this.panels.get(SAVE_MENU)).setQuitListener(listener);
         ((StartMenuPanel) this.panels.get(START)).setQuitListener(listener);
     }
 
     @Override
-    public void setScore(ScoreData score) {
+    public void setScore(final ScoreData score) {
         ((EndGamePanel) this.panels.get(END_GAME)).setScore(score);
     }
 
     @Override
-    public void showError(String message) {
+    public void showError(final String message) {
         javax.swing.JOptionPane.showMessageDialog(frame, message, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 }

@@ -55,10 +55,10 @@ class ScoreboardPanel extends BasePanel {
     }
 
     private void updateSelectedScoreDetails() {
-        int index = this.scoresList.getSelectedIndex();
+        final int index = this.scoresList.getSelectedIndex();
         if (index >= 0 && index < this.scoresData.size()) {
-            ScoreData selected = this.scoresData.get(index);
-            String details = String.format(
+            final ScoreData selected = this.scoresData.get(index);
+            final String details = String.format(
                 "<html>Character: %s<br>Session Time: %.2f seconds<br>Kills: %d<br>Level: %d<br>Coins: %d<br>Score: %d</html>",
                 selected.getCharacterName(),
                 selected.getSessionTime() / 1000.0,

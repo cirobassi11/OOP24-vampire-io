@@ -18,7 +18,7 @@ class UnlockablePowerUpsPanel extends BasePanel {
     private JList<String> powerupsList;
     private JLabel coinsLabel;
 
-    UnlockablePowerUpsPanel(GameViewImpl view) {
+    UnlockablePowerUpsPanel(final GameViewImpl view) {
         super(view);
         
         List<String> powerupNames = List.of();
@@ -29,11 +29,11 @@ class UnlockablePowerUpsPanel extends BasePanel {
         this.backButton = this.addButton("BACK", 0, 3);
     }
 
-    void setUnlockablePowerupsData(List<UnlockablePowerupData> unlockablePowerupsData) {
+    void setUnlockablePowerupsData(final List<UnlockablePowerupData> unlockablePowerupsData) {
         this.unlockablePowerupsData = unlockablePowerupsData;
         this.powerupNames = List.of();
 
-        if(unlockablePowerupsData != null && !unlockablePowerupsData.isEmpty()) {
+        if (unlockablePowerupsData != null && !unlockablePowerupsData.isEmpty()) {
             this.powerupNames = unlockablePowerupsData.stream()
             .map(powerup -> powerup.getName() + " [" 
                         + powerup.getCurrentLevel() + "/" 
@@ -53,15 +53,15 @@ class UnlockablePowerUpsPanel extends BasePanel {
         return this.unlockablePowerupsData.get(selectedIndex).getId();
     }
 
-    void setBuyPowerUpsListener(ActionListener listener) {
+    void setBuyPowerUpsListener(final ActionListener listener) {
         this.buyButton.addActionListener(listener);
     }
     
-    void setBackListener(ActionListener listener) {
+    void setBackListener(final ActionListener listener) {
         this.backButton.addActionListener(listener);
     }
 
-    void setCoinsAmount(int coins) {
+    void setCoinsAmount(final int coins) {
         this.coinsLabel.setText("Coins: " + coins);
     }
 

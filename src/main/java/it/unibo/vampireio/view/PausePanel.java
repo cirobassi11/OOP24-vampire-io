@@ -9,7 +9,7 @@ class PausePanel extends BasePanel {
     private JButton resumeButton;
     private JButton exitButton;
 
-    PausePanel(GameViewImpl view) {
+    PausePanel(final GameViewImpl view) {
         super(view);
         
         this.resumeButton = this.addButton("RESUME", 0, 0);

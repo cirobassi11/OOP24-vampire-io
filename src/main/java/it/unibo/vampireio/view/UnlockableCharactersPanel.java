@@ -16,7 +16,7 @@ class UnlockableCharactersPanel extends BasePanel {
     private JList<String> charactersList;
     private JLabel coinsLabel;
 
-    UnlockableCharactersPanel(GameViewImpl view) {
+    UnlockableCharactersPanel(final GameViewImpl view) {
         super(view);
 
         this.coinsLabel = this.addLabel("", 0, 0);
@@ -26,9 +26,9 @@ class UnlockableCharactersPanel extends BasePanel {
         this.backButton = this.addButton("BACK", 0, 3);
     }
     
-    void setUnlockableCharactersData(List<UnlockableCharacterData> unlockableCharactersData) {
+    void setUnlockableCharactersData(final List<UnlockableCharacterData> unlockableCharactersData) {
         this.unlockableCharactersData = unlockableCharactersData;
-        if(unlockableCharactersData == null || unlockableCharactersData.isEmpty()) {
+        if (unlockableCharactersData == null || unlockableCharactersData.isEmpty()) {
             this.characterNames = List.of();
         }
         else {
@@ -47,15 +47,15 @@ class UnlockableCharactersPanel extends BasePanel {
         return this.unlockableCharactersData.get(selectedIndex).getId();
     }
 
-    void setBuyCharactersListener(ActionListener listener) {
+    void setBuyCharactersListener(final ActionListener listener) {
         this.buyButton.addActionListener(listener);
     }
     
-    void setBackListener(ActionListener listener) {
+    void setBackListener(final ActionListener listener) {
         this.backButton.addActionListener(listener);
     }
 
-    void setCoinsAmount(int coins) {
+    void setCoinsAmount(final int coins) {
         this.coinsLabel.setText("Coins: " + coins);
     }
 

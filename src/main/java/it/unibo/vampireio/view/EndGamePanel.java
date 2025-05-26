@@ -10,27 +10,28 @@ class EndGamePanel extends BasePanel {
     private JButton returnMenuButton;
     private JLabel scoreLabel;
 
-    EndGamePanel(GameViewImpl view) {
+    EndGamePanel(final GameViewImpl view) {
         super(view);
 
         this.scoreLabel = this.addLabel("", 0, 0);
         this.returnMenuButton = addButton("CONTINUE", 0, 1);
     }
 
-    void setScore(ScoreData score) {
+    void setScore(final ScoreData score) {
         this.scoreLabel.setText(
-            "<html>"+
-            "Score: " + score.getScore() +
-            "<br>Character: " + score.getCharacterName() +
-            "<br>Level: " + score.getLevelCounter() +
-            "<br>Kills: " + score.getKillCounter() +
-            "<br>Coins: " + score.getCoinCounter() +
-            "<br>Time: " + (int) score.getSessionTime() / 1000 / 60 + "min " + (int) score.getSessionTime() / 1000 % 60 + "sec" +
-            "</html>"
+            "<html>"
+            + "Score: " + score.getScore()
+            + "<br>Character: " + score.getCharacterName()
+            + "<br>Level: " + score.getLevelCounter()
+            + "<br>Kills: " + score.getKillCounter()
+            + "<br>Coins: " + score.getCoinCounter()
+            + "<br>Time: " + (int) score.getSessionTime() / 1000 / 60 + "min " 
+            + (int) score.getSessionTime() / 1000 % 60 + "sec"
+            + "</html>"
         );
     }
 
-    void setReturnMenuListener(ActionListener listener) {
+    void setReturnMenuListener(final ActionListener listener) {
         this.returnMenuButton.addActionListener(listener);
     }
 }

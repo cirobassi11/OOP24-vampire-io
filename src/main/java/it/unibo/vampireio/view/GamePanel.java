@@ -59,13 +59,13 @@ class GamePanel extends JPanel {
     private int currentCharacterFrame = 0;
     private long lastCharacterFrameTime = 0;
 
-    GamePanel(GameViewImpl view) {
+    GamePanel(final GameViewImpl view) {
         this.view = view;
         this.imageManager = new ImageManager(this.view);
         setFocusable(true);
     }
 
-    void setData(GameData data) {
+    void setData(final GameData data) {
         if (this.data == null || data.getElapsedTime() < this.data.getElapsedTime()) {
             this.currentCharacterFrame = 0;
             this.lastCharacterFrameTime = 0;
@@ -74,37 +74,37 @@ class GamePanel extends JPanel {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(final Graphics g) {
         super.paintComponent(g);
 
-        Dimension fov = this.data.getVisibleMapSizeData().getDimension();
-        double scale = this.view.getFrameSize().getWidth() / fov.getWidth();
+        final Dimension fov = this.data.getVisibleMapSizeData().getDimension();
+        final double scale = this.view.getFrameSize().getWidth() / fov.getWidth();
 
-        LivingEntityData character = this.data.getCharacterData();
-        Dimension characterDimension = new Dimension((int) (character.getRadius() * 2), (int) (character.getRadius() * 2));
+        final LivingEntityData character = this.data.getCharacterData();
+        final Dimension characterDimension = new Dimension((int) (character.getRadius() * 2), (int) (character.getRadius() * 2));
 
-        int screenCenterX = (int) (this.getWidth() / 2);
-        int screenCenterY = (int) (this.getHeight() / 2);
+        final int screenCenterX = (int) (this.getWidth() / 2);
+        final int screenCenterY = (int) (this.getHeight() / 2);
 
-        int cameraOffsetX = (int) (screenCenterX - character.getPosition().getX() * scale);
-        int cameraOffsetY = (int) (screenCenterY - character.getPosition().getY() * scale);
+        final int cameraOffsetX = (int) (screenCenterX - character.getPosition().getX() * scale);
+        final int cameraOffsetY = (int) (screenCenterY - character.getPosition().getY() * scale);
 
-        int startTileX = (int) Math.floor((character.getPosition().getX() - screenCenterX / scale) / characterDimension.width);
-        int startTileY = (int) Math.floor((character.getPosition().getY() - screenCenterY / scale) / characterDimension.height);
+        final int startTileX = (int) Math.floor((character.getPosition().getX() - screenCenterX / scale) / characterDimension.width);
+        final int startTileY = (int) Math.floor((character.getPosition().getY() - screenCenterY / scale) / characterDimension.height);
 
-        int tilesNumX = (int) Math.ceil(fov.getWidth() / MAP_TILE_WIDTH) + 2;
-        int tilesNumY = (int) Math.ceil(fov.getHeight() / MAP_TILE_HEIGHT) + 2;
+        final int tilesNumX = (int) Math.ceil(fov.getWidth() / MAP_TILE_WIDTH) + 2;
+        final int tilesNumY = (int) Math.ceil(fov.getHeight() / MAP_TILE_HEIGHT) + 2;
 
         // Draws the map
         for (int y = 0; y < tilesNumY; y++) {
             for (int x = 0; x < tilesNumX; x++) {
-                int worldX = (startTileX + x) * MAP_TILE_WIDTH;
-                int worldY = (startTileY + y) * MAP_TILE_HEIGHT;
+                final int worldX = (startTileX + x) * MAP_TILE_WIDTH;
+                final int worldY = (startTileY + y) * MAP_TILE_HEIGHT;
 
-                int screenX = (int) (worldX * scale + cameraOffsetX);
-                int screenY = (int) (worldY * scale + cameraOffsetY);
+                final int screenX = (int) (worldX * scale + cameraOffsetX);
+                final int screenY = (int) (worldY * scale + cameraOffsetY);
 
-                Image tile = this.imageManager.getImage("map");
+                final Image tile = this.imageManager.getImage("map");
                 if (tile != null) {
                     g.drawImage(tile, screenX - TILE_BORDER_ADJUSTMENT, screenY - TILE_BORDER_ADJUSTMENT,
                         (int) (MAP_TILE_WIDTH * scale) + TILE_RENDER_PADDING,
@@ -117,10 +117,13 @@ class GamePanel extends JPanel {
 
         // Draws the collectibles
         for (PositionableData collectible : this.data.getCollectiblesData()) {
-            Dimension collectibleDimension = new Dimension((int) (collectible.getRadius() * 2), (int) (collectible.getRadius() * 2));
+            final Dimension collectibleDimension = 
+            new Dimension((int) (collectible.getRadius() * 2), (int) (collectible.getRadius() * 2));
             if (this.isVisible(collectible, collectibleDimension, scale, cameraOffsetX, cameraOffsetY)) {
-                int collectibleX = (int) (collectible.getPosition().getX() * scale + cameraOffsetX - collectibleDimension.width / 2);
-                int collectibleY = (int) (collectible.getPosition().getY() * scale + cameraOffsetY - collectibleDimension.height / 2);
+                final int collectibleX = (int) (collectible.getPosition().getX() * scale 
+                                    + cameraOffsetX - collectibleDimension.width / 2);
+                final int collectibleY = (int) (collectible.getPosition().getY() * scale 
+                                    + cameraOffsetY - collectibleDimension.height / 2);
                 Image tile = this.imageManager.getImage(collectible.getId());
                 if (tile != null) {
                     g.drawImage(tile, collectibleX, collectibleY,

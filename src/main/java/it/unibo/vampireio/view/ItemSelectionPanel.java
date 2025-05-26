@@ -14,7 +14,7 @@ class ItemSelectionPanel extends BasePanel {
     private JButton chooseItemButton;
     private JList<String> itemList;
 
-    ItemSelectionPanel(GameViewImpl view) {
+    ItemSelectionPanel(final GameViewImpl view) {
         super(view);
 
         this.chooseItemButton = this.addButton("CHOOSE", 0, 1);
