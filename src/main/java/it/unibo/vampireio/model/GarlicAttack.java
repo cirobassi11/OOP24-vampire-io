@@ -13,7 +13,13 @@ public class GarlicAttack extends AbstractAttack {
     private List<Enemy> damagedEnemies;
     private long lastDamageTime;
     
-    public GarlicAttack(String id, Point2D.Double position, double radius, int damage, long duration, GameWorld gameWorld) {
+    public GarlicAttack(
+        final String id,
+        final Point2D.Double position, 
+        final double radius, 
+        final int damage, 
+        final long duration, 
+        final GameWorld gameWorld) {
         super(id, position, radius, new Point2D.Double(0, 0), 0, damage, duration, gameWorld);
         this.creationTime = System.currentTimeMillis();
         this.damagedEnemies = new ArrayList<>();

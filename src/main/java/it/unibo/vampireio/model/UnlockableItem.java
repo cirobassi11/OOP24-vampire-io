@@ -26,7 +26,7 @@ public abstract class UnlockableItem implements Unlockable, Identifiable {
 
     @Override
     public boolean enhance() {
-        if(this.currentLevel >= this.maxLevel) {
+        if (this.currentLevel >= this.maxLevel) {
             return false;
         }
         this.currentLevel++;
@@ -34,7 +34,7 @@ public abstract class UnlockableItem implements Unlockable, Identifiable {
     }
 
     @Override
-    public void setCurrentLevel(int currentLevel) {
+    public void setCurrentLevel(final int currentLevel) {
         this.currentLevel = currentLevel;
     }
 

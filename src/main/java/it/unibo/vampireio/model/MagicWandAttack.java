@@ -6,7 +6,15 @@ public class MagicWandAttack extends AbstractAttack {
     
     private Enemy targetEnemy;
 
-    public MagicWandAttack(String id, Point2D.Double position, double radius, Point2D.Double direction, double speed, int damage, long duration, GameWorld gameWorld) {
+    public MagicWandAttack(
+        final String id, 
+        final Point2D.Double position, 
+        final double radius, 
+        final Point2D.Double direction, 
+        final double speed, 
+        final int damage, 
+        final long duration, 
+        final GameWorld gameWorld) {
         super(id, position, radius, direction, speed, damage, duration, gameWorld);
         this.targetEnemy = findNearestEnemy();
         if(this.targetEnemy == null) {

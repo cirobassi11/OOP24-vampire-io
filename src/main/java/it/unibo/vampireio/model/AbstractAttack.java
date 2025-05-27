@@ -10,7 +10,15 @@ public abstract class AbstractAttack extends MovableEntity implements Attack {
     protected boolean expired = false;
     private long elapsedTime = 0;
 
-    public AbstractAttack(String id, Point2D.Double position, double radius, Point2D.Double direction, double speed, int damage, long duration, GameWorld gameWorld) {
+    public AbstractAttack(
+        final String id, 
+        final Point2D.Double position, 
+        final double radius, 
+        final Point2D.Double direction, 
+        final double speed, 
+        final int damage, 
+        final long duration, 
+        final GameWorld gameWorld) {
         super(id, position, radius, direction, speed);
         this.damage = damage;
         this.gameWorld = gameWorld;

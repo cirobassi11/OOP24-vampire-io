@@ -5,7 +5,15 @@ public class UnlockableCharacter extends UnlockableItem {
     private String defaultWeapon;
     private double radius;
 
-    public UnlockableCharacter(String id, String name, String description, int price, double radius, Stats stats, String defaultWeapon) {
+    public UnlockableCharacter(
+        final String id, 
+        final String name, 
+        final String description, 
+        final int price, 
+        final double radius, 
+        final Stats stats, 
+        final String defaultWeapon) {
+        
         super(id, name, description, price, 1);
         this.characterStats = stats;
         this.defaultWeapon = defaultWeapon;

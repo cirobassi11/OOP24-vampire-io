@@ -160,7 +160,7 @@ class GamePanel extends JPanel {
 
         // Draws the enemies
         for (final LivingEntityData enemy : this.data.getEnemiesData()) {
-            Dimension enemyDimension = new Dimension((int) (enemy.getRadius() * 2), (int) (enemy.getRadius() * 2));
+            final Dimension enemyDimension = new Dimension((int) (enemy.getRadius() * 2), (int) (enemy.getRadius() * 2));
             if (this.isVisible(enemy, enemyDimension, scale, cameraOffsetX, cameraOffsetY)) {
                 final int enemyX = (int) (enemy.getPosition().getX() * scale + cameraOffsetX - enemyDimension.width / 2);
                 final int enemyY = (int) (enemy.getPosition().getY() * scale + cameraOffsetY - enemyDimension.height / 2);
@@ -181,7 +181,7 @@ class GamePanel extends JPanel {
 
                     if (enemy.isBeingAttacked()) { // white image if the enemy is being attacked
                         final BufferedImage whiteImage = new BufferedImage(enemyWidth, enemyHeight, BufferedImage.TYPE_INT_ARGB);
-                        Graphics2D whiteG = whiteImage.createGraphics();
+                        final Graphics2D whiteG = whiteImage.createGraphics();
                         whiteG.drawImage(tile.getScaledInstance(enemyWidth, enemyHeight, Image.SCALE_SMOOTH), 0, 0, null);
                         whiteG.setComposite(AlphaComposite.SrcAtop);
                         whiteG.setColor(new Color(255, 255, 255, 150));
@@ -288,10 +288,12 @@ class GamePanel extends JPanel {
         }
 
         // Draws the coin counter
-        g.drawString(String.valueOf(this.data.getCoinCounter()), (int) (this.getWidth() - COIN_COUNTER_X_OFFSET * scale), (int) (COUNTER_Y_OFFSET * scale));
+        g.drawString(String.valueOf(this.data.getCoinCounter()), 
+        (int) (this.getWidth() - COIN_COUNTER_X_OFFSET * scale), (int) (COUNTER_Y_OFFSET * scale));
         final Image coinCounterImage = this.imageManager.getImage("hud/coin");
         if (coinCounterImage != null) {
-            g.drawImage(coinCounterImage, (int) (this.getWidth() - COIN_ICON_X_OFFSET * scale), (int) (ICON_Y_OFFSET * scale), (int) (ICON_SIZE * scale), (int) (ICON_SIZE * scale), null);
+            g.drawImage(coinCounterImage, (int) (this.getWidth() - COIN_ICON_X_OFFSET * scale), 
+            (int) (ICON_Y_OFFSET * scale), (int) (ICON_SIZE * scale), (int) (ICON_SIZE * scale), null);
         }
 
         // Draws the timer
