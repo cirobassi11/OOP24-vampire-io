@@ -7,12 +7,12 @@ public class WeaponRandomizer {
     private List<String> weaponsList;
     private Character character;
     
-    public WeaponRandomizer(List<String> weaponsList, Character character) {
+    public WeaponRandomizer(final List<String> weaponsList, final Character character) {
         this.weaponsList = weaponsList;
         this.character = character;
     }
 
-    private List<String> randomize(int numberOfWeapons) {
+    private List<String> randomize(final int numberOfWeapons) {
         if (this.weaponsList.size() < numberOfWeapons) {
             return null;
         }
@@ -23,8 +23,8 @@ public class WeaponRandomizer {
             .collect(Collectors.toList());
     }
 
-    public List<String> getRandomWeapons(int numberOfWeapons){
-        if(!this.character.hasMaxWeapons()) {
+    public List<String> getRandomWeapons(final int numberOfWeapons) {
+        if (!this.character.hasMaxWeapons()) {
             return this.randomize(numberOfWeapons);
         }
         return character.getWeapons().stream()

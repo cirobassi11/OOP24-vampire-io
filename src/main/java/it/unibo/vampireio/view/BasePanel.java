@@ -42,21 +42,21 @@ abstract class BasePanel extends JPanel {
     protected final GameViewImpl view;
     private final List<Component> allComponents = new LinkedList<>();
 
-    BasePanel(GameViewImpl view) {
+    BasePanel(final GameViewImpl view) {
         this.view = view;
         this.setLayout(new GridBagLayout());
         this.setOpaque(false);
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         this.updateComponentSize();
         g.drawImage(this.view.getBackgroundImage(), 0, 0, this.getWidth(), this.getHeight(), this);
     }
 
-    private void addComponent(Component component, int gridx, int gridy) {
-        GridBagConstraints gbc = new GridBagConstraints();
+    private void addComponent(final Component component, final int gridx, final int gridy) {
+        final GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(
                 COMPONENT_INSET_TOP, COMPONENT_INSET_LEFT,
                 COMPONENT_INSET_BOTTOM, COMPONENT_INSET_RIGHT
@@ -70,8 +70,8 @@ abstract class BasePanel extends JPanel {
         this.allComponents.add(component);
     }
 
-    protected JButton addButton(String text, int gridx, int gridy) {
-        JButton button = new JButton(text);
+    protected JButton addButton(final String text, final int gridx, final int gridy) {
+        final JButton button = new JButton(text);
         button.setFont(DEFAULT_FONT);
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
@@ -81,11 +81,12 @@ abstract class BasePanel extends JPanel {
         button.setBackground(BUTTON_BACKGROUND);
         button.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent evt) {
+            public void mouseEntered(final MouseEvent evt) {
                 button.setBackground(BUTTON_HOVER);
             }
+            
             @Override
-            public void mouseExited(MouseEvent evt) {
+            public void mouseExited(final MouseEvent evt) {
                 button.setBackground(BUTTON_BACKGROUND);
             }
         });
@@ -93,8 +94,8 @@ abstract class BasePanel extends JPanel {
         return button;
     }
 
-    protected JLabel addLabel(String text, int gridx, int gridy) {
-        JLabel label = new JLabel(text);
+    protected JLabel addLabel(final String text, final int gridx, final int gridy) {
+        final JLabel label = new JLabel(text);
         label.setFont(DEFAULT_FONT);
         label.setForeground(Color.WHITE);
 
@@ -102,8 +103,8 @@ abstract class BasePanel extends JPanel {
         return label;
     }
 
-    protected JComboBox<String> addComboBox(int gridx, int gridy) {
-        JComboBox<String> comboBox = new JComboBox<>();
+    protected JComboBox<String> addComboBox(final int gridx, final int gridy) {
+        final JComboBox<String> comboBox = new JComboBox<>();
         comboBox.setFont(DEFAULT_FONT.deriveFont(SMALL_FONT_SCALE));
         comboBox.setBackground(COMBOBOX_BACKGROUND);
         comboBox.setForeground(Color.WHITE);
@@ -112,18 +113,18 @@ abstract class BasePanel extends JPanel {
         return comboBox;
     }
 
-    protected JList<String> addScrollableList(List<String> items, int gridx, int gridy) {
-        DefaultListModel<String> model = new DefaultListModel<>();
+    protected JList<String> addScrollableList(final List<String> items, final int gridx, final int gridy) {
+        final DefaultListModel<String> model = new DefaultListModel<>();
         items.forEach(model::addElement);
 
-        JList<String> list = new JList<>(model);
+        final JList<String> list = new JList<>(model);
         list.setFont(DEFAULT_FONT.deriveFont(SMALL_FONT_SCALE));
         list.setForeground(Color.WHITE);
         list.setBackground(LIST_BACKGROUND);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setVisibleRowCount(LIST_VISIBLE_ROWS);
 
-        JScrollPane scrollPane = new JScrollPane(list);
+        final JScrollPane scrollPane = new JScrollPane(list);
         scrollPane.setBorder(BorderFactory.createLineBorder(LIST_BORDER_COLOR, LIST_BORDER_THICKNESS));
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
@@ -133,9 +134,9 @@ abstract class BasePanel extends JPanel {
     }
 
     void updateComponentSize() {
-        Dimension frameSize = this.view.getFrameSize();
+        final Dimension frameSize = this.view.getFrameSize();
 
-        for (Component c : allComponents) {
+        for (final Component c : allComponents) {
             if (c instanceof JButton) {
                 c.setPreferredSize(new Dimension(
                         frameSize.width / BUTTON_WIDTH_RATIO,

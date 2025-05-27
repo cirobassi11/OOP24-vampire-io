@@ -46,7 +46,7 @@ class UnlockablePowerUpsPanel extends BasePanel {
     }
 
     String getSelectedPowerup() {
-        int selectedIndex = this.powerupsList.getSelectedIndex();
+        final int selectedIndex = this.powerupsList.getSelectedIndex();
         if (selectedIndex < 0 || selectedIndex >= this.unlockablePowerupsData.size()) {
             return null;
         }

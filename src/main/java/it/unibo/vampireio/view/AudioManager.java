@@ -10,8 +10,8 @@ class AudioManager {
 
     public AudioManager() {
         try {
-            InputStream backingTrackStream = getClass().getResourceAsStream(audioPath + "soundtrack.wav");
-            AudioInputStream backingTrackAudio = AudioSystem.getAudioInputStream(backingTrackStream);
+            final InputStream backingTrackStream = getClass().getResourceAsStream(audioPath + "soundtrack.wav");
+            final AudioInputStream backingTrackAudio = AudioSystem.getAudioInputStream(backingTrackStream);
             backingTrack = AudioSystem.getClip();
             backingTrack.open(backingTrackAudio);
 

@@ -7,7 +7,13 @@ public class WeaponData implements Identifiable {
     private double defaultCooldown;
     private int defaultAttacksPerCooldown;
 
-    public WeaponData(String id, String name, String description, double defaultCooldown, int defaultAttacksPerCooldown) {
+    public WeaponData(
+        final String id, 
+        final String name, 
+        final String description, 
+        final double defaultCooldown, 
+        final int defaultAttacksPerCooldown) {
+        
         this.id = id;
         this.name = name;
         this.description = description;

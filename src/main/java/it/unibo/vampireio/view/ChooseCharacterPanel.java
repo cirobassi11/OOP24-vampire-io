@@ -15,7 +15,7 @@ class ChooseCharacterPanel extends BasePanel {
     private JButton backButton;
     private JList<String> charactersList;
 
-    ChooseCharacterPanel(GameViewImpl view) {
+    ChooseCharacterPanel(final GameViewImpl view) {
         super(view);
 
         this.charactersList = this.addScrollableList(this.characterNames, 0, 0);
@@ -23,9 +23,9 @@ class ChooseCharacterPanel extends BasePanel {
         this.backButton = this.addButton("BACK", 0, 2);
     }
 
-    void setChoosableCharactersData(List<UnlockableCharacterData> choosableCharactersData) {
+    void setChoosableCharactersData(final List<UnlockableCharacterData> choosableCharactersData) {
         this.choosableCharactersData = choosableCharactersData;
-        if(choosableCharactersData == null || choosableCharactersData.isEmpty()) {
+        if (choosableCharactersData == null || choosableCharactersData.isEmpty()) {
             this.characterNames = List.of();
             return;
         }
@@ -39,18 +39,18 @@ class ChooseCharacterPanel extends BasePanel {
     }
 
     String getChoosedCharacter() {
-        int selectedIndex = this.charactersList.getSelectedIndex();
+        final int selectedIndex = this.charactersList.getSelectedIndex();
         if (selectedIndex < 0 || selectedIndex >= this.choosableCharactersData.size()) {
             return null;
         }
         return this.choosableCharactersData.get(selectedIndex).getId();
     }
 
-    void setConfirmCharacterListener(ActionListener listener) {
+    void setConfirmCharacterListener(final ActionListener listener) {
         this.confirmButton.addActionListener(listener);
     }
 
-    void setBackListener(ActionListener listener) {
+    void setBackListener(final ActionListener listener) {
         this.backButton.addActionListener(listener);
     }
 }
