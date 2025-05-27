@@ -1,6 +1,11 @@
 [
     {
         "defaultCharacterId": "characters/gennaro",
-        "weaponSlots": 3
+        "weaponSlots": 3,
+        "maxGameDuration": 300000,
+        "collectibleSpawnChance": 0.2,
+        "coinSpawnChance": 0.3,
+        "foodSpawnChance": 0.1,
+        "experienceGemSpawnChance": 0.6
     }
 ]

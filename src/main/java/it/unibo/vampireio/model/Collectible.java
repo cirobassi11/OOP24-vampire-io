@@ -1,5 +1,5 @@
 package it.unibo.vampireio.model;
 
-public interface Collectible extends Positionable {    
+public interface Collectible extends Collidable {    
     int getValue();
 }

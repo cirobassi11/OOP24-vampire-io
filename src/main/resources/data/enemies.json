@@ -5,7 +5,7 @@
     "level": 0,
     "damage": 1,
     "speed": 0.5,
-    "health": 10,
+    "health": 50,
     "radius": 32
   },
   {
@@ -14,7 +14,7 @@
     "level": 1,
     "damage": 1,
     "speed": 0.4,
-    "health": 20,
+    "health": 100,
     "radius": 32
   },
   {
@@ -23,7 +23,7 @@
     "level": 2,
     "damage": 1,
     "speed": 0.5,
-    "health": 10,
+    "health": 100,
     "radius": 32
   },
   {
@@ -32,7 +32,7 @@
     "level": 3,
     "damage": 1,
     "speed": 0.5,
-    "health": 10,
+    "health": 200,
     "radius": 32
   },
   {
@@ -41,7 +41,7 @@
     "level": 4,
     "damage": 1,
     "speed": 0.5,
-    "health": 10,
+    "health": 300,
     "radius": 32
   }
   ,{
@@ -49,8 +49,8 @@
     "name": "Sig.ra Rossi",
     "level": 5,
     "damage": 1,
-    "speed": 0.5,
-    "health": 10,
+    "speed": 1,
+    "health": 400,
     "radius": 32
   },
   {
@@ -59,7 +59,7 @@
     "level": 6,
     "damage": 1,
     "speed": 0,
-    "health": 10,
+    "health": 1000,
     "radius": 32
   },
   {

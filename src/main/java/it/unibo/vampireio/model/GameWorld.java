@@ -49,7 +49,7 @@ public class GameWorld implements GameModel {
     @Override
     public boolean initGame(String selectedCharacter) {
         this.isGameOver = false;
-        this.enemySpawner = new EnemySpawnerImpl(this);
+        this.enemySpawner = new EnemySpawner(this, this.configData.getMaxGameDuration());
         
         Optional<UnlockableCharacter> optionalSelectedUnlockableCharacter = this.dataLoader.getCharacterLoader().get(selectedCharacter);
         if(!optionalSelectedUnlockableCharacter.isPresent()) {
@@ -174,7 +174,12 @@ public class GameWorld implements GameModel {
                 while (enemyIterator.hasNext()) {
                     Enemy enemy = enemyIterator.next();
                     if (enemy.getHealth() <= 0) {
-                        this.spawnRandomCollectible(enemy.getPosition());
+                        this.spawnRandomCollectible(
+                            enemy.getPosition(),
+                            this.configData.getCollectibleSpawnChance(),
+                            this.configData.getCoinSpawnChance(),
+                            this.configData.getFoodSpawnChance(),
+                            this.configData.getExperienceGemSpawnChance());
                         enemyIterator.remove();
                         this.score.incrementKillCounter();
                     }
@@ -385,39 +390,47 @@ public class GameWorld implements GameModel {
     }
 
     private Stats applyBuffs(Stats baseStats) {
-    Stats modifiedStats = new Stats(baseStats);
-    Map<String, Integer> unlockedPowerUps = saveManager.getCurrentSave().getUnlockedPowerUps();
+        Stats modifiedStats = new Stats(baseStats);
+        Map<String, Integer> unlockedPowerUps = saveManager.getCurrentSave().getUnlockedPowerUps();
 
-    for (Map.Entry<String, Integer> entry : unlockedPowerUps.entrySet()) {
-        String powerupID = entry.getKey();
+        for (Map.Entry<String, Integer> entry : unlockedPowerUps.entrySet()) {
+            String powerupID = entry.getKey();
 
-        dataLoader.getPowerUpLoader().get(powerupID).ifPresent(unlockablePowerup -> {
-            double multiplier = unlockablePowerup.getMultiplier();
-            StatType statToModify = unlockablePowerup.getStatToModify();
-            modifiedStats.multiplyStat(statToModify, multiplier);
-        });
+            dataLoader.getPowerUpLoader().get(powerupID).ifPresent(unlockablePowerup -> {
+                double multiplier = unlockablePowerup.getMultiplier();
+                StatType statToModify = unlockablePowerup.getStatToModify();
+                modifiedStats.multiplyStat(statToModify, multiplier);
+            });
+        }
+
+        return modifiedStats;
     }
 
-    return modifiedStats;
-}
+    private void spawnRandomCollectible(
+            Point2D.Double position,
+            double collectibleSpawnChance,
+            double coinProbability,
+            double foodProbability,
+            double experienceGemProbability
+    ) {
+        if (position == null) {
+            return;
+        }
 
-    private void spawnRandomCollectible(Point2D.Double position) {
-        if(position == null) {
+        if (Math.random() >= collectibleSpawnChance) {
             return;
         }
-        if(Math.random() < 0.269) { //read from json
-            return;
-        }
-        double rand = Math.random();
-        Collectible collectible;
-        if (rand < 0.169) {
-            collectible = new Coin(position);
-        } else if (rand < 0.069) {
-            collectible = new Food(position);
+
+        double total = coinProbability + foodProbability + experienceGemProbability;
+        double rand = Math.random() * total;
+
+        if (rand < coinProbability) {
+            this.addCollectible(new Coin(position));
+        } else if (rand < coinProbability + foodProbability) {
+            this.addCollectible(new Food(position));
         } else {
-            collectible = new ExperienceGem(position);
+            this.addCollectible(new ExperienceGem(position));
         }
-        this.addCollectible(collectible);
     }
 
     @Override

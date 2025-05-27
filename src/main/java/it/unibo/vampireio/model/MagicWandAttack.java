@@ -15,6 +15,7 @@ public class MagicWandAttack extends AbstractAttack {
         final int damage, 
         final long duration, 
         final GameWorld gameWorld) {
+        
         super(id, position, radius, direction, speed, damage, duration, gameWorld);
         this.targetEnemy = findNearestEnemy();
         if(this.targetEnemy == null) {

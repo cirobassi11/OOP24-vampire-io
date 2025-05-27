@@ -20,6 +20,10 @@ import it.unibo.vampireio.view.GameView;
 import it.unibo.vampireio.view.GameViewImpl;
 
 public class GameControllerImpl implements GameController {
+    
+    private static final int FRAME_RATE = 60;
+    private static final int TICK_RATE = 60;
+    
     private GameModel model;
     private GameView view;
 
@@ -30,11 +34,7 @@ public class GameControllerImpl implements GameController {
 
     private boolean running = false;
     private boolean paused = false;
-
-    private final int frameRate = 60;
-    private final int tickRate = 60;
     
-
     private final Deque<String> screenHistory = new ArrayDeque<>();
 
     public GameControllerImpl() {
@@ -240,7 +240,7 @@ public class GameControllerImpl implements GameController {
     }
 
     private void modelLoop() {
-        long tickTime = 1000 / this.tickRate;
+        long tickTime = 1000 / TICK_RATE;
 
         while (this.running && !Thread.currentThread().isInterrupted()) {
             if (this.model.isGameOver()) {
@@ -321,7 +321,7 @@ public class GameControllerImpl implements GameController {
     }
 
     private void viewLoop() {
-        long frameTime = 1000 / this.frameRate;
+        long frameTime = 1000 / FRAME_RATE;
 
         while (this.running && !Thread.currentThread().isInterrupted()) {
             synchronized (this) {
@@ -420,7 +420,7 @@ public class GameControllerImpl implements GameController {
                     collectible.getPosition().getY()
                 ),
                 new Point2D.Double(0, 0),
-                10 //???????
+                collectible.getRadius()
             ))
             .collect(Collectors.toList());
 

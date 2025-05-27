@@ -3,12 +3,18 @@ package it.unibo.vampireio.model;
 import java.awt.geom.Point2D;
 
 public abstract class MovableEntity extends CollidableEntity implements Movable {
+    
+    private static final double SPEED_MULTIPLIER = 0.2;
+    
     private Point2D.Double direction;
     private double speed;
 
-    private static final double SPEED_MULTIPLIER = 0.21;
-
-    protected MovableEntity(String id, Point2D.Double position, double radius, Point2D.Double direction, double speed) {
+    protected MovableEntity(
+        final String id, 
+        final Point2D.Double position, 
+        final double radius, 
+        final Point2D.Double direction, 
+        final double speed) {
         super(id, position, radius);
         this.direction = direction;
         this.speed = speed;
