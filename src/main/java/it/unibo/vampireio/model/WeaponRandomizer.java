@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 public class WeaponRandomizer {
     private List<String> weaponsList;
     private Character character;
-        
+                
     public WeaponRandomizer(final List<String> weaponsList, final Character character) {
         this.weaponsList = weaponsList;
         this.character = character;

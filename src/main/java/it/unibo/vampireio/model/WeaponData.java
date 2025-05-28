@@ -28,7 +28,7 @@ public class WeaponData implements Identifiable {
     public String getName() {
         return this.name;
     }
-    
+            
     public String getDescription() {
         return this.description;
     }

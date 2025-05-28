@@ -7,12 +7,12 @@ import javax.swing.JList;
 import it.unibo.vampireio.controller.ItemData;
 
 class ItemSelectionPanel extends AbstractBasePanel {
+    private static final long serialVersionUID = 1L;
 
     private List<ItemData> itemsData = List.of();
-    private List<String> itemNames = List.of();
-
-    private JButton chooseItemButton;
-    private JList<String> itemList;
+    
+    private final JButton chooseItemButton;
+    private final JList<String> itemList;
 
     ItemSelectionPanel(final GameViewImpl view) {
         super(view);
@@ -26,16 +26,16 @@ class ItemSelectionPanel extends AbstractBasePanel {
     }
 
     void setItemsData(final List<ItemData> itemsData) {
+        List<String> itemNames;
         this.itemsData = itemsData;
         if (itemsData == null || itemsData.isEmpty()) {
-            this.itemNames = List.of();
-            return;
+            itemNames = List.of();
         } else {
             this.itemsData = itemsData;
-            this.itemNames = itemsData.stream()
+            itemNames = itemsData.stream()
                     .map(ItemData::getName)
                     .toList();
-            this.itemList.setListData(this.itemNames.toArray(new String[0]));
+            this.itemList.setListData(itemNames.toArray(new String[0]));
         }
     }
 

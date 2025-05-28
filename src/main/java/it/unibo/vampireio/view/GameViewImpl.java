@@ -37,18 +37,18 @@ public class GameViewImpl implements GameView {
     // Aspect Ratio fisso (es. 16:9)
     private static final double ASPECT_RATIO = 16.0 / 9.0;
 
+    static final String FRAME_TITLE = "Vampire.io";
     private static final Dimension DEFAULT_RESOLUTION = new Dimension(1280, 720);
     private static final Dimension MIN_RESOLUTION = new Dimension(640, 360);
-    static final String FRAME_TITLE = "Vampire.io";
+    
+    private static final String iconPath = "/images/icon.png";
+    private static final String backgroundPath = "/images/background.png";
 
     private final JFrame frame;
     private final CardLayout cardLayout;
     private final JPanel cardPanel;
     private final Map<String, JPanel> panels = new HashMap<>();
-    
-    private final String iconPath = "/images/icon.png";
-    private final String backgroundPath = "/images/background.png";
-    
+
     private Dimension currentFrameSize;
     private Image backgroundImage;
 
@@ -93,7 +93,7 @@ public class GameViewImpl implements GameView {
         this.frame.requestFocus();
 
         this.initPanels();
-        
+
         ((GamePanel) this.panels.get(GAME)).setFocusable(true);
         ((GamePanel) this.panels.get(GAME)).requestFocusInWindow();
     }
@@ -311,7 +311,7 @@ public class GameViewImpl implements GameView {
     public void setScoresData(final List<ScoreData> scores) {
         ((ScoreboardPanel) this.panels.get(SCOREBOARD)).setScoresData(scores);
     }
-        
+    
     @Override
     public void setBackListener(final ActionListener listener) {
         ((SaveSelectionPanel) this.panels.get(SAVE_SELECTION)).setBackListener(listener);

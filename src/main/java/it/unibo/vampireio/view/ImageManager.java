@@ -11,11 +11,11 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 class ImageManager {
-    private GameViewImpl view;
+    private static final String LOADING_ERROR = "An error occurred while loading image";
+
+    private final GameViewImpl view;
     private final Map<String, Image> images = new HashMap<>();
     private final Set<String> failedImages = new HashSet<>();
-
-    private final String loadingError = "An error occurred while loading image";
 
     ImageManager(final GameViewImpl view) {
         this.view = view;
@@ -36,7 +36,7 @@ class ImageManager {
             return img;
         } catch (IOException | IllegalArgumentException e) {
             this.failedImages.add(key);
-            this.view.showError(loadingError + key);
+            this.view.showError(this.LOADING_ERROR + key);
             return new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
         }
     }

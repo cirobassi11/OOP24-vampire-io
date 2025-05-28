@@ -10,6 +10,7 @@ import javax.swing.JList;
 import it.unibo.vampireio.controller.ScoreData;
 
 class ScoreboardPanel extends AbstractBasePanel {
+    private static final long serialVersionUID = 1L;
 
     private final JButton backButton;
     private final JList<String> scoresList;

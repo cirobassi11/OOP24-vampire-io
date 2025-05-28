@@ -22,14 +22,14 @@ public class SaveManager {
     private final String savingError = "An error occurred while saving the file";
     private final String readingError = "An error occurred while reading the file";
 
-    public SaveManager(GameController gameController) {
+    public SaveManager(final GameController gameController) {
         this.gameController = gameController;
-        File indexFile = new File(indexFileName); // nome salvataggio e percorso file salvataggio
+        final File indexFile = new File(indexFileName); // nome salvataggio e percorso file salvataggio
         if (!indexFile.exists()) {
             try {
                 indexFile.createNewFile();
                 this.savesNames = new ArrayList<>();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 this.gameController.showError(this.savingError);
             }
         } else {
@@ -48,9 +48,9 @@ public class SaveManager {
         try (FileInputStream input = new FileInputStream(indexFile);
             ObjectInputStream in = new ObjectInputStream(input)) {
 
-            Object obj = in.readObject();
+            final Object obj = in.readObject();
             if (obj instanceof List<?>) {
-                for (Object item : (List<?>) obj) {
+                for (final Object item : (List<?>) obj) {
                     if (item instanceof String) {
                         this.savesNames.add((String) item);
                     } else {
@@ -71,7 +71,7 @@ public class SaveManager {
         try (FileOutputStream fileOut = new FileOutputStream(indexFileName);
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(savesNames);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             this.gameController.showError(this.savingError);
         }
     }

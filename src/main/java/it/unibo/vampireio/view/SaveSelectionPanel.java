@@ -7,16 +7,17 @@ import javax.swing.JButton;
 import javax.swing.JList;
 
 class SaveSelectionPanel extends AbstractBasePanel {
+    private static final long serialVersionUID = 1L;
 
-    private JButton selectButton;
-    private JButton backButton;
+    private final JButton selectButton;
+    private final JButton backButton;
 
     private List<String> saves;
-    private JList<String> savesList;
+    private final JList<String> savesList;
 
     SaveSelectionPanel(final GameViewImpl view) {
         super(view);
-        this.savesList = this.addScrollableList(List.of(), 0, 0);        
+        this.savesList = this.addScrollableList(List.of(), 0, 0);
         this.selectButton = this.addButton("SELECT", 0, 1);
         this.backButton = this.addButton("BACK", 0, 2);
     }
@@ -34,7 +35,7 @@ class SaveSelectionPanel extends AbstractBasePanel {
         this.savesList.setListData(this.saves.toArray(new String[0]));
     }
 
-	public String getSelectedSave() {
+    public String getSelectedSave() {
         return this.savesList.getSelectedValue();
     }
 

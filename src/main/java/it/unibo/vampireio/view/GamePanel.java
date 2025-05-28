@@ -190,12 +190,10 @@ class GamePanel extends JPanel {
                         whiteG.fillRect(0, 0, enemyWidth, enemyHeight);
                         whiteG.dispose();
                         g2d.drawImage(whiteImage, enemyX, enemyY, null);
-                    }
-
-                    else {
+                    } else {
                         g2d.drawImage(tile, enemyX, enemyY, enemyWidth, enemyHeight, null);
                     }
-                    
+
                     g2d.setTransform(oldTransform);
                 }
             }
@@ -265,12 +263,12 @@ class GamePanel extends JPanel {
         g.setColor(Color.BLUE);
         g.fillRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale), (int) ((this.getWidth() * levelPercentage) / 100),
         (int) (LEVEL_BAR_HEIGHT * scale));
-        
+
         g2d.setColor(Color.YELLOW);
         g2d.setStroke(new BasicStroke((int) (LEVEL_BAR_BORDER_WIDTH * scale)));
         g2d.drawRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale), this.getWidth(), 
         (int) (LEVEL_BAR_HEIGHT * scale));
-        
+
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString("LV " + this.data.getLevel(), (int) (this.getWidth() - LEVEL_TEXT_X_OFFSET * scale), 
@@ -328,11 +326,11 @@ class GamePanel extends JPanel {
         final double scale,
         final int cameraOffsetX,
         final int cameraOffsetY) {
-        
-        final int screenX = (int) (positionable.getPosition().getX() * scale + cameraOffsetX);
-        final int screenY = (int) (positionable.getPosition().getY() * scale + cameraOffsetY);
-        final int width = (int) (objectDimension.width * scale);
-        final int height = (int) (objectDimension.height * scale);
+
+            final int screenX = (int) (positionable.getPosition().getX() * scale + cameraOffsetX);
+            final int screenY = (int) (positionable.getPosition().getY() * scale + cameraOffsetY);
+            final int width = (int) (objectDimension.width * scale);
+            final int height = (int) (objectDimension.height * scale);
 
         return !(screenX + width < 0 || screenX > this.getWidth() || screenY + height < 0 || screenY > this.getHeight());
     }

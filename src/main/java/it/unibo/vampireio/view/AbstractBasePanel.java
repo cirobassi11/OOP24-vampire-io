@@ -9,7 +9,14 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
@@ -92,7 +99,7 @@ abstract class AbstractBasePanel extends JPanel {
             public void mouseEntered(final MouseEvent evt) {
                 button.setBackground(BUTTON_HOVER);
             }
-            
+                        
             @Override
             public void mouseExited(final MouseEvent evt) {
                 button.setBackground(BUTTON_BACKGROUND);

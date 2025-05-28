@@ -10,20 +10,16 @@ import it.unibo.vampireio.controller.UnlockableCharacterData;
 import it.unibo.vampireio.controller.UnlockablePowerupData;
 
 public interface GameView {
-    
     void update(GameData data);
-    
     void updateSaveList(List<String> saves);
-    
     void showScreen(String name);
-
     void setPlayerInputListener(InputHandler listener);
 
     /* Button action listeners */
     void setConfirmCharacterListener(ActionListener listener);
-    
+
     void setNewSaveListener(ActionListener listener);
-    
+        
     void setShowSaveListener(ActionListener listener);
     
     void setChooseSaveListener(ActionListener listener);

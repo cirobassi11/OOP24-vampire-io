@@ -4,12 +4,13 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 
 class StartMenuPanel extends AbstractBasePanel {
-
-    private JButton startButton;
-    private JButton scoreboardButton;
-    private JButton shopButton;
-    private JButton loadSaveButton;
-    private JButton quitButton;
+    private static final long serialVersionUID = 1L;
+    
+    private final JButton startButton;
+    private final JButton scoreboardButton;
+    private final JButton shopButton;
+    private final JButton loadSaveButton;
+    private final JButton quitButton;
 
     StartMenuPanel(final GameViewImpl view) {
         super(view);
@@ -20,7 +21,7 @@ class StartMenuPanel extends AbstractBasePanel {
         this.loadSaveButton = this.addButton("LOAD SAVE", 2, 1);
         this.quitButton = this.addButton("QUIT", 1, 2);
     }
-        
+
     void setStartListener(final ActionListener listener) {
         this.startButton.addActionListener(listener);
     }

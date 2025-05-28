@@ -65,7 +65,7 @@ public class Save implements Serializable {
     public void enhancePowerup(final UnlockablePowerUp unlockedPowerUp) {
         this.unlockedPowerUps.put(unlockedPowerUp.getId(), unlockedPowerUp.getCurrentLevel());
     }
-        
+            
     // Generazione stringa data-ora dd-MM-yyyy_HH-mm-ss
     private static String generateSaveTimestamp() {
         return LocalDateTime.now().format(FORMATTER);

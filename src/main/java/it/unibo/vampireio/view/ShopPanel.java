@@ -4,10 +4,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 
 class ShopPanel extends AbstractBasePanel {
-
-    private JButton charactersButton;
-    private JButton powerUpsButton;
-    private JButton backButton;
+    private static final long serialVersionUID = 1L;
+    
+    private final JButton charactersButton;
+    private final JButton powerUpsButton;
+    private final JButton backButton;
 
     ShopPanel(final GameViewImpl view) {
         super(view);

@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import it.unibo.vampireio.controller.ScoreData;
 
 class EndGamePanel extends AbstractBasePanel {
+    private static final int SECONDS_PER_MINUTE = 60;
 
     private JButton returnMenuButton;
     private JLabel scoreLabel;
@@ -25,8 +26,8 @@ class EndGamePanel extends AbstractBasePanel {
             + "<br>Level: " + score.getLevelCounter()
             + "<br>Kills: " + score.getKillCounter()
             + "<br>Coins: " + score.getCoinCounter()
-            + "<br>Time: " + (int) score.getSessionTime() / 1000 / 60 + "min " 
-            + (int) score.getSessionTime() / 1000 % 60 + "sec"
+            + "<br>Time: " + (int) score.getSessionTime() / 1000 / this.SECONDS_PER_MINUTE + "min " 
+            + (int) score.getSessionTime() / 1000 % this.SECONDS_PER_MINUTE + "sec"
             + "</html>"
         );
     }

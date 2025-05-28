@@ -8,13 +8,15 @@ import it.unibo.vampireio.controller.UnlockableCharacterData;
 import java.awt.event.ActionListener;
 
 class UnlockableCharactersPanel extends AbstractBasePanel {
+    private static final long serialVersionUID = 1L;
+
     private List<UnlockableCharacterData> unlockableCharactersData = List.of();
     private List<String> characterNames = List.of();
 
-    private JButton buyButton;
-    private JButton backButton;
-    private JList<String> charactersList;
-    private JLabel coinsLabel;
+    private final JButton buyButton;
+    private final JButton backButton;
+    private final JList<String> charactersList;
+    private final JLabel coinsLabel;
 
     UnlockableCharactersPanel(final GameViewImpl view) {
         super(view);
@@ -49,7 +51,7 @@ class UnlockableCharactersPanel extends AbstractBasePanel {
     void setBuyCharactersListener(final ActionListener listener) {
         this.buyButton.addActionListener(listener);
     }
-    
+
     void setBackListener(final ActionListener listener) {
         this.backButton.addActionListener(listener);
     }

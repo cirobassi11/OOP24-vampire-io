@@ -10,13 +10,15 @@ import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 
 class UnlockablePowerUpsPanel extends AbstractBasePanel {
+    private static final long serialVersionUID = 1L;
+
     private List<UnlockablePowerupData> unlockablePowerupsData = List.of();
     private List<String> powerupNames = List.of();
 
-    private JButton buyButton;
-    private JButton backButton;
-    private JList<String> powerupsList;
-    private JLabel coinsLabel;
+    private final JButton buyButton;
+    private final JButton backButton;
+    private final JList<String> powerupsList;
+    private final JLabel coinsLabel;
 
     UnlockablePowerUpsPanel(final GameViewImpl view) {
         super(view);
@@ -56,7 +58,7 @@ class UnlockablePowerUpsPanel extends AbstractBasePanel {
     void setBuyPowerUpsListener(final ActionListener listener) {
         this.buyButton.addActionListener(listener);
     }
-            
+
     void setBackListener(final ActionListener listener) {
         this.backButton.addActionListener(listener);
     }

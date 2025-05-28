@@ -26,7 +26,7 @@ public class GarlicFactory extends AttackFactory {
     public void increaseLevel() {
         super.increaseLevel();
         double currentRadius = this.attackData.getRadius();
-        double newRadius = currentRadius * 1.1;
+        double newRadius = currentRadius * 1.02;
         this.attackData.setRadius(newRadius);
     }
 }

@@ -23,7 +23,7 @@ public class WeaponImpl implements Weapon {
             this.currentLevel = 1;
             this.attackFactory = attackFactory;
     }
-    
+
     @Override
     public void update(final double tickTime) {
         this.timeSinceLastAttack += tickTime;
@@ -34,7 +34,7 @@ public class WeaponImpl implements Weapon {
             this.timeSinceLastAttack = 0;
         }
     }
-    
+
     @Override
     public String getId() {
         return this.id;
@@ -44,12 +44,12 @@ public class WeaponImpl implements Weapon {
     public int getCurrentLevel() {
         return this.currentLevel;
     }
-    
+
     @Override
     public void multiplyCooldown(final double multiplier) {
         this.cooldown *= multiplier;
     }
-    
+            
     private void spawnAttack() {
         final Attack attack = attackFactory.createAttack();
         this.gameWorld.addAttack(attack);

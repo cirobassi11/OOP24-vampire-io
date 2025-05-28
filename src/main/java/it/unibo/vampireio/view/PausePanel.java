@@ -5,10 +5,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 class PausePanel extends AbstractBasePanel {
+    private static final long serialVersionUID = 1L;
 
-    private JButton resumeButton;
-    private JButton exitButton;
-
+    private final JButton resumeButton;
+    private final JButton exitButton;
+    
     PausePanel(final GameViewImpl view) {
         super(view);                
         this.resumeButton = this.addButton("RESUME", 0, 0);
