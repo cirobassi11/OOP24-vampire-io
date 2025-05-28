@@ -13,12 +13,11 @@ public class WeaponData implements Identifiable {
         final String description, 
         final double defaultCooldown, 
         final int defaultAttacksPerCooldown) {
-        
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.defaultCooldown = defaultCooldown;
-        this.defaultAttacksPerCooldown = defaultAttacksPerCooldown;
+            this.id = id;
+            this.name = name;
+            this.description = description;
+            this.defaultCooldown = defaultCooldown;
+            this.defaultAttacksPerCooldown = defaultAttacksPerCooldown;
     }
 
     @Override
@@ -33,7 +32,7 @@ public class WeaponData implements Identifiable {
     public String getDescription() {
         return this.description;
     }
-    
+
     public double getDefaultCooldown() {
         return this.defaultCooldown;
     }

@@ -1,7 +1,13 @@
 package it.unibo.vampireio.model;
 
 import it.unibo.vampireio.controller.GameController;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +15,7 @@ public class SaveManager {
 
     private GameController gameController;
 
-    private final String INDEX_FILE_NAME = System.getProperty("user.home") + File.separator + "vampire-io_saves_index.sav";
+    private final String indexFileName = System.getProperty("user.home") + File.separator + "vampire-io_saves_index.sav";
     private Save currentSave;
     private List<String> savesNames;
 
@@ -18,7 +24,7 @@ public class SaveManager {
 
     public SaveManager(GameController gameController) {
         this.gameController = gameController;
-        File indexFile = new File(INDEX_FILE_NAME); // nome salvataggio e percorso file salvataggio
+        File indexFile = new File(indexFileName); // nome salvataggio e percorso file salvataggio
         if (!indexFile.exists()) {
             try {
                 indexFile.createNewFile();
@@ -32,7 +38,7 @@ public class SaveManager {
     }
 
     private void readIndex() {
-        File indexFile = new File(this.INDEX_FILE_NAME);
+        File indexFile = new File(this.indexFileName);
         this.savesNames = new ArrayList<>();
 
         if (indexFile.length() == 0) {
@@ -62,7 +68,7 @@ public class SaveManager {
     }
 
     private void saveIndex() {
-        try (FileOutputStream fileOut = new FileOutputStream(INDEX_FILE_NAME);
+        try (FileOutputStream fileOut = new FileOutputStream(indexFileName);
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(savesNames);
         } catch (IOException e) {
@@ -74,7 +80,7 @@ public class SaveManager {
         return List.copyOf(this.savesNames);
     }
 
-    public void createNewSave(UnlockableCharacter defaultCharacter) {
+    public void createNewSave(final UnlockableCharacter defaultCharacter) {
         this.currentSave = new Save();
         this.savesNames.add(this.currentSave.getSaveTime());
         this.currentSave.addUnlockedCharacter(defaultCharacter);
@@ -82,8 +88,8 @@ public class SaveManager {
         this.saveIndex();
     }
 
-    public void loadSave(String selectedSave) {
-        String saveFilePath = this.getFilePath(selectedSave);
+    public void loadSave(final String selectedSave) {
+        final String saveFilePath = this.getFilePath(selectedSave);
         if (saveFilePath != null) {
             try (FileInputStream input = new FileInputStream(saveFilePath);
                  ObjectInputStream in = new ObjectInputStream(input)) {
@@ -98,12 +104,12 @@ public class SaveManager {
     }
 
     public void saveCurrentSave() {
-        String saveFilePath = this.getFilePath(this.currentSave.getSaveTime());
+        final String saveFilePath = this.getFilePath(this.currentSave.getSaveTime());
         if (saveFilePath != null) {
             try (FileOutputStream output = new FileOutputStream(saveFilePath);
                  ObjectOutputStream out = new ObjectOutputStream(output)) {
                 out.writeObject(currentSave);
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 this.gameController.showError(this.savingError);
             }
         }
@@ -113,8 +119,8 @@ public class SaveManager {
         return this.currentSave;
     }
 
-    private String getFilePath(String saveTime){
-        File saveDirectory = new File(System.getProperty("user.home") + File.separator + "vampire-io_save");
+    private String getFilePath(final String saveTime) {
+        final File saveDirectory = new File(System.getProperty("user.home") + File.separator + "vampire-io_save");
         if (!saveDirectory.exists()) {
             saveDirectory.mkdirs();
         }

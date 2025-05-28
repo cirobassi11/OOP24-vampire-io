@@ -4,14 +4,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-class PausePanel extends BasePanel {
-    
+class PausePanel extends AbstractBasePanel {
+
     private JButton resumeButton;
     private JButton exitButton;
 
     PausePanel(final GameViewImpl view) {
-        super(view);
-        
+        super(view);                
         this.resumeButton = this.addButton("RESUME", 0, 0);
         this.exitButton = this.addButton("EXIT", 0, 1);
     }

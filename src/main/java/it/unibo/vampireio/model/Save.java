@@ -46,7 +46,7 @@ public class Save implements Serializable {
         return this.moneyAmount;
     }
 
-    public void incrementMoneyAmount(int moneyAmount) {
+    public void incrementMoneyAmount(final int moneyAmount) {
         this.moneyAmount += moneyAmount;
     }
 
@@ -54,18 +54,18 @@ public class Save implements Serializable {
         return List.copyOf(this.scores);
     }
 
-    public void addScore(Score score) {
+    public void addScore(final Score score) {
         this.scores.add(score);
     }
 
-    public void addUnlockedCharacter(UnlockableCharacter unlockedCharacter) {
+    public void addUnlockedCharacter(final UnlockableCharacter unlockedCharacter) {
         this.unlockedCharacters.add(unlockedCharacter.getId());
     }
 
-    public void enhancePowerup(UnlockablePowerUp unlockedPowerUp) {
+    public void enhancePowerup(final UnlockablePowerUp unlockedPowerUp) {
         this.unlockedPowerUps.put(unlockedPowerUp.getId(), unlockedPowerUp.getCurrentLevel());
     }
-    
+        
     // Generazione stringa data-ora dd-MM-yyyy_HH-mm-ss
     private static String generateSaveTimestamp() {
         return LocalDateTime.now().format(FORMATTER);

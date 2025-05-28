@@ -1,6 +1,6 @@
 package it.unibo.vampireio.model;
 
-public class UnlockableCharacter extends UnlockableItem {
+public class UnlockableCharacter extends AbstractUnlockableItem {
     private Stats characterStats;
     private String defaultWeapon;
     private double radius;
@@ -13,11 +13,10 @@ public class UnlockableCharacter extends UnlockableItem {
         final double radius, 
         final Stats stats, 
         final String defaultWeapon) {
-        
-        super(id, name, description, price, 1);
-        this.characterStats = stats;
-        this.defaultWeapon = defaultWeapon;
-        this.radius = radius;
+            super(id, name, description, price, 1);
+            this.characterStats = stats;
+            this.defaultWeapon = defaultWeapon;
+            this.radius = radius;
     }
 
     public Stats getCharacterStats() {

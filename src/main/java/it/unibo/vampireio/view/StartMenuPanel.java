@@ -3,8 +3,8 @@ package it.unibo.vampireio.view;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 
-class StartMenuPanel extends BasePanel {
-    
+class StartMenuPanel extends AbstractBasePanel {
+
     private JButton startButton;
     private JButton scoreboardButton;
     private JButton shopButton;
@@ -16,11 +16,11 @@ class StartMenuPanel extends BasePanel {
 
         this.startButton = this.addButton("START", 1, 0);
         this.scoreboardButton = this.addButton("SCOREBOARD", 0, 1);
-        this.shopButton = this.addButton("SHOP", 1, 1);                
-        this.loadSaveButton = this.addButton("LOAD SAVE", 2, 1);        
+        this.shopButton = this.addButton("SHOP", 1, 1);
+        this.loadSaveButton = this.addButton("LOAD SAVE", 2, 1);
         this.quitButton = this.addButton("QUIT", 1, 2);
     }
-    
+        
     void setStartListener(final ActionListener listener) {
         this.startButton.addActionListener(listener);
     }

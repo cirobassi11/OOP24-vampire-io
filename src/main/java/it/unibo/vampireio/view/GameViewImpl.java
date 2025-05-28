@@ -21,23 +21,6 @@ import it.unibo.vampireio.controller.UnlockableCharacterData;
 import it.unibo.vampireio.controller.UnlockablePowerupData;
 
 public class GameViewImpl implements GameView {
-
-    private final JFrame frame;
-    private final CardLayout cardLayout;
-    private final JPanel cardPanel;
-    private final Map<String, JPanel> panels = new HashMap<>();
-
-    private Dimension currentFrameSize;
-    private Image backgroundImage;
-
-    // Aspect Ratio fisso (es. 16:9)
-    private static final double ASPECT_RATIO = 16.0 / 9.0;
-
-    private static final Dimension DEFAULT_RESOLUTION = new Dimension(1280, 720);
-    private static final Dimension MIN_RESOLUTION = new Dimension(640, 360);
-
-    static final String frameTitle = "Vampire.io";
-
     public static final String SAVE_MENU = "saveMenu";
     public static final String SAVE_SELECTION = "saveSelection";
     public static final String START = "mainMenu";
@@ -51,12 +34,26 @@ public class GameViewImpl implements GameView {
     public static final String UNLOCKABLE_CHARACTERS = "unlockableCharacters";
     public static final String UNLOCKABLE_POWERUPS = "unlockablePowerups";
     public static final String IN_GAME_POWERUPS = "inGamePowerups";
+    // Aspect Ratio fisso (es. 16:9)
+    private static final double ASPECT_RATIO = 16.0 / 9.0;
 
+    private static final Dimension DEFAULT_RESOLUTION = new Dimension(1280, 720);
+    private static final Dimension MIN_RESOLUTION = new Dimension(640, 360);
+    static final String FRAME_TITLE = "Vampire.io";
+
+    private final JFrame frame;
+    private final CardLayout cardLayout;
+    private final JPanel cardPanel;
+    private final Map<String, JPanel> panels = new HashMap<>();
+    
     private final String iconPath = "/images/icon.png";
     private final String backgroundPath = "/images/background.png";
+    
+    private Dimension currentFrameSize;
+    private Image backgroundImage;
 
     public GameViewImpl() {
-        this.frame = new JFrame(frameTitle);
+        this.frame = new JFrame(FRAME_TITLE);
         this.cardLayout = new CardLayout();
         this.cardPanel = new JPanel(this.cardLayout);
 
@@ -82,8 +79,8 @@ public class GameViewImpl implements GameView {
                 final int height = Math.max((int) (width / ASPECT_RATIO), MIN_RESOLUTION.height);
                 setResolution(new Dimension(width, height));
                 for (final var panel : panels.values()) {
-                    if (panel instanceof BasePanel) {
-                        ((BasePanel) panel).updateComponentSize();
+                    if (panel instanceof AbstractBasePanel) {
+                        ((AbstractBasePanel) panel).updateComponentSize();
                     }
                 }
             }
@@ -135,7 +132,7 @@ public class GameViewImpl implements GameView {
             } else {
                 Taskbar.getTaskbar().setIconImage(image);
             }
-        } catch (final Exception e) {
+        } catch (final UnsupportedOperationException e) {
             e.printStackTrace();
         }
     }
@@ -176,9 +173,9 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-	public void setChoosableCharactersData(final List<UnlockableCharacterData> choosableCharactersData) {
-		((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setChoosableCharactersData(choosableCharactersData);
-	}
+    public void setChoosableCharactersData(final List<UnlockableCharacterData> choosableCharactersData) {
+        ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setChoosableCharactersData(choosableCharactersData);
+    }
 
     @Override
     public String getChoosedCharacter() {
@@ -214,7 +211,7 @@ public class GameViewImpl implements GameView {
     public void setShowSaveListener(final ActionListener listener) {
         ((SaveMenuPanel) this.panels.get(SAVE_MENU)).setShowSaveListener(listener);
     }
-    
+
     @Override
     public void setChooseSaveListener(final ActionListener listener) {
         ((SaveSelectionPanel) this.panels.get(SAVE_SELECTION)).setChooseSaveListener(listener);
@@ -262,18 +259,18 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-	public void setUnlockableCharactersData(final List<UnlockableCharacterData> unlockableCharactersData) {
-		((UnlockableCharactersPanel) this.panels
+    public void setUnlockableCharactersData(final List<UnlockableCharacterData> unlockableCharactersData) {
+        ((UnlockableCharactersPanel) this.panels
         .get(UNLOCKABLE_CHARACTERS))
         .setUnlockableCharactersData(unlockableCharactersData);
-	}
+    }
 
     @Override
     public void setUnlockablePowerupsData(final List<UnlockablePowerupData> unlockablePowerupsData) {
-		((UnlockablePowerUpsPanel) this.panels
+        ((UnlockablePowerUpsPanel) this.panels
         .get(UNLOCKABLE_POWERUPS))
         .setUnlockablePowerupsData(unlockablePowerupsData);
-	}
+    }
 
     @Override
     public String getSelectedCharacter() {
@@ -314,7 +311,7 @@ public class GameViewImpl implements GameView {
     public void setScoresData(final List<ScoreData> scores) {
         ((ScoreboardPanel) this.panels.get(SCOREBOARD)).setScoresData(scores);
     }
-    
+        
     @Override
     public void setBackListener(final ActionListener listener) {
         ((SaveSelectionPanel) this.panels.get(SAVE_SELECTION)).setBackListener(listener);

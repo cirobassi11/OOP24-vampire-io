@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import it.unibo.vampireio.controller.ItemData;
 
-class ItemSelectionPanel extends BasePanel {
+class ItemSelectionPanel extends AbstractBasePanel {
 
     private List<ItemData> itemsData = List.of();
     private List<String> itemNames = List.of();
@@ -30,8 +30,7 @@ class ItemSelectionPanel extends BasePanel {
         if (itemsData == null || itemsData.isEmpty()) {
             this.itemNames = List.of();
             return;
-        }
-        else {
+        } else {
             this.itemsData = itemsData;
             this.itemNames = itemsData.stream()
                     .map(ItemData::getName)

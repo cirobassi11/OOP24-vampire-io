@@ -7,7 +7,7 @@ import javax.swing.JList;
 import it.unibo.vampireio.controller.UnlockableCharacterData;
 import java.awt.event.ActionListener;
 
-class UnlockableCharactersPanel extends BasePanel {
+class UnlockableCharactersPanel extends AbstractBasePanel {
     private List<UnlockableCharacterData> unlockableCharactersData = List.of();
     private List<String> characterNames = List.of();
 
@@ -25,13 +25,12 @@ class UnlockableCharactersPanel extends BasePanel {
         this.buyButton = this.addButton("BUY", 0, 2);
         this.backButton = this.addButton("BACK", 0, 3);
     }
-    
+
     void setUnlockableCharactersData(final List<UnlockableCharacterData> unlockableCharactersData) {
         this.unlockableCharactersData = unlockableCharactersData;
         if (unlockableCharactersData == null || unlockableCharactersData.isEmpty()) {
             this.characterNames = List.of();
-        }
-        else {
+        } else {
             this.characterNames = unlockableCharactersData.stream()
                     .map(UnlockableCharacterData::getName)
                     .toList();
@@ -40,7 +39,7 @@ class UnlockableCharactersPanel extends BasePanel {
     }
 
     String getSelectedCharacter() {
-        int selectedIndex = this.charactersList.getSelectedIndex();
+        final int selectedIndex = this.charactersList.getSelectedIndex();
         if (selectedIndex < 0 || selectedIndex >= this.unlockableCharactersData.size()) {
             return null;
         }

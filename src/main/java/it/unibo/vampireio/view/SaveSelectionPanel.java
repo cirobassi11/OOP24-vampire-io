@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JList;
 
-class SaveSelectionPanel extends BasePanel {
+class SaveSelectionPanel extends AbstractBasePanel {
 
     private JButton selectButton;
     private JButton backButton;
@@ -16,7 +16,6 @@ class SaveSelectionPanel extends BasePanel {
 
     SaveSelectionPanel(final GameViewImpl view) {
         super(view);
-
         this.savesList = this.addScrollableList(List.of(), 0, 0);        
         this.selectButton = this.addButton("SELECT", 0, 1);
         this.backButton = this.addButton("BACK", 0, 2);
@@ -36,7 +35,7 @@ class SaveSelectionPanel extends BasePanel {
     }
 
 	public String getSelectedSave() {
-		return this.savesList.getSelectedValue();
+        return this.savesList.getSelectedValue();
     }
 
 }

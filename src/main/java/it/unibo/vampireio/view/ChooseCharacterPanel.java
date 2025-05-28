@@ -6,7 +6,7 @@ import javax.swing.JList;
 import javax.swing.JButton;
 import it.unibo.vampireio.controller.UnlockableCharacterData;
 
-class ChooseCharacterPanel extends BasePanel {
+class ChooseCharacterPanel extends AbstractBasePanel {
 
     private List<UnlockableCharacterData> choosableCharactersData = List.of();
     private List<String> characterNames = List.of();
@@ -28,8 +28,7 @@ class ChooseCharacterPanel extends BasePanel {
         if (choosableCharactersData == null || choosableCharactersData.isEmpty()) {
             this.characterNames = List.of();
             return;
-        }
-        else {
+        } else {
             this.choosableCharactersData = choosableCharactersData;
             this.characterNames = choosableCharactersData.stream()
                     .map(UnlockableCharacterData::getName)

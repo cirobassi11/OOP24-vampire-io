@@ -5,7 +5,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import it.unibo.vampireio.controller.ScoreData;
 
-class EndGamePanel extends BasePanel {
+class EndGamePanel extends AbstractBasePanel {
 
     private JButton returnMenuButton;
     private JLabel scoreLabel;

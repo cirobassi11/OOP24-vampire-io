@@ -8,21 +8,20 @@ public class WeaponImpl implements Weapon {
     private double timeSinceLastAttack;
     private int currentLevel;
     private final AttackFactory attackFactory;
-    
+
     public WeaponImpl(
         final GameWorld gameWorld, 
         final String id,
         final double cooldown, 
         final int projectilePerCooldown, 
         final AttackFactory attackFactory) {
-        
-        this.gameWorld = gameWorld;
-        this.id = id;
-        this.cooldown = cooldown;
-        this.projectilePerCooldown = projectilePerCooldown;
-        this.timeSinceLastAttack = 0;
-        this.currentLevel = 1;
-        this.attackFactory = attackFactory;
+            this.gameWorld = gameWorld;
+            this.id = id;
+            this.cooldown = cooldown;
+            this.projectilePerCooldown = projectilePerCooldown;
+            this.timeSinceLastAttack = 0;
+            this.currentLevel = 1;
+            this.attackFactory = attackFactory;
     }
     
     @Override
@@ -52,7 +51,7 @@ public class WeaponImpl implements Weapon {
     }
     
     private void spawnAttack() {
-        final Attack attack = attackFactory.createAttack();        
+        final Attack attack = attackFactory.createAttack();
         this.gameWorld.addAttack(attack);
     }
 

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Score implements Serializable {
     private static final long serialVersionUID = 1L;
+    private static final int SECONDS_PER_MINUTE = 60;
 
     private String characterName;
     private long sessionTime;
@@ -11,7 +12,7 @@ public class Score implements Serializable {
     private int level;
     private int coinCounter;
 
-    public Score(String characterName) {
+    public Score(final String characterName) {
         this.characterName = characterName;
         this.sessionTime = 0;
         this.killCounter = 0;
@@ -23,15 +24,15 @@ public class Score implements Serializable {
         this.killCounter++;
     }
 
-    public void setCoinCounter(int coinCounter) {
+    public void setCoinCounter(final int coinCounter) {
         this.coinCounter = coinCounter;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(final int level) {
         this.level = level;
     }
 
-    public void incrementSessionTime(double tickRate) {
+    public void incrementSessionTime(final double tickRate) {
         this.sessionTime += tickRate;
     }
 
@@ -56,6 +57,6 @@ public class Score implements Serializable {
     }
 
     public int getScore() {
-        return getKillCounter() * getLevel() * (int) (getSessionTime() / 60);
+        return getKillCounter() + getLevel() + (int) (getSessionTime() / this.SECONDS_PER_MINUTE);
     }
 }

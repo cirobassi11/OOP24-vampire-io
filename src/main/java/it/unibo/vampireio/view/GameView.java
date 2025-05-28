@@ -53,7 +53,7 @@ public interface GameView {
     void setReturnMenuListener(ActionListener listener);
     
     void setResumeListener(ActionListener listener);
-    
+        
     void setExitListener(ActionListener listener);
 
     // Setta i dati dei punteggi (nella scoreboard)

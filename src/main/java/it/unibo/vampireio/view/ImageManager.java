@@ -17,7 +17,7 @@ class ImageManager {
 
     private final String loadingError = "An error occurred while loading image";
 
-    public ImageManager(final GameViewImpl view) {
+    ImageManager(final GameViewImpl view) {
         this.view = view;
     }
 

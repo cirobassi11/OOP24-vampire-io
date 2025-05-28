@@ -1,13 +1,21 @@
 package it.unibo.vampireio.view;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.List;
 
-abstract class BasePanel extends JPanel {
+abstract class AbstractBasePanel extends JPanel {
 
     // Color constants
     protected static final Color BUTTON_BACKGROUND = new Color(50, 50, 50);
@@ -39,10 +47,10 @@ abstract class BasePanel extends JPanel {
     protected static final int SCROLL_WIDTH_RATIO = 5;
     protected static final int SCROLL_HEIGHT_RATIO = 5;
 
-    protected final GameViewImpl view;
+    private final GameViewImpl view;
     private final List<Component> allComponents = new LinkedList<>();
 
-    BasePanel(final GameViewImpl view) {
+    AbstractBasePanel(final GameViewImpl view) {
         this.view = view;
         this.setLayout(new GridBagLayout());
         this.setOpaque(false);

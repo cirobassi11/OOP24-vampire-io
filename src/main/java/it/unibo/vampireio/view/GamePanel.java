@@ -47,6 +47,8 @@ class GamePanel extends JPanel {
     private static final int FONT_SIZE_BASE = 15;
     private static final int TIMER_Y_EXTRA_OFFSET = 20;
 
+    private static final String LEFT_DIRECTION = "l";
+
     private static final double ENEMY_OSCILLATION_MAX_ANGLE_RAD = Math.toRadians(10);
     private static final double ENEMY_OSCILLATION_SPEED = 0.005;
 
@@ -55,9 +57,9 @@ class GamePanel extends JPanel {
 
     private ImageManager imageManager;
 
-    private String lastCharacterDirection = "l";
-    private int currentCharacterFrame = 0;
-    private long lastCharacterFrameTime = 0;
+    private String lastCharacterDirection = this.LEFT_DIRECTION;
+    private int currentCharacterFrame;
+    private long lastCharacterFrameTime;
 
     GamePanel(final GameViewImpl view) {
         this.view = view;
@@ -229,12 +231,11 @@ class GamePanel extends JPanel {
                 redG.fillRect(0, 0, characterWidth, characterHeight);
                 redG.dispose();
                 g.drawImage(redImage, characterX, characterY, null);
-            }
-            else {
+            } else {
                 g.drawImage(tile, characterX, characterY, characterWidth, characterHeight, null);
             }
         }
-        
+
         final long elapsedTime = this.data.getElapsedTime();
         if (character.isMoving() && elapsedTime - this.lastCharacterFrameTime >= CHARACTER_FRAME_DELAY) {
             this.currentCharacterFrame = (this.currentCharacterFrame + 1) % CHARACTER_FRAME_COUNT;

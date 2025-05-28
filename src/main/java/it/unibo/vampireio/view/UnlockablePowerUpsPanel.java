@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 
 import java.awt.event.ActionListener;
 
-class UnlockablePowerUpsPanel extends BasePanel {
+class UnlockablePowerUpsPanel extends AbstractBasePanel {
     private List<UnlockablePowerupData> unlockablePowerupsData = List.of();
     private List<String> powerupNames = List.of();
 
@@ -20,8 +20,8 @@ class UnlockablePowerUpsPanel extends BasePanel {
 
     UnlockablePowerUpsPanel(final GameViewImpl view) {
         super(view);
-        
-        List<String> powerupNames = List.of();
+
+        final List<String> powerupNames = List.of();
 
         this.coinsLabel = this.addLabel("", 0, 0);
         this.powerupsList = this.addScrollableList(powerupNames, 0, 1);
@@ -41,7 +41,7 @@ class UnlockablePowerUpsPanel extends BasePanel {
                         + powerup.getDescription())
             .toList();
         }
-        
+
         this.powerupsList.setListData(this.powerupNames.toArray(new String[0]));
     }
 
@@ -56,7 +56,7 @@ class UnlockablePowerUpsPanel extends BasePanel {
     void setBuyPowerUpsListener(final ActionListener listener) {
         this.buyButton.addActionListener(listener);
     }
-    
+            
     void setBackListener(final ActionListener listener) {
         this.backButton.addActionListener(listener);
     }

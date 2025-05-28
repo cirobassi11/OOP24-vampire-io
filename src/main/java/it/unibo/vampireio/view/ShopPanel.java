@@ -3,7 +3,7 @@ package it.unibo.vampireio.view;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 
-class ShopPanel extends BasePanel {
+class ShopPanel extends AbstractBasePanel {
 
     private JButton charactersButton;
     private JButton powerUpsButton;
