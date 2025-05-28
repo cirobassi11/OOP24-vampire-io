@@ -5,6 +5,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import it.unibo.vampireio.controller.UnlockableCharacterData;
+import it.unibo.vampireio.controller.UnlockablePowerupData;
+
 import java.awt.event.ActionListener;
 
 class UnlockableCharactersPanel extends AbstractBasePanel {
@@ -17,15 +19,18 @@ class UnlockableCharactersPanel extends AbstractBasePanel {
     private final JButton backButton;
     private final JList<String> charactersList;
     private final JLabel coinsLabel;
+    private final JLabel descriptionLabel;
+    private final JLabel priceLabel;
 
     UnlockableCharactersPanel(final GameViewImpl view) {
         super(view);
 
         this.coinsLabel = this.addLabel("", 0, 0);
-
         this.charactersList = this.addScrollableList(characterNames, 0, 1);
-        this.buyButton = this.addButton("BUY", 0, 2);
-        this.backButton = this.addButton("BACK", 0, 3);
+        this.descriptionLabel = this.addLabel("", 0, 2);
+        this.priceLabel = this.addLabel("", 0, 3);
+        this.buyButton = this.addButton("BUY", 0, 4);
+        this.backButton = this.addButton("BACK", 0, 5);
     }
 
     void setUnlockableCharactersData(final List<UnlockableCharacterData> unlockableCharactersData) {
@@ -38,6 +43,7 @@ class UnlockableCharactersPanel extends AbstractBasePanel {
                     .toList();
         }
         this.charactersList.setListData(this.characterNames.toArray(new String[0]));
+        this.charactersList.addListSelectionListener(e -> getCharacterInfo());
     }
 
     String getSelectedCharacter() {
@@ -46,6 +52,18 @@ class UnlockableCharactersPanel extends AbstractBasePanel {
             return null;
         }
         return this.unlockableCharactersData.get(selectedIndex).getId();
+    }
+
+    private void getCharacterInfo() {
+        final int selectedIndex = this.charactersList.getSelectedIndex();
+        if (selectedIndex >= 0 && selectedIndex < this.unlockableCharactersData.size()) {
+            final UnlockableCharacterData data = this.unlockableCharactersData.get(selectedIndex);
+            this.descriptionLabel.setText("" + data.getDescription());
+            this.priceLabel.setText("Price: " + data.getPrice());
+        } else {
+            this.descriptionLabel.setText("");
+            this.priceLabel.setText("");
+        }
     }
 
     void setBuyCharactersListener(final ActionListener listener) {

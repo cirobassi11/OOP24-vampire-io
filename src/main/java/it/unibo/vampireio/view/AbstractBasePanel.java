@@ -118,6 +118,20 @@ abstract class AbstractBasePanel extends JPanel {
         return label;
     }
 
+    protected JLabel addLabel(final String text, final int gridx, final int gridy, final JPanel panel) {
+        if (panel == null) {
+            throw new IllegalArgumentException("Panel cannot be null");
+        }
+        final JLabel label = new JLabel(text);
+        label.setFont(DEFAULT_FONT);
+        label.setForeground(Color.WHITE);
+
+        panel.add(label, new GridBagConstraints(gridx, gridy, 1, 1, 0, 0,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
+                new Insets(0, 0, 0, 0), 0, 0));
+        return label;
+    }
+
     protected JComboBox<String> addComboBox(final int gridx, final int gridy) {
         final JComboBox<String> comboBox = new JComboBox<>();
         comboBox.setFont(DEFAULT_FONT.deriveFont(SMALL_FONT_SCALE));

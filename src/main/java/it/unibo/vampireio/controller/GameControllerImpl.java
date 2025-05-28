@@ -60,7 +60,7 @@ public class GameControllerImpl implements GameController {
         // START MENU LISTENERS
         this.view.setStartListener(e -> {
             List<UnlockableCharacterData> choosableCharactersData = this.model.getChoosableCharacters().stream()
-                    .map(character -> new UnlockableCharacterData(character.getId(), character.getName()))
+                    .map(character -> new UnlockableCharacterData(character.getId(), character.getName(), character.getDescription(), character.getPrice()))
                     .collect(Collectors.toList());
             this.view.setChoosableCharactersData(choosableCharactersData);
             this.showScreen(GameViewImpl.CHOOSE_CHARACTER);    
@@ -113,7 +113,7 @@ public class GameControllerImpl implements GameController {
         // SHOP LISTENERS
         this.view.setCharactersShopListener(e -> {
             List<UnlockableCharacterData> unlockableCharactersData = this.model.getLockedCharacters().stream()
-                    .map(character -> new UnlockableCharacterData(character.getId(), character.getName()))
+                    .map(character -> new UnlockableCharacterData(character.getId(), character.getName(), character.getDescription(), character.getPrice()))    
                     .collect(Collectors.toList());
             this.view.setUnlockableCharactersData(unlockableCharactersData);
             this.view.setCoinsAmount(this.model.getCurrentSave().getMoneyAmount());
@@ -122,8 +122,8 @@ public class GameControllerImpl implements GameController {
 
         this.view.setPowerUpsShopListener(e -> {
             List<UnlockablePowerupData> unlockablePowerupsData = this.model.getUnlockablePowerups().stream()
-                    .map(powerup -> new UnlockablePowerupData(powerup.getId(), powerup.getName(), 
-                    powerup.getDescription(), powerup.getCurrentLevel(), powerup.getMaxLevel()))
+                    .map(powerup -> new UnlockablePowerupData(powerup.getId(), powerup.getName(),
+                    powerup.getDescription(), powerup.getCurrentLevel(), powerup.getMaxLevel(), powerup.getPrice()))
                     .collect(Collectors.toList());
             this.view.setUnlockablePowerupsData(unlockablePowerupsData);
             this.view.setCoinsAmount(this.model.getCurrentSave().getMoneyAmount());
@@ -135,7 +135,7 @@ public class GameControllerImpl implements GameController {
             String selectedCharacter = this.view.getSelectedCharacter();
             if(selectedCharacter != null && this.model.buyCharacter(selectedCharacter)) {
                 List<UnlockableCharacterData> unlockableCharactersData = this.model.getLockedCharacters().stream()
-                    .map(character -> new UnlockableCharacterData(character.getId(), character.getName()))
+                    .map(character -> new UnlockableCharacterData(character.getId(), character.getName(), character.getDescription(), character.getPrice()))
                     .collect(Collectors.toList());
                 this.view.setUnlockableCharactersData(unlockableCharactersData);
                 this.view.setCoinsAmount(this.model.getCurrentSave().getMoneyAmount());
@@ -147,8 +147,8 @@ public class GameControllerImpl implements GameController {
             String selectedPowerup = this.view.getSelectedPowerup();
             if(selectedPowerup != null && this.model.buyPowerup(selectedPowerup)) {
                 List<UnlockablePowerupData> unlockablePowerupsData = this.model.getUnlockablePowerups().stream()
-                    .map(powerup -> new UnlockablePowerupData(powerup.getId(), powerup.getName(), 
-                    powerup.getDescription(), powerup.getCurrentLevel(), powerup.getMaxLevel()))
+                    .map(powerup -> new UnlockablePowerupData(powerup.getId(), powerup.getName(),
+                    powerup.getDescription(), powerup.getCurrentLevel(), powerup.getMaxLevel(), powerup.getPrice()))
                     .collect(Collectors.toList());
                 this.view.setUnlockablePowerupsData(unlockablePowerupsData);
                 this.view.setCoinsAmount(this.model.getCurrentSave().getMoneyAmount());

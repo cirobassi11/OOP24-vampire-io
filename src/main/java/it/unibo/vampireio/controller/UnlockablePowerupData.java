@@ -7,13 +7,15 @@ public class UnlockablePowerupData {
     private String description;
     private int currentLevel;
     private int maxLevel;
-    
-    public UnlockablePowerupData(String id, String name, String description, int currentLevel, int maxLevel) {
+    private int price;
+
+    public UnlockablePowerupData(final String id, final String name, final String description, final int currentLevel, final int maxLevel, final int price) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.currentLevel = currentLevel;
         this.maxLevel = maxLevel;
+        this.price = price;
     }
 
     public String getId() {
@@ -34,5 +36,9 @@ public class UnlockablePowerupData {
     
     public int getMaxLevel() {
         return this.maxLevel;
+    }
+
+    public int getPrice() {
+        return this.price;
     }
 }

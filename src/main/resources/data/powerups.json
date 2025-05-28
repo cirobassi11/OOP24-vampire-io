@@ -50,7 +50,7 @@
     {
       "id": "powerups/magnet",
       "name": "Magnet",
-      "description": "Increase the radius inside which Experience Gems and pickups will be picked up",
+      "description": "Increase the radius inside which collectible will be picked up",
       "price": 100,
       "maxLevel": 3,
       "statToModify": "MAGNET"
