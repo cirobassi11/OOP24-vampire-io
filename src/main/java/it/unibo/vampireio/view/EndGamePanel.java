@@ -26,8 +26,8 @@ class EndGamePanel extends AbstractBasePanel {
             + "<br>Level: " + score.getLevelCounter()
             + "<br>Kills: " + score.getKillCounter()
             + "<br>Coins: " + score.getCoinCounter()
-            + "<br>Time: " + (int) score.getSessionTime() / 1000 / this.SECONDS_PER_MINUTE + "min " 
-            + (int) score.getSessionTime() / 1000 % this.SECONDS_PER_MINUTE + "sec"
+            + "<br>Time: " + (int) score.getSessionTime() / 1000 / SECONDS_PER_MINUTE + "min " 
+            + (int) score.getSessionTime() / 1000 % SECONDS_PER_MINUTE + "sec"
             + "</html>"
         );
     }

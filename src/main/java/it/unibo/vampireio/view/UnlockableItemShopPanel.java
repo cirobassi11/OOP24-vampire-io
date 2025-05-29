@@ -7,15 +7,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionListener;
-
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-
-import it.unibo.vampireio.controller.ItemData;
-import it.unibo.vampireio.controller.UnlockableCharacterData;
 import it.unibo.vampireio.controller.UnlockableItemData;
-import it.unibo.vampireio.controller.UnlockablePowerupData;
 
 class UnlockableItemShopPanel extends AbstractBasePanel {
 

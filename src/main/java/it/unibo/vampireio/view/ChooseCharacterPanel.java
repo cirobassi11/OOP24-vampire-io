@@ -4,7 +4,6 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JList;
 import javax.swing.JButton;
-import it.unibo.vampireio.controller.UnlockableCharacterData;
 import it.unibo.vampireio.controller.UnlockableItemData;
 
 class ChooseCharacterPanel extends AbstractBasePanel {

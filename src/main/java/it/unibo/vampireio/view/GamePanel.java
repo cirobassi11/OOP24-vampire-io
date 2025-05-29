@@ -60,7 +60,7 @@ class GamePanel extends JPanel {
 
     private final ImageManager imageManager;
 
-    private String lastCharacterDirection = this.LEFT_DIRECTION;
+    private String lastCharacterDirection = LEFT_DIRECTION;
     private int currentCharacterFrame;
     private long lastCharacterFrameTime;
 
@@ -189,7 +189,7 @@ class GamePanel extends JPanel {
                         final Graphics2D whiteG = whiteImage.createGraphics();
                         whiteG.drawImage(tile.getScaledInstance(enemyWidth, enemyHeight, Image.SCALE_SMOOTH), 0, 0, null);
                         whiteG.setComposite(AlphaComposite.SrcAtop);
-                        whiteG.setColor(this.TRANSLUCENT_WHITE);
+                        whiteG.setColor(TRANSLUCENT_WHITE);
                         whiteG.fillRect(0, 0, enemyWidth, enemyHeight);
                         whiteG.dispose();
                         g2d.drawImage(whiteImage, enemyX, enemyY, null);

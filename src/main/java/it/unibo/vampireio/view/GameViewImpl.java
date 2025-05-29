@@ -18,9 +18,7 @@ import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.InputHandler;
 import it.unibo.vampireio.controller.ItemData;
 import it.unibo.vampireio.controller.ScoreData;
-import it.unibo.vampireio.controller.UnlockableCharacterData;
 import it.unibo.vampireio.controller.UnlockableItemData;
-import it.unibo.vampireio.controller.UnlockablePowerupData;
 
 public class GameViewImpl implements GameView {
     public static final String SAVE_MENU = "saveMenu";

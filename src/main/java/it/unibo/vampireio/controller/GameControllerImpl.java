@@ -16,7 +16,6 @@ import it.unibo.vampireio.model.GameWorld;
 import it.unibo.vampireio.model.Save;
 import it.unibo.vampireio.model.Score;
 import it.unibo.vampireio.model.Unlockable;
-import it.unibo.vampireio.model.UnlockableCharacter;
 import it.unibo.vampireio.view.GameView;
 import it.unibo.vampireio.view.GameViewImpl;
 

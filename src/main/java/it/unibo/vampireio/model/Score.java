@@ -57,6 +57,6 @@ public class Score implements Serializable {
     }
 
     public int getScore() {
-        return getKillCounter() + getLevel() + (int) (getSessionTime() / this.SECONDS_PER_MINUTE);
+        return getKillCounter() + getLevel() + (int) (getSessionTime() / SECONDS_PER_MINUTE);
     }
 }
