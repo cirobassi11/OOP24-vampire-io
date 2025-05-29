@@ -19,6 +19,7 @@ import it.unibo.vampireio.controller.PositionableData;
 import it.unibo.vampireio.controller.LivingEntityData;
 
 class GamePanel extends JPanel {
+    private static final long serialVersionUID = 1L;
 
     private static final int MAP_TILE_WIDTH = 64;
     private static final int MAP_TILE_HEIGHT = 64;
@@ -52,10 +53,10 @@ class GamePanel extends JPanel {
     private static final double ENEMY_OSCILLATION_MAX_ANGLE_RAD = Math.toRadians(10);
     private static final double ENEMY_OSCILLATION_SPEED = 0.005;
 
-    private GameViewImpl view;
+    private final GameViewImpl view;
     private GameData data;
 
-    private ImageManager imageManager;
+    private final ImageManager imageManager;
 
     private String lastCharacterDirection = this.LEFT_DIRECTION;
     private int currentCharacterFrame;

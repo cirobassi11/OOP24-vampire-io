@@ -37,7 +37,7 @@ public class Stats implements Serializable {
         final double currentValue = getStat(type);
         setStat(type, currentValue * factor);
     }
-                    
+                        
     public Map<StatType, Double> getAllStats() {
         return new EnumMap<>(this.statsMap);
     }

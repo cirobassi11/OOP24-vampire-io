@@ -26,7 +26,7 @@ class ItemSelectionPanel extends AbstractBasePanel {
     }
 
     void setItemsData(final List<ItemData> itemsData) {
-        List<String> itemNames;
+        final List<String> itemNames;
         this.itemsData = itemsData;
         if (itemsData == null || itemsData.isEmpty()) {
             itemNames = List.of();

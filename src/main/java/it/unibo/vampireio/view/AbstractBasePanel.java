@@ -99,7 +99,7 @@ abstract class AbstractBasePanel extends JPanel {
             public void mouseEntered(final MouseEvent evt) {
                 button.setBackground(BUTTON_HOVER);
             }
-                        
+            
             @Override
             public void mouseExited(final MouseEvent evt) {
                 button.setBackground(BUTTON_BACKGROUND);

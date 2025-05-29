@@ -19,7 +19,7 @@ public interface GameView {
     void setConfirmCharacterListener(ActionListener listener);
 
     void setNewSaveListener(ActionListener listener);
-        
+
     void setShowSaveListener(ActionListener listener);
     
     void setChooseSaveListener(ActionListener listener);

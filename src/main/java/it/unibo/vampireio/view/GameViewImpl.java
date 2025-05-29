@@ -40,9 +40,9 @@ public class GameViewImpl implements GameView {
     static final String FRAME_TITLE = "Vampire.io";
     private static final Dimension DEFAULT_RESOLUTION = new Dimension(1280, 720);
     private static final Dimension MIN_RESOLUTION = new Dimension(640, 360);
-    
-    private static final String iconPath = "/images/icon.png";
-    private static final String backgroundPath = "/images/background.png";
+
+    private static final String ICON_PATH = "/images/icon.png";
+    private static final String BACKGROUND_PATH = "/images/background.png";
 
     private final JFrame frame;
     private final CardLayout cardLayout;
@@ -65,8 +65,8 @@ public class GameViewImpl implements GameView {
     }
 
     private void initFrame() {
-        this.setIcon(this.iconPath);
-        this.setBackgroundImage(this.backgroundPath);
+        this.setIcon(this.ICON_PATH);
+        this.setBackgroundImage(this.BACKGROUND_PATH);
         this.setResolution(DEFAULT_RESOLUTION);
         this.frame.setLocationRelativeTo(null);
         this.frame.setResizable(true);

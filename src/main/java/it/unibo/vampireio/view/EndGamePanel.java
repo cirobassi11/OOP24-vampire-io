@@ -8,8 +8,8 @@ import it.unibo.vampireio.controller.ScoreData;
 class EndGamePanel extends AbstractBasePanel {
     private static final int SECONDS_PER_MINUTE = 60;
 
-    private JButton returnMenuButton;
-    private JLabel scoreLabel;
+    private final JButton returnMenuButton;
+    private final JLabel scoreLabel;
 
     EndGamePanel(final GameViewImpl view) {
         super(view);
