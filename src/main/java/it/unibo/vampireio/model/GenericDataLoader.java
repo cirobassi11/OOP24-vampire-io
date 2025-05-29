@@ -55,7 +55,7 @@ public class GenericDataLoader<T extends Identifiable> {
     private void load() {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream(path)) {
             if (input == null) {
-                gameController.showError("Cannot find resource: " + path);
+                gameController.showErrorWithExit("Cannot find resource: " + path);
                 dataById = Map.of();
                 return;
             }
@@ -73,7 +73,7 @@ public class GenericDataLoader<T extends Identifiable> {
                 dataById.put(element.getId(), element);
             }
         } catch (IOException | JsonSyntaxException e) {
-            gameController.showError("Error while loading data from " + path);
+            gameController.showErrorWithExit("Error while loading data from " + path);
             dataById = Map.of();
         }
     }

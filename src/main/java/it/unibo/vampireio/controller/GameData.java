@@ -15,7 +15,9 @@ public class GameData {
     private List<PositionableData> collectibles;
     private List<ItemData> items;
 
-    public GameData(VisibleMapSizeData VisibleMapSize, long elapsedTime, int level, double levelPercentage, int killCounter, int coinCounter, LivingEntityData character, List<LivingEntityData> enemies, List<PositionableData> attacks, List<PositionableData> collectibles, List<ItemData> items) {
+    public GameData(VisibleMapSizeData VisibleMapSize, long elapsedTime, int level, double levelPercentage,
+            int killCounter, int coinCounter, LivingEntityData character, List<LivingEntityData> enemies,
+            List<PositionableData> attacks, List<PositionableData> collectibles, List<ItemData> items) {
         this.VisibleMapSize = VisibleMapSize;
         this.elapsedTime = elapsedTime;
         this.level = level;
@@ -24,7 +26,7 @@ public class GameData {
         this.coinCounter = coinCounter;
         this.character = character;
         this.enemies = List.copyOf(enemies);
-        this.attacks = List.copyOf(this.attacks);
+        this.attacks = List.copyOf(attacks);
         this.collectibles = List.copyOf(collectibles);
         this.items = List.copyOf(items);
     }
@@ -51,7 +53,7 @@ public class GameData {
 
     public int getCoinCounter() {
         return this.coinCounter;
-    }    
+    }
 
     public LivingEntityData getCharacterData() {
         return this.character;

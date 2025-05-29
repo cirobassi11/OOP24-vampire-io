@@ -1,6 +1,6 @@
 package it.unibo.vampireio.controller;
 
-public class UnlockablePowerupData {
+public class UnlockableItemData {
 
     private String id;
     private String name;
@@ -9,7 +9,7 @@ public class UnlockablePowerupData {
     private int maxLevel;
     private int price;
 
-    public UnlockablePowerupData(final String id, final String name, final String description, final int currentLevel,
+    public UnlockableItemData(final String id, final String name, final String description, final int currentLevel,
             final int maxLevel, final int price) {
         this.id = id;
         this.name = name;

@@ -8,14 +8,13 @@ public class SaveData {
     private List<String> unlockedItems;
     private int moneyAmount;
     private List<ScoreData> scores;
-    
+
     public SaveData(
-        String saveTime, 
-        List<String> unlockedCharacters,
-        List<String> unlockedItems, 
-        int moneyAmount, 
-        List<ScoreData> scores
-    ) {
+            String saveTime,
+            List<String> unlockedCharacters,
+            List<String> unlockedItems,
+            int moneyAmount,
+            List<ScoreData> scores) {
         this.saveTime = saveTime;
         this.unlockedCharacters = unlockedCharacters;
         this.unlockedItems = unlockedItems;
@@ -26,7 +25,7 @@ public class SaveData {
     public String getSaveTime() {
         return this.saveTime;
     }
-    
+
     public List<String> getUnlockedCharacters() {
         return List.copyOf(this.unlockedCharacters);
     }

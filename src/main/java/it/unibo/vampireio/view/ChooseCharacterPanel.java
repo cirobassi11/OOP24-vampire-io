@@ -5,10 +5,11 @@ import java.util.List;
 import javax.swing.JList;
 import javax.swing.JButton;
 import it.unibo.vampireio.controller.UnlockableCharacterData;
+import it.unibo.vampireio.controller.UnlockableItemData;
 
 class ChooseCharacterPanel extends AbstractBasePanel {
 
-    private List<UnlockableCharacterData> choosableCharactersData = List.of();
+    private List<UnlockableItemData> choosableCharactersData = List.of();
     private List<String> characterNames = List.of();
 
     private JButton confirmButton;
@@ -23,7 +24,7 @@ class ChooseCharacterPanel extends AbstractBasePanel {
         this.backButton = this.addButton("BACK", 0, 2);
     }
 
-    void setChoosableCharactersData(final List<UnlockableCharacterData> choosableCharactersData) {
+    void setChoosableCharactersData(final List<UnlockableItemData> choosableCharactersData) {
         this.choosableCharactersData = choosableCharactersData;
         if (choosableCharactersData == null || choosableCharactersData.isEmpty()) {
             this.characterNames = List.of();
@@ -31,7 +32,7 @@ class ChooseCharacterPanel extends AbstractBasePanel {
         } else {
             this.choosableCharactersData = choosableCharactersData;
             this.characterNames = choosableCharactersData.stream()
-                    .map(UnlockableCharacterData::getName)
+                    .map(UnlockableItemData::getName)
                     .toList();
             this.charactersList.setListData(this.characterNames.toArray(new String[0]));
         }

@@ -13,11 +13,13 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionListener;
 import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.InputHandler;
 import it.unibo.vampireio.controller.ItemData;
 import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.UnlockableCharacterData;
+import it.unibo.vampireio.controller.UnlockableItemData;
 import it.unibo.vampireio.controller.UnlockablePowerupData;
 
 public class GameViewImpl implements GameView {
@@ -65,8 +67,8 @@ public class GameViewImpl implements GameView {
     }
 
     private void initFrame() {
-        this.setIcon(this.ICON_PATH);
-        this.setBackgroundImage(this.BACKGROUND_PATH);
+        this.setIcon(GameViewImpl.ICON_PATH);
+        this.setBackgroundImage(GameViewImpl.BACKGROUND_PATH);
         this.setResolution(DEFAULT_RESOLUTION);
         this.frame.setLocationRelativeTo(null);
         this.frame.setResizable(true);
@@ -109,8 +111,8 @@ public class GameViewImpl implements GameView {
         this.panels.put(END_GAME, new EndGamePanel(this));
         this.panels.put(PAUSE, new PausePanel(this));
         this.panels.put(SHOP, new ShopPanel(this));
-        this.panels.put(UNLOCKABLE_CHARACTERS, new UnlockableCharactersPanel(this));
-        this.panels.put(UNLOCKABLE_POWERUPS, new UnlockablePowerUpsPanel(this));
+        this.panels.put(UNLOCKABLE_CHARACTERS, new UnlockableItemShopPanel(this));
+        this.panels.put(UNLOCKABLE_POWERUPS, new UnlockableItemShopPanel(this));
         this.panels.put(IN_GAME_POWERUPS, new InGamePowerUpPanel(this));
         this.panels.forEach((name, panel) -> cardPanel.add(panel, name));
     }
@@ -173,7 +175,7 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setChoosableCharactersData(final List<UnlockableCharacterData> choosableCharactersData) {
+    public void setChoosableCharactersData(final List<UnlockableItemData> choosableCharactersData) {
         ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setChoosableCharactersData(choosableCharactersData);
     }
 
@@ -254,42 +256,48 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void setCoinsAmount(final int coins) {
-        ((UnlockableCharactersPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setCoinsAmount(coins);
-        ((UnlockablePowerUpsPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setCoinsAmount(coins);
+        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setCoinsAmount(coins);
+        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setCoinsAmount(coins);
     }
 
     @Override
-    public void setUnlockableCharactersData(final List<UnlockableCharacterData> unlockableCharactersData) {
-        ((UnlockableCharactersPanel) this.panels
+    public void setUnlockableCharactersData(final List<UnlockableItemData> unlockableCharacterData) {
+        ((UnlockableItemShopPanel) this.panels
         .get(UNLOCKABLE_CHARACTERS))
-        .setUnlockableCharactersData(unlockableCharactersData);
+        .setUnlockableItemData(unlockableCharacterData);
     }
 
     @Override
-    public void setUnlockablePowerupsData(final List<UnlockablePowerupData> unlockablePowerupsData) {
-        ((UnlockablePowerUpsPanel) this.panels
+    public void setUnlockablePowerupsData(final List<UnlockableItemData> unlockablePowerupData) {
+        ((UnlockableItemShopPanel) this.panels
         .get(UNLOCKABLE_POWERUPS))
-        .setUnlockablePowerupsData(unlockablePowerupsData);
+        .setUnlockableItemData(unlockablePowerupData);
     }
 
     @Override
     public String getSelectedCharacter() {
-        return ((UnlockableCharactersPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).getSelectedCharacter();
+        return ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).getSelectedItem();
     }
 
     @Override
     public String getSelectedPowerup() {
-        return ((UnlockablePowerUpsPanel) this.panels.get(UNLOCKABLE_POWERUPS)).getSelectedPowerup();
+        return ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).getSelectedItem();
     }
 
     @Override
     public void setBuyCharactersListener(final ActionListener listener) {
-        ((UnlockableCharactersPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setBuyCharactersListener(listener);
+        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setBuyItemListener(listener);
     }
 
     @Override
     public void setBuyPowerUpsListener(final ActionListener listener) {
-        ((UnlockablePowerUpsPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setBuyPowerUpsListener(listener);
+        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setBuyItemListener(listener);
+    }
+
+    @Override
+    public void setListSelectionListener(final ListSelectionListener listener) {
+        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setListSelectionListener(listener);
+        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setListSelectionListener(listener);
     }
 
     @Override
@@ -318,8 +326,8 @@ public class GameViewImpl implements GameView {
         ((ScoreboardPanel) this.panels.get(SCOREBOARD)).setBackListener(listener);
         ((ShopPanel) this.panels.get(SHOP)).setBackListener(listener);
         ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setBackListener(listener);
-        ((UnlockableCharactersPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setBackListener(listener);
-        ((UnlockablePowerUpsPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setBackListener(listener);
+        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setBackListener(listener);
+        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setBackListener(listener);
     }
 
     @Override
@@ -336,5 +344,22 @@ public class GameViewImpl implements GameView {
     @Override
     public void showError(final String message) {
         javax.swing.JOptionPane.showMessageDialog(frame, message, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+
+    @Override
+    public void showErrorWithExit(final String message) {
+        javax.swing.JOptionPane.showMessageDialog(frame, message, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+
+    @Override
+    public void disableBuyButton() {
+        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).disableBuyButton();
+        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).disableBuyButton();
+    }
+
+    @Override
+    public void enableBuyButton() {
+        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).enableBuyButton();
+        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).enableBuyButton();
     }
 }

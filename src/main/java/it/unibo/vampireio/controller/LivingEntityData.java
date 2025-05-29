@@ -8,7 +8,8 @@ public class LivingEntityData extends PositionableData {
     private boolean isBeingAttacked;
     private boolean isMoving;
 
-    public LivingEntityData(String id, Point2D.Double position, Point2D.Double direction, double radius, double health, double maxHealth, boolean isBeingAttacked, boolean isMoving) {
+    public LivingEntityData(String id, Point2D.Double position, Point2D.Double direction, double radius, double health,
+            double maxHealth, boolean isBeingAttacked, boolean isMoving) {
         super(id, position, direction, radius);
         this.health = health;
         this.maxHealth = maxHealth;
@@ -27,7 +28,7 @@ public class LivingEntityData extends PositionableData {
     public boolean isBeingAttacked() {
         return this.isBeingAttacked;
     }
-    
+
     public boolean isMoving() {
         return this.isMoving;
     }

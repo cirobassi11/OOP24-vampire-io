@@ -10,5 +10,6 @@ public class Coin extends CollectibleItem {
     }
 
     @Override
-    public void onCollision(Collidable collidable) {}
+    public void onCollision(Collidable collidable) {
+    }
 }

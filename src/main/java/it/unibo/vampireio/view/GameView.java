@@ -1,12 +1,14 @@
 package it.unibo.vampireio.view;
 
 import java.util.List;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.InputHandler;
 import it.unibo.vampireio.controller.ItemData;
 import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.UnlockableCharacterData;
+import it.unibo.vampireio.controller.UnlockableItemData;
 import it.unibo.vampireio.controller.UnlockablePowerupData;
 
 public interface GameView {
@@ -29,6 +31,8 @@ public interface GameView {
     void setCharactersShopListener(ActionListener listener);
     
     void setPowerUpsShopListener(ActionListener listener);
+
+    void setListSelectionListener(ListSelectionListener listener);
     
     void setBackListener(ActionListener listener);
     
@@ -43,7 +47,7 @@ public interface GameView {
     void setQuitListener(ActionListener listener);
     
     void setBuyCharactersListener(ActionListener listener);
-    
+
     void setBuyPowerUpsListener(ActionListener listener);
     
     void setReturnMenuListener(ActionListener listener);
@@ -56,7 +60,7 @@ public interface GameView {
     void setScoresData(List<ScoreData> scores);
     
     // Choose character panel
-    void setChoosableCharactersData(List<UnlockableCharacterData> choosableCharactersData);
+    void setChoosableCharactersData(List<UnlockableItemData> choosableCharactersData);
     
     String getChoosedCharacter();
 
@@ -64,12 +68,12 @@ public interface GameView {
     void setCoinsAmount(int coins);
 
     // Unlockable character panel
-    void setUnlockableCharactersData(List<UnlockableCharacterData> unlockableCharactersData);
+    void setUnlockableCharactersData(List<UnlockableItemData> unlockableCharactersData);
     
     String getSelectedCharacter();
     
     // Unlockable powerup panel
-    void setUnlockablePowerupsData(List<UnlockablePowerupData> unlockablePowerupsData);
+    void setUnlockablePowerupsData(List<UnlockableItemData> unlockablePowerupsData);
     
     String getSelectedPowerup();
 
@@ -85,4 +89,8 @@ public interface GameView {
     void setScore(ScoreData score);
     
     void showError(String message);
+
+    void showErrorWithExit(String message);
+    void disableBuyButton();
+	void enableBuyButton();
 }

@@ -21,6 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.ImageIcon;
 
 abstract class AbstractBasePanel extends JPanel {
 
@@ -167,7 +168,12 @@ abstract class AbstractBasePanel extends JPanel {
                 ));
             }
         }
-
         this.revalidate();
+    }
+
+    protected final JLabel addImage(final ImageIcon image, final int gridx, final int gridy) {
+        final JLabel label = new JLabel(image);
+        this.addComponent(label, gridx, gridy);
+        return label;
     }
 }

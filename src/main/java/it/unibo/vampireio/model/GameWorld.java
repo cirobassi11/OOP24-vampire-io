@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Collection;
 import java.util.Iterator;
 
 public class GameWorld implements GameModel {
@@ -42,7 +43,7 @@ public class GameWorld implements GameModel {
         if (configData != null) {
             this.configData = configData;
         } else {
-            this.gameController.showError("Config data not found!");
+            this.gameController.showErrorWithExit("Config data not found!");
         }
     }
 
@@ -302,7 +303,6 @@ public class GameWorld implements GameModel {
             .getUnlockedCharacters().stream()
             .map(id -> this.getDataLoader().getCharacterLoader().get(id).get())
             .toList();
-            
         return unlockedCharacters;
     }
 
@@ -329,12 +329,7 @@ public class GameWorld implements GameModel {
                 .filter(c -> c.getId().equals(selectedCharacter))
                 .findFirst()
                 .orElse(null);
-            if (selectedUnlockableCharacter == null) {
-                this.gameController.showError("Character not found");
-                return false;
-            }
-            if (currentSave.getMoneyAmount() < selectedUnlockableCharacter.getPrice()) {
-                this.gameController.showError("You don't have enough coins!");
+            if (selectedUnlockableCharacter == null || currentSave.getMoneyAmount() < selectedUnlockableCharacter.getPrice()) {
                 return false;
             }
             currentSave.incrementMoneyAmount(- selectedUnlockableCharacter.getPrice());
@@ -361,29 +356,20 @@ public class GameWorld implements GameModel {
         if(selectedPowerUp != null) {
             int powerupPrice = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getPrice();
             int moneyAmount = this.getCurrentSave().getMoneyAmount();
-            
             Optional<UnlockablePowerUp> unlockablePowerup = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp);
-            
             if(!unlockablePowerup.isPresent()) {
-                this.gameController.showError("Powerup not found!");
                 return false;
             }
-
             Save currentSave = this.getCurrentSave();
-
             if(moneyAmount >= powerupPrice) {
                 boolean enhanced = unlockablePowerup.get().enhance();
                 currentSave.enhancePowerup(unlockablePowerup.get());
                 if(!enhanced) {
-                    this.gameController.showError("Max level reached!");
                     return false;
                 }
                 currentSave.incrementMoneyAmount(- unlockablePowerup.get().getPrice());
                 this.saveManager.saveCurrentSave();
                 return true;
-            }
-            else {
-                this.gameController.showError("You don't have enough coins!");
             }
         }
         return false;
@@ -442,7 +428,7 @@ public class GameWorld implements GameModel {
     public void createNewSave() {
         UnlockableCharacter defaultCharacter = this.dataLoader.getCharacterLoader().get(this.configData.getDefaultCharacterId()).orElse(null);
         if (defaultCharacter == null) {
-            this.gameController.showError("Default character not found in config data!");
+            this.gameController.showErrorWithExit("Default character not found in config data!");
         }
         this.saveManager.createNewSave(defaultCharacter);
     }
@@ -533,5 +519,13 @@ public class GameWorld implements GameModel {
 
     DataLoader getDataLoader() {
         return this.dataLoader;   
+    }
+
+    @Override
+    public Collection<Unlockable> getAllItems() {
+        final List<Unlockable> allItems = new LinkedList<>();
+        allItems.addAll(this.dataLoader.getCharacterLoader().getAll());
+        allItems.addAll(this.dataLoader.getPowerUpLoader().getAll());
+        return allItems;
     }
 }

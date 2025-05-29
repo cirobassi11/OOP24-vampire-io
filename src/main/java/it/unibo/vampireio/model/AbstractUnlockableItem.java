@@ -10,7 +10,8 @@ public abstract class AbstractUnlockableItem implements Unlockable, Identifiable
     private int currentLevel;
     private int maxLevel;
 
-    public AbstractUnlockableItem(final String id, final String name, final String description, final int price, final int maxLevel) {
+    public AbstractUnlockableItem(final String id, final String name, final String description, final int price,
+            final int maxLevel) {
         this.id = id;
         this.name = name;
         this.description = description;

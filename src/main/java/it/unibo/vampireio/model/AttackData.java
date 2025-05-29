@@ -32,7 +32,7 @@ public class AttackData implements Identifiable {
     }
 
     public long getDuration() {
-        return this.duration;   
+        return this.duration;
     }
 
     public void setRadius(double radius) {

@@ -30,7 +30,7 @@ public class SaveManager {
                 indexFile.createNewFile();
                 this.savesNames = new ArrayList<>();
             } catch (final IOException e) {
-                this.gameController.showError(this.savingError);
+                this.gameController.showErrorWithExit(this.savingError);
             }
         } else {
             this.readIndex();
@@ -54,15 +54,15 @@ public class SaveManager {
                     if (item instanceof String) {
                         this.savesNames.add((String) item);
                     } else {
-                        this.gameController.showError(this.readingError);
+                        this.gameController.showErrorWithExit(this.readingError);
                     }
                 }
             } else {
-                this.gameController.showError(this.readingError);
+                this.gameController.showErrorWithExit(this.readingError);
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            this.gameController.showError(this.readingError);
+            this.gameController.showErrorWithExit(this.readingError);
             e.printStackTrace();
         }
     }
@@ -72,7 +72,7 @@ public class SaveManager {
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(savesNames);
         } catch (final IOException e) {
-            this.gameController.showError(this.savingError);
+            this.gameController.showErrorWithExit(this.savingError);
         }
     }
 
@@ -95,11 +95,11 @@ public class SaveManager {
                  ObjectInputStream in = new ObjectInputStream(input)) {
                 this.currentSave = (Save) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                this.gameController.showError(this.readingError);
+                this.gameController.showErrorWithExit(this.readingError);
                 e.printStackTrace();
             }
         } else {
-            this.gameController.showError(this.readingError);
+            this.gameController.showErrorWithExit(this.readingError);
         }
     }
 
@@ -110,7 +110,7 @@ public class SaveManager {
                  ObjectOutputStream out = new ObjectOutputStream(output)) {
                 out.writeObject(currentSave);
             } catch (final IOException e) {
-                this.gameController.showError(this.savingError);
+                this.gameController.showErrorWithExit(this.savingError);
             }
         }
     }

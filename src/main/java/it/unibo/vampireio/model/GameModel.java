@@ -2,6 +2,7 @@ package it.unibo.vampireio.model;
 
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
+import java.util.Collection;
 import java.util.List;
 
 public interface GameModel {
@@ -38,4 +39,5 @@ public interface GameModel {
     List<WeaponData> getRandomLevelUpWeapons();
     void levelUpWeapon(String selectedWeapon);
     Score exitGame();
+    Collection<Unlockable> getAllItems();
 }

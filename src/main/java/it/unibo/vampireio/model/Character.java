@@ -6,8 +6,8 @@ import java.awt.geom.Point2D;
 
 public class Character extends LivingEntity {
 
-    private static final int MAX_WEAPONS = 3; //TODO: read from config
-    
+    private static final int MAX_WEAPONS = 3; // TODO: read from config
+
     private Stats stats;
     private int level;
     private double levelPercentage;
@@ -19,7 +19,8 @@ public class Character extends LivingEntity {
     private List<Weapon> weapons = new LinkedList<>();
 
     public Character(String id, String name, Stats stats, double radius, Weapon weapon) {
-        super(id, new Point2D.Double(0, 0), radius, new Point2D.Double(1, 0), stats.getStat(StatType.MOVE_SPEED), stats.getStat(StatType.MAX_HEALTH));
+        super(id, new Point2D.Double(0, 0), radius, new Point2D.Double(1, 0), stats.getStat(StatType.MOVE_SPEED),
+                stats.getStat(StatType.MAX_HEALTH));
         this.stats = stats;
         this.level = 1;
         this.levelPercentage = 0;
@@ -30,7 +31,7 @@ public class Character extends LivingEntity {
 
     @Override
     public void setDirection(Point2D.Double direction) {
-        if(direction.getX() != 0 || direction.getY() != 0) {
+        if (direction.getX() != 0 || direction.getY() != 0) {
             lastDirection = direction;
         }
         super.setDirection(direction);
@@ -57,10 +58,11 @@ public class Character extends LivingEntity {
     }
 
     @Override
-    public void onCollision(Collidable collidable) { }
+    public void onCollision(Collidable collidable) {
+    }
 
     public boolean addWeapon(Weapon weapon) {
-        if(this.weapons.size() >= MAX_WEAPONS) {
+        if (this.weapons.size() >= MAX_WEAPONS) {
             return false;
         }
         this.weapons.add(weapon);
@@ -68,21 +70,20 @@ public class Character extends LivingEntity {
     }
 
     public void updateWeapons(double tickTime) {
-        for(Weapon weapon : this.weapons) {
+        for (Weapon weapon : this.weapons) {
             weapon.update(tickTime);
         }
     }
-    
+
     public void collect(Collectible collectible) {
-        if(collectible instanceof Coin) {
+        if (collectible instanceof Coin) {
             this.coinCounter += collectible.getValue();
-        }
-        else if(collectible instanceof Food) {
+        } else if (collectible instanceof Food) {
             this.heal(collectible.getValue());
-        }
-        else if(collectible instanceof ExperienceGem) {
-            this.levelPercentage += collectible.getValue() * (1.0 / Math.pow(level + 1, 0.7)); // TODO: calculate a better formula
-            if(this.levelPercentage >= 100) {
+        } else if (collectible instanceof ExperienceGem) {
+            this.levelPercentage += collectible.getValue() * (1.0 / Math.pow(level + 1, 0.7)); // TODO: calculate a
+                                                                                               // better formula
+            if (this.levelPercentage >= 100) {
                 this.levelPercentage -= 100;
                 this.level++;
                 this.hasJustLevelledUp = true;

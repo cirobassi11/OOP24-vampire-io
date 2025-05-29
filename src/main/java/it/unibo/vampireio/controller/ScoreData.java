@@ -8,7 +8,8 @@ public class ScoreData {
     private int coinCounter;
     private int score;
 
-    public ScoreData(String characterName, long sessionTime, int killCounter, int levelCounter, int coinCounter, int score) {
+    public ScoreData(String characterName, long sessionTime, int killCounter, int levelCounter, int coinCounter,
+            int score) {
         this.characterName = characterName;
         this.sessionTime = sessionTime;
         this.killCounter = killCounter;

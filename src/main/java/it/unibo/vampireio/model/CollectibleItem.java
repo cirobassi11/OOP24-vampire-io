@@ -16,5 +16,5 @@ public abstract class CollectibleItem extends CollidableEntity implements Collec
     public int getValue() {
         return this.value;
     }
-    
+
 }
