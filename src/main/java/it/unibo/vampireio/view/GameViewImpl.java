@@ -311,7 +311,7 @@ public class GameViewImpl implements GameView {
     public void setScoresData(final List<ScoreData> scores) {
         ((ScoreboardPanel) this.panels.get(SCOREBOARD)).setScoresData(scores);
     }
-    
+
     @Override
     public void setBackListener(final ActionListener listener) {
         ((SaveSelectionPanel) this.panels.get(SAVE_SELECTION)).setBackListener(listener);

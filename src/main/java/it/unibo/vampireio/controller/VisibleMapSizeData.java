@@ -10,6 +10,6 @@ public class VisibleMapSizeData {
     }
 
     public Dimension getDimension() {
-        return this.dimension;
+        return new Dimension(this.dimension);
     }
 }

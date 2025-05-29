@@ -38,7 +38,7 @@ public class SaveManager {
     }
 
     private void readIndex() {
-        File indexFile = new File(this.indexFileName);
+        final File indexFile = new File(this.indexFileName);
         this.savesNames = new ArrayList<>();
 
         if (indexFile.length() == 0) {

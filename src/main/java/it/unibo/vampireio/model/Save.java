@@ -15,21 +15,22 @@ public class Save implements Serializable {
     
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
     
-    private String saveTime;
-    private Set<String> unlockedCharacters;
-    private Map<String, Integer> unlockedPowerUps;
+    private final String saveTime;
+    private final Set<String> unlockedCharacters;
+    private final Map<String, Integer> unlockedPowerUps;
+    private final List<Score> scores;
+
     private int moneyAmount;
-    private List<Score> scores;
 
     // Nuovo salvataggio vuoto
     public Save() {
         this.saveTime = generateSaveTimestamp();
-        this.unlockedCharacters = new HashSet<String>();
-        this.unlockedPowerUps = new HashMap<String, Integer>(); 
+        this.unlockedCharacters = new HashSet<>();
+        this.unlockedPowerUps = new HashMap<>(); 
         this.moneyAmount = 0;
         this.scores = new LinkedList<Score>();
     }
-    
+
     public String getSaveTime() {
         return this.saveTime;
     }
@@ -65,7 +66,7 @@ public class Save implements Serializable {
     public void enhancePowerup(final UnlockablePowerUp unlockedPowerUp) {
         this.unlockedPowerUps.put(unlockedPowerUp.getId(), unlockedPowerUp.getCurrentLevel());
     }
-            
+    
     // Generazione stringa data-ora dd-MM-yyyy_HH-mm-ss
     private static String generateSaveTimestamp() {
         return LocalDateTime.now().format(FORMATTER);

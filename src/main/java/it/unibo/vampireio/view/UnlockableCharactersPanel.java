@@ -43,7 +43,7 @@ class UnlockableCharactersPanel extends AbstractBasePanel {
                     .toList();
         }
         this.charactersList.setListData(this.characterNames.toArray(new String[0]));
-        this.charactersList.addListSelectionListener(e -> getCharacterInfo());
+        this.charactersList.addListSelectionListener(e -> characterInfo());
     }
 
     String getSelectedCharacter() {
@@ -54,7 +54,7 @@ class UnlockableCharactersPanel extends AbstractBasePanel {
         return this.unlockableCharactersData.get(selectedIndex).getId();
     }
 
-    private void getCharacterInfo() {
+    private void characterInfo() {
         final int selectedIndex = this.charactersList.getSelectedIndex();
         if (selectedIndex >= 0 && selectedIndex < this.unlockableCharactersData.size()) {
             final UnlockableCharacterData data = this.unlockableCharactersData.get(selectedIndex);

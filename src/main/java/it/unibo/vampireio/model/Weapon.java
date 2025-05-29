@@ -21,7 +21,7 @@ public interface Weapon extends Identifiable {
      * @param multiplier The factor by which the current cooldown is multiplied.
      */
     void multiplyCooldown(double multiplier);
-    
+
     /**
      * Increase the weapon's level by one.
      */

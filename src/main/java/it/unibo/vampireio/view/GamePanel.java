@@ -50,6 +50,8 @@ class GamePanel extends JPanel {
 
     private static final String LEFT_DIRECTION = "l";
 
+    private static final Color TRANSLUCENT_WHITE = new Color(255, 255, 255, 150);
+
     private static final double ENEMY_OSCILLATION_MAX_ANGLE_RAD = Math.toRadians(10);
     private static final double ENEMY_OSCILLATION_SPEED = 0.005;
 
@@ -187,7 +189,7 @@ class GamePanel extends JPanel {
                         final Graphics2D whiteG = whiteImage.createGraphics();
                         whiteG.drawImage(tile.getScaledInstance(enemyWidth, enemyHeight, Image.SCALE_SMOOTH), 0, 0, null);
                         whiteG.setComposite(AlphaComposite.SrcAtop);
-                        whiteG.setColor(new Color(255, 255, 255, 150));
+                        whiteG.setColor(this.TRANSLUCENT_WHITE);
                         whiteG.fillRect(0, 0, enemyWidth, enemyHeight);
                         whiteG.dispose();
                         g2d.drawImage(whiteImage, enemyX, enemyY, null);

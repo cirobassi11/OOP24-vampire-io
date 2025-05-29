@@ -48,7 +48,7 @@ class UnlockablePowerUpsPanel extends AbstractBasePanel {
         }
 
         this.powerupsList.setListData(this.powerupNames.toArray(new String[0]));
-        this.powerupsList.addListSelectionListener(e -> getPowerupInfo());
+        this.powerupsList.addListSelectionListener(e -> powerupInfo());
     }
 
     String getSelectedPowerup() {
@@ -59,11 +59,11 @@ class UnlockablePowerUpsPanel extends AbstractBasePanel {
         return this.unlockablePowerupsData.get(selectedIndex).getId();
     }
 
-    private void getPowerupInfo() {
+    private void powerupInfo() {
         final int selectedIndex = this.powerupsList.getSelectedIndex();
         if (selectedIndex >= 0 && selectedIndex < this.unlockablePowerupsData.size()) {
             final UnlockablePowerupData data = this.unlockablePowerupsData.get(selectedIndex);
-            this.descriptionLabel.setText("" + data.getDescription());
+            this.descriptionLabel.setText(data.getDescription());
             this.priceLabel.setText("Price: " + data.getPrice());
         } else {
             this.descriptionLabel.setText("");

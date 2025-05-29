@@ -23,10 +23,10 @@ public class GameData {
         this.killCounter = killCounter;
         this.coinCounter = coinCounter;
         this.character = character;
-        this.enemies = enemies;
-        this.attacks = attacks;
-        this.collectibles = collectibles;
-        this.items = items;
+        this.enemies = List.copyOf(enemies);
+        this.attacks = List.copyOf(this.attacks);
+        this.collectibles = List.copyOf(collectibles);
+        this.items = List.copyOf(items);
     }
 
     public VisibleMapSizeData getVisibleMapSizeData() {
@@ -58,18 +58,18 @@ public class GameData {
     }
 
     public List<LivingEntityData> getEnemiesData() {
-        return this.enemies;
+        return List.copyOf(this.enemies);
     }
 
     public List<PositionableData> getAttacksData() {
-        return this.attacks;
+        return List.copyOf(this.attacks);
     }
 
     public List<PositionableData> getCollectiblesData() {
-        return this.collectibles;
+        return List.copyOf(this.collectibles);
     }
 
     public List<ItemData> getItemsData() {
-        return this.items;
+        return List.copyOf(this.items);
     }
 }

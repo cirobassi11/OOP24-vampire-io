@@ -49,7 +49,7 @@ public class WeaponImpl implements Weapon {
     public void multiplyCooldown(final double multiplier) {
         this.cooldown *= multiplier;
     }
-    
+
     private void spawnAttack() {
         final Attack attack = attackFactory.createAttack();
         this.gameWorld.addAttack(attack);

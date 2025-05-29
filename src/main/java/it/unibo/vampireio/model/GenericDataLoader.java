@@ -1,5 +1,6 @@
 package it.unibo.vampireio.model;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -70,7 +72,7 @@ public class GenericDataLoader<T extends Identifiable> {
             for (T element : list) {
                 dataById.put(element.getId(), element);
             }
-        } catch (Exception e) {
+        } catch (IOException | JsonSyntaxException e) {
             gameController.showError("Error while loading data from " + path);
             dataById = Map.of();
         }

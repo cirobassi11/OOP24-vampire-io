@@ -85,7 +85,7 @@ abstract class AbstractBasePanel extends JPanel {
         this.allComponents.add(component);
     }
 
-    protected JButton addButton(final String text, final int gridx, final int gridy) {
+    protected final JButton addButton(final String text, final int gridx, final int gridy) {
         final JButton button = new JButton(text);
         button.setFont(DEFAULT_FONT);
         button.setForeground(Color.WHITE);
@@ -99,7 +99,7 @@ abstract class AbstractBasePanel extends JPanel {
             public void mouseEntered(final MouseEvent evt) {
                 button.setBackground(BUTTON_HOVER);
             }
-            
+
             @Override
             public void mouseExited(final MouseEvent evt) {
                 button.setBackground(BUTTON_BACKGROUND);
@@ -109,7 +109,7 @@ abstract class AbstractBasePanel extends JPanel {
         return button;
     }
 
-    protected JLabel addLabel(final String text, final int gridx, final int gridy) {
+    protected final JLabel addLabel(final String text, final int gridx, final int gridy) {
         final JLabel label = new JLabel(text);
         label.setFont(DEFAULT_FONT);
         label.setForeground(Color.WHITE);
@@ -118,21 +118,7 @@ abstract class AbstractBasePanel extends JPanel {
         return label;
     }
 
-    protected JLabel addLabel(final String text, final int gridx, final int gridy, final JPanel panel) {
-        if (panel == null) {
-            throw new IllegalArgumentException("Panel cannot be null");
-        }
-        final JLabel label = new JLabel(text);
-        label.setFont(DEFAULT_FONT);
-        label.setForeground(Color.WHITE);
-
-        panel.add(label, new GridBagConstraints(gridx, gridy, 1, 1, 0, 0,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(0, 0, 0, 0), 0, 0));
-        return label;
-    }
-
-    protected JComboBox<String> addComboBox(final int gridx, final int gridy) {
+    protected final JComboBox<String> addComboBox(final int gridx, final int gridy) {
         final JComboBox<String> comboBox = new JComboBox<>();
         comboBox.setFont(DEFAULT_FONT.deriveFont(SMALL_FONT_SCALE));
         comboBox.setBackground(COMBOBOX_BACKGROUND);
@@ -142,7 +128,7 @@ abstract class AbstractBasePanel extends JPanel {
         return comboBox;
     }
 
-    protected JList<String> addScrollableList(final List<String> items, final int gridx, final int gridy) {
+    protected final JList<String> addScrollableList(final List<String> items, final int gridx, final int gridy) {
         final DefaultListModel<String> model = new DefaultListModel<>();
         items.forEach(model::addElement);
 
