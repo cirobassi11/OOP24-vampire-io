@@ -64,16 +64,15 @@ public class EnemySpawner {
 
     private void spawnEnemy() {
         if (!reaperSpawned && timeRemaining <= 0) {
-            spawnSpecificEnemy(this.enemiesData.getLast());
+            spawnSpecificEnemy(enemiesData.getLast());
             reaperSpawned = true;
-            return;
         }
 
         long enemiesToSpawn = random.nextLong(MAX_ENEMY_SPAWN) + 1;
-        int levelCap = Math.min(currentLevel + 1, enemiesData.size());
+        int levelCap = Math.min(currentLevel + 1, enemiesData.size() - 1);
 
         for (int i = 0; i < enemiesToSpawn; i++) {
-            EnemyData enemyData = enemiesData.get(random.nextInt(levelCap));
+            EnemyData enemyData = enemiesData.get(random.nextInt(levelCap + 1));
             spawnSpecificEnemy(enemyData);
         }
     }
