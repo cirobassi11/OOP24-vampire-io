@@ -13,8 +13,9 @@ import java.awt.image.BufferedImage;
 import it.unibo.vampireio.controller.UnlockableItemData;
 
 class UnlockableItemShopPanel extends AbstractBasePanel {
+    private static final long serialVersionUID = 1L;
 
-    private ImageManager imageManager;
+    private final ImageManager imageManager;
 
     private List<UnlockableItemData> unlockableItemsData = List.of();
     private List<String> itemsNames = List.of();
@@ -27,7 +28,7 @@ class UnlockableItemShopPanel extends AbstractBasePanel {
     private final JLabel descriptionLabel;
     private final JLabel priceLabel;
 
-    public UnlockableItemShopPanel(final GameViewImpl view) {
+    UnlockableItemShopPanel(final GameViewImpl view) {
         super(view);
         this.imageManager = new ImageManager(view);
 
@@ -71,7 +72,7 @@ class UnlockableItemShopPanel extends AbstractBasePanel {
         final int selectedIndex = this.itemsList.getSelectedIndex();
         if (selectedIndex >= 0 && selectedIndex < this.unlockableItemsData.size()) {
             final UnlockableItemData data = this.unlockableItemsData.get(selectedIndex);
-            Image itemIcon = this.imageManager.getImage(data.getId());
+            final Image itemIcon = this.imageManager.getImage(data.getId());
             this.iconLabel.setIcon(new ImageIcon(itemIcon));
             this.descriptionLabel.setText(data.getDescription());
             this.priceLabel.setText("Price: " + data.getPrice());

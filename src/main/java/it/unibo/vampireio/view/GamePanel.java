@@ -51,6 +51,7 @@ class GamePanel extends JPanel {
     private static final String LEFT_DIRECTION = "l";
 
     private static final Color TRANSLUCENT_WHITE = new Color(255, 255, 255, 150);
+    private static final Color TRANSLUCENT_RED = new Color(255, 0, 0, 150);
 
     private static final double ENEMY_OSCILLATION_MAX_ANGLE_RAD = Math.toRadians(10);
     private static final double ENEMY_OSCILLATION_SPEED = 0.005;
@@ -228,7 +229,7 @@ class GamePanel extends JPanel {
                 final Graphics2D redG = redImage.createGraphics();
                 redG.drawImage(tile.getScaledInstance(characterWidth, characterHeight, Image.SCALE_SMOOTH), 0, 0, null);
                 redG.setComposite(AlphaComposite.SrcAtop);
-                redG.setColor(new Color(255, 0, 0, 150));
+                redG.setColor(TRANSLUCENT_RED);
                 redG.fillRect(0, 0, characterWidth, characterHeight);
                 redG.dispose();
                 g.drawImage(redImage, characterX, characterY, null);

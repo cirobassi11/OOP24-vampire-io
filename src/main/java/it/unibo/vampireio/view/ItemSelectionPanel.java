@@ -10,7 +10,7 @@ class ItemSelectionPanel extends AbstractBasePanel {
     private static final long serialVersionUID = 1L;
 
     private List<ItemData> itemsData = List.of();
-    
+
     private final JButton chooseItemButton;
     private final JList<String> itemList;
 

@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 class StartMenuPanel extends AbstractBasePanel {
     private static final long serialVersionUID = 1L;
-    
+
     private final JButton startButton;
     private final JButton scoreboardButton;
     private final JButton shopButton;

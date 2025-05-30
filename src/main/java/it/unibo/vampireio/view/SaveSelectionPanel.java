@@ -25,7 +25,7 @@ class SaveSelectionPanel extends AbstractBasePanel {
     void setChooseSaveListener(final ActionListener listener) {
         this.selectButton.addActionListener(listener);
     }
-    
+
     void setBackListener(final ActionListener listener) {
         this.backButton.addActionListener(listener);
     }

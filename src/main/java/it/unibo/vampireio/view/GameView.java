@@ -21,45 +21,45 @@ public interface GameView {
     void setNewSaveListener(ActionListener listener);
 
     void setShowSaveListener(ActionListener listener);
-    
+
     void setChooseSaveListener(ActionListener listener);
     
     void setChooseItemListener(ActionListener listener);
-    
+
     void setCharactersShopListener(ActionListener listener);
-    
+
     void setPowerUpsShopListener(ActionListener listener);
 
     void setListSelectionListener(ListSelectionListener listener);
-    
+
     void setBackListener(ActionListener listener);
-    
+
     void setStartListener(ActionListener listener);
-    
+
     void setScoreboardListener(ActionListener listener);
-    
+
     void setShopListener(ActionListener listener);
-    
+
     void setLoadSaveListener(ActionListener listener);
-    
+
     void setQuitListener(ActionListener listener);
-    
+
     void setBuyCharactersListener(ActionListener listener);
 
     void setBuyPowerUpsListener(ActionListener listener);
-    
+
     void setReturnMenuListener(ActionListener listener);
-    
+
     void setResumeListener(ActionListener listener);
-        
+    
     void setExitListener(ActionListener listener);
 
     // Setta i dati dei punteggi (nella scoreboard)
     void setScoresData(List<ScoreData> scores);
-    
+
     // Choose character panel
     void setChoosableCharactersData(List<UnlockableItemData> choosableCharactersData);
-    
+
     String getChoosedCharacter();
 
     // Shop panel
@@ -67,12 +67,12 @@ public interface GameView {
 
     // Unlockable character panel
     void setUnlockableCharactersData(List<UnlockableItemData> unlockableCharactersData);
-    
+
     String getSelectedCharacter();
-    
+
     // Unlockable powerup panel
     void setUnlockablePowerupsData(List<UnlockableItemData> unlockablePowerupsData);
-    
+
     String getSelectedPowerup();
 
     // Save Selection Panel
@@ -80,12 +80,12 @@ public interface GameView {
 
     // Item Selection Panel
     void setItemsData(List<ItemData> itemsData);
-    
+
     String getSelectedItem();
 
     // Set game score
     void setScore(ScoreData score);
-    
+
     void showError(String message);
 
     void showErrorWithExit(String message);

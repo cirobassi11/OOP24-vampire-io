@@ -37,12 +37,12 @@ public class GameViewImpl implements GameView {
     // Aspect Ratio fisso (es. 16:9)
     private static final double ASPECT_RATIO = 16.0 / 9.0;
 
-    static final String FRAME_TITLE = "Vampire.io";
     private static final Dimension DEFAULT_RESOLUTION = new Dimension(1280, 720);
     private static final Dimension MIN_RESOLUTION = new Dimension(640, 360);
-
     private static final String ICON_PATH = "/images/icon.png";
     private static final String BACKGROUND_PATH = "/images/background.png";
+    
+    static final String FRAME_TITLE = "Vampire.io";
 
     private final JFrame frame;
     private final CardLayout cardLayout;

@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 class SaveMenuPanel extends AbstractBasePanel {
     private static final long serialVersionUID = 1L;
-    
+
     private final JButton newSaveButton;
     private final JButton loadButton;
     private final JButton quitButton;
