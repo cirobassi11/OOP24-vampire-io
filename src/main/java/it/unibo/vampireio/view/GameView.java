@@ -28,7 +28,7 @@ public interface GameView {
 
     void setCharactersShopListener(ActionListener listener);
 
-    void setPowerUpsShopListener(ActionListener listener);
+    void setPowerupsShopListener(ActionListener listener);
 
     void setListSelectionListener(ListSelectionListener listener);
 
@@ -46,7 +46,7 @@ public interface GameView {
 
     void setBuyCharactersListener(ActionListener listener);
 
-    void setBuyPowerUpsListener(ActionListener listener);
+    void setBuyPowerupsListener(ActionListener listener);
 
     void setReturnMenuListener(ActionListener listener);
 

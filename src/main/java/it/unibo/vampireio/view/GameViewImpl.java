@@ -111,7 +111,7 @@ public class GameViewImpl implements GameView {
         this.panels.put(SHOP, new ShopPanel(this));
         this.panels.put(UNLOCKABLE_CHARACTERS, new UnlockableItemShopPanel(this));
         this.panels.put(UNLOCKABLE_POWERUPS, new UnlockableItemShopPanel(this));
-        this.panels.put(IN_GAME_POWERUPS, new InGamePowerUpPanel(this));
+        this.panels.put(IN_GAME_POWERUPS, new InGamePowerupPanel(this));
         this.panels.forEach((name, panel) -> cardPanel.add(panel, name));
     }
 
@@ -228,8 +228,8 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setPowerUpsShopListener(final ActionListener listener) {
-        ((ShopPanel) this.panels.get(SHOP)).setPowerUpsShopListener(listener);
+    public void setPowerupsShopListener(final ActionListener listener) {
+        ((ShopPanel) this.panels.get(SHOP)).setPowerupsShopListener(listener);
     }
 
     @Override
@@ -288,7 +288,7 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setBuyPowerUpsListener(final ActionListener listener) {
+    public void setBuyPowerupsListener(final ActionListener listener) {
         ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setBuyItemListener(listener);
     }
 

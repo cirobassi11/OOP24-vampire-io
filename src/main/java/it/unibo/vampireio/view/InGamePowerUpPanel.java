@@ -1,9 +1,9 @@
 package it.unibo.vampireio.view;
 
-class InGamePowerUpPanel extends AbstractBasePanel {
+class InGamePowerupPanel extends AbstractBasePanel {
     private static final long serialVersionUID = 1L;
 
-    InGamePowerUpPanel(final GameViewImpl view) {
+    InGamePowerupPanel(final GameViewImpl view) {
         super(view);
     }
 }

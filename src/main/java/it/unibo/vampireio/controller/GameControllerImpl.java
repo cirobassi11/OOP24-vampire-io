@@ -123,7 +123,7 @@ public class GameControllerImpl implements GameController {
             this.showScreen(GameViewImpl.UNLOCKABLE_CHARACTERS);
         });
 
-        this.view.setPowerUpsShopListener(e -> {
+        this.view.setPowerupsShopListener(e -> {
             List<UnlockableItemData> unlockablePowerupsData = this.model.getUnlockablePowerups().stream()
                     .map(powerup -> new UnlockableItemData(powerup.getId(), powerup.getName(),
                             powerup.getDescription(), powerup.getCurrentLevel(), powerup.getMaxLevel(),
@@ -150,7 +150,7 @@ public class GameControllerImpl implements GameController {
         });
 
         // UNLOCKABLE POWERUPS SHOP LISTENERS
-        this.view.setBuyPowerUpsListener(e -> {
+        this.view.setBuyPowerupsListener(e -> {
             String selectedPowerup = this.view.getSelectedPowerup();
             if (selectedPowerup != null && this.model.buyPowerup(selectedPowerup)) {
                 List<UnlockableItemData> unlockablePowerupsData = this.model.getUnlockablePowerups().stream()

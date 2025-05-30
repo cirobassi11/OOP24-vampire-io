@@ -58,9 +58,9 @@ public class GameWorld implements GameModel {
         }
         UnlockableCharacter selectedUnlockableCharacter = optionalSelectedUnlockableCharacter.get();
         
-        Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
-        for (Map.Entry<String, Integer> entry : unlockedPowerUps.entrySet()) {
-            Optional<UnlockablePowerUp> powerupOpt = this.dataLoader.getPowerUpLoader().get(entry.getKey());
+        Map<String, Integer> unlockedPowerups = this.saveManager.getCurrentSave().getUnlockedPowerups();
+        for (Map.Entry<String, Integer> entry : unlockedPowerups.entrySet()) {
+            Optional<UnlockablePowerup> powerupOpt = this.dataLoader.getPowerupLoader().get(entry.getKey());
             powerupOpt.ifPresent(p -> p.setCurrentLevel(entry.getValue()));
         }
 
@@ -341,11 +341,11 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public List<UnlockablePowerUp> getUnlockablePowerups() {
-        List<UnlockablePowerUp> unlockablePowerups = this.dataLoader.getPowerUpLoader().getAll();
-        Map<String, Integer> unlockedPowerups = this.saveManager.getCurrentSave().getUnlockedPowerUps();
+    public List<UnlockablePowerup> getUnlockablePowerups() {
+        List<UnlockablePowerup> unlockablePowerups = this.dataLoader.getPowerupLoader().getAll();
+        Map<String, Integer> unlockedPowerups = this.saveManager.getCurrentSave().getUnlockedPowerups();
 
-        List<UnlockablePowerUp> levelAdjustedPowerups = unlockablePowerups.stream()
+        List<UnlockablePowerup> levelAdjustedPowerups = unlockablePowerups.stream()
             .peek(p -> p.setCurrentLevel(unlockedPowerups.getOrDefault(p.getId(), 0)))
             .toList();
         return levelAdjustedPowerups;
@@ -354,9 +354,9 @@ public class GameWorld implements GameModel {
     @Override
     public boolean buyPowerup(String selectedPowerUp) {
         if(selectedPowerUp != null) {
-            int powerupPrice = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp).get().getPrice();
+            int powerupPrice = this.getDataLoader().getPowerupLoader().get(selectedPowerUp).get().getPrice();
             int moneyAmount = this.getCurrentSave().getMoneyAmount();
-            Optional<UnlockablePowerUp> unlockablePowerup = this.getDataLoader().getPowerUpLoader().get(selectedPowerUp);
+            Optional<UnlockablePowerup> unlockablePowerup = this.getDataLoader().getPowerupLoader().get(selectedPowerUp);
             if(!unlockablePowerup.isPresent()) {
                 return false;
             }
@@ -377,12 +377,12 @@ public class GameWorld implements GameModel {
 
     private Stats applyBuffs(Stats baseStats) {
         Stats modifiedStats = new Stats(baseStats);
-        Map<String, Integer> unlockedPowerUps = saveManager.getCurrentSave().getUnlockedPowerUps();
+        Map<String, Integer> unlockedPowerups = saveManager.getCurrentSave().getUnlockedPowerups();
 
-        for (Map.Entry<String, Integer> entry : unlockedPowerUps.entrySet()) {
+        for (Map.Entry<String, Integer> entry : unlockedPowerups.entrySet()) {
             String powerupID = entry.getKey();
 
-            dataLoader.getPowerUpLoader().get(powerupID).ifPresent(unlockablePowerup -> {
+            dataLoader.getPowerupLoader().get(powerupID).ifPresent(unlockablePowerup -> {
                 double multiplier = unlockablePowerup.getMultiplier();
                 StatType statToModify = unlockablePowerup.getStatToModify();
                 modifiedStats.multiplyStat(statToModify, multiplier);
@@ -525,7 +525,7 @@ public class GameWorld implements GameModel {
     public Collection<Unlockable> getAllItems() {
         final List<Unlockable> allItems = new LinkedList<>();
         allItems.addAll(this.dataLoader.getCharacterLoader().getAll());
-        allItems.addAll(this.dataLoader.getPowerUpLoader().getAll());
+        allItems.addAll(this.dataLoader.getPowerupLoader().getAll());
         return allItems;
     }
 }
