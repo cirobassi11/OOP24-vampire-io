@@ -1,6 +1,6 @@
 package it.unibo.vampireio.model;
 
-public class KnifeFactory extends AttackFactory {
+public class KnifeFactory extends AbstractAttackFactory {
     private static final String attackID = "attacks/knife";
     AttackData attackData = this.getAttackDataById(attackID);
 

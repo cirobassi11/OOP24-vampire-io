@@ -4,14 +4,14 @@ public class WeaponData implements Identifiable {
     private String id;
     private String name;
     private String description;
-    private double defaultCooldown;
+    private long defaultCooldown;
     private int defaultAttacksPerCooldown;
 
     public WeaponData(
         final String id, 
         final String name, 
         final String description, 
-        final double defaultCooldown, 
+        final long defaultCooldown, 
         final int defaultAttacksPerCooldown) {
             this.id = id;
             this.name = name;
@@ -33,7 +33,7 @@ public class WeaponData implements Identifiable {
         return this.description;
     }
 
-    public double getDefaultCooldown() {
+    public long getDefaultCooldown() {
         return this.defaultCooldown;
     }
 

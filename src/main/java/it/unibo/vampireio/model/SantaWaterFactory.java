@@ -3,7 +3,7 @@ package it.unibo.vampireio.model;
 import java.awt.geom.Point2D;
 import java.awt.Dimension;
 
-public class SantaWaterFactory extends AttackFactory {
+public class SantaWaterFactory extends AbstractAttackFactory {
     private static final String attackID = "attacks/santaWater";
     private final double SPAWN_AREA_PERCENTAGE = 0.8;
     AttackData attackData = this.getAttackDataById(attackID);

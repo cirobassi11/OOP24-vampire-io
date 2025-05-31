@@ -10,7 +10,7 @@
         "id": "attacks/garlic",
         "radius": 64.0,
         "speed": 0,
-        "damage": 50,
+        "damage": 20,
         "duration": 1000
     },
     {

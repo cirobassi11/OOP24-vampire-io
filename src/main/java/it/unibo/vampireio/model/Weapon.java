@@ -6,7 +6,7 @@ public interface Weapon extends Identifiable {
      *
      * @param tickTime The amount of time that has passed since the last update call.
      */
-    void update(double tickTime);
+    void update(long tickTime);
 
     /**
      * Returns the current level of the weapon.

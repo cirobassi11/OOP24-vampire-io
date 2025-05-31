@@ -111,7 +111,6 @@ public class GameViewImpl implements GameView {
         this.panels.put(SHOP, new ShopPanel(this));
         this.panels.put(UNLOCKABLE_CHARACTERS, new UnlockableItemShopPanel(this));
         this.panels.put(UNLOCKABLE_POWERUPS, new UnlockableItemShopPanel(this));
-        this.panels.put(IN_GAME_POWERUPS, new InGamePowerupPanel(this));
         this.panels.forEach((name, panel) -> cardPanel.add(panel, name));
     }
 

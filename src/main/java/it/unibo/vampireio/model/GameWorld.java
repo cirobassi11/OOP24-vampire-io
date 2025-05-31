@@ -67,7 +67,7 @@ public class GameWorld implements GameModel {
         Stats stats = applyBuffs(selectedUnlockableCharacter.getCharacterStats());
 
         WeaponData defaultWeaponData = this.dataLoader.getWeaponLoader().get(selectedUnlockableCharacter.getDefaultWeapon()).get();
-        AttackFactory attackFactory = this.getAttackFactory(defaultWeaponData.getId());
+        AbstractAttackFactory attackFactory = this.getAttackFactory(defaultWeaponData.getId());
 
         Weapon defaultWeapon = new WeaponImpl(this,
                 defaultWeaponData.getId(),
@@ -487,7 +487,7 @@ public class GameWorld implements GameModel {
         }
     }
 
-    private AttackFactory getAttackFactory(String weaponID) {
+    private AbstractAttackFactory getAttackFactory(String weaponID) {
         return switch (weaponID) {
             case "weapons/magicWand" -> new MagicWandFactory(this);
             case "weapons/santaWater" -> new SantaWaterFactory(this);

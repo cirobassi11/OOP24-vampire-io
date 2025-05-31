@@ -1,6 +1,6 @@
 package it.unibo.vampireio.model;
 
-public class MagicWandFactory extends AttackFactory {
+public class MagicWandFactory extends AbstractAttackFactory {
     private static final String attackID = "attacks/magicWand";
     AttackData attackData = this.getAttackDataById(attackID);
     

@@ -1,6 +1,6 @@
 [
     {
-        "defaultCharacterId": "characters/gennaro",
+        "defaultCharacterId": "characters/imelda",
         "weaponSlots": 3,
         "maxGameDuration": 300000,
         "collectibleSpawnChance": 0.4,

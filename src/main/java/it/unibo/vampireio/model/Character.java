@@ -69,7 +69,7 @@ public class Character extends LivingEntity {
         return true;
     }
 
-    public void updateWeapons(double tickTime) {
+    public void updateWeapons(long tickTime) {
         for (Weapon weapon : this.weapons) {
             weapon.update(tickTime);
         }

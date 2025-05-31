@@ -1,6 +1,6 @@
 package it.unibo.vampireio.model;
 
-public class GarlicFactory extends AttackFactory {
+public class GarlicFactory extends AbstractAttackFactory {
     private static final String attackID = "attacks/garlic";
     AttackData attackData = this.getAttackDataById(attackID);
     

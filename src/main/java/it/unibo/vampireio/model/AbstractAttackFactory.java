@@ -1,10 +1,10 @@
 package it.unibo.vampireio.model;
 
-public abstract class AttackFactory {
+public abstract class AbstractAttackFactory {
     protected final GameWorld gameWorld;
     private int currentLevel;
 
-    public AttackFactory(GameWorld gameWorld) {
+    public AbstractAttackFactory(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
         this.currentLevel = 1;
     }

@@ -69,7 +69,7 @@ public class EnemySpawner {
         }
 
         long enemiesToSpawn = random.nextLong(MAX_ENEMY_SPAWN) + 1;
-        int levelCap = Math.min(currentLevel + 1, enemiesData.size() - 1);
+        int levelCap = Math.min(currentLevel, enemiesData.size() - 2);
 
         for (int i = 0; i < enemiesToSpawn; i++) {
             EnemyData enemyData = enemiesData.get(random.nextInt(levelCap + 1));

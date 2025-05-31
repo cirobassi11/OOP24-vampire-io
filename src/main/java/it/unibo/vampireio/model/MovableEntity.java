@@ -56,7 +56,7 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
     }
 
     @Override
-    public Point2D.Double getFuturePosition(double tickTime) {
+    public Point2D.Double getFuturePosition(long tickTime) {
         double newX = this.getPosition().getX() + this.getDirection().getX() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
         double newY = this.getPosition().getY() + this.getDirection().getY() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
         return new Point2D.Double(newX, newY);

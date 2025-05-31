@@ -3,18 +3,18 @@ package it.unibo.vampireio.model;
 public class WeaponImpl implements Weapon {
     private final GameWorld gameWorld;
     private final String id;
-    private double cooldown;
+    private long cooldown;
     private int projectilePerCooldown;
-    private double timeSinceLastAttack;
+    private long timeSinceLastAttack;
     private int currentLevel;
-    private final AttackFactory attackFactory;
+    private final AbstractAttackFactory attackFactory;
 
     public WeaponImpl(
-        final GameWorld gameWorld, 
+        final GameWorld gameWorld,
         final String id,
-        final double cooldown, 
+        final long cooldown, 
         final int projectilePerCooldown, 
-        final AttackFactory attackFactory) {
+        final AbstractAttackFactory attackFactory) {
             this.gameWorld = gameWorld;
             this.id = id;
             this.cooldown = cooldown;
@@ -25,7 +25,7 @@ public class WeaponImpl implements Weapon {
     }
 
     @Override
-    public void update(final double tickTime) {
+    public void update(final long tickTime) {
         this.timeSinceLastAttack += tickTime;
         if (this.timeSinceLastAttack >= this.cooldown) {
             for (int i = 0; i < this.projectilePerCooldown; i++) {

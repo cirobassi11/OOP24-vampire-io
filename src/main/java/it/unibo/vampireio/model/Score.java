@@ -32,8 +32,8 @@ public class Score implements Serializable {
         this.level = level;
     }
 
-    public void incrementSessionTime(final double tickRate) {
-        this.sessionTime += tickRate;
+    public void incrementSessionTime(final long tickTime) {
+        this.sessionTime += tickTime;
     }
 
     public String getCharacterName() {

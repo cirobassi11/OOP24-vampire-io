@@ -10,10 +10,10 @@ class ChooseCharacterPanel extends AbstractBasePanel {
 
     private List<UnlockableItemData> choosableCharactersData = List.of();
     private List<String> characterNames = List.of();
-
     private JButton confirmButton;
     private JButton backButton;
     private JList<String> charactersList;
+    
 
     ChooseCharacterPanel(final GameViewImpl view) {
         super(view);
