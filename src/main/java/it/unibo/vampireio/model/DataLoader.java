@@ -11,7 +11,7 @@ public class DataLoader {
     private final GenericDataLoader<AttackData> attackLoader;
     private final GenericDataLoader<UnlockablePowerup> powerupLoader;
 
-    public DataLoader(GameController gameController) {
+    public DataLoader(final GameController gameController) {
         this.characterLoader = new GenericDataLoader<>(gameController, "data/characters.json", UnlockableCharacter.class);
         this.enemyLoader = new GenericDataLoader<>(gameController, "data/enemies.json", EnemyData.class);
         this.weaponLoader = new GenericDataLoader<>(gameController, "data/weapons.json", WeaponData.class);

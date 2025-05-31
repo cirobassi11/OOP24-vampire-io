@@ -2,7 +2,7 @@ package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D;
 
-public abstract class AbstractAttack extends MovableEntity implements Attack {
+public abstract class AbstractAttack extends AbstractMovableEntity implements Attack {
 
     protected GameWorld gameWorld;
     protected int damage;

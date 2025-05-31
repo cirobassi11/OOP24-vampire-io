@@ -78,7 +78,6 @@ public class GameWorld implements GameModel {
 
         this.character = new Character(
             selectedUnlockableCharacter.getId(),
-            selectedUnlockableCharacter.getName(),
             stats,
             selectedUnlockableCharacter.getRadius(),
             defaultWeapon

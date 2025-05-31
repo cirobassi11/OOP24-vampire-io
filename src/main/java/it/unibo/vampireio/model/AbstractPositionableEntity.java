@@ -2,12 +2,12 @@ package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D;
 
-public abstract class PositionableEntity implements Positionable {
+public abstract class AbstractPositionableEntity implements Positionable {
     
-    private String id;
+    private final String id;
     private Point2D.Double position;
 
-    protected PositionableEntity(String id, Point2D.Double position) {
+    protected AbstractPositionableEntity(final String id, final Point2D.Double position) {
         this.id = id;
         this.position = position;
     }
@@ -23,12 +23,12 @@ public abstract class PositionableEntity implements Positionable {
     }
 
     @Override
-    public void setPosition(Point2D.Double position) {
+    public void setPosition(final Point2D.Double position) {
         this.position = position;
     }
 
     @Override
-    public double getDistance(Positionable positionable) {
+    public double getDistance(final Positionable positionable) {
         return position.distance(positionable.getPosition());
     }
 }

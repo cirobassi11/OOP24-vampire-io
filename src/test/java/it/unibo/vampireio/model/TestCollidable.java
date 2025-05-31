@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class TestCollidable {
 
-    private static class TestCollidableImpl extends CollidableEntity {
+    private static class TestCollidableImpl extends AbstractCollidableEntity {
         private boolean collided = false;
 
         public TestCollidableImpl(String id, Point2D.Double position, double radius) {

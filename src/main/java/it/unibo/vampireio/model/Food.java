@@ -3,9 +3,9 @@ package it.unibo.vampireio.model;
 import java.awt.geom.Point2D.Double;
 import java.util.Random;
 
-public class Food extends CollectibleItem {
+public class Food extends AbstractCollectibleItem {
 
-    protected Food(Double position) {
+    protected Food(final Double position) {
         super("collectibles/food", position, new Random().nextInt(51) + 50);
     }
 

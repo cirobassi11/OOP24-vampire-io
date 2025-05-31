@@ -2,13 +2,14 @@ package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D;
 
-public abstract class LivingEntity extends MovableEntity implements Living {
+public abstract class AbstractLivingEntity extends AbstractMovableEntity implements Living {
 
     private double maxHealth;
     private double health;
     private boolean isGettingAttacked;
 
-    protected LivingEntity(String id, Point2D.Double position, double radius, Point2D.Double direction, double speed, double maxHealth) {
+    protected AbstractLivingEntity(final String id, final Point2D.Double position, final double radius,
+            final Point2D.Double direction, final double speed, final double maxHealth) {
         super(id, position, radius, direction, speed);
         this.maxHealth = maxHealth;
         this.health = maxHealth;
@@ -26,17 +27,17 @@ public abstract class LivingEntity extends MovableEntity implements Living {
     }
 
     @Override
-    public void setMaxHealth(double maxHealth) {
+    public void setMaxHealth(final double maxHealth) {
         this.maxHealth = maxHealth;
     }
 
     @Override
-    public void dealDamage(double damage) {
+    public void dealDamage(final double damage) {
         this.health = Math.max(this.health - ((damage < 0) ? 0 : damage), 0);
     }
 
     @Override
-    public void heal(double heal) {
+    public void heal(final double heal) {
         this.health = Math.min(this.health + ((heal < 0) ? 0 : heal), this.maxHealth);
     }
 
@@ -46,7 +47,7 @@ public abstract class LivingEntity extends MovableEntity implements Living {
     }
 
     @Override
-    public void setGettingAttacked(boolean isGettingAttacked) {
+    public void setGettingAttacked(final boolean isGettingAttacked) {
         this.isGettingAttacked = isGettingAttacked;
     }
 }

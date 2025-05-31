@@ -21,7 +21,7 @@ public class EnemySpawner {
     private long timeRemaining;
     private int currentLevel;
     private int maxEnemyLevel;
-    private boolean reaperSpawned = false;
+    private boolean reaperSpawned;
 
     private final List<EnemyData> enemiesData;
     private final GameWorld gameWorld;
@@ -40,7 +40,7 @@ public class EnemySpawner {
         this.currentLevel = 0;
     }
 
-    public void update(long tickTime) {
+    public void update(final long tickTime) {
         this.timeRemaining -= tickTime;
         this.timeSinceLastSpawn += tickTime;
         this.timeSinceLastDecrement += tickTime;
@@ -68,21 +68,21 @@ public class EnemySpawner {
             reaperSpawned = true;
         }
 
-        long enemiesToSpawn = random.nextLong(MAX_ENEMY_SPAWN) + 1;
-        int levelCap = Math.min(currentLevel, enemiesData.size() - 2);
+        final long enemiesToSpawn = random.nextLong(MAX_ENEMY_SPAWN) + 1;
+        final int levelCap = Math.min(currentLevel, enemiesData.size() - 2);
 
         for (int i = 0; i < enemiesToSpawn; i++) {
-            EnemyData enemyData = enemiesData.get(random.nextInt(levelCap + 1));
+            final EnemyData enemyData = enemiesData.get(random.nextInt(levelCap + 1));
             spawnSpecificEnemy(enemyData);
         }
     }
 
-    private void spawnSpecificEnemy(EnemyData enemyData) {
+    private void spawnSpecificEnemy(final EnemyData enemyData) {
         final double radius = enemyData.getRadius();
         for (int attempts = 0; attempts < 10; attempts++) {
             Point2D.Double pos = getRandomSpawnPosition(radius);
             if (isPositionFree(pos, radius)) {
-                Enemy newEnemy = new Enemy(
+                final Enemy newEnemy = new Enemy(
                     enemyData.getId(),
                     pos,
                     radius,
@@ -97,15 +97,15 @@ public class EnemySpawner {
         }
     }
 
-    private Point2D.Double getRandomSpawnPosition(double radius) {
-        Dimension visualSize = gameWorld.getVisualSize();
-        Point2D.Double playerPos = gameWorld.getCharacter().getPosition();
+    private Point2D.Double getRandomSpawnPosition(final double radius) {
+        final Dimension visualSize = gameWorld.getVisualSize();
+        final Point2D.Double playerPos = gameWorld.getCharacter().getPosition();
 
-        double halfWidth = visualSize.getWidth() / 2.0;
-        double halfHeight = visualSize.getHeight() / 2.0;
+        final double halfWidth = visualSize.getWidth() / 2.0;
+        final double halfHeight = visualSize.getHeight() / 2.0;
 
-        int side = random.nextInt(4);
-        int margin = (int) (radius * 2);
+        final int side = random.nextInt(4);
+        final int margin = (int) (radius * 2);
 
         double x = playerPos.getX();
         double y = playerPos.getY();
@@ -136,9 +136,9 @@ public class EnemySpawner {
         return new Point2D.Double(x, y);
     }
 
-    private boolean isPositionFree(Point2D.Double pos, double radius) {
-        for (Enemy e : gameWorld.getEnemies()) {
-            double distance = pos.distance(e.getPosition());
+    private boolean isPositionFree(final Point2D.Double pos, final double radius) {
+        for (final Enemy e : gameWorld.getEnemies()) {
+            final double distance = pos.distance(e.getPosition());
             if (distance < radius + e.getRadius()) {
                 return false;
             }

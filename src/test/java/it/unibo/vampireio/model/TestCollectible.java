@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 class TestCollectible {
 
-    private static class TestCollectibleImpl extends CollectibleItem {
+    private static class TestCollectibleImpl extends AbstractCollectibleItem {
         public TestCollectibleImpl(String id, Point2D.Double position, int value) {
             super(id, position, value);
         }

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class TestPositionable {
 
-    private static class TestPositionableImpl extends PositionableEntity {
+    private static class TestPositionableImpl extends AbstractPositionableEntity {
         public TestPositionableImpl(String id, Point2D.Double position) {
             super(id, position);
         }

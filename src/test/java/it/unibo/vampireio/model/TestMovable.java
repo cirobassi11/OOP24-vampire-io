@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 class TestMovable {
 
-    private static class TestMovableImpl extends MovableEntity {
+    private static class TestMovableImpl extends AbstractMovableEntity {
         public TestMovableImpl(String id, Point2D.Double position) {
             super(id, position, 10.0, new Point2D.Double(0, 0), 0.0);
         }

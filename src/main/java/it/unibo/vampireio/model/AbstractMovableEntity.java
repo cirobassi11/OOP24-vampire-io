@@ -2,14 +2,14 @@ package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D;
 
-public abstract class MovableEntity extends CollidableEntity implements Movable {
+public abstract class AbstractMovableEntity extends AbstractCollidableEntity implements Movable {
     
     private static final double SPEED_MULTIPLIER = 0.2;
     
     private Point2D.Double direction;
     private double speed;
 
-    protected MovableEntity(
+    protected AbstractMovableEntity(
         final String id, 
         final Point2D.Double position, 
         final double radius, 
@@ -21,7 +21,7 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
     }
 
     @Override
-    public void setDirection(Point2D.Double direction) {
+    public void setDirection(final Point2D.Double direction) {
         this.direction = direction;
     }
 
@@ -31,7 +31,7 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
     }
 
     @Override
-    public void setSpeed(double speed) {
+    public void setSpeed(final double speed) {
         this.speed = speed;
     }
 
@@ -41,9 +41,9 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
     }
 
     @Override
-    public void move(long tickTime) {
-        double dx = this.getDirection().getX() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
-        double dy = this.getDirection().getY() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
+    public void move(final long tickTime) {
+        final double dx = this.getDirection().getX() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
+        final double dy = this.getDirection().getY() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
         this.setPosition(new Point2D.Double(
             this.getPosition().getX() + dx,
             this.getPosition().getY() + dy
@@ -56,9 +56,9 @@ public abstract class MovableEntity extends CollidableEntity implements Movable 
     }
 
     @Override
-    public Point2D.Double getFuturePosition(long tickTime) {
-        double newX = this.getPosition().getX() + this.getDirection().getX() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
-        double newY = this.getPosition().getY() + this.getDirection().getY() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
+    public Point2D.Double getFuturePosition(final long tickTime) {
+        final double newX = this.getPosition().getX() + this.getDirection().getX() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
+        final double newY = this.getPosition().getY() + this.getDirection().getY() * this.getSpeed() * tickTime * SPEED_MULTIPLIER;
         return new Point2D.Double(newX, newY);
     }
 }

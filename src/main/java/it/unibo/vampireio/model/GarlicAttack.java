@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class GarlicAttack extends AbstractAttack {
     
     private static final long DURATION_MS = 1000;
-    private static final long DAMAGE_TICK_MS = 100;
+    private static final long DAMAGE_TICK_MS = 200;
     
     private long creationTime;
     private List<Enemy> damagedEnemies;

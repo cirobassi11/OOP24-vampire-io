@@ -4,11 +4,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.awt.geom.Point2D;
 
-public class Character extends LivingEntity {
+public class Character extends AbstractLivingEntity {
 
     private static final int MAX_WEAPONS = 3; // TODO: read from config
 
-    private Stats stats;
+    private final Stats stats;
     private int level;
     private double levelPercentage;
     private int coinCounter;
@@ -16,9 +16,9 @@ public class Character extends LivingEntity {
 
     private boolean hasJustLevelledUp;
 
-    private List<Weapon> weapons = new LinkedList<>();
+    private final List<Weapon> weapons = new LinkedList<>();
 
-    public Character(String id, String name, Stats stats, double radius, Weapon weapon) {
+    public Character(final String id, final Stats stats, final double radius, final Weapon weapon) {
         super(id, new Point2D.Double(0, 0), radius, new Point2D.Double(1, 0), stats.getStat(StatType.MOVE_SPEED),
                 stats.getStat(StatType.MAX_HEALTH));
         this.stats = stats;
@@ -30,7 +30,7 @@ public class Character extends LivingEntity {
     }
 
     @Override
-    public void setDirection(Point2D.Double direction) {
+    public void setDirection(final Point2D.Double direction) {
         if (direction.getX() != 0 || direction.getY() != 0) {
             lastDirection = direction;
         }
@@ -61,7 +61,7 @@ public class Character extends LivingEntity {
     public void onCollision(Collidable collidable) {
     }
 
-    public boolean addWeapon(Weapon weapon) {
+    public boolean addWeapon(final Weapon weapon) {
         if (this.weapons.size() >= MAX_WEAPONS) {
             return false;
         }
@@ -69,13 +69,13 @@ public class Character extends LivingEntity {
         return true;
     }
 
-    public void updateWeapons(long tickTime) {
-        for (Weapon weapon : this.weapons) {
+    public void updateWeapons(final long tickTime) {
+        for (final Weapon weapon : this.weapons) {
             weapon.update(tickTime);
         }
     }
 
-    public void collect(Collectible collectible) {
+    public void collect(final Collectible collectible) {
         if (collectible instanceof Coin) {
             this.coinCounter += collectible.getValue();
         } else if (collectible instanceof Food) {
@@ -92,7 +92,7 @@ public class Character extends LivingEntity {
     }
 
     public boolean hasJustLevelledUp() {
-        boolean result = this.hasJustLevelledUp;
+        final boolean result = this.hasJustLevelledUp;
         this.hasJustLevelledUp = false;
         return result;
     }
@@ -106,8 +106,8 @@ public class Character extends LivingEntity {
     }
 
     @Override
-    public void dealDamage(double damage) {
-        double reducedDamage = damage - damage * (this.stats.getStat(StatType.ARMOR) - 1);
+    public void dealDamage(final double damage) {
+        final double reducedDamage = damage - damage * (this.stats.getStat(StatType.ARMOR) - 1);
         super.dealDamage(reducedDamage);
     }
 }

@@ -1,13 +1,13 @@
 package it.unibo.vampireio.model;
 
 public class ConfigData implements Identifiable {
-    private String defaultCharacterId;
-    private int weaponSlots;
-    private long maxGameDuration;
-    private double collectibleSpawnChance;
-    private double coinSpawnChance;
-    private double foodSpawnChance;
-    private double experienceGemSpawnChance;
+    private final String defaultCharacterId;
+    private final int weaponSlots;
+    private final long maxGameDuration;
+    private final double collectibleSpawnChance;
+    private final double coinSpawnChance;
+    private final double foodSpawnChance;
+    private final double experienceGemSpawnChance;
     
     public ConfigData(
         final String defaultCharacterId, 

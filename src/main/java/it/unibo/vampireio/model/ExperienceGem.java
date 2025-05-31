@@ -2,9 +2,9 @@ package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D.Double;
 
-public class ExperienceGem extends CollectibleItem {
+public class ExperienceGem extends AbstractCollectibleItem {
 
-    protected ExperienceGem(Double position) {
+    protected ExperienceGem(final Double position) {
         super("collectibles/experienceGem", position, 50);
     }
 

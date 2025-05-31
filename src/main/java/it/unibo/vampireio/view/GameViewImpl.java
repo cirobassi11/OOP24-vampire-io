@@ -33,7 +33,6 @@ public class GameViewImpl implements GameView {
     public static final String SHOP = "shop";
     public static final String UNLOCKABLE_CHARACTERS = "unlockableCharacters";
     public static final String UNLOCKABLE_POWERUPS = "unlockablePowerups";
-    public static final String IN_GAME_POWERUPS = "inGamePowerups";
     // Aspect Ratio fisso (es. 16:9)
     private static final double ASPECT_RATIO = 16.0 / 9.0;
 

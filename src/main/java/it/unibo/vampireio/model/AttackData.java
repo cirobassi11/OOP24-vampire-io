@@ -1,13 +1,13 @@
 package it.unibo.vampireio.model;
 
 public class AttackData implements Identifiable {
-    private String id;
+    private final String id;
     private double radius;
     private double speed;
     private int damage;
     private long duration;
 
-    public AttackData(String id, double radius, double speed, int damage, long duration) {
+    public AttackData(final String id, final double radius, final double speed, final int damage, final long duration) {
         this.id = id;
         this.radius = radius;
         this.speed = speed;
@@ -15,6 +15,7 @@ public class AttackData implements Identifiable {
         this.duration = duration;
     }
 
+    @Override
     public String getId() {
         return this.id;
     }
@@ -35,19 +36,19 @@ public class AttackData implements Identifiable {
         return this.duration;
     }
 
-    public void setRadius(double radius) {
+    public void setRadius(final double radius) {
         this.radius = radius;
     }
 
-    public void setSpeed(double speed) {
+    public void setSpeed(final double speed) {
         this.speed = speed;
     }
 
-    public void setDamage(int damage) {
+    public void setDamage(final int damage) {
         this.damage = damage;
     }
 
-    public void setDuration(long duration) {
+    public void setDuration(final long duration) {
         this.duration = duration;
     }
 }

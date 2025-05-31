@@ -7,8 +7,9 @@ public abstract class AbstractUnlockableItem implements Unlockable, Identifiable
     private final String name;
     private final String description;
     private final int price;
+    private final int maxLevel;
     private int currentLevel;
-    private int maxLevel;
+    
 
     public AbstractUnlockableItem(final String id, final String name, final String description, final int price,
             final int maxLevel) {
