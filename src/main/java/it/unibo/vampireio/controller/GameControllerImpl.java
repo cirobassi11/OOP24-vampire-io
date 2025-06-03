@@ -30,7 +30,9 @@ public class GameControllerImpl implements GameController {
     private Thread modelThread;
     private Thread viewThread;
 
-    private final InputHandler inputHandler = new InputHandler();
+    private final InputHandler inputHandler;
+    private final InputProcessor inputProcessor;
+    private final ScreenManager screenManager;
 
     private boolean running = false;
     private boolean paused = false;
@@ -40,199 +42,12 @@ public class GameControllerImpl implements GameController {
     public GameControllerImpl() {
         this.view = new GameViewImpl();
         this.model = new GameWorld(this);
-        this.setListeners();
-        this.showScreen(GameViewImpl.SAVE_MENU);
+        this.inputHandler = new InputHandler();
+        this.inputProcessor = new InputProcessor(this.inputHandler);
+        this.screenManager = new ScreenManager(this.view);
+        ListenerInitializer.initialize(this.view, this.model, this, this::resumeGame, this::stop, this.screenManager);
+        this.screenManager.showScreen(GameViewImpl.SAVE_MENU);
         this.view.setPlayerInputListener(this.inputHandler);
-    }
-
-    private void setListeners() {
-        // SAVE MENU LISTENERS
-        this.view.setNewSaveListener(e -> {
-            this.model.createNewSave();
-            this.showScreen(GameViewImpl.START);
-        });
-
-        this.view.setShowSaveListener(e -> {
-            this.view.updateSaveList(this.model.getSaveNames());
-            this.showScreen(GameViewImpl.SAVE_SELECTION);
-        });
-
-        // START MENU LISTENERS
-        this.view.setStartListener(e -> {
-            List<UnlockableItemData> choosableCharactersData = this.model.getChoosableCharacters().stream()
-                    .map(character -> new UnlockableItemData(character.getId(), character.getName(),
-                            character.getDescription(), character.getCurrentLevel(), character.getMaxLevel(),
-                            character.getPrice()))
-                    .collect(Collectors.toList());
-            this.view.setChoosableCharactersData(choosableCharactersData);
-            this.showScreen(GameViewImpl.CHOOSE_CHARACTER);
-        });
-
-        this.view.setScoreboardListener(e -> {
-            this.view.setScoresData(this.getScores());
-            this.showScreen(GameViewImpl.SCOREBOARD);
-        });
-
-        this.view.setShopListener(e -> {
-            this.showScreen(GameViewImpl.SHOP);
-        });
-
-        this.view.setLoadSaveListener(e -> {
-            this.showScreen(GameViewImpl.SAVE_MENU);
-        });
-
-        // CHOOSE CHARACTER LISTENERS
-        this.view.setConfirmCharacterListener(e -> {
-            String selectedCharacter = this.view.getChoosedCharacter();
-            if (selectedCharacter != null && this.startGame(selectedCharacter)) {
-                this.view.update(this.getData());
-                this.showScreen(GameViewImpl.GAME);
-            } else {
-                this.view.showError("Error");
-            }
-        });
-
-        // SAVE SELECTION LISTENERS
-        this.view.setChooseSaveListener(e -> {
-            String selectedSave = this.view.getSelectedSave();
-            if (selectedSave != null) {
-                this.model.loadSave(selectedSave);
-                this.showScreen(GameViewImpl.START);
-            }
-        });
-
-        // ITEM SELECTION LISTENERS
-        this.view.setChooseItemListener(e -> {
-            String selectedItem = this.view.getSelectedItem();
-            if (selectedItem != null) {
-                this.model.levelUpWeapon(selectedItem);
-                this.resumeGame();
-                this.view.showScreen(GameViewImpl.GAME);
-            }
-        });
-
-        // SHOP LISTENERS
-        this.view.setCharactersShopListener(e -> {
-            List<UnlockableItemData> unlockableCharactersData = this.model.getLockedCharacters().stream()
-                    .map(character -> new UnlockableItemData(character.getId(), character.getName(),
-                            character.getDescription(), character.getCurrentLevel(), character.getMaxLevel(),
-                            character.getPrice()))
-                    .collect(Collectors.toList());
-            this.view.setUnlockableCharactersData(unlockableCharactersData);
-            this.view.setCoinsAmount(this.model.getCurrentSave().getMoneyAmount());
-            this.showScreen(GameViewImpl.UNLOCKABLE_CHARACTERS);
-        });
-
-        this.view.setPowerupsShopListener(e -> {
-            List<UnlockableItemData> unlockablePowerupsData = this.model.getUnlockablePowerups().stream()
-                    .map(powerup -> new UnlockableItemData(powerup.getId(), powerup.getName(),
-                            powerup.getDescription(), powerup.getCurrentLevel(), powerup.getMaxLevel(),
-                            powerup.getPrice()))
-                    .collect(Collectors.toList());
-            this.view.setUnlockablePowerupsData(unlockablePowerupsData);
-            this.view.setCoinsAmount(this.model.getCurrentSave().getMoneyAmount());
-            this.showScreen(GameViewImpl.UNLOCKABLE_POWERUPS);
-        });
-
-        // UNLOCKABLE CHARACTERS SHOP LISTENERS
-        this.view.setBuyCharactersListener(e -> {
-            String selectedCharacter = this.view.getSelectedCharacter();
-            if (selectedCharacter != null && this.model.buyCharacter(selectedCharacter)) {
-                List<UnlockableItemData> unlockableCharactersData = this.model.getLockedCharacters().stream()
-                        .map(character -> new UnlockableItemData(character.getId(), character.getName(),
-                                character.getDescription(), character.getCurrentLevel(), character.getMaxLevel(),
-                                character.getPrice()))
-                        .collect(Collectors.toList());
-                this.view.setUnlockableCharactersData(unlockableCharactersData);
-                this.view.setCoinsAmount(this.model.getCurrentSave().getMoneyAmount());
-                this.view.disableBuyButton();
-            }
-        });
-
-        // UNLOCKABLE POWERUPS SHOP LISTENERS
-        this.view.setBuyPowerupsListener(e -> {
-            String selectedPowerup = this.view.getSelectedPowerup();
-            if (selectedPowerup != null && this.model.buyPowerup(selectedPowerup)) {
-                List<UnlockableItemData> unlockablePowerupsData = this.model.getUnlockablePowerups().stream()
-                        .map(powerup -> new UnlockableItemData(powerup.getId(), powerup.getName(),
-                                powerup.getDescription(), powerup.getCurrentLevel(), powerup.getMaxLevel(),
-                                powerup.getPrice()))
-                        .collect(Collectors.toList());
-                this.view.setUnlockablePowerupsData(unlockablePowerupsData);
-                this.view.setCoinsAmount(this.model.getCurrentSave().getMoneyAmount());
-                this.view.disableBuyButton();
-            }
-        });
-
-        // ITEM SELECTION LISTENER
-        this.view.setListSelectionListener(e -> {
-            String selectedItemID = this.view.getSelectedCharacter();
-            String selected;
-            if (selectedItemID == null) {
-                selected = this.view.getSelectedPowerup();
-            } else {
-                selected = selectedItemID;
-            }
-            if (selected != null) {
-                final Unlockable selectedItem = this.model.getAllItems().stream()
-                        .filter(item -> item.getId() == selected)
-                        .findFirst()
-                        .orElse(null);
-                if (selectedItem == null) {
-                    this.showErrorWithExit(selected + " is not a valid item.");
-                } else if (this.model.getCurrentSave().getMoneyAmount() < selectedItem.getPrice()
-                        || (selectedItem.getCurrentLevel() >= selectedItem.getMaxLevel() && selectedItem.getMaxLevel() > 0)) {
-                    this.view.disableBuyButton();
-                } else {
-                    this.view.enableBuyButton();
-                }
-            }
-        });
-
-        // PAUSE LISTENERS
-        this.view.setResumeListener(e -> {
-            this.showScreen(GameViewImpl.GAME);
-            this.resumeGame();
-        });
-
-        this.view.setExitListener(e -> {
-            new Thread(this::stop).start();
-            Score score = this.model.exitGame();
-            ScoreData scoreData = new ScoreData(
-                    score.getCharacterName(),
-                    score.getSessionTime(),
-                    score.getKillCounter(),
-                    score.getLevel(),
-                    score.getCoinCounter(),
-                    score.getScore());
-            this.view.setScore(scoreData);
-            this.showScreen(GameViewImpl.END_GAME);
-        });
-
-        // ENDGAME LISTENERS
-        this.view.setReturnMenuListener(e -> {
-            this.showScreen(GameViewImpl.START);
-        });
-
-        this.view.setBackListener(e -> goBack());
-
-        this.view.setQuitListener(e -> {
-            System.exit(0);
-        });
-    }
-
-    private void showScreen(String newScreen) {
-        this.screenHistory.push(newScreen);
-        this.view.showScreen(newScreen);
-    }
-
-    private void goBack() {
-        if (!this.screenHistory.isEmpty()) {
-            this.screenHistory.pop();
-            if (!this.screenHistory.isEmpty()) {
-                this.view.showScreen(this.screenHistory.peek());
-            }
-        }
     }
 
     public boolean startGame(String selectedCharacter) {
@@ -321,24 +136,7 @@ public class GameControllerImpl implements GameController {
                 }
             }
 
-            Point2D.Double direction = new Point2D.Double(0, 0);
-            if (this.inputHandler.isKeyPressed(KeyEvent.VK_W) || this.inputHandler.isKeyPressed(KeyEvent.VK_UP)) {
-                direction.y -= 1;
-            }
-            if (this.inputHandler.isKeyPressed(KeyEvent.VK_S) || this.inputHandler.isKeyPressed(KeyEvent.VK_DOWN)) {
-                direction.y += 1;
-            }
-            if (this.inputHandler.isKeyPressed(KeyEvent.VK_A) || this.inputHandler.isKeyPressed(KeyEvent.VK_LEFT)) {
-                direction.x -= 1;
-            }
-            if (this.inputHandler.isKeyPressed(KeyEvent.VK_D) || this.inputHandler.isKeyPressed(KeyEvent.VK_RIGHT)) {
-                direction.x += 1;
-            }
-
-            double length = direction.distance(0, 0);
-            if (length > 0) {
-                direction = new Point2D.Double(direction.x / length, direction.y / length);
-            }
+            Point2D.Double direction = this.inputProcessor.computeDirection();
 
             this.model.update(tickTime, direction);
 
@@ -370,7 +168,7 @@ public class GameControllerImpl implements GameController {
                 }
             }
 
-            this.view.update(this.getData());
+            this.view.update(DataBuilder.getData(this.model));
 
             try {
                 Thread.sleep(frameTime);
@@ -379,106 +177,7 @@ public class GameControllerImpl implements GameController {
                 return;
             }
         }
-    }
-
-    private GameData getData() {
-        Dimension visualSize = this.model.getVisualSize();
-        Character character = this.model.getCharacter();
-        List<Enemy> enemies = this.model.getEnemies();
-        List<Attack> attacks = this.model.getAttacks();
-        List<Collectible> collectibles = this.model.getCollectibles();
-
-        VisibleMapSizeData visibleMapSizeData = new VisibleMapSizeData(
-                visualSize.width, visualSize.height);
-
-        LivingEntityData characterData = new LivingEntityData(
-                character.getId(),
-                new Point2D.Double(
-                        character.getPosition().getX(),
-                        character.getPosition().getY()),
-                new Point2D.Double(
-                        character.getDirection().getX(),
-                        character.getDirection().getY()),
-                character.getRadius(),
-                character.getHealth(),
-                character.getMaxHealth(),
-                character.isGettingAttacked(),
-                character.isMoving());
-
-        List<LivingEntityData> enemiesData = enemies.stream()
-                .map(enemy -> new LivingEntityData(
-                        enemy.getId(),
-                        new Point2D.Double(
-                                enemy.getPosition().getX(),
-                                enemy.getPosition().getY()),
-                        new Point2D.Double(
-                                enemy.getDirection().getX(),
-                                enemy.getDirection().getY()),
-                        enemy.getRadius(),
-                        enemy.getHealth(),
-                        enemy.getMaxHealth(),
-                        enemy.isGettingAttacked(),
-                        enemy.isMoving()))
-                .collect(Collectors.toList());
-
-        List<PositionableData> attacksData = attacks.stream()
-                .map(attack -> new PositionableData(
-                        attack.getId(),
-                        new Point2D.Double(
-                                attack.getPosition().getX(),
-                                attack.getPosition().getY()),
-                        new Point2D.Double(
-                                attack.getDirection().getX(),
-                                attack.getDirection().getY()),
-                        attack.getRadius()))
-                .collect(Collectors.toList());
-
-        List<PositionableData> collectiblesData = collectibles.stream()
-                .map(collectible -> new PositionableData(
-                        collectible.getId(),
-                        new Point2D.Double(
-                                collectible.getPosition().getX(),
-                                collectible.getPosition().getY()),
-                        new Point2D.Double(0, 0),
-                        collectible.getRadius()))
-                .collect(Collectors.toList());
-
-        List<ItemData> itemsData = this.model.getWeapons().stream()
-                .map(item -> new ItemData(
-                        item.getId(),
-                        "",
-                        ""))
-                .collect(Collectors.toList());
-
-        return new GameData(
-                visibleMapSizeData,
-                this.model.getElapsedTime(),
-                this.model.getPlayerLevel(),
-                this.model.getPlayerLevelPercentage(),
-                this.model.getKillCounter(),
-                this.model.getCoinCounter(),
-                characterData,
-                enemiesData,
-                attacksData,
-                collectiblesData,
-                itemsData);
-    }
-
-    private List<ScoreData> getScores() {
-        Save currentSave = this.model.getCurrentSave();
-        if (currentSave == null) {
-            return List.of();
-        }
-        return currentSave.getScores().stream()
-                .map(score -> new ScoreData(
-                        score.getCharacterName(),
-                        score.getSessionTime(),
-                        score.getKillCounter(),
-                        score.getLevel(),
-                        score.getCoinCounter(),
-                        score.getScore()))
-                .collect(Collectors.toList());
-    }
+    }    
 
     @Override
     public void showError(String message) {
