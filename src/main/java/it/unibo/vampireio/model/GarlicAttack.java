@@ -58,15 +58,14 @@ public class GarlicAttack extends AbstractAttack {
             enemy.dealDamage(this.damage);
         }
     }
-    
+
     public long getRemainingTime() {
         return DURATION_MS - (System.currentTimeMillis() - creationTime);
     }
 
     @Override
-    protected void update(long tickTime) {
+    protected void update(final long tickTime) {
         lastDamageTime += tickTime;
-        
         if (lastDamageTime >= DAMAGE_TICK_MS) {
             applyAreaDamage();
             lastDamageTime = 0;

@@ -7,10 +7,12 @@ import org.junit.jupiter.api.Test;
 
 class TestCollidable {
 
+    private TestCollidableImpl c1;
+    private TestCollidableImpl c2;
     private static class TestCollidableImpl extends AbstractCollidableEntity {
-        private boolean collided = false;
+        private boolean collided;
 
-        public TestCollidableImpl(String id, Point2D.Double position, double radius) {
+        public TestCollidableImpl(final String id, final Point2D.Double position, final double radius) {
             super(id, position, radius);
         }
 
@@ -23,9 +25,6 @@ class TestCollidable {
             return collided;
         }
     }
-
-    private TestCollidableImpl c1;
-    private TestCollidableImpl c2;
 
     @BeforeEach
     void setUp() {

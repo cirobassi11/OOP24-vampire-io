@@ -10,7 +10,14 @@ class LivingEntityTest {
     private AbstractLivingEntity entity;
 
     private static class TestLivingImpl extends AbstractLivingEntity {
-        public TestLivingImpl(String id, Point2D.Double position, double radius, Point2D.Double direction, double speed, double maxHealth) {
+        public TestLivingImpl(
+            final String id,
+            final Point2D.Double position,
+            final double radius,
+            final Point2D.Double direction,
+            final double speed,
+            final double maxHealth
+        ) {
             super(id, position, radius, direction, speed, maxHealth);
         }
 

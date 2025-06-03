@@ -6,25 +6,25 @@ import java.awt.geom.Point2D;
 
 public class Character extends AbstractLivingEntity {
 
-    private static final int MAX_WEAPONS = 3; // TODO: read from config
-
     private final Stats stats;
     private int level;
     private double levelPercentage;
     private int coinCounter;
     private Point2D.Double lastDirection = new Point2D.Double(-1, 0);
+    private int weaponSlots;
 
     private boolean hasJustLevelledUp;
 
     private final List<Weapon> weapons = new LinkedList<>();
 
-    public Character(final String id, final Stats stats, final double radius, final Weapon weapon) {
+    public Character(final String id, final Stats stats, final double radius, final Weapon weapon, final int weaponSlots) {
         super(id, new Point2D.Double(0, 0), radius, new Point2D.Double(1, 0), stats.getStat(StatType.MOVE_SPEED),
                 stats.getStat(StatType.MAX_HEALTH));
         this.stats = stats;
         this.level = 1;
         this.levelPercentage = 0;
         this.coinCounter = 0;
+        this.weaponSlots = weaponSlots;
         this.hasJustLevelledUp = false;
         this.addWeapon(weapon);
     }
@@ -62,7 +62,7 @@ public class Character extends AbstractLivingEntity {
     }
 
     public boolean addWeapon(final Weapon weapon) {
-        if (this.weapons.size() >= MAX_WEAPONS) {
+        if (this.weapons.size() >= this.weaponSlots) {
             return false;
         }
         this.weapons.add(weapon);
@@ -81,8 +81,7 @@ public class Character extends AbstractLivingEntity {
         } else if (collectible instanceof Food) {
             this.heal(collectible.getValue());
         } else if (collectible instanceof ExperienceGem) {
-            this.levelPercentage += collectible.getValue() * (1.0 / Math.pow(level + 1, 0.7)); // TODO: calculate a
-                                                                                               // better formula
+            this.levelPercentage += collectible.getValue() * (1.0 / Math.pow(level + 1, 0.7));
             if (this.levelPercentage >= 100) {
                 this.levelPercentage -= 100;
                 this.level++;
@@ -102,7 +101,7 @@ public class Character extends AbstractLivingEntity {
     }
 
     public boolean hasMaxWeapons() {
-        return this.weapons.size() >= MAX_WEAPONS;
+        return this.weapons.size() >= this.weaponSlots;
     }
 
     @Override

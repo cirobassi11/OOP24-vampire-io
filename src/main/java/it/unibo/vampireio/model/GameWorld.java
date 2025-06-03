@@ -80,7 +80,8 @@ public class GameWorld implements GameModel {
             selectedUnlockableCharacter.getId(),
             stats,
             selectedUnlockableCharacter.getRadius(),
-            defaultWeapon
+            defaultWeapon,
+            this.configData.getWeaponSlots()
         );
         
         this.weaponRandomizer = new WeaponRandomizer(this.dataLoader.getWeaponLoader().getAll().stream().map(WeaponData::getId).toList(), this.character);

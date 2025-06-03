@@ -9,16 +9,15 @@ import org.junit.jupiter.api.Test;
 
 class TestCollectible {
 
+    private Collectible collectible;
     private static class TestCollectibleImpl extends AbstractCollectibleItem {
-        public TestCollectibleImpl(String id, Point2D.Double position, int value) {
+        public TestCollectibleImpl(final String id, final Point2D.Double position, final int value) {
             super(id, position, value);
         }
 
         @Override
         public void onCollision(Collidable collidable) {}
     }
-
-    private Collectible collectible;
 
     @BeforeEach
     void setUp() {

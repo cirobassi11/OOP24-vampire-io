@@ -9,16 +9,15 @@ import org.junit.jupiter.api.Test;
 
 class TestMovable {
 
+    private TestMovableImpl movable;
     private static class TestMovableImpl extends AbstractMovableEntity {
-        public TestMovableImpl(String id, Point2D.Double position) {
+        public TestMovableImpl(final String id, final Point2D.Double position) {
             super(id, position, 10.0, new Point2D.Double(0, 0), 0.0);
         }
 
         @Override
         public void onCollision(Collidable collidable) { }
     }
-
-    private TestMovableImpl movable;
 
     @BeforeEach
     void setUp() {
@@ -47,7 +46,7 @@ class TestMovable {
         movable.setPosition(new Point2D.Double(10.0, 5.0));
         movable.setDirection(new Point2D.Double(0, -1));
         movable.setSpeed(0.5);
-        Point2D.Double future = movable.getFuturePosition(1000);
+        final Point2D.Double future = movable.getFuturePosition(1000);
         assertEquals(new Point2D.Double(10.0, -95.0), future);
     }
 

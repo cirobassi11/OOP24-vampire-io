@@ -14,22 +14,22 @@ class AbstractAttackTest {
     // Classe concreta per testare AbstractAttack
     private static class TestAttack extends AbstractAttack {
 
-        private long totalUpdateCalled = 0;
+        private long totalUpdateCalled;
 
         public TestAttack(
-                String id,
-                Point2D.Double position,
-                double radius,
-                Point2D.Double direction,
-                double speed,
-                int damage,
-                long duration,
-                GameWorld gameWorld) {
+                final String id,
+                final Point2D.Double position,
+                final double radius,
+                final Point2D.Double direction,
+                final double speed,
+                final int damage,
+                final long duration,
+                final GameWorld gameWorld) {
             super(id, position, radius, direction, speed, damage, duration, gameWorld);
         }
 
         @Override
-        protected void update(long tickTime) {
+        protected void update(final long tickTime) {
             totalUpdateCalled += tickTime;
         }
 
@@ -81,7 +81,7 @@ class AbstractAttackTest {
         attack.execute(1500);
         assertTrue(attack.isExpired());
 
-        long before = attack.getTotalUpdateCalled();
+        final long before = attack.getTotalUpdateCalled();
         attack.execute(100);
         assertEquals(before, attack.getTotalUpdateCalled());
     }
