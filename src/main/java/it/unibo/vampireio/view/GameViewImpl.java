@@ -21,19 +21,6 @@ import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.UnlockableItemData;
 
 public class GameViewImpl implements GameView {
-    public static final String SAVE_MENU = "saveMenu";
-    public static final String SAVE_SELECTION = "saveSelection";
-    public static final String START = "mainMenu";
-    public static final String SCOREBOARD = "scoreboard";
-    public static final String CHOOSE_CHARACTER = "chooseCharacter";
-    public static final String GAME = "game";
-    public static final String ITEM_SELECTION = "itemSelection";
-    public static final String END_GAME = "endGame";
-    public static final String PAUSE = "pause";
-    public static final String SHOP = "shop";
-    public static final String UNLOCKABLE_CHARACTERS = "unlockableCharacters";
-    public static final String UNLOCKABLE_POWERUPS = "unlockablePowerups";
-    // Aspect Ratio fisso (es. 16:9)
     private static final double ASPECT_RATIO = 16.0 / 9.0;
 
     private static final Dimension DEFAULT_RESOLUTION = new Dimension(1280, 720);
@@ -333,7 +320,7 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setScore(final ScoreData score) {
+    public void setCurrentScore(final ScoreData score) {
         ((EndGamePanel) this.panels.get(END_GAME)).setScore(score);
     }
 

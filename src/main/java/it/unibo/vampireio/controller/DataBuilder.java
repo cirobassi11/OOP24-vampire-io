@@ -97,4 +97,16 @@ public class DataBuilder {
             ))
             .collect(Collectors.toList());
     }
+
+    public static ScoreData getCurrentScore(GameModel model) {
+        Score score = model.exitGame();
+        return new ScoreData(
+            score.getCharacterName(),
+            score.getSessionTime(),
+            score.getKillCounter(),
+            score.getLevel(),
+            score.getCoinCounter(),
+            score.getScore()
+        );
+    }
 }

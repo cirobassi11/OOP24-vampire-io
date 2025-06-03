@@ -10,6 +10,20 @@ import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.UnlockableItemData;
 
 public interface GameView {
+
+    String SAVE_MENU = "saveMenu";
+    String SAVE_SELECTION = "saveSelection";
+    String START = "mainMenu";
+    String SCOREBOARD = "scoreboard";
+    String CHOOSE_CHARACTER = "chooseCharacter";
+    String GAME = "game";
+    String ITEM_SELECTION = "itemSelection";
+    String END_GAME = "endGame";
+    String PAUSE = "pause";
+    String SHOP = "shop";
+    String UNLOCKABLE_CHARACTERS = "unlockableCharacters";
+    String UNLOCKABLE_POWERUPS = "unlockablePowerups";
+
     void update(GameData data);
     void updateSaveList(List<String> saves);
     void showScreen(String name);
@@ -84,7 +98,7 @@ public interface GameView {
     String getSelectedItem();
 
     // Set game score
-    void setScore(ScoreData score);
+    void setCurrentScore(ScoreData score);
 
     void showError(String message);
 
