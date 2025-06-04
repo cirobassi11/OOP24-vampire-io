@@ -11,9 +11,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class GameWorld implements GameModel {
-
-    private GameController gameController;
-    
+    private ModelErrorListener errorListener;
     private DataLoader dataLoader;
     private SaveManager saveManager;
 
@@ -33,17 +31,26 @@ public class GameWorld implements GameModel {
 
     private static final int LEVELUP_CHOICES = 3;
     
-    public GameWorld(GameController gameController) {
-        this.gameController = gameController;
-
-        this.dataLoader = new DataLoader(this.gameController);
-        this.saveManager = new SaveManager(this.gameController);
+    public GameWorld() {
+        this.dataLoader = new DataLoader(this);
+        this.saveManager = new SaveManager(this);
 
         ConfigData configData = this.dataLoader.getConfigLoader().get("").orElse(null);
         if (configData != null) {
             this.configData = configData;
         } else {
-            this.gameController.showErrorWithExit("Config data not found!");
+            this.notifyError("Config data not found!");
+        }
+    }
+
+    @Override
+    public void setModelListener(ModelErrorListener errorListener) {
+        this.errorListener = errorListener;
+    }
+
+    void notifyError(String errorMessage) {
+        if (this.errorListener != null) {
+            this.errorListener.onError(errorMessage);
         }
     }
 
@@ -428,7 +435,7 @@ public class GameWorld implements GameModel {
     public void createNewSave() {
         UnlockableCharacter defaultCharacter = this.dataLoader.getCharacterLoader().get(this.configData.getDefaultCharacterId()).orElse(null);
         if (defaultCharacter == null) {
-            this.gameController.showErrorWithExit("Default character not found in config data!");
+            this.notifyError("Default character not found in config data!");
         }
         this.saveManager.createNewSave(defaultCharacter);
     }

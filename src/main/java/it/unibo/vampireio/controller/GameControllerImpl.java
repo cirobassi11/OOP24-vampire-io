@@ -21,7 +21,8 @@ public class GameControllerImpl implements GameController {
 
     public GameControllerImpl() {
         this.view = new GameViewImpl();
-        this.model = new GameWorld(this);
+        this.model = new GameWorld();
+        this.model.setModelListener(message -> this.showError(message));
         this.inputHandler = new InputHandler();
         this.inputProcessor = new InputProcessor(this.inputHandler);
         this.screenManager = new ScreenManager(this.view);
@@ -32,13 +33,8 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void showError(final String message) {
-        this.view.showError(message);
-    }
-
-    @Override
-    public void showErrorWithExit(final String message) {
-        this.view.showError(message);
+    public void showError(final String errorMessage) {
+        this.view.showError(errorMessage);
         System.exit(1);
     }
 }

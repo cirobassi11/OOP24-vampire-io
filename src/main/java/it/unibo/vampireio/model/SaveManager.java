@@ -13,7 +13,7 @@ import java.util.List;
 
 public class SaveManager {
 
-    private GameController gameController;
+    private GameWorld model;
 
     private final String indexFileName = System.getProperty("user.home") + File.separator + "vampire-io_saves_index.sav";
     private Save currentSave;
@@ -22,15 +22,15 @@ public class SaveManager {
     private final String savingError = "An error occurred while saving the file";
     private final String readingError = "An error occurred while reading the file";
 
-    public SaveManager(final GameController gameController) {
-        this.gameController = gameController;
+    public SaveManager(final GameWorld model) {
+        this.model = model;
         final File indexFile = new File(indexFileName); // nome salvataggio e percorso file salvataggio
         if (!indexFile.exists()) {
             try {
                 indexFile.createNewFile();
                 this.savesNames = new ArrayList<>();
             } catch (final IOException e) {
-                this.gameController.showErrorWithExit(this.savingError);
+                this.model.notifyError(this.savingError);
             }
         } else {
             this.readIndex();
@@ -54,15 +54,15 @@ public class SaveManager {
                     if (item instanceof String) {
                         this.savesNames.add((String) item);
                     } else {
-                        this.gameController.showErrorWithExit(this.readingError);
+                        this.model.notifyError(this.readingError);
                     }
                 }
             } else {
-                this.gameController.showErrorWithExit(this.readingError);
+                this.model.notifyError(this.readingError);
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            this.gameController.showErrorWithExit(this.readingError);
+            this.model.notifyError(this.readingError);
             e.printStackTrace();
         }
     }
@@ -72,7 +72,7 @@ public class SaveManager {
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(savesNames);
         } catch (final IOException e) {
-            this.gameController.showErrorWithExit(this.savingError);
+            this.model.notifyError(this.savingError);
         }
     }
 
@@ -95,11 +95,11 @@ public class SaveManager {
                  ObjectInputStream in = new ObjectInputStream(input)) {
                 this.currentSave = (Save) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                this.gameController.showErrorWithExit(this.readingError);
+                this.model.notifyError(this.readingError);
                 e.printStackTrace();
             }
         } else {
-            this.gameController.showErrorWithExit(this.readingError);
+            this.model.notifyError(this.readingError);
         }
     }
 
@@ -110,7 +110,7 @@ public class SaveManager {
                  ObjectOutputStream out = new ObjectOutputStream(output)) {
                 out.writeObject(currentSave);
             } catch (final IOException e) {
-                this.gameController.showErrorWithExit(this.savingError);
+                this.model.notifyError(this.savingError);
             }
         }
     }

@@ -11,13 +11,13 @@ public class DataLoader {
     private final GenericDataLoader<AttackData> attackLoader;
     private final GenericDataLoader<UnlockablePowerup> powerupLoader;
 
-    public DataLoader(final GameController gameController) {
-        this.characterLoader = new GenericDataLoader<>(gameController, "data/characters.json", UnlockableCharacter.class);
-        this.enemyLoader = new GenericDataLoader<>(gameController, "data/enemies.json", EnemyData.class);
-        this.weaponLoader = new GenericDataLoader<>(gameController, "data/weapons.json", WeaponData.class);
-        this.attackLoader = new GenericDataLoader<>(gameController, "data/attacks.json", AttackData.class);
-        this.powerupLoader = new GenericDataLoader<>(gameController, "data/powerups.json", UnlockablePowerup.class);
-        this.configLoader = new GenericDataLoader<>(gameController, "data/config.json", ConfigData.class);
+    public DataLoader(final GameWorld model) {
+        this.characterLoader = new GenericDataLoader<>(model, "data/characters.json", UnlockableCharacter.class);
+        this.enemyLoader = new GenericDataLoader<>(model, "data/enemies.json", EnemyData.class);
+        this.weaponLoader = new GenericDataLoader<>(model, "data/weapons.json", WeaponData.class);
+        this.attackLoader = new GenericDataLoader<>(model, "data/attacks.json", AttackData.class);
+        this.powerupLoader = new GenericDataLoader<>(model, "data/powerups.json", UnlockablePowerup.class);
+        this.configLoader = new GenericDataLoader<>(model, "data/config.json", ConfigData.class);
     }
 
     public GenericDataLoader<UnlockableCharacter> getCharacterLoader() {

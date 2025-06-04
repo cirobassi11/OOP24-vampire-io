@@ -131,7 +131,7 @@ public final class ListenerInitializer {
                         .orElse(null);
 
                 if (item == null) {
-                    controller.showErrorWithExit(selected + " is not a valid item.");
+                    controller.showError(selected + " is not a valid item.");
                 } else if (model.getCurrentSave().getMoneyAmount() < item.getPrice()
                         || (item.getCurrentLevel() >= item.getMaxLevel() && item.getMaxLevel() > 0)) {
                     view.disableBuyButton();

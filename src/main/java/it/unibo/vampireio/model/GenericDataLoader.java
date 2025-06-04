@@ -20,15 +20,15 @@ import it.unibo.vampireio.controller.GameController;
 
 public class GenericDataLoader<T extends Identifiable> {
 
-    private final GameController gameController;
+    private final GameWorld model;
     private final String path;
     private final Class<T> type;
     private final Gson gson;
 
     private Map<String, T> dataById;
 
-    public GenericDataLoader(GameController gameController, String path, Class<T> type) {
-        this.gameController = gameController;
+    public GenericDataLoader(GameWorld model, String path, Class<T> type) {
+        this.model = model;
         this.path = path;
         this.type = type;
         this.gson = new GsonBuilder().setPrettyPrinting().create();
@@ -55,7 +55,7 @@ public class GenericDataLoader<T extends Identifiable> {
     private void load() {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream(path)) {
             if (input == null) {
-                gameController.showErrorWithExit("Cannot find resource: " + path);
+                this.model.notifyError("Cannot find resource: " + path);
                 dataById = Map.of();
                 return;
             }
@@ -73,7 +73,7 @@ public class GenericDataLoader<T extends Identifiable> {
                 dataById.put(element.getId(), element);
             }
         } catch (IOException | JsonSyntaxException e) {
-            gameController.showErrorWithExit("Error while loading data from " + path);
+            this.model.notifyError("Error while loading data from " + path);
             dataById = Map.of();
         }
     }
