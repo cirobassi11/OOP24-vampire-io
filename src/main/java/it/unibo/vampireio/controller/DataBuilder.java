@@ -4,23 +4,28 @@ import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.stream.Collectors;
-import it.unibo.vampireio.model.*;
+import it.unibo.vampireio.model.GameModel;
+import it.unibo.vampireio.model.Save;
+import it.unibo.vampireio.model.Score;
+import it.unibo.vampireio.model.Attack;
 import it.unibo.vampireio.model.Character;
+import it.unibo.vampireio.model.Collectible;
+import it.unibo.vampireio.model.Enemy;
 
 public class DataBuilder {
 
-    public static GameData getData(GameModel model) {
-        Dimension visualSize = model.getVisualSize();
-        Character character = model.getCharacter();
-        List<Enemy> enemies = model.getEnemies();
-        List<Attack> attacks = model.getAttacks();
-        List<Collectible> collectibles = model.getCollectibles();
+    public static GameData getData(final GameModel model) {
+        final Dimension visualSize = model.getVisualSize();
+        final Character character = model.getCharacter();
+        final List<Enemy> enemies = model.getEnemies();
+        final List<Attack> attacks = model.getAttacks();
+        final List<Collectible> collectibles = model.getCollectibles();
 
-        VisibleMapSizeData visibleMapSizeData = new VisibleMapSizeData(
+        final VisibleMapSizeData visibleMapSizeData = new VisibleMapSizeData(
             visualSize.width, visualSize.height
         );
 
-        LivingEntityData characterData = new LivingEntityData(
+        final LivingEntityData characterData = new LivingEntityData(
             character.getId(),
             new Point2D.Double(character.getPosition().getX(), character.getPosition().getY()),
             new Point2D.Double(character.getDirection().getX(), character.getDirection().getY()),
@@ -31,7 +36,7 @@ public class DataBuilder {
             character.isMoving()
         );
 
-        List<LivingEntityData> enemiesData = enemies.stream()
+        final List<LivingEntityData> enemiesData = enemies.stream()
             .map(enemy -> new LivingEntityData(
                 enemy.getId(),
                 new Point2D.Double(enemy.getPosition().getX(), enemy.getPosition().getY()),
@@ -44,7 +49,7 @@ public class DataBuilder {
             ))
             .collect(Collectors.toList());
 
-        List<PositionableData> attacksData = attacks.stream()
+        final List<PositionableData> attacksData = attacks.stream()
             .map(attack -> new PositionableData(
                 attack.getId(),
                 new Point2D.Double(attack.getPosition().getX(), attack.getPosition().getY()),
@@ -53,7 +58,7 @@ public class DataBuilder {
             ))
             .collect(Collectors.toList());
 
-        List<PositionableData> collectiblesData = collectibles.stream()
+        final List<PositionableData> collectiblesData = collectibles.stream()
             .map(collectible -> new PositionableData(
                 collectible.getId(),
                 new Point2D.Double(collectible.getPosition().getX(), collectible.getPosition().getY()),
@@ -62,7 +67,7 @@ public class DataBuilder {
             ))
             .collect(Collectors.toList());
 
-        List<ItemData> itemsData = model.getWeapons().stream()
+        final List<ItemData> itemsData = model.getWeapons().stream()
             .map(item -> new ItemData(item.getId(), "", ""))
             .collect(Collectors.toList());
 
@@ -81,8 +86,8 @@ public class DataBuilder {
         );
     }
 
-    public static List<ScoreData> getScores(GameModel model) {
-        Save currentSave = model.getCurrentSave();
+    public static List<ScoreData> getScores(final GameModel model) {
+        final Save currentSave = model.getCurrentSave();
         if (currentSave == null) {
             return List.of();
         }
@@ -98,8 +103,8 @@ public class DataBuilder {
             .collect(Collectors.toList());
     }
 
-    public static ScoreData getCurrentScore(GameModel model) {
-        Score score = model.exitGame();
+    public static ScoreData getCurrentScore(final GameModel model) {
+        final Score score = model.exitGame();
         return new ScoreData(
             score.getCharacterName(),
             score.getSessionTime(),
