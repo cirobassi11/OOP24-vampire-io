@@ -44,7 +44,7 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public void setModelListener(ModelErrorListener errorListener) {
+    public void setModelErrorListener(ModelErrorListener errorListener) {
         this.errorListener = errorListener;
     }
 

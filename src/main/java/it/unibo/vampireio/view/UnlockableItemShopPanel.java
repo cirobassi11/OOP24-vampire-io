@@ -28,9 +28,9 @@ class UnlockableItemShopPanel extends AbstractBasePanel {
     private final JLabel descriptionLabel;
     private final JLabel priceLabel;
 
-    UnlockableItemShopPanel(final GameViewImpl view) {
+    UnlockableItemShopPanel(final GameViewImpl view, final ImageManager imageManager) {
         super(view);
-        this.imageManager = new ImageManager(view);
+        this.imageManager = imageManager;
 
         final List<String> powerupNames = List.of();
 

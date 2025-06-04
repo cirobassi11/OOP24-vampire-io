@@ -65,9 +65,9 @@ class GamePanel extends JPanel {
     private int currentCharacterFrame;
     private long lastCharacterFrameTime;
 
-    GamePanel(final GameViewImpl view) {
+    GamePanel(final GameViewImpl view, final ImageManager imageManager) {
         this.view = view;
-        this.imageManager = new ImageManager(this.view);
+        this.imageManager = imageManager;
         setFocusable(true);
     }
 

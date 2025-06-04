@@ -28,6 +28,9 @@ public interface GameView {
     void updateSaveList(List<String> saves);
     void showScreen(String name);
     void setPlayerInputListener(InputHandler listener);
+    void setViewErrorListener(ViewErrorListener listener);
+    void notifyError(String message);
+    void showError(String errorMessage);
 
     /* Button action listeners */
     void setConfirmCharacterListener(ActionListener listener);
@@ -100,9 +103,7 @@ public interface GameView {
     // Set game score
     void setCurrentScore(ScoreData score);
 
-    void showError(String message);
-
-    void showErrorWithExit(String message);
     void disableBuyButton();
+
 	void enableBuyButton();
 }

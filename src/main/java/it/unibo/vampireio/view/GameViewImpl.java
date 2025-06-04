@@ -26,7 +26,6 @@ public class GameViewImpl implements GameView {
     private static final Dimension DEFAULT_RESOLUTION = new Dimension(1280, 720);
     private static final Dimension MIN_RESOLUTION = new Dimension(640, 360);
     private static final String ICON_PATH = "/images/icon.png";
-    private static final String BACKGROUND_PATH = "/images/background.png";
     
     static final String FRAME_TITLE = "Vampire.io";
 
@@ -35,6 +34,9 @@ public class GameViewImpl implements GameView {
     private final JPanel cardPanel;
     private final Map<String, JPanel> panels = new HashMap<>();
 
+    private ImageManager imageManager;
+    private ViewErrorListener errorListener;
+
     private Dimension currentFrameSize;
     private Image backgroundImage;
 
@@ -42,17 +44,15 @@ public class GameViewImpl implements GameView {
         this.frame = new JFrame(FRAME_TITLE);
         this.cardLayout = new CardLayout();
         this.cardPanel = new JPanel(this.cardLayout);
-
+        this.imageManager = new ImageManager(this);
         this.initFrame();
-
         this.showScreen(GameViewImpl.SAVE_MENU);
-
         new AudioManager();
     }
 
     private void initFrame() {
         this.setIcon(GameViewImpl.ICON_PATH);
-        this.setBackgroundImage(GameViewImpl.BACKGROUND_PATH);
+        this.setBackgroundImage("background");
         this.setResolution(DEFAULT_RESOLUTION);
         this.frame.setLocationRelativeTo(null);
         this.frame.setResizable(true);
@@ -90,13 +90,13 @@ public class GameViewImpl implements GameView {
         this.panels.put(START, new StartMenuPanel(this));
         this.panels.put(SCOREBOARD, new ScoreboardPanel(this));
         this.panels.put(CHOOSE_CHARACTER, new ChooseCharacterPanel(this));
-        this.panels.put(GAME, new GamePanel(this));
+        this.panels.put(GAME, new GamePanel(this, this.imageManager));
         this.panels.put(ITEM_SELECTION, new ItemSelectionPanel(this));
         this.panels.put(END_GAME, new EndGamePanel(this));
         this.panels.put(PAUSE, new PausePanel(this));
         this.panels.put(SHOP, new ShopPanel(this));
-        this.panels.put(UNLOCKABLE_CHARACTERS, new UnlockableItemShopPanel(this));
-        this.panels.put(UNLOCKABLE_POWERUPS, new UnlockableItemShopPanel(this));
+        this.panels.put(UNLOCKABLE_CHARACTERS, new UnlockableItemShopPanel(this, this.imageManager));
+        this.panels.put(UNLOCKABLE_POWERUPS, new UnlockableItemShopPanel(this, this.imageManager));
         this.panels.forEach((name, panel) -> cardPanel.add(panel, name));
     }
 
@@ -123,7 +123,7 @@ public class GameViewImpl implements GameView {
     }
 
     private void setBackgroundImage(final String path) {
-        this.backgroundImage = new ImageIcon(getClass().getResource(path)).getImage();
+        this.backgroundImage = this.imageManager.getImage(path);
     }
 
     Image getBackgroundImage() {
@@ -155,6 +155,18 @@ public class GameViewImpl implements GameView {
     @Override
     public void setPlayerInputListener(final InputHandler listener) {
         listener.setupKeyBindings((GamePanel) this.panels.get(GAME));
+    }
+
+    @Override
+    public void setViewErrorListener(ViewErrorListener listener) {
+        this.errorListener = listener;
+    }
+
+    @Override
+    public void notifyError(final String message) {
+        if (this.errorListener != null) {
+            this.errorListener.onError(message);
+        }
     }
 
     @Override
@@ -326,11 +338,6 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void showError(final String message) {
-        javax.swing.JOptionPane.showMessageDialog(frame, message, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
-
-    @Override
-    public void showErrorWithExit(final String message) {
         javax.swing.JOptionPane.showMessageDialog(frame, message, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 

@@ -22,7 +22,8 @@ public class GameControllerImpl implements GameController {
     public GameControllerImpl() {
         this.view = new GameViewImpl();
         this.model = new GameWorld();
-        this.model.setModelListener(message -> this.showError(message));
+        this.model.setModelErrorListener(this::showError);
+        this.view.setViewErrorListener(this::showError);
         this.inputHandler = new InputHandler();
         this.inputProcessor = new InputProcessor(this.inputHandler);
         this.screenManager = new ScreenManager(this.view);

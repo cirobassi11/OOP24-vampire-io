@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface GameModel {
-    void setModelListener(ModelErrorListener errorListener);
+    void setModelErrorListener(ModelErrorListener errorListener);
     boolean initGame(String selectedCharacter);
     boolean isGameOver();
     void update(long tickTime, Point2D.Double characterDirection);

@@ -18,13 +18,13 @@ class AudioManager {
         try {
             final InputStream backingTrackStream = getClass().getResourceAsStream(audioPath + "soundtrack.wav");
             final AudioInputStream backingTrackAudio = AudioSystem.getAudioInputStream(backingTrackStream);
-            backingTrack = AudioSystem.getClip();
-            backingTrack.open(backingTrackAudio);
+            this.backingTrack = AudioSystem.getClip();
+            this.backingTrack.open(backingTrackAudio);
 
-            final FloatControl volume = (FloatControl) backingTrack.getControl(FloatControl.Type.MASTER_GAIN);
+            final FloatControl volume = (FloatControl) this.backingTrack.getControl(FloatControl.Type.MASTER_GAIN);
             volume.setValue(DEFAULT_VOLUME_DB);
 
-            backingTrack.loop(Clip.LOOP_CONTINUOUSLY);
+            this.backingTrack.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | IllegalArgumentException e) {
             e.printStackTrace();
         }

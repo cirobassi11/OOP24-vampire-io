@@ -36,7 +36,7 @@ class ImageManager {
             return img;
         } catch (IOException | IllegalArgumentException e) {
             this.failedImages.add(key);
-            this.view.showErrorWithExit(LOADING_ERROR + key);
+            this.view.notifyError(LOADING_ERROR + key);
             return new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
         }
     }
