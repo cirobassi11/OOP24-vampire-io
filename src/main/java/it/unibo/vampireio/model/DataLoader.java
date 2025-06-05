@@ -1,8 +1,8 @@
 package it.unibo.vampireio.model;
 
-import it.unibo.vampireio.controller.GameController;
-
 public class DataLoader {
+
+    private static DataLoader instance;
 
     private final GenericDataLoader<ConfigData> configLoader;
     private final GenericDataLoader<UnlockableCharacter> characterLoader;
@@ -11,7 +11,7 @@ public class DataLoader {
     private final GenericDataLoader<AttackData> attackLoader;
     private final GenericDataLoader<UnlockablePowerup> powerupLoader;
 
-    public DataLoader(final GameWorld model) {
+    private DataLoader(final GameWorld model) {
         this.characterLoader = new GenericDataLoader<>(model, "data/characters.json", UnlockableCharacter.class);
         this.enemyLoader = new GenericDataLoader<>(model, "data/enemies.json", EnemyData.class);
         this.weaponLoader = new GenericDataLoader<>(model, "data/weapons.json", WeaponData.class);
@@ -20,10 +20,20 @@ public class DataLoader {
         this.configLoader = new GenericDataLoader<>(model, "data/config.json", ConfigData.class);
     }
 
+    public static void init(GameWorld model) {
+        if (instance == null) {
+            instance = new DataLoader(model);
+        }
+    }
+
+    public static DataLoader getInstance() {
+        return instance;
+    }
+
     public GenericDataLoader<UnlockableCharacter> getCharacterLoader() {
         return this.characterLoader;
     }
-    
+
     public GenericDataLoader<EnemyData> getEnemyLoader() {
         return this.enemyLoader;
     }
@@ -35,7 +45,7 @@ public class DataLoader {
     public GenericDataLoader<AttackData> getAttackLoader() {
         return this.attackLoader;
     }
-    
+
     public GenericDataLoader<UnlockablePowerup> getPowerupLoader() {
         return this.powerupLoader;
     }

@@ -1,15 +1,11 @@
 package it.unibo.vampireio.controller;
 
-
 import it.unibo.vampireio.model.GameModel;
 import it.unibo.vampireio.model.GameWorld;
 import it.unibo.vampireio.view.GameView;
 import it.unibo.vampireio.view.GameViewImpl;
 
 public class GameControllerImpl implements GameController {
-
-    private static final int FRAME_RATE = 60;
-    private static final int TICK_RATE = 60;
 
     private GameModel model;
     private GameView view;

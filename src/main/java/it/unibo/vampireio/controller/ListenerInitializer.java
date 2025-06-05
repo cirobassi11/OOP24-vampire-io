@@ -11,7 +11,8 @@ public final class ListenerInitializer {
     private ListenerInitializer() {
     }
 
-    public static void initialize(GameView view, GameModel model, GameControllerImpl controller, GameLoopManager gameLoopManager, ScreenManager screenManager) {
+    public static void initialize(GameView view, GameModel model, GameControllerImpl controller,
+            GameLoopManager gameLoopManager, ScreenManager screenManager) {
 
         // SAVE MENU
         view.setNewSaveListener(e -> {
@@ -27,7 +28,8 @@ public final class ListenerInitializer {
         // START MENU
         view.setStartListener(e -> {
             List<UnlockableItemData> characters = model.getChoosableCharacters().stream()
-                    .map(c -> new UnlockableItemData(c.getId(), c.getName(), c.getDescription(), c.getCurrentLevel(), c.getMaxLevel(), c.getPrice()))
+                    .map(c -> new UnlockableItemData(c.getId(), c.getName(), c.getDescription(), c.getCurrentLevel(),
+                            c.getMaxLevel(), c.getPrice()))
                     .collect(Collectors.toList());
             view.setChoosableCharactersData(characters);
             screenManager.showScreen(GameView.CHOOSE_CHARACTER);
@@ -74,7 +76,8 @@ public final class ListenerInitializer {
         // SHOP
         view.setCharactersShopListener(e -> {
             List<UnlockableItemData> characters = model.getLockedCharacters().stream()
-                    .map(c -> new UnlockableItemData(c.getId(), c.getName(), c.getDescription(), c.getCurrentLevel(), c.getMaxLevel(), c.getPrice()))
+                    .map(c -> new UnlockableItemData(c.getId(), c.getName(), c.getDescription(), c.getCurrentLevel(),
+                            c.getMaxLevel(), c.getPrice()))
                     .collect(Collectors.toList());
             view.setUnlockableCharactersData(characters);
             view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
@@ -83,7 +86,8 @@ public final class ListenerInitializer {
 
         view.setPowerupsShopListener(e -> {
             List<UnlockableItemData> powerups = model.getUnlockablePowerups().stream()
-                    .map(p -> new UnlockableItemData(p.getId(), p.getName(), p.getDescription(), p.getCurrentLevel(), p.getMaxLevel(), p.getPrice()))
+                    .map(p -> new UnlockableItemData(p.getId(), p.getName(), p.getDescription(), p.getCurrentLevel(),
+                            p.getMaxLevel(), p.getPrice()))
                     .collect(Collectors.toList());
             view.setUnlockablePowerupsData(powerups);
             view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
@@ -95,7 +99,8 @@ public final class ListenerInitializer {
             String character = view.getSelectedCharacter();
             if (character != null && model.buyCharacter(character)) {
                 List<UnlockableItemData> characters = model.getLockedCharacters().stream()
-                        .map(c -> new UnlockableItemData(c.getId(), c.getName(), c.getDescription(), c.getCurrentLevel(), c.getMaxLevel(), c.getPrice()))
+                        .map(c -> new UnlockableItemData(c.getId(), c.getName(), c.getDescription(),
+                                c.getCurrentLevel(), c.getMaxLevel(), c.getPrice()))
                         .collect(Collectors.toList());
                 view.setUnlockableCharactersData(characters);
                 view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
@@ -108,7 +113,8 @@ public final class ListenerInitializer {
             String powerup = view.getSelectedPowerup();
             if (powerup != null && model.buyPowerup(powerup)) {
                 List<UnlockableItemData> powerups = model.getUnlockablePowerups().stream()
-                        .map(p -> new UnlockableItemData(p.getId(), p.getName(), p.getDescription(), p.getCurrentLevel(), p.getMaxLevel(), p.getPrice()))
+                        .map(p -> new UnlockableItemData(p.getId(), p.getName(), p.getDescription(),
+                                p.getCurrentLevel(), p.getMaxLevel(), p.getPrice()))
                         .collect(Collectors.toList());
                 view.setUnlockablePowerupsData(powerups);
                 view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
@@ -132,12 +138,14 @@ public final class ListenerInitializer {
 
                 if (item == null) {
                     controller.showError(selected + " is not a valid item.");
-                } else if (model.getCurrentSave().getMoneyAmount() < item.getPrice()
+                } else if ((model.getCurrentSave().getMoneyAmount() < item.getPrice())
                         || (item.getCurrentLevel() >= item.getMaxLevel() && item.getMaxLevel() > 0)) {
                     view.disableBuyButton();
                 } else {
                     view.enableBuyButton();
                 }
+            } else {
+                view.disableBuyButton();
             }
         });
 

@@ -4,13 +4,13 @@ public class GarlicFactory extends AbstractAttackFactory {
     private static final String attackID = "attacks/garlic";
     AttackData attackData = this.getAttackDataById(attackID);
     
-    public GarlicFactory(GameWorld gameWorld) {
-        super(gameWorld);
+    public GarlicFactory(EntityManager entityManager) {
+        super(entityManager);
     }
     
     @Override
     public Attack createAttack() {
-        Character character = this.gameWorld.getCharacter();
+        Character character = this.entityManager.getCharacter();
         Stats stats = character.getStats();
         return new GarlicAttack(
             attackData.getId(),
@@ -18,7 +18,7 @@ public class GarlicFactory extends AbstractAttackFactory {
             attackData.getRadius(),
             (int) (attackData.getDamage() * stats.getStat(StatType.MIGHT)),
             attackData.getDuration(),
-            gameWorld
+            entityManager
         );
     }
 

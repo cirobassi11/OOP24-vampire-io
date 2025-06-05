@@ -8,13 +8,13 @@ public class SantaWaterFactory extends AbstractAttackFactory {
     private final double SPAWN_AREA_PERCENTAGE = 0.8;
     AttackData attackData = this.getAttackDataById(attackID);
     
-    public SantaWaterFactory(GameWorld gameWorld) {
-        super(gameWorld);
+    public SantaWaterFactory(EntityManager entityManager) {
+        super(entityManager);
     }
     
     @Override
     public Attack createAttack() {
-        Character character = this.gameWorld.getCharacter();
+        Character character = this.entityManager.getCharacter();
         Stats stats = character.getStats();
         return new SantaWaterAttack(
             attackData.getId(),
@@ -22,13 +22,13 @@ public class SantaWaterFactory extends AbstractAttackFactory {
             attackData.getRadius(),
             (int) (attackData.getDamage() * stats.getStat(StatType.MIGHT)),
             attackData.getDuration(),
-            gameWorld
+            this.entityManager
         );
     }
 
     private Point2D.Double getRandomPosition() {
-        Point2D.Double characterPosition = this.gameWorld.getCharacter().getPosition();
-        Dimension dimension = gameWorld.getVisualSize();        
+        Point2D.Double characterPosition = this.entityManager.getCharacter().getPosition();
+        Dimension dimension = GameWorld.VISUAL_SIZE;      
         double x = characterPosition.getX() + (Math.random() * dimension.getWidth() * SPAWN_AREA_PERCENTAGE) - (dimension.getWidth() * SPAWN_AREA_PERCENTAGE / 2);
         double y = characterPosition.getY() + (Math.random() * dimension.getHeight() * SPAWN_AREA_PERCENTAGE) - (dimension.getHeight() * SPAWN_AREA_PERCENTAGE / 2);
         return new Point2D.Double(x, y);

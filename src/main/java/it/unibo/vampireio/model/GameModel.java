@@ -10,12 +10,6 @@ public interface GameModel {
     boolean initGame(String selectedCharacter);
     boolean isGameOver();
     void update(long tickTime, Point2D.Double characterDirection);
-    void addEnemy(Enemy enemy);
-    void removeEnemy(Enemy enemy);
-    void addCollectible(Collectible collectible);
-    void removeCollectible(Collectible collectible);
-    void addAttack(Attack attack);
-    void removeAttack(Attack attack);
     Dimension getVisualSize();
     long getElapsedTime();
     int getPlayerLevel();

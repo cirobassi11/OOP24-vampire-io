@@ -19,15 +19,15 @@ public class GarlicAttack extends AbstractAttack {
         final double radius, 
         final int damage, 
         final long duration, 
-        final GameWorld gameWorld) {
-        super(id, position, radius, new Point2D.Double(0, 0), 0, damage, duration, gameWorld);
+        final EntityManager entityManager) {
+        super(id, position, radius, new Point2D.Double(0, 0), 0, damage, duration, entityManager);
         this.creationTime = System.currentTimeMillis();
         this.damagedEnemies = new ArrayList<>();
         this.lastDamageTime = 0;
     }
     
     private void applyAreaDamage() {
-        for (Enemy enemy : gameWorld.getEnemies()) {
+        for (Enemy enemy : entityManager.getEnemies()) {
             if (damagedEnemies.contains(enemy)) {
                 continue;
             }
@@ -71,6 +71,6 @@ public class GarlicAttack extends AbstractAttack {
             lastDamageTime = 0;
             damagedEnemies.clear();
         }
-        this.setPosition(this.gameWorld.getCharacter().getPosition());
+        this.setPosition(this.entityManager.getCharacter().getPosition());
     }
 }

@@ -4,13 +4,13 @@ public class MagicWandFactory extends AbstractAttackFactory {
     private static final String attackID = "attacks/magicWand";
     AttackData attackData = this.getAttackDataById(attackID);
     
-    public MagicWandFactory(GameWorld gameWorld) {
-        super(gameWorld);
+    public MagicWandFactory(EntityManager entityManager) {
+        super(entityManager);
     }
     
     @Override
     public Attack createAttack() {
-        Character character = this.gameWorld.getCharacter();
+        Character character = this.entityManager.getCharacter();
         Stats stats = character.getStats();
         return new MagicWandAttack(
             attackData.getId(),
@@ -20,14 +20,14 @@ public class MagicWandFactory extends AbstractAttackFactory {
             attackData.getSpeed() * stats.getStat(StatType.SPEED),
             (int) (attackData.getDamage() * stats.getStat(StatType.MIGHT)),
             attackData.getDuration(),
-            gameWorld
+            entityManager
         );
     }
 
     @Override
     public void increaseLevel() {
         super.increaseLevel();
-        Weapon weapon = this.gameWorld.getWeaponById("weapons/magicWand");
+        Weapon weapon = this.entityManager.getWeaponById("weapons/magicWand");
         weapon.multiplyCooldown(0.90);
     }
 }

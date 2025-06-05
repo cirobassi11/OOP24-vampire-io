@@ -1,21 +1,21 @@
 package it.unibo.vampireio.model;
 
 public class WeaponImpl implements Weapon {
-    private final GameWorld gameWorld;
     private final String id;
     private long cooldown;
     private int projectilePerCooldown;
     private long timeSinceLastAttack;
     private int currentLevel;
     private final AbstractAttackFactory attackFactory;
+    private final EntityManager entityManager;
 
     public WeaponImpl(
-        final GameWorld gameWorld,
+        final EntityManager entityManager,
         final String id,
         final long cooldown, 
         final int projectilePerCooldown, 
         final AbstractAttackFactory attackFactory) {
-            this.gameWorld = gameWorld;
+            this.entityManager = entityManager;
             this.id = id;
             this.cooldown = cooldown;
             this.projectilePerCooldown = projectilePerCooldown;
@@ -52,7 +52,7 @@ public class WeaponImpl implements Weapon {
 
     private void spawnAttack() {
         final Attack attack = attackFactory.createAttack();
-        this.gameWorld.addAttack(attack);
+        this.entityManager.addAttack(attack);
     }
 
     @Override

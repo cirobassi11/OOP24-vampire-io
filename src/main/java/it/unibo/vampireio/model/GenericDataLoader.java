@@ -8,14 +8,11 @@ import java.util.Optional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
-
 import it.unibo.vampireio.controller.GameController;
 
 public class GenericDataLoader<T extends Identifiable> {

@@ -1,18 +1,18 @@
 package it.unibo.vampireio.model;
 
 public abstract class AbstractAttackFactory {
-    protected final GameWorld gameWorld;
+    protected final EntityManager entityManager;
     private int currentLevel;
 
-    public AbstractAttackFactory(final GameWorld gameWorld) {
-        this.gameWorld = gameWorld;
+    public AbstractAttackFactory(final EntityManager entityManager) {
+        this.entityManager = entityManager;
         this.currentLevel = 1;
     }
 
     public abstract Attack createAttack();
 
     protected AttackData getAttackDataById(final String id) {
-        final AttackData attackData = gameWorld.getDataLoader().getAttackLoader().get(id).get();
+        final AttackData attackData = DataLoader.getInstance().getAttackLoader().get(id).get();
         return attackData;
     }
 

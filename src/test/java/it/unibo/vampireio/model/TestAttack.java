@@ -24,8 +24,8 @@ class AbstractAttackTest {
                 final double speed,
                 final int damage,
                 final long duration,
-                final GameWorld gameWorld) {
-            super(id, position, radius, direction, speed, damage, duration, gameWorld);
+                final EntityManager entityManager) {
+            super(id, position, radius, direction, speed, damage, duration, entityManager);
         }
 
         @Override

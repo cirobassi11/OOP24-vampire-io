@@ -14,9 +14,9 @@ public class MagicWandAttack extends AbstractAttack {
         final double speed, 
         final int damage, 
         final long duration, 
-        final GameWorld gameWorld) {
+        final EntityManager entityManager) {
         
-        super(id, position, radius, direction, speed, damage, duration, gameWorld);
+        super(id, position, radius, direction, speed, damage, duration, entityManager);
         this.targetEnemy = findNearestEnemy();
         if(this.targetEnemy == null) {
             this.setDirection(this.getRandomDirection());
@@ -27,7 +27,7 @@ public class MagicWandAttack extends AbstractAttack {
         double minDistance = Double.MAX_VALUE;
         Enemy nearest = null;
         
-        for (Enemy enemy : gameWorld.getEnemies()) {
+        for (Enemy enemy : entityManager.getEnemies()) {
             Point2D.Double enemyPos = enemy.getPosition();
             Point2D.Double currentPos = this.getPosition();
             

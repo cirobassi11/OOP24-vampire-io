@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class SantaWaterAttack extends AbstractAttack {
     
-    private static final long DURATION_MS = 3000; // Attack duration in milliseconds
-    private static final long DAMAGE_TICK_MS = 500; // Damage tick interval in milliseconds
+    private static final long DURATION_MS = 3000;
+    private static final long DAMAGE_TICK_MS = 500;
     
     private long creationTime;
     private List<Enemy> damagedEnemies;
@@ -19,15 +19,15 @@ public class SantaWaterAttack extends AbstractAttack {
         final double radius, 
         final int damage, 
         final long duration, 
-        final GameWorld gameWorld) {
-        super(id, position, radius, new Point2D.Double(0, 0), 0, damage, duration, gameWorld);
+        final EntityManager entityManager) {
+        super(id, position, radius, new Point2D.Double(0, 0), 0, damage, duration, entityManager);
         this.creationTime = System.currentTimeMillis();
         this.damagedEnemies = new ArrayList<>();
         this.lastDamageTime = 0;
     }
     
     private void applyAreaDamage() {
-        for (Enemy enemy : gameWorld.getEnemies()) {
+        for (Enemy enemy : this.entityManager.getEnemies()) {
             if (damagedEnemies.contains(enemy)) {
                 continue;
             }

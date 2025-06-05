@@ -15,7 +15,8 @@ public class SaveManager {
 
     private GameWorld model;
 
-    private final String indexFileName = System.getProperty("user.home") + File.separator + "vampire-io_saves_index.sav";
+    private final String indexFileName = System.getProperty("user.home") + File.separator
+            + "vampire-io_saves_index.sav";
     private Save currentSave;
     private List<String> savesNames;
 
@@ -24,7 +25,7 @@ public class SaveManager {
 
     public SaveManager(final GameWorld model) {
         this.model = model;
-        final File indexFile = new File(indexFileName); // nome salvataggio e percorso file salvataggio
+        final File indexFile = new File(indexFileName); // save name and save path
         if (!indexFile.exists()) {
             try {
                 indexFile.createNewFile();
@@ -46,7 +47,7 @@ public class SaveManager {
         }
 
         try (FileInputStream input = new FileInputStream(indexFile);
-            ObjectInputStream in = new ObjectInputStream(input)) {
+                ObjectInputStream in = new ObjectInputStream(input)) {
 
             final Object obj = in.readObject();
             if (obj instanceof List<?>) {
@@ -69,7 +70,7 @@ public class SaveManager {
 
     private void saveIndex() {
         try (FileOutputStream fileOut = new FileOutputStream(indexFileName);
-             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(savesNames);
         } catch (final IOException e) {
             this.model.notifyError(this.savingError);
@@ -80,7 +81,7 @@ public class SaveManager {
         return List.copyOf(this.savesNames);
     }
 
-    public void createNewSave(final UnlockableCharacter defaultCharacter) {
+    private void createNewSave(final UnlockableCharacter defaultCharacter) {
         this.currentSave = new Save();
         this.savesNames.add(this.currentSave.getSaveTime());
         this.currentSave.addUnlockedCharacter(defaultCharacter);
@@ -92,7 +93,7 @@ public class SaveManager {
         final String saveFilePath = this.getFilePath(selectedSave);
         if (saveFilePath != null) {
             try (FileInputStream input = new FileInputStream(saveFilePath);
-                 ObjectInputStream in = new ObjectInputStream(input)) {
+                    ObjectInputStream in = new ObjectInputStream(input)) {
                 this.currentSave = (Save) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 this.model.notifyError(this.readingError);
@@ -107,7 +108,7 @@ public class SaveManager {
         final String saveFilePath = this.getFilePath(this.currentSave.getSaveTime());
         if (saveFilePath != null) {
             try (FileOutputStream output = new FileOutputStream(saveFilePath);
-                 ObjectOutputStream out = new ObjectOutputStream(output)) {
+                    ObjectOutputStream out = new ObjectOutputStream(output)) {
                 out.writeObject(currentSave);
             } catch (final IOException e) {
                 this.model.notifyError(this.savingError);
@@ -125,5 +126,15 @@ public class SaveManager {
             saveDirectory.mkdirs();
         }
         return saveDirectory.getPath() + File.separator + saveTime + ".sav";
+    }
+
+    public void createNewSave() {
+        ConfigData configData = DataLoader.getInstance().getConfigLoader().get("").orElse(null);
+        UnlockableCharacter defaultCharacter = DataLoader.getInstance().getCharacterLoader()
+                .get(configData.getDefaultCharacterId()).orElse(null);
+        if (defaultCharacter == null) {
+            this.model.notifyError("Default character not found in config data!");
+        }
+        this.createNewSave(defaultCharacter);
     }
 }

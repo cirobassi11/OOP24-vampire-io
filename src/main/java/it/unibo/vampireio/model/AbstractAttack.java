@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 
 public abstract class AbstractAttack extends AbstractMovableEntity implements Attack {
 
-    protected GameWorld gameWorld;
+    protected EntityManager entityManager;
     protected int damage;
     protected long duration;
     protected boolean expired = false;
@@ -18,10 +18,10 @@ public abstract class AbstractAttack extends AbstractMovableEntity implements At
             final double speed,
             final int damage,
             final long duration,
-            final GameWorld gameWorld) {
+            final EntityManager entityManager) {
         super(id, position, radius, direction, speed);
         this.damage = damage;
-        this.gameWorld = gameWorld;
+        this.entityManager = entityManager;
         this.duration = duration;
     }
 

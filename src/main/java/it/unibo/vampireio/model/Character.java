@@ -17,7 +17,8 @@ public class Character extends AbstractLivingEntity {
 
     private final List<Weapon> weapons = new LinkedList<>();
 
-    public Character(final String id, final Stats stats, final double radius, final Weapon weapon, final int weaponSlots) {
+    public Character(final String id, final Stats stats, final double radius, final Weapon weapon,
+            final int weaponSlots) {
         super(id, new Point2D.Double(0, 0), radius, new Point2D.Double(1, 0), stats.getStat(StatType.MOVE_SPEED),
                 stats.getStat(StatType.MAX_HEALTH));
         this.stats = stats;

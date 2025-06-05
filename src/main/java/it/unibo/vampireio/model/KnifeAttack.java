@@ -12,8 +12,8 @@ public class KnifeAttack extends AbstractAttack {
         final double speed, 
         final int damage, 
         final long duration, 
-        final GameWorld gameWorld) {
-        super(id, position, radius, direction, speed, damage, duration, gameWorld);
+        final EntityManager entityManager) {
+        super(id, position, radius, direction, speed, damage, duration, entityManager);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class KnifeAttack extends AbstractAttack {
 
     @Override
     protected void update(long tickTime) {
-        for (Enemy enemy : gameWorld.getEnemies()) {
+        for (Enemy enemy : entityManager.getEnemies()) {
             if (this.getDistance(enemy) <= enemy.getRadius()) {
                 this.onCollision(enemy);
                 break;

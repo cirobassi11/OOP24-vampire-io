@@ -24,12 +24,12 @@ public class EnemySpawner {
     private boolean reaperSpawned;
 
     private final List<EnemyData> enemiesData;
-    private final GameWorld gameWorld;
     private final Random random = new Random();
+    private EntityManager entityManager;
 
-    public EnemySpawner(final GameWorld gameWorld, final long maxGameDuration) {
-        this.gameWorld = gameWorld;
-        this.enemiesData = this.gameWorld.getDataLoader().getEnemyLoader().getAll();
+    public EnemySpawner(final EntityManager entityManager, final long maxGameDuration) {
+        this.entityManager = entityManager;
+        this.enemiesData = DataLoader.getInstance().getEnemyLoader().getAll();
         this.enemiesData.sort((e1, e2) -> Integer.compare(e1.getLevel(), e2.getLevel()));
         this.maxEnemyLevel = this.enemiesData.size() - 1;
         this.spawnInterval = INITIAL_SPAWN_INTERVAL;
@@ -91,15 +91,15 @@ public class EnemySpawner {
                     enemyData.getHealth(),
                     enemyData.getDamage()
                 );
-                gameWorld.addEnemy(newEnemy);
+                entityManager.addEnemy(newEnemy);
                 break;
             }
         }
     }
 
     private Point2D.Double getRandomSpawnPosition(final double radius) {
-        final Dimension visualSize = gameWorld.getVisualSize();
-        final Point2D.Double playerPos = gameWorld.getCharacter().getPosition();
+        final Dimension visualSize = GameWorld.VISUAL_SIZE;
+        final Point2D.Double playerPos = this.entityManager.getCharacter().getPosition();
 
         final double halfWidth = visualSize.getWidth() / 2.0;
         final double halfHeight = visualSize.getHeight() / 2.0;
@@ -137,7 +137,7 @@ public class EnemySpawner {
     }
 
     private boolean isPositionFree(final Point2D.Double pos, final double radius) {
-        for (final Enemy e : gameWorld.getEnemies()) {
+        for (final Enemy e : this.entityManager.getEnemies()) {
             final double distance = pos.distance(e.getPosition());
             if (distance < radius + e.getRadius()) {
                 return false;
