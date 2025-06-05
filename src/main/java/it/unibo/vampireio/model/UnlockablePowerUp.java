@@ -2,7 +2,7 @@ package it.unibo.vampireio.model;
 
 public class UnlockablePowerup extends AbstractUnlockableItem {
     private static final long serialVersionUID = 1L;
-    private static final double MULTIPLIER_INCREMENT = 0.10;
+    private static final double MULTIPLIER_INCREMENT = 0.15;
 
     private final StatType statToModify;
 

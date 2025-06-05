@@ -51,7 +51,8 @@ public class LevelUpManager {
                 data.getId(),
                 data.getDefaultCooldown(),
                 data.getDefaultAttacksPerCooldown(),
-                this.getAttackFactory(data.getId()));
+                this.getAttackFactory(data.getId())
+        );
     }
 
     private AbstractAttackFactory getAttackFactory(String weaponID) {

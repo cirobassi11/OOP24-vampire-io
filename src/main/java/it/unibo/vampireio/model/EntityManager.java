@@ -108,45 +108,39 @@ public class EntityManager {
     }
 
     private void updateEnemy(Enemy enemy, long tickTime) {
-        synchronized (this.enemies) {
-            enemy.setGettingAttacked(false);
+        enemy.setGettingAttacked(false);
 
-            double deltaX = character.getPosition().getX() - enemy.getPosition().getX();
-            double deltaY = character.getPosition().getY() - enemy.getPosition().getY();
-            double distance = enemy.getDistance(character);
+        double deltaX = character.getPosition().getX() - enemy.getPosition().getX();
+        double deltaY = character.getPosition().getY() - enemy.getPosition().getY();
+        double distance = enemy.getDistance(character);
 
-            Point2D.Double enemyDirection = new Point2D.Double(deltaX / distance, deltaY / distance);
-            enemy.setDirection(enemyDirection);
+        Point2D.Double enemyDirection = new Point2D.Double(deltaX / distance, deltaY / distance);
+        enemy.setDirection(enemyDirection);
 
-            Point2D.Double enemyFuturePosition = enemy.getFuturePosition(tickTime);
-            boolean collisionWithOtherEnemies = CollisionManager.checkEnemyCollisions(enemy, enemyFuturePosition,
-                    this.enemies);
-            boolean collisionWithCharacter = (enemyFuturePosition.distance(character.getPosition()) < 35); // TODO: Adjust collision distance
+        Point2D.Double enemyFuturePosition = enemy.getFuturePosition(tickTime);
+        boolean collisionWithOtherEnemies = CollisionManager.checkEnemyCollisions(enemy, enemyFuturePosition,
+                this.enemies);
+        boolean collisionWithCharacter = (enemyFuturePosition.distance(character.getPosition()) < 35); // TODO: Adjust collision distance
 
-            if (!collisionWithOtherEnemies && !collisionWithCharacter) {
-                enemy.move(tickTime);
-            }
+        if (!collisionWithOtherEnemies && !collisionWithCharacter) {
+            enemy.move(tickTime);
         }
     }
 
     private void updateAttacks(long tickTime) {
-        synchronized (this.attacks) {
-            this.attacks.forEach(attack -> attack.execute(tickTime));
-        }
+        this.attacks.forEach(attack -> attack.execute(tickTime));
     }
 
     private void cleanupExpiredEntities() {
         this.attacks.removeIf(Attack::isExpired);
 
-        synchronized (this.enemies) {
-            Iterator<Enemy> enemyIterator = enemies.iterator();
-            while (enemyIterator.hasNext()) {
-                Enemy enemy = enemyIterator.next();
-                if (enemy.getHealth() <= 0) {
-                    spawnRandomCollectible(enemy.getPosition());
-                    score.incrementKillCounter();
-                    enemyIterator.remove();
-                }
+        Iterator<Enemy> enemyIterator = enemies.iterator();
+        while (enemyIterator.hasNext()) {
+            Enemy enemy = enemyIterator.next();
+            if (enemy.getHealth() <= 0) {
+                spawnRandomCollectible(enemy.getPosition());
+                score.incrementKillCounter();
+                enemyIterator.remove();
             }
         }
     }
@@ -173,51 +167,35 @@ public class EntityManager {
     }
 
     public void addEnemy(final Enemy enemy) {
-        synchronized (this.enemies) {
-            this.enemies.add(enemy);
-        }
+        this.enemies.add(enemy);
     }
 
     public void addAttack(final Attack attack) {
-        synchronized (this.attacks) {
-            this.attacks.add(attack);
-        }
+        this.attacks.add(attack);
     }
 
     public void addCollectible(final Collectible collectible) {
-        synchronized (this.collectibles) {
-            this.collectibles.add(collectible);
-        }
+        this.collectibles.add(collectible);
     }
 
     public Character getCharacter() {
-        synchronized (this.character) {
-            return this.character;
-        }
+        return this.character;
     }
 
     public List<Enemy> getEnemies() {
-        synchronized (this.enemies) {
-            return this.enemies.stream().toList();
-        }
+        return List.copyOf(this.enemies);
     }
 
     public List<Attack> getAttacks() {
-        synchronized (this.attacks) {
-            return this.attacks.stream().toList();
-        }
+        return List.copyOf(this.attacks);
     }
 
     public List<Weapon> getWeapons() {
-        synchronized (this.character) {
-            return this.character.getWeapons();
-        }
+        return this.character.getWeapons();
     }
 
     public List<Collectible> getCollectibles() {
-        synchronized (this.collectibles) {
-            return new ArrayList<>(collectibles);
-        }
+        return List.copyOf(this.collectibles);
     }
 
     public Weapon getWeaponById(String weaponId) {

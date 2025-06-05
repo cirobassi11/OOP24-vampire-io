@@ -7,9 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import javax.swing.text.html.parser.Entity;
-
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -71,13 +69,11 @@ public class GameWorld implements GameModel {
         this.entityManager = new EntityManager(this.configData, this.score, this.saveManager,
                 selectedUnlockableCharacter);
 
-        // ??????
         Map<String, Integer> unlockedPowerups = this.saveManager.getCurrentSave().getUnlockedPowerups();
         for (Map.Entry<String, Integer> entry : unlockedPowerups.entrySet()) {
             Optional<UnlockablePowerup> powerupOpt = DataLoader.getInstance().getPowerupLoader().get(entry.getKey());
             powerupOpt.ifPresent(p -> p.setCurrentLevel(entry.getValue()));
         }
-        //////////
 
         return true;
     }
@@ -89,13 +85,11 @@ public class GameWorld implements GameModel {
 
     @Override
     public void update(long tickTime, Point2D.Double characterDirection) {
-        synchronized (this) {
-            this.score.incrementSessionTime(tickTime);
-            this.entityManager.updateEntities(tickTime, characterDirection);
+        this.score.incrementSessionTime(tickTime);
+        this.entityManager.updateEntities(tickTime, characterDirection);
 
-            if (entityManager.getCharacter().getHealth() <= 0) {
-                this.isGameOver = true;
-            }
+        if (entityManager.getCharacter().getHealth() <= 0) {
+            this.isGameOver = true;
         }
     }
 

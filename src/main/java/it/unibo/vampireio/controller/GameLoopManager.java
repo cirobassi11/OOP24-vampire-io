@@ -8,19 +8,15 @@ import java.util.stream.Collectors;
 
 public class GameLoopManager {
 
-    private static final int FRAME_RATE = 60;
-    private static final int TICK_RATE = 60;
+    private static final int UPDATE_RATE = 60;
 
     private final GameModel model;
     private final GameView view;
     private final InputHandler inputHandler;
     private final InputProcessor inputProcessor;
 
-    private Thread modelThread;
-    private Thread viewThread;
-
-    private volatile boolean running = false;
-    private volatile boolean paused = false;
+    private boolean running = false;
+    private boolean paused = false;
 
     public GameLoopManager(GameModel model, GameView view, InputHandler inputHandler, InputProcessor inputProcessor) {
         this.model = model;
@@ -30,111 +26,75 @@ public class GameLoopManager {
     }
 
     public boolean startGame(String selectedCharacter) {
-        if (!this.model.initGame(selectedCharacter)) return false;
+        if (!this.model.initGame(selectedCharacter)) {
+            return false;
+        }
 
-        this.running = true;
-        this.paused = false;
+        running = true;
+        paused = false;
 
-        modelThread = new Thread(this::modelLoop);
-        viewThread = new Thread(this::viewLoop);
-
-        modelThread.start();
-        viewThread.start();
+        new Thread(this::runGameLoop).start();;
 
         return true;
     }
 
-    public synchronized void pause() {
+    public void pause() {
         paused = true;
         inputHandler.clearPressedKeys();
     }
 
-    public synchronized void resume() {
+    public void resume() {
         paused = false;
-        notifyAll();
     }
 
-    public synchronized void stop() {
+    public void stop() {
         running = false;
-        if (modelThread != null) modelThread.interrupt();
-        if (viewThread != null) viewThread.interrupt();
     }
 
-    private void modelLoop() {
-        long tickTime = 1000 / TICK_RATE;
+    private void runGameLoop() {
+        final long updateInterval = 1000 / UPDATE_RATE;
+        long lastUpdateTime = System.currentTimeMillis();
 
-        while (running && !Thread.currentThread().isInterrupted()) {
-            if (this.model.isGameOver()) {
-                running = false;
-                ScoreData score = DataBuilder.getCurrentScore(this.model);
-                view.setCurrentScore(score);
-                view.showScreen(GameView.END_GAME);
-                inputHandler.clearPressedKeys();
-                return;
-            }
+        while (running) {
+            long currentTime = System.currentTimeMillis();
+            long elapsed = currentTime - lastUpdateTime;
 
-            if (this.model.hasJustLevelledUp()) {
-                pause();
-                view.setItemsData(this.model.getRandomLevelUpWeapons().stream()
-                        .map(item -> new ItemData(item.getId(), item.getName(), item.getDescription()))
-                        .collect(Collectors.toList()));
-                view.showScreen(GameView.ITEM_SELECTION);
-            }
+            if (elapsed >= updateInterval) {
+                if (this.model.isGameOver()) {
+                    running = false;
+                    view.setCurrentScore(DataBuilder.getCurrentScore(this.model));
+                    view.showScreen(GameView.END_GAME);
+                    inputHandler.clearPressedKeys();
+                    break;
+                }
 
-            synchronized (this) {
+                if (this.model.hasJustLevelledUp()) {
+                    pause();
+                    view.setItemsData(this.model.getRandomLevelUpWeapons().stream()
+                            .map(item -> new ItemData(item.getId(), item.getName(), item.getDescription()))
+                            .collect(Collectors.toList()));
+                    view.showScreen(GameView.ITEM_SELECTION);
+                }
+
                 if (inputHandler.isKeyPressed(KeyEvent.VK_ESCAPE)) {
                     pause();
                     view.showScreen(GameView.PAUSE);
                 }
 
-                while (paused) {
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        return;
-                    }
+                if (!paused) {
+                    Point2D.Double direction = inputProcessor.computeDirection();
+                    this.model.update(updateInterval, direction);
+                    view.update(DataBuilder.getData(this.model));
                 }
 
-                if (!running) return;
+                lastUpdateTime = currentTime;
             }
-
-            Point2D.Double direction = inputProcessor.computeDirection();
-            this.model.update(tickTime, direction);
 
             try {
-                Thread.sleep(tickTime);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                return;
-            }
-        }
-    }
-
-    private void viewLoop() {
-        long frameTime = 1000 / FRAME_RATE;
-
-        while (running && !Thread.currentThread().isInterrupted()) {
-            synchronized (this) {
-                while (paused) {
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        return;
-                    }
-                }
-
-                if (!running) return;
-            }
-
-            view.update(DataBuilder.getData(this.model));
-
-            try {
-                Thread.sleep(frameTime);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                return;
+                break;
             }
         }
     }
