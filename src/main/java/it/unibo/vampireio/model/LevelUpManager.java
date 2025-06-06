@@ -51,17 +51,7 @@ public class LevelUpManager {
                 data.getId(),
                 data.getDefaultCooldown(),
                 data.getDefaultAttacksPerCooldown(),
-                this.getAttackFactory(data.getId())
+                this.entityManager.getAttackFactory(data.getId())
         );
-    }
-
-    private AbstractAttackFactory getAttackFactory(String weaponID) {
-        return switch (weaponID) {
-            case "weapons/magicWand" -> new MagicWandFactory(this.entityManager);
-            case "weapons/santaWater" -> new SantaWaterFactory(this.entityManager);
-            case "weapons/garlic" -> new GarlicFactory(this.entityManager);
-            case "weapons/knife" -> new KnifeFactory(this.entityManager);
-            default -> null;
-        };
     }
 }

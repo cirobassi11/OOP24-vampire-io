@@ -59,22 +59,21 @@ public class EntityManager {
 
     private Stats applyBuffs(Stats baseStats) {
         Stats modifiedStats = new Stats(baseStats);
-        Map<String, Integer> unlockedPowerups = saveManager.getCurrentSave().getUnlockedPowerups();
-
-        for (Map.Entry<String, Integer> entry : unlockedPowerups.entrySet()) {
-            String powerupID = entry.getKey();
-
-            DataLoader.getInstance().getPowerupLoader().get(powerupID).ifPresent(unlockablePowerup -> {
-                double multiplier = unlockablePowerup.getMultiplier();
-                StatType statToModify = unlockablePowerup.getStatToModify();
-                modifiedStats.multiplyStat(statToModify, multiplier);
-            });
+        Map<String, Integer> unlockedPowerups = this.saveManager.getCurrentSave().getUnlockedPowerups();
+        for (String powerupID : unlockedPowerups.keySet()) {
+            int level = unlockedPowerups.get(powerupID);
+            UnlockablePowerup powerup = DataLoader.getInstance().getPowerupLoader().get(powerupID).orElse(null);
+            if (powerup != null) {
+                powerup.setCurrentLevel(level);
+                double multiplier = powerup.getMultiplier();
+                StatType stat = powerup.getStatToModify();
+                modifiedStats.multiplyStat(stat, multiplier);
+            }
         }
-
         return modifiedStats;
     }
 
-    private AbstractAttackFactory getAttackFactory(String weaponID) {
+    AbstractAttackFactory getAttackFactory(String weaponID) {
         return switch (weaponID) {
             case "weapons/magicWand" -> new MagicWandFactory(this);
             case "weapons/santaWater" -> new SantaWaterFactory(this);

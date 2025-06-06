@@ -61,7 +61,7 @@ public class MagicWandAttack extends AbstractAttack {
     @Override
     protected void update(long tickTime) {
         if (this.targetEnemy != null) {
-            Point2D.Double enemyPos = targetEnemy.getPosition();
+            Point2D.Double enemyPos = this.targetEnemy.getPosition();
             Point2D.Double currentPos = this.getPosition();
             
             double dx = enemyPos.x - currentPos.x;
@@ -69,11 +69,11 @@ public class MagicWandAttack extends AbstractAttack {
             double length = Math.sqrt(dx * dx + dy * dy);
             
             if (length > 0) {
-                setDirection(new Point2D.Double(dx / length, dy / length));
+                this.setDirection(new Point2D.Double(dx / length, dy / length));
             }
 
             if(length < this.getRadius()) {
-                this.onCollision(targetEnemy);
+                this.onCollision(this.targetEnemy);
             }
         }
         this.move(tickTime);

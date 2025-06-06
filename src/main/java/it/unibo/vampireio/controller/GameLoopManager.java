@@ -33,14 +33,14 @@ public class GameLoopManager {
         running = true;
         paused = false;
 
-        new Thread(this::runGameLoop).start();;
+        new Thread(this::runGameLoop).start();
 
         return true;
     }
 
     public void pause() {
-        paused = true;
         inputHandler.clearPressedKeys();
+        paused = true;
     }
 
     public void resume() {

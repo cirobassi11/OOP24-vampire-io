@@ -69,12 +69,6 @@ public class GameWorld implements GameModel {
         this.entityManager = new EntityManager(this.configData, this.score, this.saveManager,
                 selectedUnlockableCharacter);
 
-        Map<String, Integer> unlockedPowerups = this.saveManager.getCurrentSave().getUnlockedPowerups();
-        for (Map.Entry<String, Integer> entry : unlockedPowerups.entrySet()) {
-            Optional<UnlockablePowerup> powerupOpt = DataLoader.getInstance().getPowerupLoader().get(entry.getKey());
-            powerupOpt.ifPresent(p -> p.setCurrentLevel(entry.getValue()));
-        }
-
         return true;
     }
 
