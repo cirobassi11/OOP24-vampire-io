@@ -3,6 +3,7 @@ package it.unibo.vampireio.view;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JList;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JButton;
 import it.unibo.vampireio.controller.UnlockableItemData;
 
@@ -13,7 +14,6 @@ class ChooseCharacterPanel extends AbstractBasePanel {
     private JButton confirmButton;
     private JButton backButton;
     private JList<String> charactersList;
-    
 
     ChooseCharacterPanel(final GameViewImpl view) {
         super(view);
@@ -21,6 +21,7 @@ class ChooseCharacterPanel extends AbstractBasePanel {
         this.charactersList = this.addScrollableList(this.characterNames, 0, 0);
         this.confirmButton = this.addButton("CONFIRM", 0, 1);
         this.backButton = this.addButton("BACK", 0, 2);
+        this.confirmButton.setEnabled(false);
     }
 
     void setChoosableCharactersData(final List<UnlockableItemData> choosableCharactersData) {
@@ -51,5 +52,17 @@ class ChooseCharacterPanel extends AbstractBasePanel {
 
     void setBackListener(final ActionListener listener) {
         this.backButton.addActionListener(listener);
+    }
+
+    void disableConfirmCharacterButton() {
+        this.confirmButton.setEnabled(false);
+    }
+
+    void enableConfirmCharacterButton() {
+        this.confirmButton.setEnabled(true);
+    }
+
+    void setCharacterSelectionListener(final ListSelectionListener listener) {
+        this.charactersList.addListSelectionListener(listener);
     }
 }

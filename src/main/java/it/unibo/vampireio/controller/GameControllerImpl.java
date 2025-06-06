@@ -7,9 +7,8 @@ import it.unibo.vampireio.view.GameViewImpl;
 
 public class GameControllerImpl implements GameController {
 
-    private GameModel model;
-    private GameView view;
-
+    private final GameModel model;
+    private final GameView view;
     private final InputHandler inputHandler;
     private final InputProcessor inputProcessor;
     private final ScreenManager screenManager;
@@ -24,9 +23,7 @@ public class GameControllerImpl implements GameController {
         this.inputProcessor = new InputProcessor(this.inputHandler);
         this.screenManager = new ScreenManager(this.view);
         this.gameLoopManager = new GameLoopManager(this.model, this.view, this.inputHandler, this.inputProcessor);
-        ListenerInitializer.initialize(this.view, this.model, this, this.gameLoopManager, this.screenManager);
-        this.screenManager.showScreen(GameViewImpl.SAVE_MENU);
-        this.view.setPlayerInputListener(this.inputHandler);
+        ListenerInitializer.initialize(this.view, this.model, this, this.gameLoopManager, this.screenManager, this.inputHandler);
     }
 
     @Override

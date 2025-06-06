@@ -32,7 +32,7 @@ class UnlockableItemShopPanel extends AbstractBasePanel {
         super(view);
         this.imageManager = imageManager;
 
-        final List<String> powerupNames = List.of();
+        final List<String> powerUpNames = List.of();
 
         this.coinsLabel = this.addLabel("", 0, 0);
         this.itemsList = this.addScrollableList(this.itemsNames, 0, 1);
@@ -106,5 +106,4 @@ class UnlockableItemShopPanel extends AbstractBasePanel {
     void setCoinsAmount(final int coins) {
         this.coinsLabel.setText("Coins: " + coins);
     }
-
 }

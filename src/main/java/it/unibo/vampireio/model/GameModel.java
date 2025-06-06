@@ -28,8 +28,8 @@ public interface GameModel {
     List<UnlockableCharacter> getChoosableCharacters();
     List<UnlockableCharacter> getLockedCharacters();
     boolean buyCharacter(String selectedCharacter);
-    List<UnlockablePowerup> getUnlockablePowerups();
-    boolean buyPowerup(String selectedPowerup);
+    List<UnlockablePowerUp> getUnlockablePowerUps();
+    boolean buyPowerUp(String selectedPowerUp);
     boolean hasJustLevelledUp();
     List<WeaponData> getRandomLevelUpWeapons();
     void levelUpWeapon(String selectedWeapon);

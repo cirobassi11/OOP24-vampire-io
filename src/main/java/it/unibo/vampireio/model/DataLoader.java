@@ -9,14 +9,14 @@ public class DataLoader {
     private final GenericDataLoader<EnemyData> enemyLoader;
     private final GenericDataLoader<WeaponData> weaponLoader;
     private final GenericDataLoader<AttackData> attackLoader;
-    private final GenericDataLoader<UnlockablePowerup> powerupLoader;
+    private final GenericDataLoader<UnlockablePowerUp> powerUpLoader;
 
     private DataLoader(final GameWorld model) {
         this.characterLoader = new GenericDataLoader<>(model, "data/characters.json", UnlockableCharacter.class);
         this.enemyLoader = new GenericDataLoader<>(model, "data/enemies.json", EnemyData.class);
         this.weaponLoader = new GenericDataLoader<>(model, "data/weapons.json", WeaponData.class);
         this.attackLoader = new GenericDataLoader<>(model, "data/attacks.json", AttackData.class);
-        this.powerupLoader = new GenericDataLoader<>(model, "data/powerups.json", UnlockablePowerup.class);
+        this.powerUpLoader = new GenericDataLoader<>(model, "data/powerUps.json", UnlockablePowerUp.class);
         this.configLoader = new GenericDataLoader<>(model, "data/config.json", ConfigData.class);
     }
 
@@ -46,8 +46,8 @@ public class DataLoader {
         return this.attackLoader;
     }
 
-    public GenericDataLoader<UnlockablePowerup> getPowerupLoader() {
-        return this.powerupLoader;
+    public GenericDataLoader<UnlockablePowerUp> getPowerUpLoader() {
+        return this.powerUpLoader;
     }
 
     public GenericDataLoader<ConfigData> getConfigLoader() {

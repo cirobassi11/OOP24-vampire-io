@@ -1,7 +1,10 @@
 package it.unibo.vampireio.controller;
 
-import it.unibo.vampireio.model.*;
-import it.unibo.vampireio.view.*;
+import it.unibo.vampireio.model.GameModel;
+import it.unibo.vampireio.model.Unlockable;
+import it.unibo.vampireio.model.UnlockableCharacter;
+import it.unibo.vampireio.model.Score;
+import it.unibo.vampireio.view.GameView;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,7 +15,10 @@ public final class ListenerInitializer {
     }
 
     public static void initialize(GameView view, GameModel model, GameControllerImpl controller,
-            GameLoopManager gameLoopManager, ScreenManager screenManager) {
+            GameLoopManager gameLoopManager, ScreenManager screenManager, InputHandler inputHandler) {
+
+        view.setPlayerInputListener(inputHandler);
+        screenManager.showScreen(GameView.SAVE_MENU);
 
         // SAVE MENU
         view.setNewSaveListener(e -> {
@@ -49,8 +55,26 @@ public final class ListenerInitializer {
             if (selected != null && gameLoopManager.startGame(selected)) {
                 view.update(DataBuilder.getData(model));
                 screenManager.showScreen(GameView.GAME);
+            }
+        });
+
+        // CHARACTER SELECTION
+        view.setCharacterSelectionListener(e -> {
+            final String selected = view.getChoosedCharacter();
+
+            if (selected != null) {
+                UnlockableCharacter character = model.getChoosableCharacters().stream()
+                        .filter(i -> i.getId().equals(selected))
+                        .findFirst()
+                        .orElse(null);
+                if (character == null) {
+                    view.disableConfirmCharacterButton();
+                    controller.showError(selected + " is not a valid character.");
+                } else {
+                    view.enableConfirmCharacterButton();
+                }
             } else {
-                view.showError("Error");
+                view.disableConfirmCharacterButton();
             }
         });
 
@@ -84,12 +108,12 @@ public final class ListenerInitializer {
             screenManager.showScreen(GameView.UNLOCKABLE_CHARACTERS);
         });
 
-        view.setPowerupsShopListener(e -> {
-            List<UnlockableItemData> powerups = model.getUnlockablePowerups().stream()
+        view.setPowerUpsShopListener(e -> {
+            List<UnlockableItemData> powerUps = model.getUnlockablePowerUps().stream()
                     .map(p -> new UnlockableItemData(p.getId(), p.getName(), p.getDescription(), p.getCurrentLevel(),
                             p.getMaxLevel(), p.getPrice()))
                     .collect(Collectors.toList());
-            view.setUnlockablePowerupsData(powerups);
+            view.setUnlockablePowerUpsData(powerUps);
             view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
             screenManager.showScreen(GameView.UNLOCKABLE_POWERUPS);
         });
@@ -109,14 +133,14 @@ public final class ListenerInitializer {
         });
 
         // BUY POWERUPS
-        view.setBuyPowerupsListener(e -> {
-            String powerup = view.getSelectedPowerup();
-            if (powerup != null && model.buyPowerup(powerup)) {
-                List<UnlockableItemData> powerups = model.getUnlockablePowerups().stream()
+        view.setBuyPowerUpsListener(e -> {
+            String powerUp = view.getSelectedPowerUp();
+            if (powerUp != null && model.buyPowerUp(powerUp)) {
+                List<UnlockableItemData> powerUps = model.getUnlockablePowerUps().stream()
                         .map(p -> new UnlockableItemData(p.getId(), p.getName(), p.getDescription(),
                                 p.getCurrentLevel(), p.getMaxLevel(), p.getPrice()))
                         .collect(Collectors.toList());
-                view.setUnlockablePowerupsData(powerups);
+                view.setUnlockablePowerUpsData(powerUps);
                 view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
                 view.disableBuyButton();
             }
@@ -126,7 +150,7 @@ public final class ListenerInitializer {
         view.setListSelectionListener(e -> {
             String tempSelected = view.getSelectedCharacter();
             if (tempSelected == null) {
-                tempSelected = view.getSelectedPowerup();
+                tempSelected = view.getSelectedPowerUp();
             }
             final String selected = tempSelected;
 

@@ -7,14 +7,14 @@ class ShopPanel extends AbstractBasePanel {
     private static final long serialVersionUID = 1L;
 
     private final JButton charactersButton;
-    private final JButton powerupsButton;
+    private final JButton powerUpsButton;
     private final JButton backButton;
 
     ShopPanel(final GameViewImpl view) {
         super(view);
 
         this.charactersButton = this.addButton("CHARACTERS", 0, 0);
-        this.powerupsButton = this.addButton("POWERUPS", 0, 1);
+        this.powerUpsButton = this.addButton("POWERUPS", 0, 1);
         this.backButton = this.addButton("BACK", 0, 2);
     }
 
@@ -22,8 +22,8 @@ class ShopPanel extends AbstractBasePanel {
         this.charactersButton.addActionListener(listener);
     }
 
-    void setPowerupsShopListener(final ActionListener listener) {
-        this.powerupsButton.addActionListener(listener);
+    void setPowerUpsShopListener(final ActionListener listener) {
+        this.powerUpsButton.addActionListener(listener);
     }
 
     void setBackListener(final ActionListener listener) {

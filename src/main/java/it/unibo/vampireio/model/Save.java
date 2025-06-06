@@ -17,7 +17,7 @@ public class Save implements Serializable {
     
     private final String saveTime;
     private final Set<String> unlockedCharacters;
-    private final Map<String, Integer> unlockedPowerups;
+    private final Map<String, Integer> unlockedPowerUps;
     private final List<Score> scores;
 
     private int moneyAmount;
@@ -26,7 +26,7 @@ public class Save implements Serializable {
     public Save() {
         this.saveTime = generateSaveTimestamp();
         this.unlockedCharacters = new HashSet<>();
-        this.unlockedPowerups = new HashMap<>(); 
+        this.unlockedPowerUps = new HashMap<>(); 
         this.moneyAmount = 0;
         this.scores = new LinkedList<Score>();
     }
@@ -39,8 +39,8 @@ public class Save implements Serializable {
         return List.copyOf(this.unlockedCharacters);
     }
 
-    public Map<String, Integer> getUnlockedPowerups() {
-        return Map.copyOf(this.unlockedPowerups);
+    public Map<String, Integer> getUnlockedPowerUps() {
+        return Map.copyOf(this.unlockedPowerUps);
     }
 
     public int getMoneyAmount() {
@@ -63,8 +63,8 @@ public class Save implements Serializable {
         this.unlockedCharacters.add(unlockedCharacter.getId());
     }
 
-    public void enhancePowerup(final UnlockablePowerup unlockedPowerup) {
-        this.unlockedPowerups.put(unlockedPowerup.getId(), unlockedPowerup.getCurrentLevel());
+    public void enhancePowerUp(final UnlockablePowerUp unlockedPowerUp) {
+        this.unlockedPowerUps.put(unlockedPowerUp.getId(), unlockedPowerUp.getCurrentLevel());
     }
 
     // Generazione stringa data-ora dd-MM-yyyy_HH-mm-ss

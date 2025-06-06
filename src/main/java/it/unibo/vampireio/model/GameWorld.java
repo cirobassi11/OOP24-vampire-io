@@ -167,25 +167,25 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public List<UnlockablePowerup> getUnlockablePowerups() {
-        List<UnlockablePowerup> unlockablePowerups = DataLoader.getInstance().getPowerupLoader().getAll();
-        Map<String, Integer> unlockedPowerups = this.saveManager.getCurrentSave().getUnlockedPowerups();
+    public List<UnlockablePowerUp> getUnlockablePowerUps() {
+        List<UnlockablePowerUp> unlockablePowerUps = DataLoader.getInstance().getPowerUpLoader().getAll();
+        Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
 
-        List<UnlockablePowerup> levelAdjustedPowerups = unlockablePowerups.stream()
-                .peek(p -> p.setCurrentLevel(unlockedPowerups.getOrDefault(p.getId(), 0)))
+        List<UnlockablePowerUp> levelAdjustedPowerUps = unlockablePowerUps.stream()
+                .peek(p -> p.setCurrentLevel(unlockedPowerUps.getOrDefault(p.getId(), 0)))
                 .toList();
-        return levelAdjustedPowerups;
+        return levelAdjustedPowerUps;
     }
 
     private Stats applyBuffs(Stats baseStats) {
         Stats modifiedStats = new Stats(baseStats);
-        Map<String, Integer> unlockedPowerups = saveManager.getCurrentSave().getUnlockedPowerups();
+        Map<String, Integer> unlockedPowerUps = saveManager.getCurrentSave().getUnlockedPowerUps();
 
-        for (Map.Entry<String, Integer> entry : unlockedPowerups.entrySet()) {
-            String powerupID = entry.getKey();
+        for (Map.Entry<String, Integer> entry : unlockedPowerUps.entrySet()) {
+            String powerUpID = entry.getKey();
 
-            DataLoader.getInstance().getPowerupLoader().get(powerupID).ifPresent(unlockablePowerup -> {
-                modifiedStats.multiplyStat(unlockablePowerup.getStatToModify(), unlockablePowerup.getMultiplier());
+            DataLoader.getInstance().getPowerUpLoader().get(powerUpID).ifPresent(unlockablePowerUp -> {
+                modifiedStats.multiplyStat(unlockablePowerUp.getStatToModify(), unlockablePowerUp.getMultiplier());
             });
         }
 
@@ -239,7 +239,7 @@ public class GameWorld implements GameModel {
     public Collection<Unlockable> getAllItems() {
         final List<Unlockable> allItems = new LinkedList<>();
         allItems.addAll(DataLoader.getInstance().getCharacterLoader().getAll());
-        allItems.addAll(DataLoader.getInstance().getPowerupLoader().getAll());
+        allItems.addAll(DataLoader.getInstance().getPowerUpLoader().getAll());
         return allItems;
     }
 
@@ -258,7 +258,7 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public boolean buyPowerup(String selectedPowerup) {
-        return this.shopManager.buyPowerup(selectedPowerup);
+    public boolean buyPowerUp(String selectedPowerUp) {
+        return this.shopManager.buyPowerUp(selectedPowerUp);
     }
 }

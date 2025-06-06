@@ -22,14 +22,20 @@ public interface GameView {
     String PAUSE = "pause";
     String SHOP = "shop";
     String UNLOCKABLE_CHARACTERS = "unlockableCharacters";
-    String UNLOCKABLE_POWERUPS = "unlockablePowerups";
+    String UNLOCKABLE_POWERUPS = "unlockablePowerUps";
 
     void update(GameData data);
+
     void updateSaveList(List<String> saves);
+
     void showScreen(String name);
+
     void setPlayerInputListener(InputHandler listener);
+
     void setViewErrorListener(ViewErrorListener listener);
+
     void notifyError(String message);
+
     void showError(String errorMessage);
 
     /* Button action listeners */
@@ -40,12 +46,12 @@ public interface GameView {
     void setShowSaveListener(ActionListener listener);
 
     void setChooseSaveListener(ActionListener listener);
-    
+
     void setChooseItemListener(ActionListener listener);
 
     void setCharactersShopListener(ActionListener listener);
 
-    void setPowerupsShopListener(ActionListener listener);
+    void setPowerUpsShopListener(ActionListener listener);
 
     void setListSelectionListener(ListSelectionListener listener);
 
@@ -63,7 +69,7 @@ public interface GameView {
 
     void setBuyCharactersListener(ActionListener listener);
 
-    void setBuyPowerupsListener(ActionListener listener);
+    void setBuyPowerUpsListener(ActionListener listener);
 
     void setReturnMenuListener(ActionListener listener);
 
@@ -87,10 +93,10 @@ public interface GameView {
 
     String getSelectedCharacter();
 
-    // Unlockable powerup panel
-    void setUnlockablePowerupsData(List<UnlockableItemData> unlockablePowerupsData);
+    // Unlockable powerUp panel
+    void setUnlockablePowerUpsData(List<UnlockableItemData> unlockablePowerUpsData);
 
-    String getSelectedPowerup();
+    String getSelectedPowerUp();
 
     // Save Selection Panel
     String getSelectedSave();
@@ -105,5 +111,11 @@ public interface GameView {
 
     void disableBuyButton();
 
-	void enableBuyButton();
+    void enableBuyButton();
+
+    void disableConfirmCharacterButton();
+
+    void enableConfirmCharacterButton();
+
+    void setCharacterSelectionListener(final ListSelectionListener listener);
 }

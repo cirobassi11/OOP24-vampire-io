@@ -26,7 +26,7 @@ public class GameViewImpl implements GameView {
     private static final Dimension DEFAULT_RESOLUTION = new Dimension(1280, 720);
     private static final Dimension MIN_RESOLUTION = new Dimension(640, 360);
     private static final String ICON_PATH = "/images/icon.png";
-    
+
     static final String FRAME_TITLE = "Vampire.io";
 
     private final JFrame frame;
@@ -225,8 +225,8 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setPowerupsShopListener(final ActionListener listener) {
-        ((ShopPanel) this.panels.get(SHOP)).setPowerupsShopListener(listener);
+    public void setPowerUpsShopListener(final ActionListener listener) {
+        ((ShopPanel) this.panels.get(SHOP)).setPowerUpsShopListener(listener);
     }
 
     @Override
@@ -258,15 +258,15 @@ public class GameViewImpl implements GameView {
     @Override
     public void setUnlockableCharactersData(final List<UnlockableItemData> unlockableCharacterData) {
         ((UnlockableItemShopPanel) this.panels
-        .get(UNLOCKABLE_CHARACTERS))
-        .setUnlockableItemData(unlockableCharacterData);
+                .get(UNLOCKABLE_CHARACTERS))
+                .setUnlockableItemData(unlockableCharacterData);
     }
 
     @Override
-    public void setUnlockablePowerupsData(final List<UnlockableItemData> unlockablePowerupData) {
+    public void setUnlockablePowerUpsData(final List<UnlockableItemData> unlockablePowerUpData) {
         ((UnlockableItemShopPanel) this.panels
-        .get(UNLOCKABLE_POWERUPS))
-        .setUnlockableItemData(unlockablePowerupData);
+                .get(UNLOCKABLE_POWERUPS))
+                .setUnlockableItemData(unlockablePowerUpData);
     }
 
     @Override
@@ -275,7 +275,7 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public String getSelectedPowerup() {
+    public String getSelectedPowerUp() {
         return ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).getSelectedItem();
     }
 
@@ -285,7 +285,7 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setBuyPowerupsListener(final ActionListener listener) {
+    public void setBuyPowerUpsListener(final ActionListener listener) {
         ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setBuyItemListener(listener);
     }
 
@@ -351,5 +351,20 @@ public class GameViewImpl implements GameView {
     public void enableBuyButton() {
         ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).enableBuyButton();
         ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).enableBuyButton();
+    }
+
+    @Override
+    public void disableConfirmCharacterButton() {
+        ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).disableConfirmCharacterButton();
+    }
+
+    @Override
+    public void enableConfirmCharacterButton() {
+        ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).enableConfirmCharacterButton();
+    }
+
+    @Override
+    public void setCharacterSelectionListener(final ListSelectionListener listener) {
+        ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setCharacterSelectionListener(listener);
     }
 }

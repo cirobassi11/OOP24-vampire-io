@@ -23,15 +23,15 @@ public class ShopManager {
         return purchaseCharacter(currentSave, character);
     }
 
-    public boolean buyPowerup(String powerupId) {
+    public boolean buyPowerUp(String powerUpID) {
         Save currentSave = saveManager.getCurrentSave();
-        UnlockablePowerup powerup = DataLoader.getInstance().getPowerupLoader().get(powerupId).orElse(null);
+        UnlockablePowerUp powerUp = DataLoader.getInstance().getPowerUpLoader().get(powerUpID).orElse(null);
 
-        if (powerup == null || !canAfford(currentSave, powerup.getPrice())) {
+        if (powerUp == null || !canAfford(currentSave, powerUp.getPrice())) {
             return false;
         }
 
-        return purchasePowerup(currentSave, powerup);
+        return purchasePowerUp(currentSave, powerUp);
     }
 
     private boolean canAfford(Save save, int price) {
@@ -45,12 +45,12 @@ public class ShopManager {
         return true;
     }
 
-    private boolean purchasePowerup(Save save, UnlockablePowerup powerup) {
-        if (!powerup.enhance()) {
+    private boolean purchasePowerUp(Save save, UnlockablePowerUp powerUp) {
+        if (!powerUp.enhance()) {
             return false;
         }
-        save.incrementMoneyAmount(-powerup.getPrice());
-        save.enhancePowerup(powerup);
+        save.incrementMoneyAmount(-powerUp.getPrice());
+        save.enhancePowerUp(powerUp);
         saveManager.saveCurrentSave();
         return true;
     }
@@ -77,13 +77,13 @@ public class ShopManager {
         return List.copyOf(lockedCharacters);
     }
 
-    public List<UnlockablePowerup> getUnlockablePowerups() {
-        List<UnlockablePowerup> unlockablePowerups = DataLoader.getInstance().getPowerupLoader().getAll();
-        Map<String, Integer> unlockedPowerups = this.saveManager.getCurrentSave().getUnlockedPowerups();
+    public List<UnlockablePowerUp> getUnlockablePowerUps() {
+        List<UnlockablePowerUp> unlockablePowerUps = DataLoader.getInstance().getPowerUpLoader().getAll();
+        Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
 
-        List<UnlockablePowerup> levelAdjustedPowerups = unlockablePowerups.stream()
-                .peek(p -> p.setCurrentLevel(unlockedPowerups.getOrDefault(p.getId(), 0)))
+        List<UnlockablePowerUp> levelAdjustedPowerUps = unlockablePowerUps.stream()
+                .peek(p -> p.setCurrentLevel(unlockedPowerUps.getOrDefault(p.getId(), 0)))
                 .toList();
-        return levelAdjustedPowerups;
+        return levelAdjustedPowerUps;
     }
 }
