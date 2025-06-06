@@ -1,5 +1,7 @@
 package it.unibo.vampireio.model;
 
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -85,5 +87,12 @@ public class ShopManager {
                 .peek(p -> p.setCurrentLevel(unlockedPowerUps.getOrDefault(p.getId(), 0)))
                 .toList();
         return levelAdjustedPowerUps;
+    }
+
+    public Collection<Unlockable> getAllItems() {
+        final List<Unlockable> allItems = new LinkedList<>();
+        allItems.addAll(DataLoader.getInstance().getCharacterLoader().getAll());
+        allItems.addAll(DataLoader.getInstance().getPowerUpLoader().getAll());
+        return allItems;
     }
 }

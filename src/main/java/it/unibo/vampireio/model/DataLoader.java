@@ -16,7 +16,7 @@ public class DataLoader {
         this.enemyLoader = new GenericDataLoader<>(model, "data/enemies.json", EnemyData.class);
         this.weaponLoader = new GenericDataLoader<>(model, "data/weapons.json", WeaponData.class);
         this.attackLoader = new GenericDataLoader<>(model, "data/attacks.json", AttackData.class);
-        this.powerUpLoader = new GenericDataLoader<>(model, "data/powerUps.json", UnlockablePowerUp.class);
+        this.powerUpLoader = new GenericDataLoader<>(model, "data/powerups.json", UnlockablePowerUp.class);
         this.configLoader = new GenericDataLoader<>(model, "data/config.json", ConfigData.class);
     }
 

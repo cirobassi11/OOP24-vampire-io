@@ -25,6 +25,7 @@ public class GameWorld implements GameModel {
     private EntityManager entityManager;
     private SaveManager saveManager;
     private ShopManager shopManager;
+    private GameDataProvider gameDataProvider;
 
     static final Dimension VISUAL_SIZE = new Dimension(1280, 720);
 
@@ -69,6 +70,8 @@ public class GameWorld implements GameModel {
         this.entityManager = new EntityManager(this.configData, this.score, this.saveManager,
                 selectedUnlockableCharacter);
 
+        this.gameDataProvider = new GameDataProvider(entityManager, saveManager, score);
+
         return true;
     }
 
@@ -94,71 +97,57 @@ public class GameWorld implements GameModel {
 
     @Override
     public Character getCharacter() {
-        return this.entityManager.getCharacter();
+        return this.gameDataProvider.getCharacter();
     }
 
     @Override
     public List<Enemy> getEnemies() {
-        return this.entityManager.getEnemies();
+        return this.gameDataProvider.getEnemies();
     }
 
     @Override
     public List<Attack> getAttacks() {
-        return this.entityManager.getAttacks();
+        return this.gameDataProvider.getAttacks();
     }
 
     @Override
     public List<Weapon> getWeapons() {
-        return this.entityManager.getWeapons();
+        return this.gameDataProvider.getWeapons();
     }
 
     @Override
     public List<Collectible> getCollectibles() {
-        return this.entityManager.getCollectibles();
+        return this.gameDataProvider.getCollectibles();
     }
 
     @Override
     public int getPlayerLevel() {
-        return this.entityManager.getCharacter().getLevel();
+        return this.gameDataProvider.getCharacter().getLevel();
     }
 
     @Override
     public double getPlayerLevelPercentage() {
-        return this.entityManager.getCharacter().getLevelPercentage();
+        return this.gameDataProvider.getCharacter().getLevelPercentage();
     }
 
     @Override
     public int getKillCounter() {
-        return this.score.getKillCounter();
+        return this.gameDataProvider.getKillCounter();
     }
 
     @Override
     public int getCoinCounter() {
-        return this.entityManager.getCharacter().getCoinCounter();
+        return this.gameDataProvider.getCharacter().getCoinCounter();
     }
 
     @Override
     public List<UnlockableCharacter> getChoosableCharacters() {
-        List<UnlockableCharacter> unlockedCharacters = this.saveManager.getCurrentSave()
-                .getUnlockedCharacters().stream()
-                .map(id -> DataLoader.getInstance().getCharacterLoader().get(id).get())
-                .toList();
-        return unlockedCharacters;
+        return this.shopManager.getChoosableCharacters();
     }
 
     @Override
     public List<UnlockableCharacter> getLockedCharacters() {
-        List<UnlockableCharacter> unlockedCharacters = this.getChoosableCharacters();
-        List<UnlockableCharacter> unlockableCharacters = DataLoader.getInstance().getCharacterLoader().getAll();
-
-        List<String> unlockedIds = unlockedCharacters.stream()
-                .map(UnlockableCharacter::getId)
-                .toList();
-
-        List<UnlockableCharacter> lockedCharacters = unlockableCharacters.stream()
-                .filter(c -> !unlockedIds.contains(c.getId()))
-                .toList();
-        return List.copyOf(lockedCharacters);
+        return this.shopManager.getLockedCharacters();
     }
 
     @Override
@@ -168,28 +157,7 @@ public class GameWorld implements GameModel {
 
     @Override
     public List<UnlockablePowerUp> getUnlockablePowerUps() {
-        List<UnlockablePowerUp> unlockablePowerUps = DataLoader.getInstance().getPowerUpLoader().getAll();
-        Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
-
-        List<UnlockablePowerUp> levelAdjustedPowerUps = unlockablePowerUps.stream()
-                .peek(p -> p.setCurrentLevel(unlockedPowerUps.getOrDefault(p.getId(), 0)))
-                .toList();
-        return levelAdjustedPowerUps;
-    }
-
-    private Stats applyBuffs(Stats baseStats) {
-        Stats modifiedStats = new Stats(baseStats);
-        Map<String, Integer> unlockedPowerUps = saveManager.getCurrentSave().getUnlockedPowerUps();
-
-        for (Map.Entry<String, Integer> entry : unlockedPowerUps.entrySet()) {
-            String powerUpID = entry.getKey();
-
-            DataLoader.getInstance().getPowerUpLoader().get(powerUpID).ifPresent(unlockablePowerUp -> {
-                modifiedStats.multiplyStat(unlockablePowerUp.getStatToModify(), unlockablePowerUp.getMultiplier());
-            });
-        }
-
-        return modifiedStats;
+        return this.shopManager.getUnlockablePowerUps();
     }
 
     @Override
@@ -217,7 +185,7 @@ public class GameWorld implements GameModel {
 
     @Override
     public boolean hasJustLevelledUp() {
-        return this.entityManager.getCharacter().hasJustLevelledUp();
+        return this.gameDataProvider.getCharacter().hasJustLevelledUp();
     }
 
     @Override
@@ -237,10 +205,7 @@ public class GameWorld implements GameModel {
 
     @Override
     public Collection<Unlockable> getAllItems() {
-        final List<Unlockable> allItems = new LinkedList<>();
-        allItems.addAll(DataLoader.getInstance().getCharacterLoader().getAll());
-        allItems.addAll(DataLoader.getInstance().getPowerUpLoader().getAll());
-        return allItems;
+        return this.shopManager.getAllItems();
     }
 
     public EntityManager getEntityManager() {
