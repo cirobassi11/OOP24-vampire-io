@@ -3,10 +3,9 @@ package it.unibo.vampireio.model;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
 import java.util.List;
+import java.util.Iterator;
 
 public class CollisionManager {
-    private static final double COLLISION_DISTANCE = 50.0;
-    private static final double ENEMY_COLLISION_DISTANCE = 15.0;
 
     public static void checkCharacterCollisions(
             final Character character,
@@ -18,34 +17,37 @@ public class CollisionManager {
 
     private static void checkEnemyCharacterCollisions(Collidable character, List<Enemy> enemies) {
         for (Collidable enemy : enemies) {
-            if (isColliding(enemy.getPosition(), character.getPosition(), COLLISION_DISTANCE)) {
+            if (enemy.isColliding(character)) {
                 enemy.onCollision(character);
             }
         }
     }
 
     private static void checkCharacterCollectibleCollisions(Character character, List<Collectible> collectibles) {
-        double magnetRange = COLLISION_DISTANCE * character.getStats().getStat(StatType.MAGNET);
-
-        collectibles.removeIf(collectible -> {
-            if (CollisionManager.isColliding(character.getPosition(), collectible.getPosition(), magnetRange)) {
+        Iterator<Collectible> it = collectibles.iterator();
+        while (it.hasNext()) {
+            Collectible collectible = it.next();
+            if (collectible.isColliding(character)) {
                 character.collect(collectible);
-                return true;
+                it.remove();
             }
-            return false;
-        });
+        }
     }
 
-    private static boolean isColliding(Point2D.Double pos1, Point2D.Double pos2, double distance) {
-        return pos1.distance(pos2) <= distance;
-    }
-
-    static boolean checkEnemyCollisions(Enemy currentEnemy, Point2D.Double futurePosition, List<Enemy> enemies) {
+    static boolean checkEnemyCollisions(Enemy currentEnemy, Point2D.Double futurePosition, List<Enemy> enemies,
+            Character character) {
+        double currentEnemyRadius = currentEnemy.getRadius();
         for (Enemy otherEnemy : enemies) {
-            if (currentEnemy != otherEnemy && 
-                futurePosition.distance(otherEnemy.getPosition()) < 15) {
-                return true;
+            if (currentEnemy != otherEnemy) {
+                double combinedRadius = currentEnemyRadius + otherEnemy.getRadius();
+                if (futurePosition.distance(otherEnemy.getPosition()) < combinedRadius / 2) {
+                    return true;
+                }
             }
+        }
+        double combinedRadius = currentEnemyRadius + character.getRadius();
+        if (futurePosition.distance(character.getPosition()) < combinedRadius / 2) {
+            return true;
         }
         return false;
     }

@@ -117,11 +117,10 @@ public class EntityManager {
         enemy.setDirection(enemyDirection);
 
         Point2D.Double enemyFuturePosition = enemy.getFuturePosition(tickTime);
-        boolean collisionWithOtherEnemies = CollisionManager.checkEnemyCollisions(enemy, enemyFuturePosition,
-                this.enemies);
-        boolean collisionWithCharacter = (enemyFuturePosition.distance(character.getPosition()) < 35); // TODO: Adjust collision distance
+        boolean collisionWithOtherEntities = CollisionManager.checkEnemyCollisions(enemy, enemyFuturePosition,
+                this.enemies, this.character);
 
-        if (!collisionWithOtherEnemies && !collisionWithCharacter) {
+        if (!collisionWithOtherEntities) {
             enemy.move(tickTime);
         }
     }

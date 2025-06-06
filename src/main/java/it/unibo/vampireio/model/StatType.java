@@ -7,5 +7,4 @@ public enum StatType {
     MOVE_SPEED,
     MIGHT,
     COOLDOWN,
-    MAGNET
 }

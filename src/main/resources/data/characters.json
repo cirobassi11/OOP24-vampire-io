@@ -7,8 +7,7 @@
           "SPEED": 1.0,
           "MOVE_SPEED": 1.0,
           "MIGHT": 1.0,
-          "COOLDOWN": 1.0,
-          "MAGNET": 1.0
+          "COOLDOWN": 1.0
         }
       },
       "id": "characters/poe",
@@ -28,8 +27,7 @@
           "SPEED": 1.0,
           "MOVE_SPEED": 1.0,
           "MIGHT": 1.0,
-          "COOLDOWN": 1.0,
-          "MAGNET": 1.0
+          "COOLDOWN": 1.0
         }
       },
       "id": "characters/imelda",
@@ -49,8 +47,7 @@
           "SPEED": 1.0,
           "MOVE_SPEED": 1.0,
           "MIGHT": 1.0,
-          "COOLDOWN": 1.0,
-          "MAGNET": 1.0
+          "COOLDOWN": 1.0
         }
       },
       "id": "characters/clerici",
@@ -70,8 +67,7 @@
           "SPEED": 1.0,
           "MOVE_SPEED": 1.0,
           "MIGHT": 1.0,
-          "COOLDOWN": 1.0,
-          "MAGNET": 1.0
+          "COOLDOWN": 1.0
         }
       },
       "id": "characters/gennaro",
