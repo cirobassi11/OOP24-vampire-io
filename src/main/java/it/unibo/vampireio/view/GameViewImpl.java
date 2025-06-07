@@ -55,6 +55,110 @@ public class GameViewImpl implements GameView {
         this.panels.put(UNLOCKABLE_POWERUPS, new UnlockableItemShopPanel(this.frameManager, this.imageManager));
     }
 
+    @Override
+    public void setSaveMenuPanelListeners(
+            final ActionListener newSaveListener,
+            final ActionListener showSaveListener,
+            final ActionListener quitListener) {
+        ListenerBinder.bindSaveMenuPanelListener(
+                (SaveMenuPanel) this.panels.get(SAVE_MENU),
+                newSaveListener,
+                showSaveListener,
+                quitListener);
+    }
+
+    @Override
+    public void setStartMenuPanelListeners(
+            final ActionListener startListener,
+            final ActionListener scoreboardListener,
+            final ActionListener shopListener,
+            final ActionListener loadSaveListener,
+            final ActionListener quitListener) {
+        ListenerBinder.bindStartMenuPanelListener((StartMenuPanel) this.panels.get(START),
+                startListener,
+                scoreboardListener,
+                shopListener,
+                loadSaveListener,
+                quitListener);
+    }
+
+    @Override
+    public void setSaveSelectionPanelListener(
+            final ActionListener chooseSaveListener,
+            final ActionListener backListener) {
+        ListenerBinder.bindSaveSelectionPanelListener((SaveSelectionPanel) this.panels.get(SAVE_SELECTION),
+                chooseSaveListener,
+                backListener);
+    }
+
+    @Override
+    public void setChooseCharacterPanelListener(
+            final ListSelectionListener characterSelectionListener,
+            final ActionListener confirmCharacterListener,
+            final ActionListener backListener) {
+        ListenerBinder.bindChooseCharacterPanelListener(
+                (ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER),
+                characterSelectionListener,
+                confirmCharacterListener,
+                backListener);
+    }
+
+    @Override
+    public void setShopPanelListener(
+            final ActionListener characterShopListener,
+            final ActionListener powerUpsShopListener,
+            final ActionListener backListener) {
+        ListenerBinder.bindShopPanelListener((ShopPanel) this.panels.get(SHOP),
+                characterShopListener,
+                powerUpsShopListener,
+                backListener);
+    }
+
+    @Override
+    public void setScoreboardPanelListener(final ActionListener backListener) {
+        ListenerBinder.bindScoreboardPanelListener((ScoreboardPanel) this.panels.get(SCOREBOARD), backListener);
+
+    }
+
+    @Override
+    public void setEndGamePanelListener(final ActionListener returnMenuListener) {
+        ListenerBinder.bindEndGamePanelListener((EndGamePanel) this.panels.get(END_GAME),
+                returnMenuListener);
+
+    }
+
+    @Override
+    public void setPausePanelListener(final ActionListener resumeListener,
+            final ActionListener exitListener) {
+        ListenerBinder.bindPausePanelListener((PausePanel) this.panels.get(PAUSE),
+                resumeListener, exitListener);
+
+    }
+
+    @Override
+    public void setItemSelectionPanelListener(final ActionListener chooseItemListener) {
+        ListenerBinder.bindItemSelectionPanelListener((ItemSelectionPanel) this.panels.get(ITEM_SELECTION),
+                chooseItemListener);
+
+    }
+
+    @Override
+    public void setUnlockableItemShopPanelListener(final ActionListener buyItemListener,
+            final ListSelectionListener listSelectionListener, final ActionListener backListener) {
+        ListenerBinder.bindUnlockableItemShopPanelListener(
+                (UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS),
+                buyItemListener, listSelectionListener, backListener);
+        ListenerBinder.bindUnlockableItemShopPanelListener(
+                (UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS),
+                buyItemListener, listSelectionListener, backListener);
+
+    }
+
+    @Override
+    public void setPlayerInputListener(final InputHandler inputHandler) {
+        ListenerBinder.bindGamePanelListener((GamePanel) this.panels.get(GAME), inputHandler);
+    }
+
     public void quit() {
         System.exit(0);
     }
@@ -74,11 +178,6 @@ public class GameViewImpl implements GameView {
     @Override
     public void showScreen(final String name) {
         this.frameManager.showScreen(name);
-    }
-
-    @Override
-    public void setPlayerInputListener(final InputHandler listener) {
-        listener.setupKeyBindings((GamePanel) this.panels.get(GAME));
     }
 
     @Override
@@ -119,61 +218,6 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setConfirmCharacterListener(final ActionListener listener) {
-        ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setConfirmCharacterListener(listener);
-    }
-
-    @Override
-    public void setNewSaveListener(final ActionListener listener) {
-        ((SaveMenuPanel) this.panels.get(SAVE_MENU)).setNewSaveListener(listener);
-    }
-
-    @Override
-    public void setShowSaveListener(final ActionListener listener) {
-        ((SaveMenuPanel) this.panels.get(SAVE_MENU)).setShowSaveListener(listener);
-    }
-
-    @Override
-    public void setChooseSaveListener(final ActionListener listener) {
-        ((SaveSelectionPanel) this.panels.get(SAVE_SELECTION)).setChooseSaveListener(listener);
-    }
-
-    @Override
-    public void setChooseItemListener(final ActionListener listener) {
-        ((ItemSelectionPanel) this.panels.get(ITEM_SELECTION)).setChooseItemListener(listener);
-    }
-
-    @Override
-    public void setCharactersShopListener(final ActionListener listener) {
-        ((ShopPanel) this.panels.get(SHOP)).setCharactersShopListener(listener);
-    }
-
-    @Override
-    public void setPowerUpsShopListener(final ActionListener listener) {
-        ((ShopPanel) this.panels.get(SHOP)).setPowerUpsShopListener(listener);
-    }
-
-    @Override
-    public void setStartListener(final ActionListener listener) {
-        ((StartMenuPanel) this.panels.get(START)).setStartListener(listener);
-    }
-
-    @Override
-    public void setScoreboardListener(final ActionListener listener) {
-        ((StartMenuPanel) this.panels.get(START)).setScoreboardListener(listener);
-    }
-
-    @Override
-    public void setShopListener(final ActionListener listener) {
-        ((StartMenuPanel) this.panels.get(START)).setShopListener(listener);
-    }
-
-    @Override
-    public void setLoadSaveListener(final ActionListener listener) {
-        ((StartMenuPanel) this.panels.get(START)).setLoadSaveListener(listener);
-    }
-
-    @Override
     public void setCoinsAmount(final int coins) {
         ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setCoinsAmount(coins);
         ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setCoinsAmount(coins);
@@ -204,55 +248,8 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setBuyCharactersListener(final ActionListener listener) {
-        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setBuyItemListener(listener);
-    }
-
-    @Override
-    public void setBuyPowerUpsListener(final ActionListener listener) {
-        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setBuyItemListener(listener);
-    }
-
-    @Override
-    public void setListSelectionListener(final ListSelectionListener listener) {
-        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setListSelectionListener(listener);
-        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setListSelectionListener(listener);
-    }
-
-    @Override
-    public void setReturnMenuListener(final ActionListener listener) {
-        ((EndGamePanel) this.panels.get(END_GAME)).setReturnMenuListener(listener);
-    }
-
-    @Override
-    public void setResumeListener(final ActionListener listener) {
-        ((PausePanel) this.panels.get(PAUSE)).setResumeListener(listener);
-    }
-
-    @Override
-    public void setExitListener(final ActionListener listener) {
-        ((PausePanel) this.panels.get(PAUSE)).setExitListener(listener);
-    }
-
-    @Override
     public void setScoresData(final List<ScoreData> scores) {
         ((ScoreboardPanel) this.panels.get(SCOREBOARD)).setScoresData(scores);
-    }
-
-    @Override
-    public void setBackListener(final ActionListener listener) {
-        ((SaveSelectionPanel) this.panels.get(SAVE_SELECTION)).setBackListener(listener);
-        ((ScoreboardPanel) this.panels.get(SCOREBOARD)).setBackListener(listener);
-        ((ShopPanel) this.panels.get(SHOP)).setBackListener(listener);
-        ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setBackListener(listener);
-        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).setBackListener(listener);
-        ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).setBackListener(listener);
-    }
-
-    @Override
-    public void setQuitListener(final ActionListener listener) {
-        ((SaveMenuPanel) this.panels.get(SAVE_MENU)).setQuitListener(listener);
-        ((StartMenuPanel) this.panels.get(START)).setQuitListener(listener);
     }
 
     @Override
@@ -280,11 +277,6 @@ public class GameViewImpl implements GameView {
     @Override
     public void enableConfirmCharacterButton() {
         ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).enableConfirmCharacterButton();
-    }
-
-    @Override
-    public void setCharacterSelectionListener(final ListSelectionListener listener) {
-        ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setCharacterSelectionListener(listener);
     }
 
     @Override

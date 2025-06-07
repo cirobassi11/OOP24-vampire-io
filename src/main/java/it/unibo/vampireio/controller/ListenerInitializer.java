@@ -6,8 +6,11 @@ import it.unibo.vampireio.model.UnlockableCharacter;
 import it.unibo.vampireio.model.Score;
 import it.unibo.vampireio.view.GameView;
 
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.swing.event.ListSelectionListener;
 
 public final class ListenerInitializer {
 
@@ -20,46 +23,55 @@ public final class ListenerInitializer {
         view.setPlayerInputListener(inputHandler);
         screenManager.showScreen(GameView.SAVE_MENU);
 
+        ActionListener backListener = e -> screenManager.goBack();
+        ActionListener quitListener = e -> System.exit(0);
+
         // SAVE MENU
-        view.setNewSaveListener(e -> {
+        ActionListener newSaveListener = e -> {
             model.createNewSave();
             screenManager.showScreen(GameView.START);
-        });
-
-        view.setShowSaveListener(e -> {
+        };
+        ActionListener showSaveListener = e -> {
             view.updateSaveList(model.getSaveNames());
             screenManager.showScreen(GameView.SAVE_SELECTION);
-        });
+        };
+
+        view.setSaveMenuPanelListeners(newSaveListener, showSaveListener, quitListener);
 
         // START MENU
-        view.setStartListener(e -> {
+        ActionListener startListener = e -> {
             List<UnlockableItemData> characters = model.getChoosableCharacters().stream()
                     .map(c -> new UnlockableItemData(c.getId(), c.getName(), c.getDescription(), c.getCurrentLevel(),
                             c.getMaxLevel(), c.getPrice()))
                     .collect(Collectors.toList());
             view.setChoosableCharactersData(characters);
             screenManager.showScreen(GameView.CHOOSE_CHARACTER);
-        });
-
-        view.setScoreboardListener(e -> {
+        };
+        ActionListener scoreboardListener = e -> {
             view.setScoresData(DataBuilder.getScores(model));
             screenManager.showScreen(GameView.SCOREBOARD);
-        });
+        };
+        ActionListener shopListener = e -> screenManager.showScreen(GameView.SHOP);
+        ActionListener loadSaveListener = e -> screenManager.showScreen(GameView.SAVE_MENU);
 
-        view.setShopListener(e -> screenManager.showScreen(GameView.SHOP));
-        view.setLoadSaveListener(e -> screenManager.showScreen(GameView.SAVE_MENU));
+        view.setStartMenuPanelListeners(
+                startListener,
+                scoreboardListener,
+                shopListener,
+                loadSaveListener,
+                quitListener);
 
         // CHOOSE CHARACTER
-        view.setConfirmCharacterListener(e -> {
+        ActionListener confirmCharacterListener = e -> {
             String selected = view.getChoosedCharacter();
             if (selected != null && gameLoopManager.startGame(selected)) {
                 view.update(DataBuilder.getData(model));
                 screenManager.showScreen(GameView.GAME);
             }
-        });
+        };
 
         // CHARACTER SELECTION
-        view.setCharacterSelectionListener(e -> {
+        ListSelectionListener setCharacterSelectionListener = e -> {
             final String selected = view.getChoosedCharacter();
 
             if (selected != null) {
@@ -76,29 +88,35 @@ public final class ListenerInitializer {
             } else {
                 view.disableConfirmCharacterButton();
             }
-        });
+        };
+
+        view.setChooseCharacterPanelListener(setCharacterSelectionListener, confirmCharacterListener, backListener);
 
         // SAVE SELECTION
-        view.setChooseSaveListener(e -> {
+        ActionListener setChooseSaveListener = e -> {
             String save = view.getSelectedSave();
             if (save != null) {
                 model.loadSave(save);
                 screenManager.showScreen(GameView.START);
             }
-        });
+        };
+
+        view.setSaveSelectionPanelListener(setChooseSaveListener, backListener);
 
         // ITEM SELECTION
-        view.setChooseItemListener(e -> {
+        ActionListener setChooseItemListener = e -> {
             String item = view.getSelectedItem();
             if (item != null) {
                 model.levelUpWeapon(item);
                 gameLoopManager.resume();
                 screenManager.showScreen(GameView.GAME);
             }
-        });
+        };
+
+        view.setItemSelectionPanelListener(setChooseItemListener);
 
         // SHOP
-        view.setCharactersShopListener(e -> {
+        ActionListener setCharacterShopListener = e -> {
             List<UnlockableItemData> characters = model.getLockedCharacters().stream()
                     .map(c -> new UnlockableItemData(c.getId(), c.getName(), c.getDescription(), c.getCurrentLevel(),
                             c.getMaxLevel(), c.getPrice()))
@@ -106,9 +124,9 @@ public final class ListenerInitializer {
             view.setUnlockableCharactersData(characters);
             view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
             screenManager.showScreen(GameView.UNLOCKABLE_CHARACTERS);
-        });
+        };
 
-        view.setPowerUpsShopListener(e -> {
+        ActionListener setPowerUpsShopListener = e -> {
             List<UnlockableItemData> powerUps = model.getUnlockablePowerUps().stream()
                     .map(p -> new UnlockableItemData(p.getId(), p.getName(), p.getDescription(), p.getCurrentLevel(),
                             p.getMaxLevel(), p.getPrice()))
@@ -116,10 +134,15 @@ public final class ListenerInitializer {
             view.setUnlockablePowerUpsData(powerUps);
             view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
             screenManager.showScreen(GameView.UNLOCKABLE_POWERUPS);
-        });
+        };
+
+        view.setShopPanelListener(setCharacterShopListener, setPowerUpsShopListener, backListener);
+
+        // SCOREBOARD
+        view.setScoreboardPanelListener(backListener);
 
         // BUY CHARACTERS
-        view.setBuyCharactersListener(e -> {
+        ActionListener setBuyCharactersListener = e -> {
             String character = view.getSelectedCharacter();
             if (character != null && model.buyCharacter(character)) {
                 List<UnlockableItemData> characters = model.getLockedCharacters().stream()
@@ -130,24 +153,10 @@ public final class ListenerInitializer {
                 view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
                 view.disableBuyButton();
             }
-        });
-
-        // BUY POWERUPS
-        view.setBuyPowerUpsListener(e -> {
-            String powerUp = view.getSelectedPowerUp();
-            if (powerUp != null && model.buyPowerUp(powerUp)) {
-                List<UnlockableItemData> powerUps = model.getUnlockablePowerUps().stream()
-                        .map(p -> new UnlockableItemData(p.getId(), p.getName(), p.getDescription(),
-                                p.getCurrentLevel(), p.getMaxLevel(), p.getPrice()))
-                        .collect(Collectors.toList());
-                view.setUnlockablePowerUpsData(powerUps);
-                view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
-                view.disableBuyButton();
-            }
-        });
+        };
 
         // ITEM SELECTION
-        view.setListSelectionListener(e -> {
+        ListSelectionListener setListSelectionListener = e -> {
             String tempSelected = view.getSelectedCharacter();
             if (tempSelected == null) {
                 tempSelected = view.getSelectedPowerUp();
@@ -171,26 +180,49 @@ public final class ListenerInitializer {
             } else {
                 view.disableBuyButton();
             }
-        });
+        };
+
+        view.setUnlockableItemShopPanelListener(setBuyCharactersListener, setListSelectionListener, backListener);
+
+        // BUY POWERUPS
+        ActionListener setBuyPowerUpsListener = e -> {
+            String powerUp = view.getSelectedPowerUp();
+            if (powerUp != null && model.buyPowerUp(powerUp)) {
+                List<UnlockableItemData> powerUps = model.getUnlockablePowerUps().stream()
+                        .map(p -> new UnlockableItemData(p.getId(), p.getName(), p.getDescription(),
+                                p.getCurrentLevel(), p.getMaxLevel(), p.getPrice()))
+                        .collect(Collectors.toList());
+                view.setUnlockablePowerUpsData(powerUps);
+                view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
+                view.disableBuyButton();
+            }
+        };
+
+        view.setUnlockableItemShopPanelListener(setBuyPowerUpsListener, setListSelectionListener, backListener);
+
+        view.setUnlockableItemShopPanelListener(setBuyCharactersListener, setListSelectionListener, backListener);
 
         // PAUSE MENU
-        view.setResumeListener(e -> {
+        ActionListener setResumeListener = e -> {
             screenManager.showScreen(GameView.GAME);
             gameLoopManager.resume();
-        });
+        };
 
-        view.setExitListener(e -> {
+        ActionListener setExitListener = e -> {
             gameLoopManager.stop();
             Score score = model.exitGame();
             ScoreData data = new ScoreData(score.getCharacterName(), score.getSessionTime(), score.getKillCounter(),
                     score.getLevel(), score.getCoinCounter(), score.getScore());
             view.setCurrentScore(data);
             screenManager.showScreen(GameView.END_GAME);
-        });
+        };
+
+        view.setPausePanelListener(setResumeListener, setExitListener);
 
         // ENDGAME
-        view.setReturnMenuListener(e -> screenManager.showScreen(GameView.START));
-        view.setBackListener(e -> screenManager.goBack());
-        view.setQuitListener(e -> System.exit(0));
+        ActionListener setReturnMenuListener = e -> {
+            screenManager.showScreen(GameView.START);
+        };
+        view.setEndGamePanelListener(setReturnMenuListener);
     }
 }

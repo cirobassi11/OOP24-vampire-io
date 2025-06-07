@@ -11,111 +11,105 @@ import it.unibo.vampireio.controller.UnlockableItemData;
 
 public interface GameView {
 
-    String SAVE_MENU = "saveMenu";
-    String SAVE_SELECTION = "saveSelection";
-    String START = "mainMenu";
-    String SCOREBOARD = "scoreboard";
-    String CHOOSE_CHARACTER = "chooseCharacter";
-    String GAME = "game";
-    String ITEM_SELECTION = "itemSelection";
-    String END_GAME = "endGame";
-    String PAUSE = "pause";
-    String SHOP = "shop";
-    String UNLOCKABLE_CHARACTERS = "unlockableCharacters";
-    String UNLOCKABLE_POWERUPS = "unlockablePowerUps";
+        String SAVE_MENU = "saveMenu";
+        String SAVE_SELECTION = "saveSelection";
+        String START = "mainMenu";
+        String SCOREBOARD = "scoreboard";
+        String CHOOSE_CHARACTER = "chooseCharacter";
+        String GAME = "game";
+        String ITEM_SELECTION = "itemSelection";
+        String END_GAME = "endGame";
+        String PAUSE = "pause";
+        String SHOP = "shop";
+        String UNLOCKABLE_CHARACTERS = "unlockableCharacters";
+        String UNLOCKABLE_POWERUPS = "unlockablePowerUps";
 
-    void update(GameData data);
+        void update(GameData data);
 
-    void updateSaveList(List<String> saves);
+        void updateSaveList(List<String> saves);
 
-    void showScreen(String name);
+        void showScreen(String name);
 
-    void setPlayerInputListener(InputHandler listener);
+        void setPlayerInputListener(InputHandler listener);
 
-    void setViewErrorListener(ViewErrorListener listener);
+        void setViewErrorListener(ViewErrorListener listener);
 
-    void notifyError(String message);
+        void notifyError(String message);
 
-    void showError(String errorMessage);
+        void showError(String errorMessage);
 
-    /* Button action listeners */
-    void setConfirmCharacterListener(ActionListener listener);
+        /* Listeners */
 
-    void setNewSaveListener(ActionListener listener);
+        public void setSaveMenuPanelListeners(
+                        final ActionListener newSaveListener,
+                        final ActionListener showSaveListener,
+                        final ActionListener quitListener);
 
-    void setShowSaveListener(ActionListener listener);
+        public void setStartMenuPanelListeners(
+                        final ActionListener startListener,
+                        final ActionListener scoreboardListener,
+                        final ActionListener shopListener,
+                        final ActionListener loadSaveListener,
+                        final ActionListener quitListener);
 
-    void setChooseSaveListener(ActionListener listener);
+        public void setSaveSelectionPanelListener(
+                        final ActionListener chooseSaveListener,
+                        final ActionListener backListener);
 
-    void setChooseItemListener(ActionListener listener);
+        public void setChooseCharacterPanelListener(
+                        final ListSelectionListener characterSelectionListener,
+                        final ActionListener confirmCharacterListener,
+                        final ActionListener backListener);
 
-    void setCharactersShopListener(ActionListener listener);
+        public void setShopPanelListener(
+                        final ActionListener characterShopListener,
+                        final ActionListener powerUpsShopListener,
+                        final ActionListener backListener);
 
-    void setPowerUpsShopListener(ActionListener listener);
+        public void setScoreboardPanelListener(final ActionListener backListener);
 
-    void setListSelectionListener(ListSelectionListener listener);
+        public void setEndGamePanelListener(final ActionListener returnMenuListener);
 
-    void setBackListener(ActionListener listener);
+        public void setPausePanelListener(
+                        final ActionListener resumeListener,
+                        final ActionListener exitListener);
 
-    void setStartListener(ActionListener listener);
+        public void setItemSelectionPanelListener(final ActionListener chooseItemListener);
 
-    void setScoreboardListener(ActionListener listener);
+        public void setUnlockableItemShopPanelListener(
+                        final ActionListener buyItemListener,
+                        final ListSelectionListener listSelectionListener,
+                        final ActionListener backListener);
 
-    void setShopListener(ActionListener listener);
+        void setScoresData(List<ScoreData> scores);
 
-    void setLoadSaveListener(ActionListener listener);
+        void setChoosableCharactersData(List<UnlockableItemData> choosableCharactersData);
 
-    void setQuitListener(ActionListener listener);
+        String getChoosedCharacter();
 
-    void setBuyCharactersListener(ActionListener listener);
+        void setCoinsAmount(int coins);
 
-    void setBuyPowerUpsListener(ActionListener listener);
+        void setUnlockableCharactersData(List<UnlockableItemData> unlockableCharactersData);
 
-    void setReturnMenuListener(ActionListener listener);
+        String getSelectedCharacter();
 
-    void setResumeListener(ActionListener listener);
+        void setUnlockablePowerUpsData(List<UnlockableItemData> unlockablePowerUpsData);
 
-    void setExitListener(ActionListener listener);
+        String getSelectedPowerUp();
 
-    // Setta i dati dei punteggi (nella scoreboard)
-    void setScoresData(List<ScoreData> scores);
+        String getSelectedSave();
 
-    // Choose character panel
-    void setChoosableCharactersData(List<UnlockableItemData> choosableCharactersData);
+        void setItemsData(List<ItemData> itemsData);
 
-    String getChoosedCharacter();
+        String getSelectedItem();
 
-    // Shop panel
-    void setCoinsAmount(int coins);
+        void setCurrentScore(ScoreData score);
 
-    // Unlockable character panel
-    void setUnlockableCharactersData(List<UnlockableItemData> unlockableCharactersData);
+        void disableBuyButton();
 
-    String getSelectedCharacter();
+        void enableBuyButton();
 
-    // Unlockable powerUp panel
-    void setUnlockablePowerUpsData(List<UnlockableItemData> unlockablePowerUpsData);
+        void disableConfirmCharacterButton();
 
-    String getSelectedPowerUp();
-
-    // Save Selection Panel
-    String getSelectedSave();
-
-    // Item Selection Panel
-    void setItemsData(List<ItemData> itemsData);
-
-    String getSelectedItem();
-
-    // Set game score
-    void setCurrentScore(ScoreData score);
-
-    void disableBuyButton();
-
-    void enableBuyButton();
-
-    void disableConfirmCharacterButton();
-
-    void enableConfirmCharacterButton();
-
-    void setCharacterSelectionListener(final ListSelectionListener listener);
+        void enableConfirmCharacterButton();
 }
