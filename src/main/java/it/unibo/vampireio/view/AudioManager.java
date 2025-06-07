@@ -11,22 +11,21 @@ import java.io.InputStream;
 
 class AudioManager {
     private static final float DEFAULT_VOLUME_DB = -25.0f;
-    private Clip backingTrack;
     private final String audioPath = "/audio/";
 
-    AudioManager() {
+    AudioManager(final GameViewImpl view) {
         try {
             final InputStream backingTrackStream = getClass().getResourceAsStream(audioPath + "soundtrack.wav");
             final AudioInputStream backingTrackAudio = AudioSystem.getAudioInputStream(backingTrackStream);
-            this.backingTrack = AudioSystem.getClip();
-            this.backingTrack.open(backingTrackAudio);
+            Clip backingTrack = AudioSystem.getClip();
+            backingTrack.open(backingTrackAudio);
 
-            final FloatControl volume = (FloatControl) this.backingTrack.getControl(FloatControl.Type.MASTER_GAIN);
+            final FloatControl volume = (FloatControl) backingTrack.getControl(FloatControl.Type.MASTER_GAIN);
             volume.setValue(DEFAULT_VOLUME_DB);
 
-            this.backingTrack.loop(Clip.LOOP_CONTINUOUSLY);
+            backingTrack.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | IllegalArgumentException e) {
-            e.printStackTrace();
+            view.notifyError("An error occurred while loading the audio.");
         }
     }
 }

@@ -47,7 +47,7 @@ public class GameViewImpl implements GameView {
         this.imageManager = new ImageManager(this);
         this.initFrame();
         this.showScreen(GameViewImpl.SAVE_MENU);
-        new AudioManager();
+        new AudioManager(this);
     }
 
     private void initFrame() {
@@ -118,7 +118,7 @@ public class GameViewImpl implements GameView {
                 Taskbar.getTaskbar().setIconImage(image);
             }
         } catch (final UnsupportedOperationException e) {
-            e.printStackTrace();
+            notifyError("Setting icon is not supported");
         }
     }
 
