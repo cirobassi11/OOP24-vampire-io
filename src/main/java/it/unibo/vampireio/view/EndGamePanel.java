@@ -11,8 +11,8 @@ class EndGamePanel extends AbstractBasePanel {
     private final JButton returnMenuButton;
     private final JLabel scoreLabel;
 
-    EndGamePanel(final GameViewImpl view) {
-        super(view);
+    EndGamePanel(final FrameManager frameManager) {
+        super(frameManager);
 
         this.scoreLabel = this.addLabel("", 0, 0);
         this.returnMenuButton = addButton("CONTINUE", 0, 1);

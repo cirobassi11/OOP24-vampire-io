@@ -15,8 +15,8 @@ class SaveSelectionPanel extends AbstractBasePanel {
     private List<String> saves;
     private final JList<String> savesList;
 
-    SaveSelectionPanel(final GameViewImpl view) {
-        super(view);
+    SaveSelectionPanel(final FrameManager frameManager) {
+        super(frameManager);
         this.savesList = this.addScrollableList(List.of(), 0, 0);
         this.selectButton = this.addButton("SELECT", 0, 1);
         this.backButton = this.addButton("BACK", 0, 2);

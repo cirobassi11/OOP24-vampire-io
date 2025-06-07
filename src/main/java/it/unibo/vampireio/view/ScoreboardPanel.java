@@ -19,8 +19,8 @@ class ScoreboardPanel extends AbstractBasePanel {
     private List<ScoreData> scoresData;
     private List<String> scoreNames = List.of();
 
-    ScoreboardPanel(final GameViewImpl view) {
-        super(view);
+    ScoreboardPanel(final FrameManager frameManager) {
+        super(frameManager);
 
         this.scoresList = this.addScrollableList(this.scoreNames, 0, 0);
         this.scoreLabel = this.addLabel("", 0, 1);

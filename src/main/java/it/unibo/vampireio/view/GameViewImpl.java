@@ -21,19 +21,10 @@ import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.UnlockableItemData;
 
 public class GameViewImpl implements GameView {
-    private static final double ASPECT_RATIO = 16.0 / 9.0;
-
-    private static final Dimension DEFAULT_RESOLUTION = new Dimension(1280, 720);
-    private static final Dimension MIN_RESOLUTION = new Dimension(640, 360);
-    private static final String ICON_PATH = "/images/icon.png";
-
     static final String FRAME_TITLE = "Vampire.io";
 
-    private final JFrame frame;
-    private final CardLayout cardLayout;
-    private final JPanel cardPanel;
     private final Map<String, JPanel> panels = new HashMap<>();
-
+    private final FrameManager frameManager;
     private ImageManager imageManager;
     private ViewErrorListener errorListener;
 
@@ -41,93 +32,27 @@ public class GameViewImpl implements GameView {
     private Image backgroundImage;
 
     public GameViewImpl() {
-        this.frame = new JFrame(FRAME_TITLE);
-        this.cardLayout = new CardLayout();
-        this.cardPanel = new JPanel(this.cardLayout);
         this.imageManager = new ImageManager(this);
-        this.initFrame();
+        this.frameManager = new FrameManager(FRAME_TITLE, this.imageManager.getImage("background"));
+        this.initPanels();
+        this.frameManager.addPanels(this.panels);
         this.showScreen(GameViewImpl.SAVE_MENU);
         new AudioManager(this);
     }
 
-    private void initFrame() {
-        this.setIcon(GameViewImpl.ICON_PATH);
-        this.setBackgroundImage("background");
-        this.setResolution(DEFAULT_RESOLUTION);
-        this.frame.setLocationRelativeTo(null);
-        this.frame.setResizable(true);
-
-        // Blocca aspect ratio
-        this.frame.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(final ComponentEvent e) {
-                final int width = Math.max(frame.getWidth(), MIN_RESOLUTION.width);
-                final int height = Math.max((int) (width / ASPECT_RATIO), MIN_RESOLUTION.height);
-                setResolution(new Dimension(width, height));
-                for (final var panel : panels.values()) {
-                    if (panel instanceof AbstractBasePanel) {
-                        ((AbstractBasePanel) panel).updateComponentSize();
-                    }
-                }
-            }
-        });
-
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.add(this.cardPanel);
-        this.frame.setVisible(true);
-        this.frame.setFocusable(true);
-        this.frame.requestFocus();
-
-        this.initPanels();
-
-        ((GamePanel) this.panels.get(GAME)).setFocusable(true);
-        ((GamePanel) this.panels.get(GAME)).requestFocusInWindow();
-    }
-
     private void initPanels() {
-        this.panels.put(SAVE_MENU, new SaveMenuPanel(this));
-        this.panels.put(SAVE_SELECTION, new SaveSelectionPanel(this));
-        this.panels.put(START, new StartMenuPanel(this));
-        this.panels.put(SCOREBOARD, new ScoreboardPanel(this));
-        this.panels.put(CHOOSE_CHARACTER, new ChooseCharacterPanel(this));
-        this.panels.put(GAME, new GamePanel(this, this.imageManager));
-        this.panels.put(ITEM_SELECTION, new ItemSelectionPanel(this));
-        this.panels.put(END_GAME, new EndGamePanel(this));
-        this.panels.put(PAUSE, new PausePanel(this));
-        this.panels.put(SHOP, new ShopPanel(this));
-        this.panels.put(UNLOCKABLE_CHARACTERS, new UnlockableItemShopPanel(this, this.imageManager));
-        this.panels.put(UNLOCKABLE_POWERUPS, new UnlockableItemShopPanel(this, this.imageManager));
-        this.panels.forEach((name, panel) -> cardPanel.add(panel, name));
-    }
-
-    public Dimension getFrameSize() {
-        return this.currentFrameSize;
-    }
-
-    private void setResolution(final Dimension resolution) {
-        this.frame.setSize(resolution);
-        this.currentFrameSize = resolution;
-    }
-
-    private void setIcon(final String path) {
-        final Image image = new ImageIcon(getClass().getResource(path)).getImage();
-        try {
-            if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                frame.setIconImage(image);
-            } else {
-                Taskbar.getTaskbar().setIconImage(image);
-            }
-        } catch (final UnsupportedOperationException e) {
-            notifyError("Setting icon is not supported");
-        }
-    }
-
-    private void setBackgroundImage(final String path) {
-        this.backgroundImage = this.imageManager.getImage(path);
-    }
-
-    Image getBackgroundImage() {
-        return this.backgroundImage;
+        this.panels.put(SAVE_MENU, new SaveMenuPanel(this.frameManager));
+        this.panels.put(SAVE_SELECTION, new SaveSelectionPanel(this.frameManager));
+        this.panels.put(START, new StartMenuPanel(this.frameManager));
+        this.panels.put(SCOREBOARD, new ScoreboardPanel(this.frameManager));
+        this.panels.put(CHOOSE_CHARACTER, new ChooseCharacterPanel(this.frameManager));
+        this.panels.put(GAME, new GamePanel(this.frameManager, this.imageManager));
+        this.panels.put(ITEM_SELECTION, new ItemSelectionPanel(this.frameManager));
+        this.panels.put(END_GAME, new EndGamePanel(this.frameManager));
+        this.panels.put(PAUSE, new PausePanel(this.frameManager));
+        this.panels.put(SHOP, new ShopPanel(this.frameManager));
+        this.panels.put(UNLOCKABLE_CHARACTERS, new UnlockableItemShopPanel(this.frameManager, this.imageManager));
+        this.panels.put(UNLOCKABLE_POWERUPS, new UnlockableItemShopPanel(this.frameManager, this.imageManager));
     }
 
     public void quit() {
@@ -136,9 +61,8 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void update(final GameData data) {
-        final var gamePanel = (GamePanel) this.panels.get(GAME);
-        gamePanel.setData(data);
-        gamePanel.repaint();
+        ((GamePanel) panels.get(GAME)).setData(data);
+        panels.get(GAME).repaint();
     }
 
     @Override
@@ -149,7 +73,7 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void showScreen(final String name) {
-        this.cardLayout.show(this.cardPanel, name);
+        this.frameManager.showScreen(name);
     }
 
     @Override
@@ -337,11 +261,6 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void showError(final String message) {
-        javax.swing.JOptionPane.showMessageDialog(frame, message, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
-
-    @Override
     public void disableBuyButton() {
         ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS)).disableBuyButton();
         ((UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS)).disableBuyButton();
@@ -366,5 +285,10 @@ public class GameViewImpl implements GameView {
     @Override
     public void setCharacterSelectionListener(final ListSelectionListener listener) {
         ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).setCharacterSelectionListener(listener);
+    }
+
+    @Override
+    public void showError(final String message) {
+        this.frameManager.showError(message);
     }
 }

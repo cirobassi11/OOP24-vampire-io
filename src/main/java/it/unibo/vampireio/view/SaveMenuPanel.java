@@ -10,8 +10,8 @@ class SaveMenuPanel extends AbstractBasePanel {
     private final JButton loadButton;
     private final JButton quitButton;
 
-    SaveMenuPanel(final GameViewImpl view) {
-        super(view);
+    SaveMenuPanel(final FrameManager frameManager) {
+        super(frameManager);
         this.newSaveButton = this.addButton("NEW GAME", 0, 0);
         this.loadButton = this.addButton("LOAD GAME", 0, 1);
         this.quitButton = this.addButton("QUIT", 0, 2);

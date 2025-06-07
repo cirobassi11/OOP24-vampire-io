@@ -12,8 +12,8 @@ class StartMenuPanel extends AbstractBasePanel {
     private final JButton loadSaveButton;
     private final JButton quitButton;
 
-    StartMenuPanel(final GameViewImpl view) {
-        super(view);
+    StartMenuPanel(final FrameManager frameManager) {
+        super(frameManager);
 
         this.startButton = this.addButton("START", 1, 0);
         this.scoreboardButton = this.addButton("SCOREBOARD", 0, 1);

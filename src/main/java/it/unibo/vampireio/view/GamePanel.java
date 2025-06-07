@@ -56,7 +56,7 @@ class GamePanel extends JPanel {
     private static final double ENEMY_OSCILLATION_MAX_ANGLE_RAD = Math.toRadians(10);
     private static final double ENEMY_OSCILLATION_SPEED = 0.005;
 
-    private final GameViewImpl view;
+    private final FrameManager frameManager;
     private GameData data;
 
     private final ImageManager imageManager;
@@ -65,8 +65,8 @@ class GamePanel extends JPanel {
     private int currentCharacterFrame;
     private long lastCharacterFrameTime;
 
-    GamePanel(final GameViewImpl view, final ImageManager imageManager) {
-        this.view = view;
+    GamePanel(final FrameManager frameManager, final ImageManager imageManager) {
+        this.frameManager = frameManager;
         this.imageManager = imageManager;
         setFocusable(true);
     }
@@ -84,7 +84,7 @@ class GamePanel extends JPanel {
         super.paintComponent(g);
 
         final Dimension fov = this.data.getVisibleMapSizeData().getDimension();
-        final double scale = this.view.getFrameSize().getWidth() / fov.getWidth();
+        final double scale = this.frameManager.getFrameSize().getWidth() / fov.getWidth();
 
         final LivingEntityData character = this.data.getCharacterData();
         final Dimension characterDimension = new Dimension((int) (character.getRadius() * 2), (int) (character.getRadius() * 2));

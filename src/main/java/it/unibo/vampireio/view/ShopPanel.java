@@ -10,8 +10,8 @@ class ShopPanel extends AbstractBasePanel {
     private final JButton powerUpsButton;
     private final JButton backButton;
 
-    ShopPanel(final GameViewImpl view) {
-        super(view);
+    ShopPanel(final FrameManager frameManager) {
+        super(frameManager);
 
         this.charactersButton = this.addButton("CHARACTERS", 0, 0);
         this.powerUpsButton = this.addButton("POWERUPS", 0, 1);

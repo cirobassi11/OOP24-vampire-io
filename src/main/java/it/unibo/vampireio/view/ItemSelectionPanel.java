@@ -14,8 +14,8 @@ class ItemSelectionPanel extends AbstractBasePanel {
     private final JButton chooseItemButton;
     private final JList<String> itemList;
 
-    ItemSelectionPanel(final GameViewImpl view) {
-        super(view);
+    ItemSelectionPanel(final FrameManager frameManager) {
+        super(frameManager);
 
         this.chooseItemButton = this.addButton("CHOOSE", 0, 1);
         this.itemList = this.addScrollableList(List.of(), 0, 0);

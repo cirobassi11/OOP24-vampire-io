@@ -55,11 +55,11 @@ abstract class AbstractBasePanel extends JPanel {
     protected static final int SCROLL_WIDTH_RATIO = 5;
     protected static final int SCROLL_HEIGHT_RATIO = 5;
 
-    private final GameViewImpl view;
+    private final FrameManager frameManager;
     private final List<Component> allComponents = new LinkedList<>();
 
-    AbstractBasePanel(final GameViewImpl view) {
-        this.view = view;
+    AbstractBasePanel(final FrameManager frameManager) {
+        this.frameManager = frameManager;
         this.setLayout(new GridBagLayout());
         this.setOpaque(false);
     }
@@ -68,7 +68,7 @@ abstract class AbstractBasePanel extends JPanel {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         this.updateComponentSize();
-        g.drawImage(this.view.getBackgroundImage(), 0, 0, this.getWidth(), this.getHeight(), this);
+        g.drawImage(this.frameManager.getBackgroundImage(), 0, 0, this.getWidth(), this.getHeight(), this);
     }
 
     private void addComponent(final Component component, final int gridx, final int gridy) {
@@ -150,7 +150,7 @@ abstract class AbstractBasePanel extends JPanel {
     }
 
     void updateComponentSize() {
-        final Dimension frameSize = this.view.getFrameSize();
+        final Dimension frameSize = this.frameManager.getFrameSize();
 
         for (final Component c : allComponents) {
             if (c instanceof JButton) {

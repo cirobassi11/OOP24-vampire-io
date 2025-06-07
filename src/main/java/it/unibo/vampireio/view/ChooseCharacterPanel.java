@@ -15,8 +15,8 @@ class ChooseCharacterPanel extends AbstractBasePanel {
     private JButton backButton;
     private JList<String> charactersList;
 
-    ChooseCharacterPanel(final GameViewImpl view) {
-        super(view);
+    ChooseCharacterPanel(final FrameManager frameManager) {
+        super(frameManager);
 
         this.charactersList = this.addScrollableList(this.characterNames, 0, 0);
         this.confirmButton = this.addButton("CONFIRM", 0, 1);
