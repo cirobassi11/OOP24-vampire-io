@@ -51,4 +51,14 @@ public class CollisionManager {
         }
         return false;
     }
+
+    static boolean checkAttackCollisions(Attack attack, List<Enemy> enemies) {
+        for (Enemy enemy : enemies) {
+            if (attack.isColliding(enemy)) {
+                attack.onCollision(enemy);
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -19,7 +19,7 @@
       "id": "powerups/speed",
       "name": "Projectile Speed",
       "description": "Increase projectile movement speed",
-      "price": 10,
+      "price": 15,
       "maxLevel": 5,
       "statToModify": "SPEED"
     },
@@ -27,7 +27,7 @@
       "id": "powerups/movespeed",
       "name": "Movement Speed",
       "description": "Increase character movement speed",
-      "price": 10,
+      "price": 5,
       "maxLevel": 3,
       "statToModify": "MOVE_SPEED"
     },
@@ -43,7 +43,7 @@
       "id": "powerUps/cooldown",
       "name": "Cooldown",
       "description": "Decrease time between the shots",
-      "price": 10,
+      "price": 15,
       "maxLevel": 3,
       "statToModify": "COOLDOWN"
     }

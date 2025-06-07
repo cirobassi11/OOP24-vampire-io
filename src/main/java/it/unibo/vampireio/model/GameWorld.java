@@ -1,24 +1,19 @@
 package it.unibo.vampireio.model;
 
-import it.unibo.vampireio.controller.GameController;
 import java.awt.geom.Point2D;
 import java.awt.Dimension;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import javax.swing.text.html.parser.Entity;
 import java.util.Collection;
-import java.util.Iterator;
 
 public class GameWorld implements GameModel {
-    private static final int LEVELUP_CHOICES = 3;
 
     private ModelErrorListener errorListener;
 
     private boolean isGameOver;
     private Score score;
-    private WeaponRandomizer weaponRandomizer;
 
     private ConfigData configData;
 

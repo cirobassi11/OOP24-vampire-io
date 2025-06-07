@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.awt.geom.Point2D;
 import static org.junit.jupiter.api.Assertions.*;
 
-class LivingEntityTest {
+class TestLiving {
 
     private AbstractLivingEntity entity;
 

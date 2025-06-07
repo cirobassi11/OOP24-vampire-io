@@ -2,11 +2,9 @@ package it.unibo.vampireio.view;
 
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
-
 import it.unibo.vampireio.controller.ScoreData;
 
 class ScoreboardPanel extends AbstractBasePanel {

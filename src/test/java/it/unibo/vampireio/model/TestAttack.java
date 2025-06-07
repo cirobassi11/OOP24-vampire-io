@@ -2,21 +2,18 @@ package it.unibo.vampireio.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.awt.geom.Point2D;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class AbstractAttackTest {
+class TestAttack {
 
-    private TestAttack attack;
+    private TestAttackImpl attack;
 
-    // Classe concreta per testare AbstractAttack
-    private static class TestAttack extends AbstractAttack {
+    private static class TestAttackImpl extends AbstractAttack {
 
         private long totalUpdateCalled;
 
-        public TestAttack(
+        public TestAttackImpl(
                 final String id,
                 final Point2D.Double position,
                 final double radius,
@@ -34,7 +31,8 @@ class AbstractAttackTest {
         }
 
         @Override
-        public void onCollision(Collidable collidable) { }
+        public void onCollision(Collidable collidable) {
+        }
 
         public long getTotalUpdateCalled() {
             return totalUpdateCalled;
@@ -43,7 +41,7 @@ class AbstractAttackTest {
 
     @BeforeEach
     void setUp() {
-        attack = new TestAttack(
+        attack = new TestAttackImpl(
                 "test_attack",
                 new Point2D.Double(0, 0),
                 1.0,
@@ -51,8 +49,7 @@ class AbstractAttackTest {
                 1.0,
                 10,
                 1000L,
-                null
-        );
+                null);
     }
 
     @Test

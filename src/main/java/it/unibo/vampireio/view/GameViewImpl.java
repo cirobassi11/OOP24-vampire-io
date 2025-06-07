@@ -143,14 +143,17 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setUnlockableItemShopPanelListener(final ActionListener buyItemListener,
-            final ListSelectionListener listSelectionListener, final ActionListener backListener) {
+    public void setUnlockableItemShopPanelListener(
+            final ActionListener buyCharacterListener,
+            final ActionListener buyPowerUpListener,
+            final ListSelectionListener listSelectionListener,
+            final ActionListener backListener) {
         ListenerBinder.bindUnlockableItemShopPanelListener(
                 (UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_CHARACTERS),
-                buyItemListener, listSelectionListener, backListener);
+                buyCharacterListener, listSelectionListener, backListener);
         ListenerBinder.bindUnlockableItemShopPanelListener(
                 (UnlockableItemShopPanel) this.panels.get(UNLOCKABLE_POWERUPS),
-                buyItemListener, listSelectionListener, backListener);
+                buyPowerUpListener, listSelectionListener, backListener);
 
     }
 

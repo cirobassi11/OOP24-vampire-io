@@ -2,7 +2,7 @@
     {
         "id": "attacks/magicWand",
         "radius": 5.0,
-        "speed": 3.0,
+        "speed": 2.0,
         "damage": 50,
         "duration": 5000
     },

@@ -5,8 +5,10 @@ import java.util.Random;
 
 public class Coin extends AbstractCollectibleItem {
 
+    private static final int COIN_VALUE = 1;
+
     protected Coin(final Double position) {
-        super("collectibles/coin", position, new Random().nextInt(9) + 1);
+        super("collectibles/coin", position, COIN_VALUE);
     }
 
     @Override

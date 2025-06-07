@@ -28,12 +28,7 @@ public class KnifeAttack extends AbstractAttack {
 
     @Override
     protected void update(long tickTime) {
-        for (Enemy enemy : entityManager.getEnemies()) {
-            if (this.getDistance(enemy) <= enemy.getRadius()) {
-                this.onCollision(enemy);
-                break;
-            }
-        }
+        CollisionManager.checkAttackCollisions(this, this.entityManager.getEnemies());
         this.move(tickTime);
     }
     

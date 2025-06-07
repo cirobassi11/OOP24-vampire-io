@@ -1,9 +1,7 @@
 package it.unibo.vampireio.model;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.awt.geom.Point2D;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -77,7 +77,8 @@ public interface GameView {
         public void setItemSelectionPanelListener(final ActionListener chooseItemListener);
 
         public void setUnlockableItemShopPanelListener(
-                        final ActionListener buyItemListener,
+                        final ActionListener buyCharacterListener,
+                        final ActionListener buyPowerUpListener,
                         final ListSelectionListener listSelectionListener,
                         final ActionListener backListener);
 

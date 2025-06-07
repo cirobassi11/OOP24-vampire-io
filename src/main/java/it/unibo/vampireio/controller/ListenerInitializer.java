@@ -182,8 +182,6 @@ public final class ListenerInitializer {
             }
         };
 
-        view.setUnlockableItemShopPanelListener(setBuyCharactersListener, setListSelectionListener, backListener);
-
         // BUY POWERUPS
         ActionListener setBuyPowerUpsListener = e -> {
             String powerUp = view.getSelectedPowerUp();
@@ -198,9 +196,8 @@ public final class ListenerInitializer {
             }
         };
 
-        view.setUnlockableItemShopPanelListener(setBuyPowerUpsListener, setListSelectionListener, backListener);
-
-        view.setUnlockableItemShopPanelListener(setBuyCharactersListener, setListSelectionListener, backListener);
+        view.setUnlockableItemShopPanelListener(setBuyCharactersListener, setBuyPowerUpsListener,
+                setListSelectionListener, backListener);
 
         // PAUSE MENU
         ActionListener setResumeListener = e -> {

@@ -11,7 +11,6 @@ import java.awt.Image;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-
 import javax.swing.JPanel;
 import it.unibo.vampireio.controller.GameData;
 import it.unibo.vampireio.controller.ItemData;

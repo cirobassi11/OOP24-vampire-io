@@ -1,7 +1,6 @@
 package it.unibo.vampireio.view;
 
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 
 class PausePanel extends AbstractBasePanel {

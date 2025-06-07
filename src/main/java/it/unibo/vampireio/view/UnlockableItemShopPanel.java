@@ -1,7 +1,6 @@
 package it.unibo.vampireio.view;
 
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -31,8 +30,6 @@ class UnlockableItemShopPanel extends AbstractBasePanel {
     UnlockableItemShopPanel(final FrameManager frameManager, final ImageManager imageManager) {
         super(frameManager);
         this.imageManager = imageManager;
-
-        final List<String> powerUpNames = List.of();
 
         this.coinsLabel = this.addLabel("", 0, 0);
         this.itemsList = this.addScrollableList(this.itemsNames, 0, 1);
