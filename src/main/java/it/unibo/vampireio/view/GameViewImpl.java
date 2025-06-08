@@ -1,17 +1,11 @@
 package it.unibo.vampireio.view;
 
-import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.Taskbar;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionListener;
 import it.unibo.vampireio.controller.GameData;
@@ -20,7 +14,12 @@ import it.unibo.vampireio.controller.ItemData;
 import it.unibo.vampireio.controller.ScoreData;
 import it.unibo.vampireio.controller.UnlockableItemData;
 
-public class GameViewImpl implements GameView {
+/**
+ * The GameViewImpl class implements the GameView interface, providing the
+ * functionality to manage different panels in the game view, handle user
+ * interactions, and update the game state.
+ */
+public final class GameViewImpl implements GameView {
     static final String FRAME_TITLE = "Vampire.io";
 
     private final Map<String, JPanel> panels = new HashMap<>();
@@ -31,6 +30,10 @@ public class GameViewImpl implements GameView {
     private Dimension currentFrameSize;
     private Image backgroundImage;
 
+    /**
+     * Constructs a new GameViewImpl instance, initializing the image manager,
+     * frame manager, and panels.
+     */
     public GameViewImpl() {
         this.imageManager = new ImageManager(this);
         this.frameManager = new FrameManager(FRAME_TITLE, this.imageManager.getImage("background"));
@@ -162,10 +165,6 @@ public class GameViewImpl implements GameView {
         ListenerBinder.bindGamePanelListener((GamePanel) this.panels.get(GAME), inputHandler);
     }
 
-    public void quit() {
-        System.exit(0);
-    }
-
     @Override
     public void update(final GameData data) {
         ((GamePanel) panels.get(GAME)).setData(data);
@@ -184,7 +183,7 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setViewErrorListener(ViewErrorListener listener) {
+    public void setViewErrorListener(final ViewErrorListener listener) {
         this.errorListener = listener;
     }
 
