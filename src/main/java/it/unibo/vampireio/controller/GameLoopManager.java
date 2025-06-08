@@ -6,7 +6,12 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.util.stream.Collectors;
 
-public class GameLoopManager {
+/**
+ * Manages the game loop, handling updates to the game model and view.
+ * It runs in a separate thread and processes input from the user.
+ * The loop continues until the game is stopped or paused.
+ */
+public final class GameLoopManager {
 
     private static final int UPDATE_RATE = 60;
 
@@ -15,17 +20,37 @@ public class GameLoopManager {
     private final InputHandler inputHandler;
     private final InputProcessor inputProcessor;
 
-    private boolean running = false;
-    private boolean paused = false;
+    private boolean running;
+    private boolean paused;
 
-    public GameLoopManager(GameModel model, GameView view, InputHandler inputHandler, InputProcessor inputProcessor) {
+    /**
+     * Constructs a GameLoopManager with the specified model, view, input handler, and input processor.
+     *
+     * @param model          the game model to manage
+     * @param view           the game view to update
+     * @param inputHandler   the input handler to process user inputs
+     * @param inputProcessor the input processor to compute movement directions
+     */
+    public GameLoopManager(
+            final GameModel model,
+            final GameView view,
+            final InputHandler inputHandler,
+            final InputProcessor inputProcessor
+        ) {
         this.model = model;
         this.view = view;
         this.inputHandler = inputHandler;
         this.inputProcessor = inputProcessor;
     }
 
-    public boolean startGame(String selectedCharacter) {
+    /**
+     * Starts the game loop with the selected character.
+     * Initializes the game model and starts the game loop in a new thread.
+     *
+     * @param selectedCharacter the character to start the game with
+     * @return true if the game started successfully, false otherwise
+     */
+    public boolean startGame(final String selectedCharacter) {
         if (!this.model.initGame(selectedCharacter)) {
             return false;
         }
@@ -38,26 +63,42 @@ public class GameLoopManager {
         return true;
     }
 
+    /**
+     * Pauses the game loop, clearing any pressed keys.
+     * The game can be resumed later.
+     */
     public void pause() {
         inputHandler.clearPressedKeys();
         paused = true;
     }
 
+    /**
+     * Resumes the game loop if it was paused.
+     * The game continues from where it was paused.
+     */
     public void resume() {
         paused = false;
     }
 
+    /**
+     * Stops the game loop, ending the game.
+     */
     public void stop() {
         running = false;
     }
 
+    /**
+     * The main game loop that updates the game model and view.
+     * It checks for user inputs, updates the game state, and renders the view.
+     * The loop runs at a fixed update rate and continues until the game is over or paused.
+     */
     private void runGameLoop() {
         final long updateInterval = 1000 / UPDATE_RATE;
         long lastUpdateTime = System.currentTimeMillis();
 
         while (running) {
-            long currentTime = System.currentTimeMillis();
-            long elapsed = currentTime - lastUpdateTime;
+            final long currentTime = System.currentTimeMillis();
+            final long elapsed = currentTime - lastUpdateTime;
 
             if (elapsed >= updateInterval) {
                 if (this.model.isGameOver()) {
@@ -82,7 +123,7 @@ public class GameLoopManager {
                 }
 
                 if (!paused) {
-                    Point2D.Double direction = inputProcessor.computeDirection();
+                    final Point2D.Double direction = inputProcessor.computeDirection();
                     this.model.update(updateInterval, direction);
                     view.update(DataBuilder.getData(this.model));
                 }
@@ -92,7 +133,7 @@ public class GameLoopManager {
 
             try {
                 Thread.sleep(1);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
             }

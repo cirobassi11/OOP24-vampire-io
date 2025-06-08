@@ -6,10 +6,15 @@ import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
-public class InputHandler {
+/**
+ * InputHandler is responsible for managing keyboard input in the game.
+ * It sets up key bindings for movement and actions, tracks pressed keys,
+ * and provides methods to check if a key is pressed or to clear the pressed keys.
+ */
+public final class InputHandler {
     private final Set<Integer> pressedKeys = new HashSet<>();
 
-    public void setupKeyBindings(JComponent component) {
+    public void setupKeyBindings(final JComponent component) {
         int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
         InputMap inputMap = component.getInputMap(condition);
         ActionMap actionMap = component.getActionMap();
@@ -44,7 +49,7 @@ public class InputHandler {
         }
     }
 
-    public boolean isKeyPressed(int keyCode) {
+    public boolean isKeyPressed(final int keyCode) {
         return this.pressedKeys.contains(keyCode);
     }
 

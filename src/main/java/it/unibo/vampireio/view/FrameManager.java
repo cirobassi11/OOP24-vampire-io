@@ -12,7 +12,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class FrameManager {
+/**
+ * FrameManager is responsible for managing the main application frame,
+ * including setting up the layout, adding panels, and handling resizing.
+ */
+public final class FrameManager {
     private static final double ASPECT_RATIO = 16.0 / 9.0;
     private static final Dimension DEFAULT_RESOLUTION = new Dimension(1280, 720);
     private static final Dimension MIN_RESOLUTION = new Dimension(640, 360);
@@ -24,7 +28,13 @@ public class FrameManager {
     private Dimension currentFrameSize;
     private Image backgroundImage;
 
-    public FrameManager(final String title, Image backgroundImage) {
+    /**
+     * Constructs a FrameManager with the specified title and background image.
+     *
+     * @param title          the title of the frame
+     * @param backgroundImage the background image for the frame
+     */
+    public FrameManager(final String title, final Image backgroundImage) {
         this.frame = new JFrame(title);
         this.backgroundImage = backgroundImage;
         this.cardLayout = new CardLayout();
@@ -46,11 +56,11 @@ public class FrameManager {
 
         this.frame.addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e) {
-                int width = Math.max(frame.getWidth(), MIN_RESOLUTION.width);
-                int height = Math.max((int) (width / ASPECT_RATIO), MIN_RESOLUTION.height);
+            public void componentResized(final ComponentEvent e) {
+                final int width = Math.max(frame.getWidth(), MIN_RESOLUTION.width);
+                final int height = Math.max((int) (width / ASPECT_RATIO), MIN_RESOLUTION.height);
                 setResolution(new Dimension(width, height));
-                for (Component comp : cardPanel.getComponents()) {
+                for (final Component comp : cardPanel.getComponents()) {
                     if (comp instanceof AbstractBasePanel basePanel) {
                         basePanel.updateComponentSize();
                     }
@@ -59,16 +69,21 @@ public class FrameManager {
         });
     }
 
-    public void addPanels(Map<String, JPanel> panels) {
+    /**
+     * Adds panels to the card layout.
+     *
+     * @param panels a map of panel names to JPanel instances
+     */
+    public void addPanels(final Map<String, JPanel> panels) {
         panels.forEach(this.cardPanel::add);
     }
 
-    private void setResolution(Dimension resolution) {
+    private void setResolution(final Dimension resolution) {
         frame.setSize(resolution);
         this.currentFrameSize = resolution;
     }
 
-    private void setIcon(String path) {
+    private void setIcon(final String path) {
         final Image image = new ImageIcon(getClass().getResource(path)).getImage();
         try {
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
@@ -76,29 +91,43 @@ public class FrameManager {
             } else {
                 Taskbar.getTaskbar().setIconImage(image);
             }
-        } catch (UnsupportedOperationException e) { }
+        } catch (final UnsupportedOperationException e) {
+            // Taskbar is not supported on this platform, do nothing
+        }
     }
 
-    public void showScreen(String name) {
+    /**
+     * Shows the specified screen by its name.
+     *
+     * @param name the name of the screen to show
+     */
+    public void showScreen(final String name) {
         this.cardLayout.show(cardPanel, name);
     }
 
-    public void showError(String message) {
+    /**
+     * Shows an error message dialog.
+     *
+     * @param message the error message to display
+     */
+    public void showError(final String message) {
         javax.swing.JOptionPane.showMessageDialog(this.frame, message, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
+    /**
+     * Returns the current size of the frame.
+     *
+     * @return the current frame size
+     */
     public Dimension getFrameSize() {
         return this.currentFrameSize;
     }
 
-    public JPanel getCardPanel() {
-        return this.cardPanel;
-    }
-
-    public JFrame getFrame() {
-        return this.frame;
-    }
-
+    /**
+     * Returns the background image of the frame.
+     *
+     * @return the background image
+     */
     public Image getBackgroundImage() {
         return this.backgroundImage;
     }

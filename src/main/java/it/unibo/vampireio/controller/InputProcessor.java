@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 
-public class InputProcessor {
+public final class InputProcessor {
 
     private final InputHandler inputHandler;
 

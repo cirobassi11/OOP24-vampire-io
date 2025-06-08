@@ -31,28 +31,30 @@ class UnlockableItemShopPanel extends AbstractBasePanel {
         super(frameManager);
         this.imageManager = imageManager;
 
+        int gridy = 0;
+
         this.coinsLabel = this.addLabel("", 0, 0);
-        this.itemsList = this.addScrollableList(this.itemsNames, 0, 1);
-        this.iconLabel = this.addImage(new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB)), 0, 2);
-        this.descriptionLabel = this.addLabel(" ", 0, 3);
-        this.priceLabel = this.addLabel(" ", 0, 4);
-        this.buyButton = this.addButton("BUY", 0, 5);
-        this.backButton = this.addButton("BACK", 0, 6);
+        this.itemsList = this.addScrollableList(this.itemsNames, 0, ++gridy);
+        this.iconLabel = this.addImage(new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB)), 0, ++gridy);
+        this.descriptionLabel = this.addLabel(" ", 0, ++gridy);
+        this.priceLabel = this.addLabel(" ", 0, ++gridy);
+        this.buyButton = this.addButton("BUY", 0, ++gridy);
+        this.backButton = this.addButton("BACK", 0, ++gridy);
         this.buyButton.setEnabled(false);
     }
 
-    void setUnlockableItemData(final List<UnlockableItemData> unlockableItemsData) {
-        this.unlockableItemsData = unlockableItemsData;
+    void setUnlockableItemData(final List<UnlockableItemData> itemsData) {
         this.itemsNames = List.of();
 
-        if (unlockableItemsData != null && !unlockableItemsData.isEmpty()) {
-            this.itemsNames = unlockableItemsData.stream()
+        if (itemsData != null && !itemsData.isEmpty()) {
+            this.itemsNames = itemsData.stream()
                     .map(item -> item.getName() + ((item.getMaxLevel() != 0) ? (" ["
                             + item.getCurrentLevel() + "/"
                             + item.getMaxLevel() + "]") : ""))
                     .toList();
         }
 
+        this.unlockableItemsData = itemsData;
         this.itemsList.setListData(this.itemsNames.toArray(new String[0]));
         this.itemsList.addListSelectionListener(e -> itemInfo());
     }

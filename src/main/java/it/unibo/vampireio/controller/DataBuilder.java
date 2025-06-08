@@ -12,8 +12,22 @@ import it.unibo.vampireio.model.Character;
 import it.unibo.vampireio.model.Collectible;
 import it.unibo.vampireio.model.Enemy;
 
-public class DataBuilder {
+/**
+ * Utility class that constructs various data objects
+ * from the GameModel, such as GameData, ScoreData, and others.
+ * It provides methods to get game information in a structured format.
+ */
+public final class DataBuilder {
 
+    private DataBuilder() {
+    }
+
+    /**
+     * Constructs a GameData object from the provided GameModel.
+     *
+     * @param model the game model containing the current game state
+     * @return a GameData object representing the current game state
+     */
     public static GameData getData(final GameModel model) {
         final Dimension visualSize = model.getVisualSize();
         final Character character = model.getCharacter();
@@ -86,6 +100,12 @@ public class DataBuilder {
         );
     }
 
+    /**
+     * Gets the scores from the current save in the game model.
+     *
+     * @param model the game model containing the current game state
+     * @return a list of ScoreData objects representing the scores
+     */
     public static List<ScoreData> getScores(final GameModel model) {
         final Save currentSave = model.getCurrentSave();
         if (currentSave == null) {
@@ -103,6 +123,12 @@ public class DataBuilder {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Gets the current score from the game model.
+     *
+     * @param model the game model containing the current game state
+     * @return a ScoreData object representing the current score
+     */
     public static ScoreData getCurrentScore(final GameModel model) {
         final Score score = model.exitGame();
         return new ScoreData(

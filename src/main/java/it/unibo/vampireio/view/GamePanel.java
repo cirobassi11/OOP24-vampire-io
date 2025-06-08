@@ -48,6 +48,7 @@ class GamePanel extends JPanel {
     private static final int TIMER_Y_EXTRA_OFFSET = 20;
 
     private static final String LEFT_DIRECTION = "l";
+    private static final String RIGHT_DIRECTION = "r";
 
     private static final Color TRANSLUCENT_WHITE = new Color(255, 255, 255, 150);
     private static final Color TRANSLUCENT_RED = new Color(255, 0, 0, 150);
@@ -172,7 +173,7 @@ class GamePanel extends JPanel {
                 final int enemyWidth = (int) (enemyDimension.width * scale);
                 final int enemyHeight = (int) (enemyDimension.height * scale);
 
-                final String directionSuffix = enemy.getDirection().getX() <= 0 ? "l" : "r";
+                final String directionSuffix = enemy.getDirection().getX() <= 0 ? LEFT_DIRECTION : RIGHT_DIRECTION;
                 final Image tile = this.imageManager.getImage(enemy.getId() + "/" + directionSuffix);
 
                 if (tile != null) {
@@ -211,11 +212,11 @@ class GamePanel extends JPanel {
 
         String directionSuffix = "_";
         if (character.getDirection().getX() < 0) {
-            directionSuffix += "l";
-            this.lastCharacterDirection = "l";
+            directionSuffix += LEFT_DIRECTION;
+            this.lastCharacterDirection = LEFT_DIRECTION;
         } else if (character.getDirection().getX() > 0) {
-            directionSuffix += "r";
-            this.lastCharacterDirection = "r";
+            directionSuffix += RIGHT_DIRECTION;
+            this.lastCharacterDirection = RIGHT_DIRECTION;
         } else {
             directionSuffix += this.lastCharacterDirection;
         }

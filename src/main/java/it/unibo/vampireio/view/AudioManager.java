@@ -17,7 +17,7 @@ class AudioManager {
         try {
             final InputStream backingTrackStream = getClass().getResourceAsStream(audioPath + "soundtrack.wav");
             final AudioInputStream backingTrackAudio = AudioSystem.getAudioInputStream(backingTrackStream);
-            Clip backingTrack = AudioSystem.getClip();
+            final Clip backingTrack = AudioSystem.getClip();
             backingTrack.open(backingTrackAudio);
 
             final FloatControl volume = (FloatControl) backingTrack.getControl(FloatControl.Type.MASTER_GAIN);

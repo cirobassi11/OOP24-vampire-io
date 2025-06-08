@@ -5,7 +5,10 @@ import it.unibo.vampireio.model.GameWorld;
 import it.unibo.vampireio.view.GameView;
 import it.unibo.vampireio.view.GameViewImpl;
 
-public class GameControllerImpl implements GameController {
+/**
+ * Implementation of the GameController interface.
+ */
+public final class GameControllerImpl implements GameController {
 
     private final GameModel model;
     private final GameView view;
@@ -14,6 +17,11 @@ public class GameControllerImpl implements GameController {
     private final ScreenManager screenManager;
     private final GameLoopManager gameLoopManager;
 
+    /**
+     * Constructs a GameControllerImpl instance, initializing the model, view, input handler,
+     * input processor, screen manager, and game loop manager.
+     * It also sets up error listeners for the model and view to handle error messages.
+     */
     public GameControllerImpl() {
         this.view = new GameViewImpl();
         this.model = new GameWorld();

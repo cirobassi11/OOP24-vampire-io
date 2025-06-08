@@ -11,7 +11,6 @@ class SaveSelectionPanel extends AbstractBasePanel {
     private final JButton selectButton;
     private final JButton backButton;
 
-    private List<String> saves;
     private final JList<String> savesList;
 
     SaveSelectionPanel(final FrameManager frameManager) {
@@ -30,8 +29,7 @@ class SaveSelectionPanel extends AbstractBasePanel {
     }
 
     void updateSavesList(final List<String> saves) {
-        this.saves = saves;
-        this.savesList.setListData(this.saves.toArray(new String[0]));
+        this.savesList.setListData(saves.toArray(new String[0]));
     }
 
     public String getSelectedSave() {

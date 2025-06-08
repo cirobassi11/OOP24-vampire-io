@@ -5,11 +5,9 @@ import it.unibo.vampireio.model.Unlockable;
 import it.unibo.vampireio.model.UnlockableCharacter;
 import it.unibo.vampireio.model.Score;
 import it.unibo.vampireio.view.GameView;
-
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.swing.event.ListSelectionListener;
 
 public final class ListenerInitializer {
