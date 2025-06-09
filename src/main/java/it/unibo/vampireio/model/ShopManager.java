@@ -8,14 +8,14 @@ import java.util.Map;
 public class ShopManager {
     private final SaveManager saveManager;
 
-    public ShopManager(SaveManager saveManager) {
+    public ShopManager(final SaveManager saveManager) {
         this.saveManager = saveManager;
     }
 
-    public boolean buyCharacter(String characterId) {
-        Save currentSave = saveManager.getCurrentSave();
-        UnlockableCharacter character = this.getLockedCharacters().stream()
-                .filter(c -> c.getId().equals(characterId))
+    public boolean buyCharacter(final String characterID) {
+        final Save currentSave = saveManager.getCurrentSave();
+        final UnlockableCharacter character = this.getLockedCharacters().stream()
+                .filter(c -> c.getId().equals(characterID))
                 .findFirst()
                 .orElse(null);
         if (character == null || !canAfford(currentSave, character.getPrice())) {
@@ -25,9 +25,9 @@ public class ShopManager {
         return purchaseCharacter(currentSave, character);
     }
 
-    public boolean buyPowerUp(String powerUpID) {
-        Save currentSave = saveManager.getCurrentSave();
-        UnlockablePowerUp powerUp = DataLoader.getInstance().getPowerUpLoader().get(powerUpID).orElse(null);
+    public boolean buyPowerUp(final String powerUpID) {
+        final Save currentSave = saveManager.getCurrentSave();
+        final UnlockablePowerUp powerUp = DataLoader.getInstance().getPowerUpLoader().get(powerUpID).orElse(null);
 
         if (powerUp == null || !canAfford(currentSave, powerUp.getPrice())) {
             return false;
@@ -36,18 +36,18 @@ public class ShopManager {
         return purchasePowerUp(currentSave, powerUp);
     }
 
-    private boolean canAfford(Save save, int price) {
+    private boolean canAfford(final Save save, final int price) {
         return save.getMoneyAmount() >= price;
     }
 
-    private boolean purchaseCharacter(Save save, UnlockableCharacter character) {
+    private boolean purchaseCharacter(final Save save, final UnlockableCharacter character) {
         save.incrementMoneyAmount(-character.getPrice());
         save.addUnlockedCharacter(character);
         saveManager.saveCurrentSave();
         return true;
     }
 
-    private boolean purchasePowerUp(Save save, UnlockablePowerUp powerUp) {
+    private boolean purchasePowerUp(final Save save, final UnlockablePowerUp powerUp) {
         if (!powerUp.enhance()) {
             return false;
         }
@@ -58,7 +58,7 @@ public class ShopManager {
     }
 
     public List<UnlockableCharacter> getChoosableCharacters() {
-        List<UnlockableCharacter> unlockedCharacters = this.saveManager.getCurrentSave()
+        final List<UnlockableCharacter> unlockedCharacters = this.saveManager.getCurrentSave()
                 .getUnlockedCharacters().stream()
                 .map(id -> DataLoader.getInstance().getCharacterLoader().get(id).get())
                 .toList();
@@ -66,24 +66,24 @@ public class ShopManager {
     }
 
     public List<UnlockableCharacter> getLockedCharacters() {
-        List<UnlockableCharacter> unlockedCharacters = this.getChoosableCharacters();
-        List<UnlockableCharacter> unlockableCharacters = DataLoader.getInstance().getCharacterLoader().getAll();
+        final List<UnlockableCharacter> unlockedCharacters = this.getChoosableCharacters();
+        final List<UnlockableCharacter> unlockableCharacters = DataLoader.getInstance().getCharacterLoader().getAll();
 
-        List<String> unlockedIds = unlockedCharacters.stream()
+        final List<String> unlockedIds = unlockedCharacters.stream()
                 .map(UnlockableCharacter::getId)
                 .toList();
 
-        List<UnlockableCharacter> lockedCharacters = unlockableCharacters.stream()
+        final List<UnlockableCharacter> lockedCharacters = unlockableCharacters.stream()
                 .filter(c -> !unlockedIds.contains(c.getId()))
                 .toList();
         return List.copyOf(lockedCharacters);
     }
 
     public List<UnlockablePowerUp> getUnlockablePowerUps() {
-        List<UnlockablePowerUp> unlockablePowerUps = DataLoader.getInstance().getPowerUpLoader().getAll();
-        Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
+        final List<UnlockablePowerUp> unlockablePowerUps = DataLoader.getInstance().getPowerUpLoader().getAll();
+        final Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
 
-        List<UnlockablePowerUp> levelAdjustedPowerUps = unlockablePowerUps.stream()
+        final List<UnlockablePowerUp> levelAdjustedPowerUps = unlockablePowerUps.stream()
                 .peek(p -> p.setCurrentLevel(unlockedPowerUps.getOrDefault(p.getId(), 0)))
                 .toList();
         return levelAdjustedPowerUps;

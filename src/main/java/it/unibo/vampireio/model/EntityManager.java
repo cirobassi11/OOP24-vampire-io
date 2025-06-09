@@ -3,10 +3,7 @@ package it.unibo.vampireio.model;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.awt.Dimension;
 import java.awt.geom.Point2D;
 
 public class EntityManager {
@@ -31,13 +28,13 @@ public class EntityManager {
         this.saveManager = saveManager;
         this.enemySpawner = new EnemySpawner(this, this.config.getMaxGameDuration());
 
-        Stats stats = applyBuffs(selectedCharacter.getCharacterStats());
+        final Stats stats = applyBuffs(selectedCharacter.getCharacterStats());
 
-        WeaponData defaultWeaponData = DataLoader.getInstance().getWeaponLoader()
+        final WeaponData defaultWeaponData = DataLoader.getInstance().getWeaponLoader()
                 .get(selectedCharacter.getDefaultWeapon()).get();
-        AbstractAttackFactory attackFactory = this.getAttackFactory(defaultWeaponData.getId());
+        final AbstractAttackFactory attackFactory = this.getAttackFactory(defaultWeaponData.getId());
 
-        Weapon defaultWeapon = new WeaponImpl(this,
+        final Weapon defaultWeapon = new WeaponImpl(this,
                 defaultWeaponData.getId(),
                 (long) (defaultWeaponData.getDefaultCooldown() * (2 - stats.getStat(StatType.COOLDOWN))),
                 defaultWeaponData.getDefaultAttacksPerCooldown(),
@@ -57,23 +54,23 @@ public class EntityManager {
         this.levelUpManager = new LevelUpManager(this, this.weaponRandomizer);
     }
 
-    private Stats applyBuffs(Stats baseStats) {
-        Stats modifiedStats = new Stats(baseStats);
-        Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
-        for (String powerUpID : unlockedPowerUps.keySet()) {
-            int level = unlockedPowerUps.get(powerUpID);
-            UnlockablePowerUp powerUp = DataLoader.getInstance().getPowerUpLoader().get(powerUpID).orElse(null);
+    private Stats applyBuffs(final Stats baseStats) {
+        final Stats modifiedStats = new Stats(baseStats);
+        final Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
+        for (final String powerUpID : unlockedPowerUps.keySet()) {
+            final int level = unlockedPowerUps.get(powerUpID);
+            final UnlockablePowerUp powerUp = DataLoader.getInstance().getPowerUpLoader().get(powerUpID).orElse(null);
             if (powerUp != null) {
                 powerUp.setCurrentLevel(level);
-                double multiplier = powerUp.getMultiplier();
-                StatType stat = powerUp.getStatToModify();
+                final double multiplier = powerUp.getMultiplier();
+                final StatType stat = powerUp.getStatToModify();
                 modifiedStats.multiplyStat(stat, multiplier);
             }
         }
         return modifiedStats;
     }
 
-    AbstractAttackFactory getAttackFactory(String weaponID) {
+    AbstractAttackFactory getAttackFactory(final String weaponID) {
         return switch (weaponID) {
             case "weapons/magicWand" -> new MagicWandFactory(this);
             case "weapons/santaWater" -> new SantaWaterFactory(this);
@@ -101,23 +98,23 @@ public class EntityManager {
     }
 
     private void updateEnemies(final long tickTime) {
-        for (Enemy enemy : enemies) {
+        for (final Enemy enemy : enemies) {
             this.updateEnemy(enemy, tickTime);
         }
     }
 
-    private void updateEnemy(Enemy enemy, long tickTime) {
+    private void updateEnemy(final Enemy enemy, final long tickTime) {
         enemy.setGettingAttacked(false);
 
-        double deltaX = character.getPosition().getX() - enemy.getPosition().getX();
-        double deltaY = character.getPosition().getY() - enemy.getPosition().getY();
-        double distance = enemy.getDistance(character);
+        final double deltaX = character.getPosition().getX() - enemy.getPosition().getX();
+        final double deltaY = character.getPosition().getY() - enemy.getPosition().getY();
+        final double distance = enemy.getDistance(character);
 
-        Point2D.Double enemyDirection = new Point2D.Double(deltaX / distance, deltaY / distance);
+        final Point2D.Double enemyDirection = new Point2D.Double(deltaX / distance, deltaY / distance);
         enemy.setDirection(enemyDirection);
 
-        Point2D.Double enemyFuturePosition = enemy.getFuturePosition(tickTime);
-        boolean collisionWithOtherEntities = CollisionManager.checkEnemyCollisions(enemy, enemyFuturePosition,
+        final Point2D.Double enemyFuturePosition = enemy.getFuturePosition(tickTime);
+        final boolean collisionWithOtherEntities = CollisionManager.checkEnemyCollisions(enemy, enemyFuturePosition,
                 this.enemies, this.character);
 
         if (!collisionWithOtherEntities) {
@@ -125,16 +122,16 @@ public class EntityManager {
         }
     }
 
-    private void updateAttacks(long tickTime) {
+    private void updateAttacks(final long tickTime) {
         this.attacks.forEach(attack -> attack.execute(tickTime));
     }
 
     private void cleanupExpiredEntities() {
         this.attacks.removeIf(Attack::isExpired);
 
-        Iterator<Enemy> enemyIterator = enemies.iterator();
+        final Iterator<Enemy> enemyIterator = enemies.iterator();
         while (enemyIterator.hasNext()) {
-            Enemy enemy = enemyIterator.next();
+            final Enemy enemy = enemyIterator.next();
             if (enemy.getHealth() <= 0) {
                 spawnRandomCollectible(enemy.getPosition());
                 score.incrementKillCounter();
@@ -148,12 +145,12 @@ public class EntityManager {
             return;
         }
 
-        double coinProb = this.config.getCoinSpawnChance();
-        double foodProb = this.config.getFoodSpawnChance();
-        double expProb = this.config.getExperienceGemSpawnChance();
+        final double coinProb = this.config.getCoinSpawnChance();
+        final double foodProb = this.config.getFoodSpawnChance();
+        final double expProb = this.config.getExperienceGemSpawnChance();
 
-        double total = coinProb + foodProb + expProb;
-        double rand = Math.random() * total;
+        final double total = coinProb + foodProb + expProb;
+        final double rand = Math.random() * total;
 
         if (rand < coinProb) {
             this.addCollectible(new Coin(position));
@@ -196,11 +193,11 @@ public class EntityManager {
         return List.copyOf(this.collectibles);
     }
 
-    public Weapon getWeaponById(String weaponId) {
-        return this.levelUpManager.findWeaponById(this.character, weaponId);
+    public Weapon getWeaponById(final String weaponID) {
+        return this.levelUpManager.findWeaponById(this.character, weaponID);
     }
 
-    public void levelUpWeapon(String selectedWeapon) {
+    public void levelUpWeapon(final String selectedWeapon) {
         this.levelUpManager.levelUpWeapon(this.character, selectedWeapon);
     }
 

@@ -2,14 +2,16 @@ package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D;
 import java.awt.Dimension;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Collection;
 
+
+
+
 public class GameWorld implements GameModel {
 
+    static final Dimension VISUAL_SIZE = new Dimension(1280, 720);
     private ModelErrorListener errorListener;
 
     private boolean isGameOver;
@@ -22,14 +24,12 @@ public class GameWorld implements GameModel {
     private ShopManager shopManager;
     private GameDataProvider gameDataProvider;
 
-    static final Dimension VISUAL_SIZE = new Dimension(1280, 720);
-
     public GameWorld() {
         DataLoader.init(this);
         this.saveManager = new SaveManager(this);
         this.shopManager = new ShopManager(this.saveManager);
 
-        ConfigData configData = DataLoader.getInstance().getConfigLoader().get("").orElse(null);
+        final ConfigData configData = DataLoader.getInstance().getConfigLoader().get("").orElse(null);
         if (configData != null) {
             this.configData = configData;
         } else {
@@ -38,27 +38,27 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public void setModelErrorListener(ModelErrorListener errorListener) {
+    public void setModelErrorListener(final ModelErrorListener errorListener) {
         this.errorListener = errorListener;
     }
 
-    void notifyError(String errorMessage) {
+    void notifyError(final String errorMessage) {
         if (this.errorListener != null) {
             this.errorListener.onError(errorMessage);
         }
     }
 
     @Override
-    public boolean initGame(String selectedCharacter) {
+    public boolean initGame(final String selectedCharacter) {
         this.isGameOver = false;
 
-        Optional<UnlockableCharacter> optionalSelectedUnlockableCharacter = DataLoader.getInstance()
+        final Optional<UnlockableCharacter> optionalSelectedUnlockableCharacter = DataLoader.getInstance()
                 .getCharacterLoader()
                 .get(selectedCharacter);
         if (!optionalSelectedUnlockableCharacter.isPresent()) {
             return false;
         }
-        UnlockableCharacter selectedUnlockableCharacter = optionalSelectedUnlockableCharacter.get();
+        final UnlockableCharacter selectedUnlockableCharacter = optionalSelectedUnlockableCharacter.get();
 
         this.score = new Score(selectedUnlockableCharacter.getName());
 
@@ -76,7 +76,7 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public void update(long tickTime, Point2D.Double characterDirection) {
+    public void update(final long tickTime, final Point2D.Double characterDirection) {
         this.score.incrementSessionTime(tickTime);
         this.entityManager.updateEntities(tickTime, characterDirection);
 
@@ -146,7 +146,7 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public boolean buyCharacter(String selectedCharacter) {
+    public boolean buyCharacter(final String selectedCharacter) {
         return this.shopManager.buyCharacter(selectedCharacter);
     }
 
@@ -161,7 +161,7 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public void loadSave(String selectedSave) {
+    public void loadSave(final String selectedSave) {
         this.saveManager.loadSave(selectedSave);
     }
 
@@ -208,7 +208,7 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public void levelUpWeapon(String selectedWeapon) {
+    public void levelUpWeapon(final String selectedWeapon) {
         this.entityManager.levelUpWeapon(selectedWeapon);
     }
 
@@ -218,7 +218,7 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public boolean buyPowerUp(String selectedPowerUp) {
+    public boolean buyPowerUp(final String selectedPowerUp) {
         return this.shopManager.buyPowerUp(selectedPowerUp);
     }
 }
