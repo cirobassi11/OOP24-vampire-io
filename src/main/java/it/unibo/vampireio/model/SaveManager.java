@@ -1,6 +1,5 @@
 package it.unibo.vampireio.model;
 
-import it.unibo.vampireio.controller.GameController;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,7 +14,7 @@ import java.util.List;
  * Handles the creation, reading, and writing of save files and an index file
  * that keeps track of available saves.
  */
-public class SaveManager {
+public final class SaveManager {
 
     private GameWorld model;
 
@@ -27,6 +26,12 @@ public class SaveManager {
     private final String savingError = "An error occurred while saving the file";
     private final String readingError = "An error occurred while reading the file";
 
+    /**
+     * Constructs a SaveManager for the given GameWorld model.
+     * Initializes the save index file and reads existing saves if available.
+     *
+     * @param model the GameWorld model to manage saves for
+     */
     public SaveManager(final GameWorld model) {
         this.model = model;
         final File indexFile = new File(indexFileName); // save name and save path
@@ -81,19 +86,46 @@ public class SaveManager {
         }
     }
 
+    /**
+     * Returns the names of all available saves.
+     * This method provides a read-only view of the saves names list.
+     *
+     * @return a list of save names
+     */
     public List<String> getSavesNames() {
         return List.copyOf(this.savesNames);
     }
 
+    /**
+     * Creates a new save with the default character defined in the config data.
+     * If the default character is not found, an error is notified to the model.
+     */
+    void createNewSave() {
+        final ConfigData configData = DataLoader.getInstance().getConfigLoader().get("").orElse(null);
+        final UnlockableCharacter defaultCharacter = DataLoader.getInstance().getCharacterLoader()
+                .get(configData.getDefaultCharacterId()).orElse(null);
+        if (defaultCharacter == null) {
+            this.model.notifyError("Default character not found in config data!");
+        }
+        this.createNewSave(defaultCharacter);
+    }
+
     private void createNewSave(final UnlockableCharacter defaultCharacter) {
-        this.currentSave = new Save();
+        this.currentSave = new SaveImpl();
         this.savesNames.add(this.currentSave.getSaveTime());
         this.currentSave.addUnlockedCharacter(defaultCharacter);
         this.saveCurrentSave();
         this.saveIndex();
     }
 
-    public void loadSave(final String selectedSave) {
+    /**
+     * Loads a save by its name.
+     * If the save file does not exist or cannot be read, an error is notified to
+     * the model.
+     *
+     * @param selectedSave the name of the save to load
+     */
+    void loadSave(final String selectedSave) {
         final String saveFilePath = this.getFilePath(selectedSave);
         if (saveFilePath != null) {
             try (FileInputStream input = new FileInputStream(saveFilePath);
@@ -108,7 +140,13 @@ public class SaveManager {
         }
     }
 
-    public void saveCurrentSave() {
+    /**
+     * Saves the current game state to a file.
+     * The save file is named with the current save time and stored in the user's
+     * home directory.
+     * If an error occurs during saving, an error is notified to the model.
+     */
+    void saveCurrentSave() {
         final String saveFilePath = this.getFilePath(this.currentSave.getSaveTime());
         if (saveFilePath != null) {
             try (FileOutputStream output = new FileOutputStream(saveFilePath);
@@ -120,25 +158,29 @@ public class SaveManager {
         }
     }
 
-    public Save getCurrentSave() {
+    /**
+     * Returns the current save.
+     *
+     * @return the current Save object
+     */
+    Save getCurrentSave() {
         return this.currentSave;
     }
 
+    /**
+     * Returns the file path for a save file based on the save time.
+     * The save files are stored in a directory named "vampire-io_save" in the
+     * user's
+     * home directory.
+     *
+     * @param saveTime the timestamp of the save
+     * @return the file path for the save file
+     */
     private String getFilePath(final String saveTime) {
         final File saveDirectory = new File(System.getProperty("user.home") + File.separator + "vampire-io_save");
         if (!saveDirectory.exists()) {
             saveDirectory.mkdirs();
         }
         return saveDirectory.getPath() + File.separator + saveTime + ".sav";
-    }
-
-    public void createNewSave() {
-        ConfigData configData = DataLoader.getInstance().getConfigLoader().get("").orElse(null);
-        UnlockableCharacter defaultCharacter = DataLoader.getInstance().getCharacterLoader()
-                .get(configData.getDefaultCharacterId()).orElse(null);
-        if (defaultCharacter == null) {
-            this.model.notifyError("Default character not found in config data!");
-        }
-        this.createNewSave(defaultCharacter);
     }
 }

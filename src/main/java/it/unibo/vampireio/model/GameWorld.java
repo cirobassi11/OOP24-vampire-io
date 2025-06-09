@@ -18,7 +18,7 @@ public final class GameWorld implements GameModel {
     private ModelErrorListener errorListener;
 
     private boolean isGameOver;
-    private Score score;
+    private ScoreImpl score;
 
     private ConfigData configData;
     private EntityManager entityManager;
@@ -66,7 +66,7 @@ public final class GameWorld implements GameModel {
         }
         final UnlockableCharacter selectedUnlockableCharacter = optionalSelectedUnlockableCharacter.get();
 
-        this.score = new Score(selectedUnlockableCharacter.getName());
+        this.score = new ScoreImpl(selectedUnlockableCharacter.getName());
 
         this.entityManager = new EntityManager(this.configData, this.score, this.saveManager,
                 selectedUnlockableCharacter);

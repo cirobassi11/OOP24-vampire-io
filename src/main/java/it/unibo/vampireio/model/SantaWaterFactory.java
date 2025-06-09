@@ -9,47 +9,48 @@ import java.awt.Dimension;
  * dealing damage to enemies within its radius.
  */
 final class SantaWaterFactory extends AbstractAttackFactory {
-    private static final String attackID = "attacks/santaWater";
-    private final double SPAWN_AREA_PERCENTAGE = 0.8;
-    AttackData attackData = this.getAttackDataById(attackID);
-    
+    private static final String ATTACK_ID = "attacks/santaWater";
+    private static final double SPAWN_AREA_PERCENTAGE = 0.8;
+    private static final double DAMAGE_MULTIPLIER = 1.5;
+
     /**
      * Constructor for SantaWaterFactory.
      * It initializes the factory with the provided EntityManager.
      *
      * @param entityManager the EntityManager to be used for creating attacks
      */
-    SantaWaterFactory(EntityManager entityManager) {
-        super(entityManager);
+    SantaWaterFactory(final EntityManager entityManager) {
+        super(entityManager, ATTACK_ID);
     }
-    
+
     @Override
     Attack createAttack() {
-        Character character = this.entityManager.getCharacter();
-        Stats stats = character.getStats();
+        final Character character = this.getEntityManager().getCharacter();
+        final Stats stats = character.getStats();
         return new SantaWaterAttack(
-            attackData.getId(),
-            this.getRandomPosition(),
-            attackData.getRadius(),
-            (int) (attackData.getDamage() * stats.getStat(StatType.MIGHT)),
-            attackData.getDuration(),
-            this.entityManager
-        );
+                this.getAttackData().getId(),
+                this.getRandomPosition(),
+                this.getAttackData().getRadius(),
+                (int) (this.getAttackData().getDamage() * stats.getStat(StatType.MIGHT)),
+                this.getAttackData().getDuration(),
+                this.getEntityManager());
     }
-    
+
     @Override
     void increaseLevel() {
         super.increaseLevel();
-        int currentDamage = this.attackData.getDamage();
-        int newDamage = (int) (currentDamage * 1.5);
-        this.attackData.setDamage(newDamage);
+        final int currentDamage = this.getAttackData().getDamage();
+        final int newDamage = (int) (currentDamage * this.DAMAGE_MULTIPLIER);
+        this.getAttackData().setDamage(newDamage);
     }
 
     private Point2D.Double getRandomPosition() {
-        Point2D.Double characterPosition = this.entityManager.getCharacter().getPosition();
-        Dimension dimension = GameWorld.VISUAL_SIZE;      
-        double x = characterPosition.getX() + (Math.random() * dimension.getWidth() * SPAWN_AREA_PERCENTAGE) - (dimension.getWidth() * SPAWN_AREA_PERCENTAGE / 2);
-        double y = characterPosition.getY() + (Math.random() * dimension.getHeight() * SPAWN_AREA_PERCENTAGE) - (dimension.getHeight() * SPAWN_AREA_PERCENTAGE / 2);
+        final Point2D.Double characterPosition = this.getEntityManager().getCharacter().getPosition();
+        final Dimension dimension = GameWorld.VISUAL_SIZE;
+        final double x = characterPosition.getX() + (Math.random() * dimension.getWidth() * SPAWN_AREA_PERCENTAGE)
+                - (dimension.getWidth() * SPAWN_AREA_PERCENTAGE / 2);
+        final double y = characterPosition.getY() + (Math.random() * dimension.getHeight() * SPAWN_AREA_PERCENTAGE)
+                - (dimension.getHeight() * SPAWN_AREA_PERCENTAGE / 2);
         return new Point2D.Double(x, y);
     }
 }

@@ -13,10 +13,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
-import it.unibo.vampireio.controller.GameController;
 
 /**
- * GenericDataLoader is responsible for loading and managing game data from a JSON file.
+ * GenericDataLoader is responsible for loading and managing game data from a
+ * JSON file.
  * It provides methods to retrieve all data or specific items by their ID.
  *
  * @param <T> the type of data being loaded, which must implement Identifiable
@@ -34,10 +34,10 @@ class GenericDataLoader<T extends Identifiable> {
      * Constructs a GenericDataLoader with the specified model, path, and type.
      *
      * @param model the GameWorld model to notify on errors
-     * @param path the path to the JSON file containing the data
-     * @param type the class type of the data being loaded
+     * @param path  the path to the JSON file containing the data
+     * @param type  the class type of the data being loaded
      */
-    GenericDataLoader(GameWorld model, String path, Class<T> type) {
+    GenericDataLoader(final GameWorld model, final String path, final Class<T> type) {
         this.model = model;
         this.path = path;
         this.type = type;
@@ -51,7 +51,7 @@ class GenericDataLoader<T extends Identifiable> {
         return new ArrayList<>(dataById.values());
     }
 
-    Optional<T> get(String id) {
+    Optional<T> get(final String id) {
         if (dataById == null) {
             load();
         }
@@ -70,8 +70,8 @@ class GenericDataLoader<T extends Identifiable> {
                 return;
             }
 
-            InputStreamReader reader = new InputStreamReader(input);
-            Type listType = TypeToken.getParameterized(List.class, type).getType();
+            final InputStreamReader reader = new InputStreamReader(input);
+            final Type listType = TypeToken.getParameterized(List.class, type).getType();
             List<T> list = gson.fromJson(reader, listType);
 
             if (list == null) {
@@ -79,7 +79,7 @@ class GenericDataLoader<T extends Identifiable> {
             }
 
             dataById = new HashMap<>();
-            for (T element : list) {
+            for (final T element : list) {
                 dataById.put(element.getId(), element);
             }
         } catch (IOException | JsonSyntaxException e) {

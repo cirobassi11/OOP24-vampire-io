@@ -44,7 +44,7 @@ public final class GarlicAttack extends AbstractAttack {
         if (collidable instanceof Enemy) {
             final Enemy enemy = (Enemy) collidable;
             enemy.setGettingAttacked(true);
-            enemy.dealDamage(this.damage);
+            enemy.dealDamage(this.getDamage());
         }
     }
 
@@ -52,8 +52,8 @@ public final class GarlicAttack extends AbstractAttack {
     protected void update(final long tickTime) {
         lastDamageTime += tickTime;
         if (lastDamageTime >= DAMAGE_TICK_MS) {
-            CollisionManager.checkAttackCollisions(this, this.entityManager.getEnemies());
+            CollisionManager.checkAttackCollisions(this, this.getEntityManager().getEnemies());
         }
-        this.setPosition(this.entityManager.getCharacter().getPosition());
+        this.setPosition(this.getEntityManager().getCharacter().getPosition());
     }
 }

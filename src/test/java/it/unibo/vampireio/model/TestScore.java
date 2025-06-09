@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 class TestScore {
 
     private static final String CHARACTER_NAME = "Imelda";
-    private Score score;
+    private ScoreImpl score;
 
     @BeforeEach
     void setUp() {
-        score = new Score(CHARACTER_NAME);
+        score = new ScoreImpl(CHARACTER_NAME);
     }
 
     @Test

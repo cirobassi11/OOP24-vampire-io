@@ -14,13 +14,13 @@ public final class MagicWandAttack extends AbstractAttack {
     /**
      * Constructs a MagicWandAttack with the specified parameters.
      *
-     * @param id          the unique identifier for the attack
-     * @param position    the initial position of the attack
-     * @param radius      the radius of the attack
-     * @param direction   the initial direction of the attack
-     * @param speed       the speed of the attack
-     * @param damage      the damage dealt by the attack
-     * @param duration    the duration of the attack in milliseconds
+     * @param id            the unique identifier for the attack
+     * @param position      the initial position of the attack
+     * @param radius        the radius of the attack
+     * @param direction     the initial direction of the attack
+     * @param speed         the speed of the attack
+     * @param damage        the damage dealt by the attack
+     * @param duration      the duration of the attack in milliseconds
      * @param entityManager the entity manager to manage entities in the game
      */
     public MagicWandAttack(
@@ -44,13 +44,13 @@ public final class MagicWandAttack extends AbstractAttack {
         double minDistance = Double.MAX_VALUE;
         Living nearest = null;
 
-        for (Living enemy : entityManager.getEnemies()) {
-            Point2D.Double enemyPos = enemy.getPosition();
-            Point2D.Double currentPos = this.getPosition();
+        for (final Living enemy : this.getEntityManager().getEnemies()) {
+            final Point2D.Double enemyPos = enemy.getPosition();
+            final Point2D.Double currentPos = this.getPosition();
 
-            double dx = enemyPos.x - currentPos.x;
-            double dy = enemyPos.y - currentPos.y;
-            double distance = Math.sqrt(dx * dx + dy * dy);
+            final double dx = enemyPos.x - currentPos.x;
+            final double dy = enemyPos.y - currentPos.y;
+            final double distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < minDistance) {
                 minDistance = distance;
@@ -61,29 +61,29 @@ public final class MagicWandAttack extends AbstractAttack {
     }
 
     @Override
-    public void onCollision(Collidable collidable) {
+    public void onCollision(final Collidable collidable) {
         if (collidable instanceof Enemy) {
-            Enemy enemy = (Enemy) collidable;
+            final Enemy enemy = (Enemy) collidable;
             enemy.setGettingAttacked(true);
-            enemy.dealDamage(this.damage);
-            this.expired = true;
+            enemy.dealDamage(this.getDamage());
+            this.expire();
         }
     }
 
     private Point2D.Double getRandomDirection() {
-        double angle = Math.random() * 2 * Math.PI;
+        final double angle = Math.random() * 2 * Math.PI;
         return new Point2D.Double(Math.cos(angle), Math.sin(angle));
     }
 
     @Override
-    protected void update(long tickTime) {
+    protected void update(final long tickTime) {
         if (this.targetEnemy != null) {
-            Point2D.Double enemyPos = this.targetEnemy.getPosition();
-            Point2D.Double currentPos = this.getPosition();
+            final Point2D.Double enemyPos = this.targetEnemy.getPosition();
+            final Point2D.Double currentPos = this.getPosition();
 
-            double dx = enemyPos.x - currentPos.x;
-            double dy = enemyPos.y - currentPos.y;
-            double length = Math.sqrt(dx * dx + dy * dy);
+            final double dx = enemyPos.x - currentPos.x;
+            final double dy = enemyPos.y - currentPos.y;
+            final double length = Math.sqrt(dx * dx + dy * dy);
 
             if (length > 0) {
                 this.setDirection(new Point2D.Double(dx / length, dy / length));

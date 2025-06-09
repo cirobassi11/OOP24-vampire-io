@@ -1,11 +1,26 @@
 package it.unibo.vampireio.model;
 
-public class UnlockablePowerUp extends AbstractUnlockableItem {
+/**
+ * Represents a power-up that can be unlocked in the game.
+ * Each power-up modifies a specific stat and has a level that determines its
+ * effectiveness.
+ */
+public final class UnlockablePowerUp extends AbstractUnlockableItem {
     private static final long serialVersionUID = 1L;
     private static final double MULTIPLIER_INCREMENT = 0.15;
 
     private final StatType statToModify;
 
+    /**
+     * Constructs an UnlockablePowerUp instance.
+     *
+     * @param id           the unique identifier for the power-up
+     * @param name         the name of the power-up
+     * @param description  a brief description of the power-up
+     * @param price        the price to unlock the power-up
+     * @param maxLevel     the maximum level of the power-up
+     * @param statToModify the stat that this power-up modifies
+     */
     public UnlockablePowerUp(
             final String id,
             final String name,
@@ -17,11 +32,11 @@ public class UnlockablePowerUp extends AbstractUnlockableItem {
         this.statToModify = statToModify;
     }
 
-    public double getMultiplier() {
+    double getMultiplier() {
         return 1 + this.getCurrentLevel() * MULTIPLIER_INCREMENT;
     }
 
-    public StatType getStatToModify() {
+    StatType getStatToModify() {
         return this.statToModify;
     }
 }

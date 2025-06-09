@@ -7,10 +7,11 @@ import java.util.Map;
 
 /**
  * ShopManager is responsible for managing the shop functionalities in the game.
- * It allows players to buy characters and power-ups, and provides methods to retrieve
+ * It allows players to buy characters and power-ups, and provides methods to
+ * retrieve
  * available characters and power-ups.
  */
-public class ShopManager {
+final class ShopManager {
     private final SaveManager saveManager;
 
     /**
@@ -18,11 +19,11 @@ public class ShopManager {
      *
      * @param saveManager the SaveManager to be used by this ShopManager
      */
-    public ShopManager(final SaveManager saveManager) {
+    ShopManager(final SaveManager saveManager) {
         this.saveManager = saveManager;
     }
 
-    public boolean buyCharacter(final String characterID) {
+    boolean buyCharacter(final String characterID) {
         final Save currentSave = saveManager.getCurrentSave();
         final UnlockableCharacter character = this.getLockedCharacters().stream()
                 .filter(c -> c.getId().equals(characterID))
@@ -35,7 +36,7 @@ public class ShopManager {
         return purchaseCharacter(currentSave, character);
     }
 
-    public boolean buyPowerUp(final String powerUpID) {
+    boolean buyPowerUp(final String powerUpID) {
         final Save currentSave = saveManager.getCurrentSave();
         final UnlockablePowerUp powerUp = DataLoader.getInstance().getPowerUpLoader().get(powerUpID).orElse(null);
 
@@ -67,7 +68,7 @@ public class ShopManager {
         return true;
     }
 
-    public List<UnlockableCharacter> getChoosableCharacters() {
+    List<UnlockableCharacter> getChoosableCharacters() {
         final List<UnlockableCharacter> unlockedCharacters = this.saveManager.getCurrentSave()
                 .getUnlockedCharacters().stream()
                 .map(id -> DataLoader.getInstance().getCharacterLoader().get(id).get())
@@ -75,7 +76,7 @@ public class ShopManager {
         return unlockedCharacters;
     }
 
-    public List<UnlockableCharacter> getLockedCharacters() {
+    List<UnlockableCharacter> getLockedCharacters() {
         final List<UnlockableCharacter> unlockedCharacters = this.getChoosableCharacters();
         final List<UnlockableCharacter> unlockableCharacters = DataLoader.getInstance().getCharacterLoader().getAll();
 
@@ -89,7 +90,7 @@ public class ShopManager {
         return List.copyOf(lockedCharacters);
     }
 
-    public List<UnlockablePowerUp> getUnlockablePowerUps() {
+    List<UnlockablePowerUp> getUnlockablePowerUps() {
         final List<UnlockablePowerUp> unlockablePowerUps = DataLoader.getInstance().getPowerUpLoader().getAll();
         final Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
 
@@ -99,7 +100,7 @@ public class ShopManager {
         return levelAdjustedPowerUps;
     }
 
-    public Collection<Unlockable> getAllItems() {
+    Collection<Unlockable> getAllItems() {
         final List<Unlockable> allItems = new LinkedList<>();
         allItems.addAll(DataLoader.getInstance().getCharacterLoader().getAll());
         allItems.addAll(DataLoader.getInstance().getPowerUpLoader().getAll());

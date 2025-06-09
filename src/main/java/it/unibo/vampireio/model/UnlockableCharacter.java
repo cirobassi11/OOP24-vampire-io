@@ -1,33 +1,49 @@
 package it.unibo.vampireio.model;
 
-public class UnlockableCharacter extends AbstractUnlockableItem {
+/**
+ * Represents an unlockable character in the game.
+ * This class extends AbstractUnlockableItem and includes character-specific
+ * attributes.
+ */
+public final class UnlockableCharacter extends AbstractUnlockableItem {
     private Stats characterStats;
     private String defaultWeapon;
     private double radius;
 
+    /**
+     * Constructs an UnlockableCharacter with the specified attributes.
+     *
+     * @param id            the unique identifier for the character
+     * @param name          the name of the character
+     * @param description   a brief description of the character
+     * @param price         the price to unlock the character
+     * @param radius        the radius of the character
+     * @param stats         the character's stats, encapsulated in a Stats object
+     * @param defaultWeapon the default weapon associated with the character
+     */
     public UnlockableCharacter(
-        final String id, 
-        final String name, 
-        final String description, 
-        final int price, 
-        final double radius, 
-        final Stats stats, 
-        final String defaultWeapon) {
-            super(id, name, description, price, 1);
-            this.characterStats = stats;
-            this.defaultWeapon = defaultWeapon;
-            this.radius = radius;
+            final String id,
+            final String name,
+            final String description,
+            final int price,
+            final double radius,
+            final Stats stats,
+            final String defaultWeapon) {
+        super(id, name, description, price, 1);
+        this.characterStats = stats;
+        this.defaultWeapon = defaultWeapon;
+        this.radius = radius;
     }
 
-    public Stats getCharacterStats() {
+    Stats getCharacterStats() {
         return this.characterStats;
     }
 
-    public String getDefaultWeapon() {
+    String getDefaultWeapon() {
         return this.defaultWeapon;
     }
 
-    public double getRadius() {
+    double getRadius() {
         return this.radius;
     }
 }

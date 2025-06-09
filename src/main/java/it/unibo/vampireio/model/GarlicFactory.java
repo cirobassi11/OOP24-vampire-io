@@ -1,33 +1,41 @@
 package it.unibo.vampireio.model;
 
-public class GarlicFactory extends AbstractAttackFactory {
+/**
+ * Factory class for creating GarlicAttack instances.
+ * Increases the attack's radius with each level up.
+ */
+public final class GarlicFactory extends AbstractAttackFactory {
     private static final String ATTACK_ID = "attacks/garlic";
     private static final double RADIUS_INCREASE_RATIO = 1.02;
-    AttackData attackData = this.getAttackDataById(ATTACK_ID);
 
-    public GarlicFactory(EntityManager entityManager) {
-        super(entityManager);
+    /**
+     * Constructor for GarlicFactory.
+     * Initializes the factory with the provided EntityManager.
+     *
+     * @param entityManager the EntityManager to be used by this factory
+     */
+    public GarlicFactory(final EntityManager entityManager) {
+        super(entityManager, ATTACK_ID);
     }
-    
+
     @Override
     public Attack createAttack() {
-        Character character = this.entityManager.getCharacter();
-        Stats stats = character.getStats();
+        final Character character = this.getEntityManager().getCharacter();
+        final Stats stats = character.getStats();
         return new GarlicAttack(
-            attackData.getId(),
-            character.getPosition(),
-            attackData.getRadius(),
-            (int) (attackData.getDamage() * stats.getStat(StatType.MIGHT)),
-            attackData.getDuration(),
-            entityManager
-        );
+                this.getAttackData().getId(),
+                character.getPosition(),
+                this.getAttackData().getRadius(),
+                (int) (this.getAttackData().getDamage() * stats.getStat(StatType.MIGHT)),
+                this.getAttackData().getDuration(),
+                this.getEntityManager());
     }
 
     @Override
     public void increaseLevel() {
         super.increaseLevel();
-        double currentRadius = this.attackData.getRadius();
-        double newRadius = currentRadius * RADIUS_INCREASE_RATIO;
-        this.attackData.setRadius(newRadius);
+        final double currentRadius = this.getAttackData().getRadius();
+        final double newRadius = currentRadius * RADIUS_INCREASE_RATIO;
+        this.getAttackData().setRadius(newRadius);
     }
 }

@@ -6,39 +6,38 @@ package it.unibo.vampireio.model;
  * for creating a MagicWandAttack with specific parameters.
  */
 final class MagicWandFactory extends AbstractAttackFactory {
-    private static final String attackID = "attacks/magicWand";
-    AttackData attackData = this.getAttackDataById(attackID);
-    
+    private static final String ATTACK_ID = "attacks/magicWand";
+    private static final double COOLDOWN_MULTIPLIER = 0.90;
+
     /**
      * Constructor for MagicWandFactory.
      * It initializes the factory with the provided EntityManager.
      *
      * @param entityManager the EntityManager to be used for creating attacks
      */
-    public MagicWandFactory(EntityManager entityManager) {
-        super(entityManager);
+    MagicWandFactory(final EntityManager entityManager) {
+        super(entityManager, ATTACK_ID);
     }
-    
+
     @Override
     public Attack createAttack() {
-        Character character = this.entityManager.getCharacter();
-        Stats stats = character.getStats();
+        final Character character = this.getEntityManager().getCharacter();
+        final Stats stats = character.getStats();
         return new MagicWandAttack(
-            attackData.getId(),
-            character.getPosition(),
-            attackData.getRadius(),
-            character.getDirection(),
-            attackData.getSpeed() * stats.getStat(StatType.SPEED),
-            (int) (attackData.getDamage() * stats.getStat(StatType.MIGHT)),
-            attackData.getDuration(),
-            entityManager
-        );
+                this.getAttackData().getId(),
+                character.getPosition(),
+                this.getAttackData().getRadius(),
+                character.getDirection(),
+                this.getAttackData().getSpeed() * stats.getStat(StatType.SPEED),
+                (int) (this.getAttackData().getDamage() * stats.getStat(StatType.MIGHT)),
+                this.getAttackData().getDuration(),
+                this.getEntityManager());
     }
 
     @Override
     public void increaseLevel() {
         super.increaseLevel();
-        Weapon weapon = this.entityManager.getWeaponById("weapons/magicWand");
-        weapon.multiplyCooldown(0.90);
+        final Weapon weapon = this.getEntityManager().getWeaponById("weapons/magicWand");
+        weapon.multiplyCooldown(COOLDOWN_MULTIPLIER);
     }
 }

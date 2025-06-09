@@ -34,12 +34,12 @@ public abstract class AbstractUnlockableItem implements Unlockable, Identifiable
     }
 
     @Override
-    public boolean isLocked() {
+    public final boolean isLocked() {
         return this.currentLevel > 0;
     }
 
     @Override
-    public boolean enhance() {
+    public final boolean enhance() {
         if (this.currentLevel >= this.maxLevel) {
             return false;
         }
@@ -48,37 +48,37 @@ public abstract class AbstractUnlockableItem implements Unlockable, Identifiable
     }
 
     @Override
-    public void setCurrentLevel(final int currentLevel) {
+    public final void setCurrentLevel(final int currentLevel) {
         this.currentLevel = currentLevel;
     }
 
     @Override
-    public String getId() {
+    public final String getId() {
         return this.id;
     }
 
     @Override
-    public String getName() {
+    public final String getName() {
         return this.name;
     }
 
     @Override
-    public String getDescription() {
+    public final String getDescription() {
         return this.description;
     }
 
     @Override
-    public int getPrice() {
+    public final int getPrice() {
         return this.price;
     }
 
     @Override
-    public int getCurrentLevel() {
+    public final int getCurrentLevel() {
         return this.currentLevel;
     }
 
     @Override
-    public int getMaxLevel() {
+    public final int getMaxLevel() {
         return this.maxLevel;
     }
 }

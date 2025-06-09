@@ -9,9 +9,7 @@ import it.unibo.vampireio.model.Living;
 import it.unibo.vampireio.model.Save;
 import it.unibo.vampireio.model.Score;
 import it.unibo.vampireio.model.Attack;
-import it.unibo.vampireio.model.Character;
 import it.unibo.vampireio.model.Collectible;
-import it.unibo.vampireio.model.Enemy;
 
 /**
  * Utility class that constructs various data objects
@@ -37,68 +35,62 @@ final class DataBuilder {
         final List<Collectible> collectibles = model.getCollectibles();
 
         final VisibleMapSizeData visibleMapSizeData = new VisibleMapSizeData(
-            visualSize.width, visualSize.height
-        );
+                visualSize.width, visualSize.height);
 
         final LivingEntityData characterData = new LivingEntityData(
-            character.getId(),
-            new Point2D.Double(character.getPosition().getX(), character.getPosition().getY()),
-            new Point2D.Double(character.getDirection().getX(), character.getDirection().getY()),
-            character.getRadius(),
-            character.getHealth(),
-            character.getMaxHealth(),
-            character.isGettingAttacked(),
-            character.isMoving()
-        );
+                character.getId(),
+                new Point2D.Double(character.getPosition().getX(), character.getPosition().getY()),
+                new Point2D.Double(character.getDirection().getX(), character.getDirection().getY()),
+                character.getRadius(),
+                character.getHealth(),
+                character.getMaxHealth(),
+                character.isGettingAttacked(),
+                character.isMoving());
 
         final List<LivingEntityData> enemiesData = enemies.stream()
-            .map(enemy -> new LivingEntityData(
-                enemy.getId(),
-                new Point2D.Double(enemy.getPosition().getX(), enemy.getPosition().getY()),
-                new Point2D.Double(enemy.getDirection().getX(), enemy.getDirection().getY()),
-                enemy.getRadius(),
-                enemy.getHealth(),
-                enemy.getMaxHealth(),
-                enemy.isGettingAttacked(),
-                enemy.isMoving()
-            ))
-            .collect(Collectors.toList());
+                .map(enemy -> new LivingEntityData(
+                        enemy.getId(),
+                        new Point2D.Double(enemy.getPosition().getX(), enemy.getPosition().getY()),
+                        new Point2D.Double(enemy.getDirection().getX(), enemy.getDirection().getY()),
+                        enemy.getRadius(),
+                        enemy.getHealth(),
+                        enemy.getMaxHealth(),
+                        enemy.isGettingAttacked(),
+                        enemy.isMoving()))
+                .collect(Collectors.toList());
 
         final List<PositionableData> attacksData = attacks.stream()
-            .map(attack -> new PositionableData(
-                attack.getId(),
-                new Point2D.Double(attack.getPosition().getX(), attack.getPosition().getY()),
-                new Point2D.Double(attack.getDirection().getX(), attack.getDirection().getY()),
-                attack.getRadius()
-            ))
-            .collect(Collectors.toList());
+                .map(attack -> new PositionableData(
+                        attack.getId(),
+                        new Point2D.Double(attack.getPosition().getX(), attack.getPosition().getY()),
+                        new Point2D.Double(attack.getDirection().getX(), attack.getDirection().getY()),
+                        attack.getRadius()))
+                .collect(Collectors.toList());
 
         final List<PositionableData> collectiblesData = collectibles.stream()
-            .map(collectible -> new PositionableData(
-                collectible.getId(),
-                new Point2D.Double(collectible.getPosition().getX(), collectible.getPosition().getY()),
-                new Point2D.Double(0, 0),
-                collectible.getRadius()
-            ))
-            .collect(Collectors.toList());
+                .map(collectible -> new PositionableData(
+                        collectible.getId(),
+                        new Point2D.Double(collectible.getPosition().getX(), collectible.getPosition().getY()),
+                        new Point2D.Double(0, 0),
+                        collectible.getRadius()))
+                .collect(Collectors.toList());
 
         final List<ItemData> itemsData = model.getWeapons().stream()
-            .map(item -> new ItemData(item.getId(), "", ""))
-            .collect(Collectors.toList());
+                .map(item -> new ItemData(item.getId(), "", ""))
+                .collect(Collectors.toList());
 
         return new GameData(
-            visibleMapSizeData,
-            model.getElapsedTime(),
-            model.getPlayerLevel(),
-            model.getPlayerLevelPercentage(),
-            model.getKillCounter(),
-            model.getCoinCounter(),
-            characterData,
-            enemiesData,
-            attacksData,
-            collectiblesData,
-            itemsData
-        );
+                visibleMapSizeData,
+                model.getElapsedTime(),
+                model.getPlayerLevel(),
+                model.getPlayerLevelPercentage(),
+                model.getKillCounter(),
+                model.getCoinCounter(),
+                characterData,
+                enemiesData,
+                attacksData,
+                collectiblesData,
+                itemsData);
     }
 
     /**
@@ -113,15 +105,14 @@ final class DataBuilder {
             return List.of();
         }
         return currentSave.getScores().stream()
-            .map(score -> new ScoreData(
-                score.getCharacterName(),
-                score.getSessionTime(),
-                score.getKillCounter(),
-                score.getLevel(),
-                score.getCoinCounter(),
-                score.getScore()
-            ))
-            .collect(Collectors.toList());
+                .map(score -> new ScoreData(
+                        score.getCharacterName(),
+                        score.getSessionTime(),
+                        score.getKillCounter(),
+                        score.getLevel(),
+                        score.getCoinCounter(),
+                        score.getScore()))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -133,12 +124,11 @@ final class DataBuilder {
     static ScoreData getCurrentScore(final GameModel model) {
         final Score score = model.exitGame();
         return new ScoreData(
-            score.getCharacterName(),
-            score.getSessionTime(),
-            score.getKillCounter(),
-            score.getLevel(),
-            score.getCoinCounter(),
-            score.getScore()
-        );
+                score.getCharacterName(),
+                score.getSessionTime(),
+                score.getKillCounter(),
+                score.getLevel(),
+                score.getCoinCounter(),
+                score.getScore());
     }
 }

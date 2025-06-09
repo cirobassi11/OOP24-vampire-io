@@ -1,19 +1,32 @@
 package it.unibo.vampireio.model;
 
+/**
+ * AbstractAttackFactory is an abstract class that serves as a base for creating
+ * different types of attacks.
+ * It provides methods to create attacks and manage their levels.
+ */
 abstract class AbstractAttackFactory {
-    protected final EntityManager entityManager;
+    private final EntityManager entityManager;
     private int currentLevel;
+    private final AttackData attackData;
 
-    AbstractAttackFactory(final EntityManager entityManager) {
+    /**
+     * Constructor for AbstractAttackFactory.
+     * Initializes the factory with the provided EntityManager and attack ID.
+     *
+     * @param entityManager the EntityManager to be used by this factory
+     * @param attackID      the ID of the attack to be created
+     */
+    AbstractAttackFactory(final EntityManager entityManager, final String attackID) {
         this.entityManager = entityManager;
         this.currentLevel = 1;
+        this.attackData = getAttackDataById(attackID);
     }
 
     abstract Attack createAttack();
 
     AttackData getAttackDataById(final String id) {
-        final AttackData attackData = DataLoader.getInstance().getAttackLoader().get(id).get();
-        return attackData;
+        return DataLoader.getInstance().getAttackLoader().get(id).get();
     }
 
     int getCurrentLevel() {
@@ -22,5 +35,13 @@ abstract class AbstractAttackFactory {
 
     void increaseLevel() {
         this.currentLevel++;
+    }
+
+    protected EntityManager getEntityManager() {
+        return this.entityManager;
+    }
+
+    protected AttackData getAttackData() {
+        return this.attackData;
     }
 }

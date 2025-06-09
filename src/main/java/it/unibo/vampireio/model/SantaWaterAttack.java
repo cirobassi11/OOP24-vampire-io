@@ -2,7 +2,6 @@ package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D;
 import java.util.List;
-import java.util.ArrayList;
 
 class SantaWaterAttack extends AbstractAttack {
 
@@ -26,11 +25,11 @@ class SantaWaterAttack extends AbstractAttack {
     }
 
     @Override
-    public void onCollision(Collidable collidable) {
+    public void onCollision(final Collidable collidable) {
         if (collidable instanceof Enemy) {
-            Enemy enemy = (Enemy) collidable;
+            final Enemy enemy = (Enemy) collidable;
             enemy.setGettingAttacked(true);
-            enemy.dealDamage(this.damage);
+            enemy.dealDamage(this.getDamage());
         }
     }
 
@@ -39,11 +38,11 @@ class SantaWaterAttack extends AbstractAttack {
     }
 
     @Override
-    protected void update(long tickTime) {
+    protected void update(final long tickTime) {
         this.lastDamageTime += tickTime;
 
         if (this.lastDamageTime >= DAMAGE_TICK_MS) {
-            CollisionManager.checkAttackCollisions(this, this.entityManager.getEnemies());
+            CollisionManager.checkAttackCollisions(this, this.getEntityManager().getEnemies());
             this.lastDamageTime = 0;
         }
     }

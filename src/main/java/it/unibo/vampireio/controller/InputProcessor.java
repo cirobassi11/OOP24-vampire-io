@@ -5,7 +5,8 @@ import java.awt.geom.Point2D;
 
 /**
  * InputProcessor is responsible for processing user input from the keyboard.
- * It computes movement directions based on key presses and checks for pause requests.
+ * It computes movement directions based on key presses and checks for pause
+ * requests.
  */
 final class InputProcessor {
 
@@ -16,7 +17,7 @@ final class InputProcessor {
      *
      * @param inputHandler the InputHandler to use for processing input
      */
-    InputProcessor(InputHandler inputHandler) {
+    InputProcessor(final InputHandler inputHandler) {
         this.inputHandler = inputHandler;
     }
 
@@ -27,7 +28,7 @@ final class InputProcessor {
      * @return a Point2D.Double representing the normalized direction vector
      */
     Point2D.Double computeDirection() {
-        Point2D.Double direction = new Point2D.Double(0, 0);
+        final Point2D.Double direction = new Point2D.Double(0, 0);
         if (inputHandler.isKeyPressed(KeyEvent.VK_W) || inputHandler.isKeyPressed(KeyEvent.VK_UP)) {
             direction.y -= 1;
         }
@@ -40,7 +41,7 @@ final class InputProcessor {
         if (inputHandler.isKeyPressed(KeyEvent.VK_D) || inputHandler.isKeyPressed(KeyEvent.VK_RIGHT)) {
             direction.x += 1;
         }
-        double length = direction.distance(0, 0);
+        final double length = direction.distance(0, 0);
         if (length > 0) {
             direction.x /= length;
             direction.y /= length;

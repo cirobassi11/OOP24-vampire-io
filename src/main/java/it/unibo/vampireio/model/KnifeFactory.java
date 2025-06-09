@@ -4,33 +4,39 @@ package it.unibo.vampireio.model;
  * KnifeFactory is responsible for creating KnifeAttack instances.
  * It extends AbstractAttackFactory to utilize common attack creation logic.
  */
-public class KnifeFactory extends AbstractAttackFactory {
-    private static final String attackID = "attacks/knife";
-    AttackData attackData = this.getAttackDataById(attackID);
+public final class KnifeFactory extends AbstractAttackFactory {
+    private static final String ATTACK_ID = "attacks/knife";
+    private static final double COOLDOWN_MULTIPLIER = 0.90;
 
-    public KnifeFactory(EntityManager entityManager) {
-        super(entityManager);
+    /**
+     * Constructor for KnifeFactory.
+     * Initializes the factory with the provided EntityManager.
+     *
+     * @param entityManager the EntityManager to be used for creating attacks
+     */
+    public KnifeFactory(final EntityManager entityManager) {
+        super(entityManager, ATTACK_ID);
     }
 
     @Override
     public Attack createAttack() {
-        Character character = this.entityManager.getCharacter();
-        Stats stats = character.getStats();
+        final Character character = this.getEntityManager().getCharacter();
+        final Stats stats = character.getStats();
         return new KnifeAttack(
-                attackData.getId(),
+                this.getAttackData().getId(),
                 character.getPosition(),
-                attackData.getRadius(),
+                this.getAttackData().getRadius(),
                 character.getLastDirection(),
-                attackData.getSpeed() * stats.getStat(StatType.SPEED),
-                (int) (attackData.getDamage() * stats.getStat(StatType.MIGHT)),
-                attackData.getDuration(),
-                entityManager);
+                this.getAttackData().getSpeed() * stats.getStat(StatType.SPEED),
+                (int) (this.getAttackData().getDamage() * stats.getStat(StatType.MIGHT)),
+                this.getAttackData().getDuration(),
+                this.getEntityManager());
     }
 
     @Override
     public void increaseLevel() {
         super.increaseLevel();
-        Weapon weapon = this.entityManager.getWeaponById("weapons/knife");
-        weapon.multiplyCooldown(0.90);
+        final Weapon weapon = this.getEntityManager().getWeaponById("weapons/knife");
+        weapon.multiplyCooldown(this.COOLDOWN_MULTIPLIER);
     }
 }

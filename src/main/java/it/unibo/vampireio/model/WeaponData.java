@@ -3,7 +3,7 @@ package it.unibo.vampireio.model;
 /**
  * Represents the data for a weapon in the game.
  */
-public class WeaponData implements Identifiable {
+public final class WeaponData implements Identifiable {
     private String id;
     private String name;
     private String description;
@@ -13,23 +13,25 @@ public class WeaponData implements Identifiable {
     /**
      * Constructor for WeaponData.
      *
-     * @param id                     the unique identifier of the weapon
-     * @param name                   the name of the weapon
-     * @param description            a brief description of the weapon
-     * @param defaultCooldown        the default cooldown time for the weapon in milliseconds
-     * @param defaultAttacksPerCooldown the number of attacks that can be performed per cooldown period
+     * @param id                        the unique identifier of the weapon
+     * @param name                      the name of the weapon
+     * @param description               a brief description of the weapon
+     * @param defaultCooldown           the default cooldown time for the weapon in
+     *                                  milliseconds
+     * @param defaultAttacksPerCooldown the number of attacks that can be performed
+     *                                  per cooldown period
      */
     public WeaponData(
-        final String id, 
-        final String name, 
-        final String description, 
-        final long defaultCooldown, 
-        final int defaultAttacksPerCooldown) {
-            this.id = id;
-            this.name = name;
-            this.description = description;
-            this.defaultCooldown = defaultCooldown;
-            this.defaultAttacksPerCooldown = defaultAttacksPerCooldown;
+            final String id,
+            final String name,
+            final String description,
+            final long defaultCooldown,
+            final int defaultAttacksPerCooldown) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.defaultCooldown = defaultCooldown;
+        this.defaultAttacksPerCooldown = defaultAttacksPerCooldown;
     }
 
     @Override

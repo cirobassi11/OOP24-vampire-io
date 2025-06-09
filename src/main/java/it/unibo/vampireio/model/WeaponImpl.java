@@ -5,7 +5,7 @@ package it.unibo.vampireio.model;
  * intervals.
  * Implements the Weapon interface.
  */
-public class WeaponImpl implements Weapon {
+public final class WeaponImpl implements Weapon {
     private final String id;
     private long cooldown;
     private int projectilePerCooldown;

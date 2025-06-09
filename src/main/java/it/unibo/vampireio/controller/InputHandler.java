@@ -5,6 +5,8 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
+
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
@@ -30,13 +32,12 @@ public final class InputHandler {
         final InputMap inputMap = component.getInputMap(condition);
         final ActionMap actionMap = component.getActionMap();
 
-        final int[] keys = {
+        final List<Integer> keysList = List.of(
                 KeyEvent.VK_W, KeyEvent.VK_A, KeyEvent.VK_S, KeyEvent.VK_D,
                 KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT,
-                KeyEvent.VK_ESCAPE
-        };
+                KeyEvent.VK_ESCAPE);
 
-        for (int key : keys) {
+        for (final int key : keysList) {
             final String keyName = KeyEvent.getKeyText(key);
             final String press = "pressed " + keyName;
             final String release = "released " + keyName;

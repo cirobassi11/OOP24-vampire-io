@@ -18,7 +18,7 @@ public final class EntityManager {
     private final List<Collectible> collectibles = new LinkedList<>();
     private final EnemySpawner enemySpawner;
     private final ConfigData config;
-    private final Score score;
+    private final ScoreImpl score;
     private final SaveManager saveManager;
     private final WeaponRandomizer weaponRandomizer;
     private final LevelUpManager levelUpManager;
@@ -34,7 +34,7 @@ public final class EntityManager {
      */
     public EntityManager(
             final ConfigData config,
-            final Score score,
+            final ScoreImpl score,
             final SaveManager saveManager,
             final UnlockableCharacter selectedCharacter) {
         this.config = config;
