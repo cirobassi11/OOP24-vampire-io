@@ -9,7 +9,7 @@ public final class ScoreImpl implements Score {
     private static final long serialVersionUID = 1L;
     private static final int SECONDS_PER_MINUTE = 60;
 
-    private String characterName;
+    private final String characterName;
     private long sessionTime;
     private int killCounter;
     private int level;

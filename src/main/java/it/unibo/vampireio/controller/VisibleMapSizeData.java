@@ -7,7 +7,7 @@ import java.awt.Dimension;
  * This class encapsulates the width and height of the visible area.
  */
 public final class VisibleMapSizeData {
-    private Dimension dimension;
+    private final Dimension dimension;
 
     /**
      * Constructs a VisibleMapSizeData instance with the specified width and height.

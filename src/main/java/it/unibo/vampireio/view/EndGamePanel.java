@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import it.unibo.vampireio.controller.ScoreData;
 
 class EndGamePanel extends AbstractBasePanel {
+    private static final long serialVersionUID = 1L;
+    
     private static final int SECONDS_PER_MINUTE = 60;
 
     private final JButton returnMenuButton;

@@ -12,7 +12,7 @@ import java.awt.geom.Point2D;
  * It handles their updates, collisions, and interactions.
  */
 public final class EntityManager {
-    private Character character;
+    private final Character character;
     private final List<Enemy> enemies = new LinkedList<>();
     private final List<Attack> attacks = new LinkedList<>();
     private final List<Collectible> collectibles = new LinkedList<>();

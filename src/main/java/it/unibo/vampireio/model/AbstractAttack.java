@@ -11,9 +11,9 @@ import java.awt.geom.Point2D;
  */
 public abstract class AbstractAttack extends AbstractMovableEntity implements Attack {
 
-    private EntityManager entityManager;
-    private int damage;
-    private long duration;
+    private final EntityManager entityManager;
+    private final int damage;
+    private final long duration;
     private boolean expired;
     private long elapsedTime;
 

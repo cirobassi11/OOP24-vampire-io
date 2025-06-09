@@ -11,11 +11,11 @@ public final class Character extends AbstractLivingEntity {
 
     private static final double XP_GROWTH_EXPONENT = 0.7;
     private final Stats stats;
+    private final int weaponSlots;
     private int level;
     private double levelPercentage;
     private int coinCounter;
     private Point2D.Double lastDirection = new Point2D.Double(-1, 0);
-    private int weaponSlots;
 
     private boolean hasJustLevelledUp;
 

@@ -9,17 +9,17 @@ import java.util.List;
  * attacks, collectibles, and items.
  */
 public final class GameData {
-    private VisibleMapSizeData visibleMapSize;
-    private long elapsedTime;
-    private int level;
-    private double levelPercentage;
-    private int killCounter;
-    private int coinCounter;
-    private LivingEntityData character;
-    private List<LivingEntityData> enemies;
-    private List<PositionableData> attacks;
-    private List<PositionableData> collectibles;
-    private List<ItemData> items;
+    private final VisibleMapSizeData visibleMapSize;
+    private final long elapsedTime;
+    private final int level;
+    private final double levelPercentage;
+    private final int killCounter;
+    private final int coinCounter;
+    private final LivingEntityData character;
+    private final List<LivingEntityData> enemies;
+    private final List<PositionableData> attacks;
+    private final List<PositionableData> collectibles;
+    private final List<ItemData> items;
 
     /**
      * Constructs a GameData instance with the specified parameters.

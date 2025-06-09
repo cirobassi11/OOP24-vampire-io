@@ -10,8 +10,8 @@ import java.awt.geom.Point2D;
 public final class LivingEntityData extends PositionableData {
     private final double health;
     private final double maxHealth;
-    private boolean isBeingAttacked;
-    private boolean isMoving;
+    private final boolean isBeingAttacked;
+    private final boolean isMoving;
 
     /**
      * Constructs a LivingEntityData instance with the specified parameters.

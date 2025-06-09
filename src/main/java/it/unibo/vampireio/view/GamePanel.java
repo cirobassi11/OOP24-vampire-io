@@ -89,8 +89,8 @@ class GamePanel extends JPanel {
         final LivingEntityData character = this.data.getCharacterData();
         final Dimension characterDimension = new Dimension((int) (character.getRadius() * 2), (int) (character.getRadius() * 2));
 
-        final int screenCenterX = (int) (this.getWidth() / 2);
-        final int screenCenterY = (int) (this.getHeight() / 2);
+        final int screenCenterX = this.getWidth() / 2;
+        final int screenCenterY = this.getHeight() / 2;
 
         final int cameraOffsetX = (int) (screenCenterX - character.getPosition().getX() * scale);
         final int cameraOffsetY = (int) (screenCenterY - character.getPosition().getY() * scale);
@@ -265,7 +265,7 @@ class GamePanel extends JPanel {
         g.setColor(Color.BLACK);
         g.fillRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale), this.getWidth(), (int) (LEVEL_BAR_HEIGHT * scale));
         g.setColor(Color.BLUE);
-        g.fillRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale), (int) ((this.getWidth() * levelPercentage) / 100),
+        g.fillRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale), (int) (this.getWidth() * levelPercentage / 100),
         (int) (LEVEL_BAR_HEIGHT * scale));
 
         g2d.setColor(Color.YELLOW);
@@ -300,8 +300,8 @@ class GamePanel extends JPanel {
         }
 
         // Draws the timer
-        final long elapsedSeconds = (elapsedTime / 1000) % 60;
-        final long elapsedMinutes = (elapsedTime / 1000) / 60;
+        final long elapsedSeconds = elapsedTime / 1000 % 60;
+        final long elapsedMinutes = elapsedTime / 1000 / 60;
         final String timeString = String.format("%02d:%02d", elapsedMinutes, elapsedSeconds);
         g.setColor(Color.WHITE);
         g.setFont(font);

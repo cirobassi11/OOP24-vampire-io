@@ -15,6 +15,10 @@ import java.util.Collection;
 public final class GameWorld implements GameModel {
 
     static final Dimension VISUAL_SIZE = new Dimension(1280, 720);
+    
+    private final SaveManager saveManager;
+    private final ShopManager shopManager;
+
     private ModelErrorListener errorListener;
 
     private boolean isGameOver;
@@ -22,8 +26,7 @@ public final class GameWorld implements GameModel {
 
     private ConfigData configData;
     private EntityManager entityManager;
-    private SaveManager saveManager;
-    private ShopManager shopManager;
+
     private GameDataProvider gameDataProvider;
 
     /**

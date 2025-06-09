@@ -9,7 +9,7 @@ import java.util.List;
  */
 public final class MagicWandAttack extends AbstractAttack {
 
-    private Living targetEnemy;
+    private final Living targetEnemy;
 
     /**
      * Constructs a MagicWandAttack with the specified parameters.

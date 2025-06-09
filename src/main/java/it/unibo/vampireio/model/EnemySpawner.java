@@ -20,18 +20,18 @@ public final class EnemySpawner {
     private static final long MAX_ENEMY_SPAWN = 4;
     private static final long LEVEL_INTERVAL = 30_000;
 
+    private final List<EnemyData> enemiesData;
+    private final Random random = new Random();
+    private final EntityManager entityManager;
+
+    private final int maxEnemyLevel;
     private long spawnInterval;
     private long timeSinceLastSpawn;
     private long timeSinceLastDecrement;
     private long timeSinceLevelUp;
     private long timeRemaining;
     private int currentLevel;
-    private int maxEnemyLevel;
     private boolean reaperSpawned;
-
-    private final List<EnemyData> enemiesData;
-    private final Random random = new Random();
-    private EntityManager entityManager;
 
     /**
      * Creates a new EnemySpawner.

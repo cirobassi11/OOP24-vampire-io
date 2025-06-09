@@ -25,8 +25,8 @@ public final class FrameManager {
     private final JFrame frame;
     private final CardLayout cardLayout;
     private final JPanel cardPanel;
+    private final Image backgroundImage;
     private Dimension currentFrameSize;
-    private Image backgroundImage;
 
     /**
      * Constructs a FrameManager with the specified title and background image.

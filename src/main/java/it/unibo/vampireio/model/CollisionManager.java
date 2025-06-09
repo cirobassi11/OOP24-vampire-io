@@ -55,7 +55,7 @@ public final class CollisionManager {
             final Character character) {
         final double currentEnemyRadius = currentEnemy.getRadius();
         for (final Enemy otherEnemy : enemies) {
-            if (currentEnemy != otherEnemy) {
+            if (currentEnemy.equals(otherEnemy)) {
                 final double combinedRadius = currentEnemyRadius + otherEnemy.getRadius();
                 if (futurePosition.distance(otherEnemy.getPosition()) < combinedRadius / 2) {
                     return true;

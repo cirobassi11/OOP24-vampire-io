@@ -6,12 +6,12 @@ package it.unibo.vampireio.controller;
  * kill counter, level counter, coin counter, and total score.
  */
 public final class ScoreData {
-    private String characterName;
-    private long sessionTime;
-    private int killCounter;
-    private int levelCounter;
-    private int coinCounter;
-    private int score;
+    private final String characterName;
+    private final long sessionTime;
+    private final int killCounter;
+    private final int levelCounter;
+    private final int coinCounter;
+    private final int score;
 
     /**
      * Constructs a ScoreData instance with the specified parameters.

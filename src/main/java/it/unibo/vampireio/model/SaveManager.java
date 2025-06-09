@@ -15,16 +15,15 @@ import java.util.List;
  * that keeps track of available saves.
  */
 public final class SaveManager {
-
-    private GameWorld model;
+    private final static String savingError = "An error occurred while saving the file";
+    private final static String readingError = "An error occurred while reading the file";
+    
+    private final GameWorld model;
 
     private final String indexFileName = System.getProperty("user.home") + File.separator
             + "vampire-io_saves_index.sav";
     private Save currentSave;
     private List<String> savesNames;
-
-    private final String savingError = "An error occurred while saving the file";
-    private final String readingError = "An error occurred while reading the file";
 
     /**
      * Constructs a SaveManager for the given GameWorld model.

@@ -7,12 +7,12 @@ package it.unibo.vampireio.controller;
  */
 public final class UnlockableItemData {
 
-    private String id;
-    private String name;
-    private String description;
-    private int currentLevel;
-    private int maxLevel;
-    private int price;
+    private final String id;
+    private final String name;
+    private final String description;
+    private final int currentLevel;
+    private final int maxLevel;
+    private final int price;
 
     /**
      * Constructs an UnlockableItemData instance with the specified parameters.

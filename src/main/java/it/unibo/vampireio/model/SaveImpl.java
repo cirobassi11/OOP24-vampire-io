@@ -37,7 +37,7 @@ public final class SaveImpl implements Save {
         this.unlockedCharacters = new HashSet<>();
         this.unlockedPowerUps = new HashMap<>();
         this.moneyAmount = 0;
-        this.scores = new LinkedList<Score>();
+        this.scores = new LinkedList<>();
     }
 
     @Override

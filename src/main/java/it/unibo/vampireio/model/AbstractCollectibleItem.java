@@ -10,7 +10,7 @@ import java.awt.geom.Point2D.Double;
 public abstract class AbstractCollectibleItem extends AbstractCollidableEntity implements Collectible {
 
     private static final double COLLECTIBLE_RADIUS = 10;
-    private int value;
+    private final int value;
 
     /**
      * Constructs a new AbstractCollectibleItem with the specified parameters.

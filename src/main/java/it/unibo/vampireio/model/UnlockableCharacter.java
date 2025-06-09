@@ -6,7 +6,9 @@ package it.unibo.vampireio.model;
  * attributes.
  */
 public final class UnlockableCharacter extends AbstractUnlockableItem {
-    private Stats characterStats;
+    private static final long serialVersionUID = 1L;
+    
+    private final Stats characterStats;
     private String defaultWeapon;
     private double radius;
 

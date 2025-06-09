@@ -6,9 +6,9 @@ package it.unibo.vampireio.controller;
  */
 public final class ItemData {
 
-    private String id;
-    private String name;
-    private String description;
+    private final String id;
+    private final String name;
+    private final String description;
 
     /**
      * Constructs an ItemData instance with the specified parameters.

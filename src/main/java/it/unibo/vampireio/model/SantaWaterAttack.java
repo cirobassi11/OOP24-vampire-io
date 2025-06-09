@@ -8,8 +8,7 @@ class SantaWaterAttack extends AbstractAttack {
     private static final long DURATION_MS = 3000;
     private static final long DAMAGE_TICK_MS = 500;
 
-    private long creationTime;
-    private List<Enemy> damagedEnemies;
+    private final long creationTime;
     private long lastDamageTime;
 
     SantaWaterAttack(
