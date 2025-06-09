@@ -11,7 +11,7 @@ import java.io.InputStream;
 
 class AudioManager {
     private static final float DEFAULT_VOLUME_DB = -25.0f;
-    private final String audioPath = "/audio/";
+    private static final String audioPath = "/audio/";
 
     AudioManager(final GameViewImpl view) {
         try {

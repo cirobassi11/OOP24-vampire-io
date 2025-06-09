@@ -15,7 +15,6 @@ import java.util.Collection;
 public final class GameWorld implements GameModel {
 
     static final Dimension VISUAL_SIZE = new Dimension(1280, 720);
-    
     private final SaveManager saveManager;
     private final ShopManager shopManager;
 

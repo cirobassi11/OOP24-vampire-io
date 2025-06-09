@@ -10,15 +10,14 @@ import it.unibo.vampireio.controller.UnlockableItemData;
 class ChooseCharacterPanel extends AbstractBasePanel {
 
     private List<UnlockableItemData> choosableCharactersData = List.of();
-    private List<String> characterNames = List.of();
-    private JButton confirmButton;
-    private JButton backButton;
-    private JList<String> charactersList;
+    private final JButton confirmButton;
+    private final JButton backButton;
+    private final JList<String> charactersList;
 
     ChooseCharacterPanel(final FrameManager frameManager) {
         super(frameManager);
 
-        this.charactersList = this.addScrollableList(this.characterNames, 0, 0);
+        this.charactersList = this.addScrollableList(List.of(), 0, 0);
         this.confirmButton = this.addButton("CONFIRM", 0, 1);
         this.backButton = this.addButton("BACK", 0, 2);
         this.confirmButton.setEnabled(false);
@@ -26,15 +25,15 @@ class ChooseCharacterPanel extends AbstractBasePanel {
 
     void setChoosableCharactersData(final List<UnlockableItemData> choosableCharactersData) {
         this.choosableCharactersData = choosableCharactersData;
+        List<String> characterNames;
         if (choosableCharactersData == null || choosableCharactersData.isEmpty()) {
-            this.characterNames = List.of();
-            return;
+            characterNames = List.of();
         } else {
             this.choosableCharactersData = choosableCharactersData;
-            this.characterNames = choosableCharactersData.stream()
+            characterNames = choosableCharactersData.stream()
                     .map(UnlockableItemData::getName)
                     .toList();
-            this.charactersList.setListData(this.characterNames.toArray(new String[0]));
+            charactersList.setListData(characterNames.toArray(new String[0]));
         }
     }
 

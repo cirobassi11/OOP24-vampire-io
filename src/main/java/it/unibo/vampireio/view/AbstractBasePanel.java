@@ -24,6 +24,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 abstract class AbstractBasePanel extends JPanel {
+    private static final long serialVersionUID = 1L;
 
     // Color constants
     protected static final Color BUTTON_BACKGROUND = new Color(50, 50, 50);

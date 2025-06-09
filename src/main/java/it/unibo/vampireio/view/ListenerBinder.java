@@ -62,7 +62,7 @@ public final class ListenerBinder {
     static void bindGamePanelListener(
             final GamePanel gamePanel,
             final InputHandler inputListener) {
-        inputListener.setupKeyBindings((GamePanel) gamePanel);
+        inputListener.setupKeyBindings(gamePanel);
     }
 
     static void bindShopPanelListener(

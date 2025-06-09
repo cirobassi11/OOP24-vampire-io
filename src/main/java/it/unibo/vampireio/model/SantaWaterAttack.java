@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D;
-import java.util.List;
 
 class SantaWaterAttack extends AbstractAttack {
 

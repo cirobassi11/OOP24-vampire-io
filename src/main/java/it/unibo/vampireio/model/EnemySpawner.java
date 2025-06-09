@@ -147,6 +147,8 @@ public final class EnemySpawner {
                 x -= halfWidth;
                 x += random.nextInt(visualSize.width);
                 break;
+            default:
+                break;
         }
 
         return new Point2D.Double(x, y);

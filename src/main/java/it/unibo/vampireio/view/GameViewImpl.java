@@ -1,7 +1,5 @@
 package it.unibo.vampireio.view;
 
-import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.List;
@@ -26,9 +24,6 @@ public final class GameViewImpl implements GameView {
     private final FrameManager frameManager;
     private ImageManager imageManager;
     private ViewErrorListener errorListener;
-
-    private Dimension currentFrameSize;
-    private Image backgroundImage;
 
     /**
      * Constructs a new GameViewImpl instance, initializing the image manager,

@@ -17,7 +17,6 @@ class UnlockableItemShopPanel extends AbstractBasePanel {
     private final ImageManager imageManager;
 
     private List<UnlockableItemData> unlockableItemsData = List.of();
-    private List<String> itemsNames = List.of();
 
     private final JButton buyButton;
     private final JButton backButton;
@@ -34,7 +33,7 @@ class UnlockableItemShopPanel extends AbstractBasePanel {
         int gridy = 0;
 
         this.coinsLabel = this.addLabel("", 0, 0);
-        this.itemsList = this.addScrollableList(this.itemsNames, 0, ++gridy);
+        this.itemsList = this.addScrollableList(List.of(), 0, ++gridy);
         this.iconLabel = this.addImage(new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB)), 0, ++gridy);
         this.descriptionLabel = this.addLabel(" ", 0, ++gridy);
         this.priceLabel = this.addLabel(" ", 0, ++gridy);
@@ -44,10 +43,10 @@ class UnlockableItemShopPanel extends AbstractBasePanel {
     }
 
     void setUnlockableItemData(final List<UnlockableItemData> itemsData) {
-        this.itemsNames = List.of();
+        List<String> itemsNames = List.of();
 
         if (itemsData != null && !itemsData.isEmpty()) {
-            this.itemsNames = itemsData.stream()
+            itemsNames = itemsData.stream()
                     .map(item -> item.getName() + ((item.getMaxLevel() != 0) ? (" ["
                             + item.getCurrentLevel() + "/"
                             + item.getMaxLevel() + "]") : ""))
@@ -55,7 +54,7 @@ class UnlockableItemShopPanel extends AbstractBasePanel {
         }
 
         this.unlockableItemsData = itemsData;
-        this.itemsList.setListData(this.itemsNames.toArray(new String[0]));
+        this.itemsList.setListData(itemsNames.toArray(new String[0]));
         this.itemsList.addListSelectionListener(e -> itemInfo());
     }
 

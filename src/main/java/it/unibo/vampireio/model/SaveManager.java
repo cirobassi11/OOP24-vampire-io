@@ -15,9 +15,8 @@ import java.util.List;
  * that keeps track of available saves.
  */
 public final class SaveManager {
-    private final static String savingError = "An error occurred while saving the file";
-    private final static String readingError = "An error occurred while reading the file";
-    
+    private static final String SAVING_ERROR = "An error occurred while saving the file";
+    private static final String READING_ERROR = "An error occurred while reading the file";
     private final GameWorld model;
 
     private final String indexFileName = System.getProperty("user.home") + File.separator
@@ -33,13 +32,13 @@ public final class SaveManager {
      */
     public SaveManager(final GameWorld model) {
         this.model = model;
-        final File indexFile = new File(indexFileName); // save name and save path
+        final File indexFile = new File(indexFileName);
         if (!indexFile.exists()) {
             try {
                 indexFile.createNewFile();
                 this.savesNames = new ArrayList<>();
             } catch (final IOException e) {
-                this.model.notifyError(this.savingError);
+                this.model.notifyError(this.SAVING_ERROR);
             }
         } else {
             this.readIndex();
@@ -63,16 +62,15 @@ public final class SaveManager {
                     if (item instanceof String) {
                         this.savesNames.add((String) item);
                     } else {
-                        this.model.notifyError(this.readingError);
+                        this.model.notifyError(this.READING_ERROR);
                     }
                 }
             } else {
-                this.model.notifyError(this.readingError);
+                this.model.notifyError(this.READING_ERROR);
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            this.model.notifyError(this.readingError);
-            e.printStackTrace();
+            this.model.notifyError(this.READING_ERROR);
         }
     }
 
@@ -81,7 +79,7 @@ public final class SaveManager {
                 ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(savesNames);
         } catch (final IOException e) {
-            this.model.notifyError(this.savingError);
+            this.model.notifyError(this.SAVING_ERROR);
         }
     }
 
@@ -131,11 +129,10 @@ public final class SaveManager {
                     ObjectInputStream in = new ObjectInputStream(input)) {
                 this.currentSave = (Save) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                this.model.notifyError(this.readingError);
-                e.printStackTrace();
+                this.model.notifyError(this.READING_ERROR);
             }
         } else {
-            this.model.notifyError(this.readingError);
+            this.model.notifyError(this.READING_ERROR);
         }
     }
 
@@ -152,7 +149,7 @@ public final class SaveManager {
                     ObjectOutputStream out = new ObjectOutputStream(output)) {
                 out.writeObject(currentSave);
             } catch (final IOException e) {
-                this.model.notifyError(this.savingError);
+                this.model.notifyError(this.SAVING_ERROR);
             }
         }
     }

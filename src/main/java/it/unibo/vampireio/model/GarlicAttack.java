@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D;
-import java.util.List;
 
 /**
  * Represents a GarlicAttack that damages enemies within its radius.
@@ -11,7 +10,6 @@ import java.util.List;
 public final class GarlicAttack extends AbstractAttack {
     private static final long DAMAGE_TICK_MS = 200;
 
-    private final long creationTime;
     private long lastDamageTime;
 
     /**
@@ -32,7 +30,6 @@ public final class GarlicAttack extends AbstractAttack {
             final long duration,
             final EntityManager entityManager) {
         super(id, position, radius, new Point2D.Double(0, 0), 0, damage, duration, entityManager);
-        this.creationTime = System.currentTimeMillis();
         this.lastDamageTime = 0;
     }
 

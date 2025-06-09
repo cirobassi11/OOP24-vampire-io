@@ -63,10 +63,8 @@ public final class CollisionManager {
             }
         }
         final double combinedRadius = currentEnemyRadius + character.getRadius();
-        if (futurePosition.distance(character.getPosition()) < combinedRadius / 2) {
-            return true;
-        }
-        return false;
+        
+        return futurePosition.distance(character.getPosition()) < combinedRadius / 2;
     }
 
     static boolean checkAttackCollisions(final Attack attack, final List<Living> enemies) {

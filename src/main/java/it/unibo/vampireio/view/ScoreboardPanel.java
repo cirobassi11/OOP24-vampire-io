@@ -15,12 +15,11 @@ class ScoreboardPanel extends AbstractBasePanel {
     private final JLabel scoreLabel;
 
     private List<ScoreData> scoresData;
-    private List<String> scoreNames = List.of();
 
     ScoreboardPanel(final FrameManager frameManager) {
         super(frameManager);
 
-        this.scoresList = this.addScrollableList(this.scoreNames, 0, 0);
+        this.scoresList = this.addScrollableList(List.of(), 0, 0);
         this.scoreLabel = this.addLabel("", 0, 1);
         this.backButton = this.addButton("BACK", 0, 2);
 
@@ -34,20 +33,21 @@ class ScoreboardPanel extends AbstractBasePanel {
 
     void setScoresData(final List<ScoreData> scoresData) {
         this.scoresData = scoresData;
-
+        final List<String> scoreNames;
+        
         if (scoresData == null || scoresData.isEmpty()) {
-            this.scoreNames = List.of();
+            scoreNames = List.of();
             this.scoreLabel.setText("");
         } else {
-            this.scoreNames = scoresData.stream()
+            scoreNames = scoresData.stream()
                 .map(ScoreData::getCharacterName)
                 .toList();
         }
 
-        this.scoresList.setListData(this.scoreNames.toArray(new String[0]));
+        this.scoresList.setListData(scoreNames.toArray(new String[0]));
 
         // Seleziona automaticamente il primo elemento
-        if (!this.scoreNames.isEmpty()) {
+        if (!scoreNames.isEmpty()) {
             this.scoresList.setSelectedIndex(0);
             updateSelectedScoreDetails();
         }
