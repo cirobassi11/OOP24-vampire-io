@@ -15,7 +15,13 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import it.unibo.vampireio.controller.GameController;
 
-public class GenericDataLoader<T extends Identifiable> {
+/**
+ * GenericDataLoader is responsible for loading and managing game data from a JSON file.
+ * It provides methods to retrieve all data or specific items by their ID.
+ *
+ * @param <T> the type of data being loaded, which must implement Identifiable
+ */
+class GenericDataLoader<T extends Identifiable> {
 
     private final GameWorld model;
     private final String path;
@@ -24,32 +30,39 @@ public class GenericDataLoader<T extends Identifiable> {
 
     private Map<String, T> dataById;
 
-    public GenericDataLoader(GameWorld model, String path, Class<T> type) {
+    /**
+     * Constructs a GenericDataLoader with the specified model, path, and type.
+     *
+     * @param model the GameWorld model to notify on errors
+     * @param path the path to the JSON file containing the data
+     * @param type the class type of the data being loaded
+     */
+    GenericDataLoader(GameWorld model, String path, Class<T> type) {
         this.model = model;
         this.path = path;
         this.type = type;
         this.gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
-    public List<T> getAll() {
+    List<T> getAll() {
         if (dataById == null) {
             load();
         }
         return new ArrayList<>(dataById.values());
     }
 
-    public Optional<T> get(String id) {
+    Optional<T> get(String id) {
         if (dataById == null) {
             load();
         }
         return Optional.ofNullable(dataById.get(id));
     }
 
-    public void reload() {
+    void reload() {
         dataById = null;
     }
 
-    private void load() {
+    void load() {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream(path)) {
             if (input == null) {
                 this.model.notifyError("Cannot find resource: " + path);

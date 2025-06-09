@@ -1,5 +1,10 @@
 package it.unibo.vampireio.model;
 
+/**
+ * Represents a weapon in the game, capable of spawning attacks at specified
+ * intervals.
+ * Implements the Weapon interface.
+ */
 public class WeaponImpl implements Weapon {
     private final String id;
     private long cooldown;
@@ -9,19 +14,29 @@ public class WeaponImpl implements Weapon {
     private final AbstractAttackFactory attackFactory;
     private final EntityManager entityManager;
 
-    public WeaponImpl(
-        final EntityManager entityManager,
-        final String id,
-        final long cooldown, 
-        final int projectilePerCooldown, 
-        final AbstractAttackFactory attackFactory) {
-            this.entityManager = entityManager;
-            this.id = id;
-            this.cooldown = cooldown;
-            this.projectilePerCooldown = projectilePerCooldown;
-            this.timeSinceLastAttack = 0;
-            this.currentLevel = 1;
-            this.attackFactory = attackFactory;
+    /**
+     * Constructs a WeaponImpl instance.
+     *
+     * @param entityManager         the EntityManager to manage attacks
+     * @param id                    the unique identifier for the weapon
+     * @param cooldown              the cooldown time in milliseconds between
+     *                              attacks
+     * @param projectilePerCooldown the number of projectiles spawned per cooldown
+     * @param attackFactory         the factory to create attacks
+     */
+    WeaponImpl(
+            final EntityManager entityManager,
+            final String id,
+            final long cooldown,
+            final int projectilePerCooldown,
+            final AbstractAttackFactory attackFactory) {
+        this.entityManager = entityManager;
+        this.id = id;
+        this.cooldown = cooldown;
+        this.projectilePerCooldown = projectilePerCooldown;
+        this.timeSinceLastAttack = 0;
+        this.currentLevel = 1;
+        this.attackFactory = attackFactory;
     }
 
     @Override

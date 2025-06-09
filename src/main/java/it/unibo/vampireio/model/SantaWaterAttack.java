@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.ArrayList;
 
-public class SantaWaterAttack extends AbstractAttack {
+class SantaWaterAttack extends AbstractAttack {
 
     private static final long DURATION_MS = 3000;
     private static final long DAMAGE_TICK_MS = 500;
@@ -13,7 +13,7 @@ public class SantaWaterAttack extends AbstractAttack {
     private List<Enemy> damagedEnemies;
     private long lastDamageTime;
 
-    public SantaWaterAttack(
+    SantaWaterAttack(
             final String id,
             final Point2D.Double position,
             final double radius,

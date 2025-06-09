@@ -4,41 +4,54 @@ import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class Stats implements Serializable {
+/**
+ * Represents a collection of statistics for a character or entity in the game.
+ * Each statistic is identified by a StatType and can be modified or retrieved.
+ */
+class Stats implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final Map<StatType, Double> statsMap;
 
-    public Stats() {
+    /**
+     * Default constructor initializes all stats to zero.
+     */
+    Stats() {
         this.statsMap = new EnumMap<>(StatType.class);
     }
 
-    public Stats(final Stats other) {
+    /**
+     * Copy constructor that creates a new Stats object with the same values as
+     * another Stats object.
+     *
+     * @param other the Stats object to copy from
+     */
+    Stats(final Stats other) {
         this.statsMap = new EnumMap<>(StatType.class);
         for (final StatType type : StatType.values()) {
             this.statsMap.put(type, other.getStat(type));
         }
     }
 
-    public double getStat(final StatType type) {
+    double getStat(final StatType type) {
         return this.statsMap.getOrDefault(type, 0.0);
     }
 
-    public void setStat(final StatType type, final double value) {
+    void setStat(final StatType type, final double value) {
         this.statsMap.put(type, value);
     }
 
-    public void modifyStat(final StatType type, final double amount) {
+    void modifyStat(final StatType type, final double amount) {
         final double currentValue = getStat(type);
         setStat(type, currentValue + amount);
     }
 
-    public void multiplyStat(final StatType type, final double factor) {
+    void multiplyStat(final StatType type, final double factor) {
         final double currentValue = getStat(type);
         setStat(type, currentValue * factor);
     }
 
-    public Map<StatType, Double> getAllStats() {
+    Map<StatType, Double> getAllStats() {
         return new EnumMap<>(this.statsMap);
     }
 }

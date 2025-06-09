@@ -10,7 +10,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Save implements Serializable {
+/**
+ * Represents a save file in the game, containing information about unlocked characters,
+ * power-ups, scores, and the amount of money.
+ * 
+ * This class is serializable to allow saving and loading of game state.
+ */
+public final class Save implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
@@ -22,8 +28,11 @@ public class Save implements Serializable {
 
     private int moneyAmount;
 
-    // Nuovo salvataggio vuoto
-    public Save() {
+    /**
+     * Constructs a new Save object with the current timestamp.
+     * Initializes unlocked characters, power-ups, and scores.
+     */
+    Save() {
         this.saveTime = generateSaveTimestamp();
         this.unlockedCharacters = new HashSet<>();
         this.unlockedPowerUps = new HashMap<>(); 
@@ -47,7 +56,7 @@ public class Save implements Serializable {
         return this.moneyAmount;
     }
 
-    public void incrementMoneyAmount(final int moneyAmount) {
+    void incrementMoneyAmount(final int moneyAmount) {
         this.moneyAmount += moneyAmount;
     }
 
@@ -55,19 +64,23 @@ public class Save implements Serializable {
         return List.copyOf(this.scores);
     }
 
-    public void addScore(final Score score) {
+    void addScore(final Score score) {
         this.scores.add(score);
     }
 
-    public void addUnlockedCharacter(final UnlockableCharacter unlockedCharacter) {
+    void addUnlockedCharacter(final UnlockableCharacter unlockedCharacter) {
         this.unlockedCharacters.add(unlockedCharacter.getId());
     }
 
-    public void enhancePowerUp(final UnlockablePowerUp unlockedPowerUp) {
+    void enhancePowerUp(final UnlockablePowerUp unlockedPowerUp) {
         this.unlockedPowerUps.put(unlockedPowerUp.getId(), unlockedPowerUp.getCurrentLevel());
     }
 
-    // Generazione stringa data-ora dd-MM-yyyy_HH-mm-ss
+    /**
+     * Generates a timestamp string in the format "dd-MM-yyyy_HH-mm-ss".
+     * 
+     * @return A string representing the current date and time.
+     */
     private static String generateSaveTimestamp() {
         return LocalDateTime.now().format(FORMATTER);
     }

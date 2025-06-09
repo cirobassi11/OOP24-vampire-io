@@ -5,9 +5,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * ShopManager is responsible for managing the shop functionalities in the game.
+ * It allows players to buy characters and power-ups, and provides methods to retrieve
+ * available characters and power-ups.
+ */
 public class ShopManager {
     private final SaveManager saveManager;
 
+    /**
+     * Constructs a ShopManager with the specified SaveManager.
+     *
+     * @param saveManager the SaveManager to be used by this ShopManager
+     */
     public ShopManager(final SaveManager saveManager) {
         this.saveManager = saveManager;
     }

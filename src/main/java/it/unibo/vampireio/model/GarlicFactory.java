@@ -1,9 +1,10 @@
 package it.unibo.vampireio.model;
 
 public class GarlicFactory extends AbstractAttackFactory {
-    private static final String attackID = "attacks/garlic";
-    AttackData attackData = this.getAttackDataById(attackID);
-    
+    private static final String ATTACK_ID = "attacks/garlic";
+    private static final double RADIUS_INCREASE_RATIO = 1.02;
+    AttackData attackData = this.getAttackDataById(ATTACK_ID);
+
     public GarlicFactory(EntityManager entityManager) {
         super(entityManager);
     }
@@ -26,7 +27,7 @@ public class GarlicFactory extends AbstractAttackFactory {
     public void increaseLevel() {
         super.increaseLevel();
         double currentRadius = this.attackData.getRadius();
-        double newRadius = currentRadius * 1.02;
+        double newRadius = currentRadius * RADIUS_INCREASE_RATIO;
         this.attackData.setRadius(newRadius);
     }
 }

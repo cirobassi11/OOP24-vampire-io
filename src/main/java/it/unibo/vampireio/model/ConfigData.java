@@ -1,6 +1,6 @@
 package it.unibo.vampireio.model;
 
-public class ConfigData implements Identifiable {
+class ConfigData implements Identifiable {
     private final String defaultCharacterId;
     private final int weaponSlots;
     private final long maxGameDuration;
@@ -9,7 +9,7 @@ public class ConfigData implements Identifiable {
     private final double foodSpawnChance;
     private final double experienceGemSpawnChance;
     
-    public ConfigData(
+    ConfigData(
         final String defaultCharacterId, 
         final int weaponSlots, 
         final long maxGameDuration,
@@ -32,30 +32,30 @@ public class ConfigData implements Identifiable {
         return "";
     }
 
-    public String getDefaultCharacterId() {
+    String getDefaultCharacterId() {
         return this.defaultCharacterId;
     }
 
-    public int getWeaponSlots() {
+    int getWeaponSlots() {
         return this.weaponSlots;
     }
 
-    public long getMaxGameDuration() {
+    long getMaxGameDuration() {
         return this.maxGameDuration;
     }
-    public double getCollectibleSpawnChance() {
+    double getCollectibleSpawnChance() {
         return this.collectibleSpawnChance;
     }
 
-    public double getCoinSpawnChance() {
+    double getCoinSpawnChance() {
         return this.coinSpawnChance;
     }
 
-    public double getFoodSpawnChance() {
+    double getFoodSpawnChance() {
         return this.foodSpawnChance;
     }
     
-    public double getExperienceGemSpawnChance() {
+    double getExperienceGemSpawnChance() {
         return this.experienceGemSpawnChance;
     }
 }

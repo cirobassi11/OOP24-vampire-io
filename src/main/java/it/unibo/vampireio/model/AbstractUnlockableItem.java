@@ -1,5 +1,9 @@
 package it.unibo.vampireio.model;
 
+/**
+ * Abstract class representing an unlockable item in the game.
+ * It implements the Unlockable and Identifiable interfaces.
+ */
 public abstract class AbstractUnlockableItem implements Unlockable, Identifiable {
     private static final long serialVersionUID = 1L;
 
@@ -9,8 +13,16 @@ public abstract class AbstractUnlockableItem implements Unlockable, Identifiable
     private final int price;
     private final int maxLevel;
     private int currentLevel;
-    
 
+    /**
+     * Constructor for AbstractUnlockableItem.
+     *
+     * @param id          the unique identifier of the item
+     * @param name        the name of the item
+     * @param description a brief description of the item
+     * @param price       the price of the item
+     * @param maxLevel    the maximum level this item can be enhanced to
+     */
     public AbstractUnlockableItem(final String id, final String name, final String description, final int price,
             final int maxLevel) {
         this.id = id;

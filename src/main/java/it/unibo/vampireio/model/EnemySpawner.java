@@ -5,7 +5,13 @@ import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Random;
 
-public class EnemySpawner {
+/**
+ * EnemySpawner is responsible for spawning enemies in the game world.
+ * It manages the spawn intervals, levels, and the specific enemies to spawn.
+ * The spawner adjusts its behavior based on the game's progression and time
+ * remaining.
+ */
+public final class EnemySpawner {
     private static final long INITIAL_SPAWN_INTERVAL = 2000;
     private static final long MIN_SPAWN_INTERVAL = 300;
     private static final long DECREMENT_INTERVAL = 500;
@@ -13,7 +19,7 @@ public class EnemySpawner {
     private static final long RANDOM_SPAWN_INTERVAL = 500;
     private static final long MAX_ENEMY_SPAWN = 4;
     private static final long LEVEL_INTERVAL = 30_000;
-    
+
     private long spawnInterval;
     private long timeSinceLastSpawn;
     private long timeSinceLastDecrement;
@@ -27,6 +33,12 @@ public class EnemySpawner {
     private final Random random = new Random();
     private EntityManager entityManager;
 
+    /**
+     * Creates a new EnemySpawner.
+     *
+     * @param entityManager   the EntityManager to manage entities
+     * @param maxGameDuration the maximum duration of the game in milliseconds
+     */
     public EnemySpawner(final EntityManager entityManager, final long maxGameDuration) {
         this.entityManager = entityManager;
         this.enemiesData = DataLoader.getInstance().getEnemyLoader().getAll();
@@ -40,6 +52,11 @@ public class EnemySpawner {
         this.currentLevel = 0;
     }
 
+    /**
+     * Updates the spawner's state based on the elapsed time.
+     *
+     * @param tickTime the time elapsed since the last update in milliseconds
+     */
     public void update(final long tickTime) {
         this.timeRemaining -= tickTime;
         this.timeSinceLastSpawn += tickTime;
@@ -80,17 +97,16 @@ public class EnemySpawner {
     private void spawnSpecificEnemy(final EnemyData enemyData) {
         final double radius = enemyData.getRadius();
         for (int attempts = 0; attempts < 10; attempts++) {
-            Point2D.Double pos = getRandomSpawnPosition(radius);
+            final Point2D.Double pos = getRandomSpawnPosition(radius);
             if (isPositionFree(pos, radius)) {
                 final Enemy newEnemy = new Enemy(
-                    enemyData.getId(),
-                    pos,
-                    radius,
-                    new Point2D.Double(0, 0),
-                    enemyData.getSpeed(),
-                    enemyData.getHealth(),
-                    enemyData.getDamage()
-                );
+                        enemyData.getId(),
+                        pos,
+                        radius,
+                        new Point2D.Double(0, 0),
+                        enemyData.getSpeed(),
+                        enemyData.getHealth(),
+                        enemyData.getDamage());
                 entityManager.addEnemy(newEnemy);
                 break;
             }
@@ -137,7 +153,7 @@ public class EnemySpawner {
     }
 
     private boolean isPositionFree(final Point2D.Double pos, final double radius) {
-        for (final Enemy e : this.entityManager.getEnemies()) {
+        for (final Living e : this.entityManager.getEnemies()) {
             final double distance = pos.distance(e.getPosition());
             if (distance < radius + e.getRadius()) {
                 return false;

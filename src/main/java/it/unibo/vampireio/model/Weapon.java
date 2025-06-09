@@ -1,5 +1,8 @@
 package it.unibo.vampireio.model;
 
+/**
+ * Represents a weapon in the game, which can be upgraded and has a cooldown mechanism.
+ */
 public interface Weapon extends Identifiable {
     /**
      * Updates the internal cooldown timer and triggers attacks if the cooldown has elapsed.

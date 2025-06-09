@@ -6,7 +6,12 @@ import java.util.Map;
 import java.util.Iterator;
 import java.awt.geom.Point2D;
 
-public class EntityManager {
+/**
+ * EntityManager is responsible for managing all entities in the game, including
+ * the character, enemies, attacks, and collectibles.
+ * It handles their updates, collisions, and interactions.
+ */
+public final class EntityManager {
     private Character character;
     private final List<Enemy> enemies = new LinkedList<>();
     private final List<Attack> attacks = new LinkedList<>();
@@ -18,6 +23,15 @@ public class EntityManager {
     private final WeaponRandomizer weaponRandomizer;
     private final LevelUpManager levelUpManager;
 
+    /**
+     * Constructs an EntityManager with the specified configuration, score,
+     * saveManager, and selected character.
+     *
+     * @param config            the game configuration data
+     * @param score             the score manager
+     * @param saveManager       the save manager
+     * @param selectedCharacter the character selected by the player
+     */
     public EntityManager(
             final ConfigData config,
             final Score score,
@@ -80,6 +94,13 @@ public class EntityManager {
         };
     }
 
+    /**
+     * Updates all entities in the game world based on the current tick time and
+     * character direction.
+     *
+     * @param tickTime           the time elapsed since the last update
+     * @param characterDirection the direction of the character
+     */
     public void updateEntities(final long tickTime, final Point2D.Double characterDirection) {
         this.updateCharacter(tickTime, characterDirection);
         this.updateEnemies(tickTime);
@@ -161,46 +182,102 @@ public class EntityManager {
         }
     }
 
+    /**
+     * Adds a new enemy to the game.
+     *
+     * @param enemy the enemy to add
+     */
     public void addEnemy(final Enemy enemy) {
         this.enemies.add(enemy);
     }
 
+    /**
+     * Adds a new attack to the game.
+     *
+     * @param attack the attack to add
+     */
     public void addAttack(final Attack attack) {
         this.attacks.add(attack);
     }
 
+    /**
+     * Adds a new collectible to the game.
+     *
+     * @param collectible the collectible to add
+     */
     public void addCollectible(final Collectible collectible) {
         this.collectibles.add(collectible);
     }
 
+    /**
+     * Returns the character managed by this EntityManager.
+     *
+     * @return the character
+     */
     public Character getCharacter() {
         return this.character;
     }
 
-    public List<Enemy> getEnemies() {
+    /**
+     * Returns a list of all enemies currently in the game.
+     *
+     * @return a list of enemies
+     */
+    public List<Living> getEnemies() {
         return List.copyOf(this.enemies);
     }
 
+    /**
+     * Returns a list of all attacks currently in the game.
+     *
+     * @return a list of attacks
+     */
     public List<Attack> getAttacks() {
         return List.copyOf(this.attacks);
     }
 
+    /**
+     * Returns a list of all weapons currently available to the character.
+     *
+     * @return a list of weapons
+     */
     public List<Weapon> getWeapons() {
         return this.character.getWeapons();
     }
 
+    /**
+     * Returns a list of all collectibles currently in the game.
+     *
+     * @return a list of collectibles
+     */
     public List<Collectible> getCollectibles() {
         return List.copyOf(this.collectibles);
     }
 
+    /**
+     * Retrieves a weapon by its ID.
+     *
+     * @param weaponID the ID of the weapon to retrieve
+     * @return the weapon with the specified ID, or null if not found
+     */
     public Weapon getWeaponById(final String weaponID) {
         return this.levelUpManager.findWeaponById(this.character, weaponID);
     }
 
+    /**
+     * Levels up a weapon for the character.
+     *
+     * @param selectedWeapon the ID of the weapon to level up
+     */
     public void levelUpWeapon(final String selectedWeapon) {
         this.levelUpManager.levelUpWeapon(this.character, selectedWeapon);
     }
 
+    /**
+     * Retrieves a list of random weapons available for level-up.
+     *
+     * @return a list of random weapons for level-up
+     */
     public List<WeaponData> getRandomWeaponsForLevelUp() {
         return this.levelUpManager.getRandomLevelUpWeapons();
     }

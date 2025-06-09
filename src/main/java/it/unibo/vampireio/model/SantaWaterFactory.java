@@ -3,17 +3,28 @@ package it.unibo.vampireio.model;
 import java.awt.geom.Point2D;
 import java.awt.Dimension;
 
-public class SantaWaterFactory extends AbstractAttackFactory {
+/**
+ * Factory class for creating Santa Water attacks.
+ * This attack spawns water in a random area around the character,
+ * dealing damage to enemies within its radius.
+ */
+final class SantaWaterFactory extends AbstractAttackFactory {
     private static final String attackID = "attacks/santaWater";
     private final double SPAWN_AREA_PERCENTAGE = 0.8;
     AttackData attackData = this.getAttackDataById(attackID);
     
-    public SantaWaterFactory(EntityManager entityManager) {
+    /**
+     * Constructor for SantaWaterFactory.
+     * It initializes the factory with the provided EntityManager.
+     *
+     * @param entityManager the EntityManager to be used for creating attacks
+     */
+    SantaWaterFactory(EntityManager entityManager) {
         super(entityManager);
     }
     
     @Override
-    public Attack createAttack() {
+    Attack createAttack() {
         Character character = this.entityManager.getCharacter();
         Stats stats = character.getStats();
         return new SantaWaterAttack(
@@ -25,6 +36,14 @@ public class SantaWaterFactory extends AbstractAttackFactory {
             this.entityManager
         );
     }
+    
+    @Override
+    void increaseLevel() {
+        super.increaseLevel();
+        int currentDamage = this.attackData.getDamage();
+        int newDamage = (int) (currentDamage * 1.5);
+        this.attackData.setDamage(newDamage);
+    }
 
     private Point2D.Double getRandomPosition() {
         Point2D.Double characterPosition = this.entityManager.getCharacter().getPosition();
@@ -32,13 +51,5 @@ public class SantaWaterFactory extends AbstractAttackFactory {
         double x = characterPosition.getX() + (Math.random() * dimension.getWidth() * SPAWN_AREA_PERCENTAGE) - (dimension.getWidth() * SPAWN_AREA_PERCENTAGE / 2);
         double y = characterPosition.getY() + (Math.random() * dimension.getHeight() * SPAWN_AREA_PERCENTAGE) - (dimension.getHeight() * SPAWN_AREA_PERCENTAGE / 2);
         return new Point2D.Double(x, y);
-    }
-    
-    @Override
-    public void increaseLevel() {
-        super.increaseLevel();
-        int currentDamage = this.attackData.getDamage();
-        int newDamage = (int) (currentDamage * 1.5);
-        this.attackData.setDamage(newDamage);
     }
 }

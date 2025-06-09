@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
 import java.util.List;
 import java.util.Iterator;
 
@@ -15,18 +14,18 @@ public class CollisionManager {
         checkCharacterCollectibleCollisions(character, collectibles);
     }
 
-    private static void checkEnemyCharacterCollisions(Collidable character, List<Enemy> enemies) {
-        for (Collidable enemy : enemies) {
+    private static void checkEnemyCharacterCollisions(final Collidable character, List<Enemy> enemies) {
+        for (final Collidable enemy : enemies) {
             if (enemy.isColliding(character)) {
                 enemy.onCollision(character);
             }
         }
     }
 
-    private static void checkCharacterCollectibleCollisions(Character character, List<Collectible> collectibles) {
-        Iterator<Collectible> it = collectibles.iterator();
+    private static void checkCharacterCollectibleCollisions(final Character character, final List<Collectible> collectibles) {
+        final Iterator<Collectible> it = collectibles.iterator();
         while (it.hasNext()) {
-            Collectible collectible = it.next();
+            final Collectible collectible = it.next();
             if (collectible.isColliding(character)) {
                 character.collect(collectible);
                 it.remove();
@@ -34,26 +33,29 @@ public class CollisionManager {
         }
     }
 
-    static boolean checkEnemyCollisions(Enemy currentEnemy, Point2D.Double futurePosition, List<Enemy> enemies,
-            Character character) {
-        double currentEnemyRadius = currentEnemy.getRadius();
-        for (Enemy otherEnemy : enemies) {
+    static boolean checkEnemyCollisions(
+        final Enemy currentEnemy,
+        final Point2D.Double futurePosition,
+        final List<Enemy> enemies,
+        final Character character) {
+        final double currentEnemyRadius = currentEnemy.getRadius();
+        for (final Enemy otherEnemy : enemies) {
             if (currentEnemy != otherEnemy) {
-                double combinedRadius = currentEnemyRadius + otherEnemy.getRadius();
+                final double combinedRadius = currentEnemyRadius + otherEnemy.getRadius();
                 if (futurePosition.distance(otherEnemy.getPosition()) < combinedRadius / 2) {
                     return true;
                 }
             }
         }
-        double combinedRadius = currentEnemyRadius + character.getRadius();
+        final double combinedRadius = currentEnemyRadius + character.getRadius();
         if (futurePosition.distance(character.getPosition()) < combinedRadius / 2) {
             return true;
         }
         return false;
     }
 
-    static boolean checkAttackCollisions(Attack attack, List<Enemy> enemies) {
-        for (Enemy enemy : enemies) {
+    static boolean checkAttackCollisions(final Attack attack, final List<Living> enemies) {
+        for (final Living enemy : enemies) {
             if (attack.isColliding(enemy)) {
                 attack.onCollision(enemy);
                 return true;

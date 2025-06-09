@@ -2,7 +2,6 @@ package it.unibo.vampireio.controller;
 
 import it.unibo.vampireio.model.GameModel;
 import it.unibo.vampireio.view.GameView;
-import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.util.stream.Collectors;
 
@@ -11,7 +10,7 @@ import java.util.stream.Collectors;
  * It runs in a separate thread and processes input from the user.
  * The loop continues until the game is stopped or paused.
  */
-public final class GameLoopManager {
+final class GameLoopManager {
 
     private static final int UPDATE_RATE = 60;
 
@@ -24,19 +23,19 @@ public final class GameLoopManager {
     private boolean paused;
 
     /**
-     * Constructs a GameLoopManager with the specified model, view, input handler, and input processor.
+     * Constructs a GameLoopManager with the specified model, view, input handler,
+     * and input processor.
      *
      * @param model          the game model to manage
      * @param view           the game view to update
      * @param inputHandler   the input handler to process user inputs
      * @param inputProcessor the input processor to compute movement directions
      */
-    public GameLoopManager(
+    GameLoopManager(
             final GameModel model,
             final GameView view,
             final InputHandler inputHandler,
-            final InputProcessor inputProcessor
-        ) {
+            final InputProcessor inputProcessor) {
         this.model = model;
         this.view = view;
         this.inputHandler = inputHandler;
@@ -50,7 +49,7 @@ public final class GameLoopManager {
      * @param selectedCharacter the character to start the game with
      * @return true if the game started successfully, false otherwise
      */
-    public boolean startGame(final String selectedCharacter) {
+    boolean startGame(final String selectedCharacter) {
         if (!this.model.initGame(selectedCharacter)) {
             return false;
         }
@@ -67,7 +66,7 @@ public final class GameLoopManager {
      * Pauses the game loop, clearing any pressed keys.
      * The game can be resumed later.
      */
-    public void pause() {
+    void pause() {
         inputHandler.clearPressedKeys();
         paused = true;
     }
@@ -76,21 +75,22 @@ public final class GameLoopManager {
      * Resumes the game loop if it was paused.
      * The game continues from where it was paused.
      */
-    public void resume() {
+    void resume() {
         paused = false;
     }
 
     /**
      * Stops the game loop, ending the game.
      */
-    public void stop() {
+    void stop() {
         running = false;
     }
 
     /**
      * The main game loop that updates the game model and view.
      * It checks for user inputs, updates the game state, and renders the view.
-     * The loop runs at a fixed update rate and continues until the game is over or paused.
+     * The loop runs at a fixed update rate and continues until the game is over or
+     * paused.
      */
     private void runGameLoop() {
         final long updateInterval = 1000 / UPDATE_RATE;
@@ -117,7 +117,7 @@ public final class GameLoopManager {
                     view.showScreen(GameView.ITEM_SELECTION);
                 }
 
-                if (inputHandler.isKeyPressed(KeyEvent.VK_ESCAPE)) {
+                if (inputProcessor.isPauseRequested()) {
                     pause();
                     view.showScreen(GameView.PAUSE);
                 }

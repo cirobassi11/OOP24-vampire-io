@@ -9,7 +9,7 @@ import java.util.List;
  * attacks, collectibles, and items.
  */
 public final class GameData {
-    private VisibleMapSizeData VisibleMapSize;
+    private VisibleMapSizeData visibleMapSize;
     private long elapsedTime;
     private int level;
     private double levelPercentage;
@@ -24,7 +24,7 @@ public final class GameData {
     /**
      * Constructs a GameData instance with the specified parameters.
      *
-     * @param VisibleMapSize   the visible map size data
+     * @param visibleMapSize   the visible map size data
      * @param elapsedTime       the elapsed time in milliseconds
      * @param level             the current level of the game
      * @param levelPercentage   the percentage of the level completed
@@ -37,7 +37,7 @@ public final class GameData {
      * @param items             a list of item data in the game
      */
     public GameData(
-            final VisibleMapSizeData VisibleMapSize,
+            final VisibleMapSizeData visibleMapSize,
             final long elapsedTime,
             final int level,
             final double levelPercentage,
@@ -49,7 +49,7 @@ public final class GameData {
             final List<PositionableData> collectibles,
             final List<ItemData> items
         ) {
-        this.VisibleMapSize = VisibleMapSize;
+        this.visibleMapSize = visibleMapSize;
         this.elapsedTime = elapsedTime;
         this.level = level;
         this.levelPercentage = levelPercentage;
@@ -68,7 +68,7 @@ public final class GameData {
      * @return the visible map size data
      */
     public VisibleMapSizeData getVisibleMapSizeData() {
-        return this.VisibleMapSize;
+        return this.visibleMapSize;
     }
 
     /**

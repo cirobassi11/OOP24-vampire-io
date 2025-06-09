@@ -5,6 +5,7 @@ import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.stream.Collectors;
 import it.unibo.vampireio.model.GameModel;
+import it.unibo.vampireio.model.Living;
 import it.unibo.vampireio.model.Save;
 import it.unibo.vampireio.model.Score;
 import it.unibo.vampireio.model.Attack;
@@ -17,7 +18,7 @@ import it.unibo.vampireio.model.Enemy;
  * from the GameModel, such as GameData, ScoreData, and others.
  * It provides methods to get game information in a structured format.
  */
-public final class DataBuilder {
+final class DataBuilder {
 
     private DataBuilder() {
     }
@@ -28,10 +29,10 @@ public final class DataBuilder {
      * @param model the game model containing the current game state
      * @return a GameData object representing the current game state
      */
-    public static GameData getData(final GameModel model) {
+    static GameData getData(final GameModel model) {
         final Dimension visualSize = model.getVisualSize();
-        final Character character = model.getCharacter();
-        final List<Enemy> enemies = model.getEnemies();
+        final Living character = model.getCharacter();
+        final List<Living> enemies = model.getEnemies();
         final List<Attack> attacks = model.getAttacks();
         final List<Collectible> collectibles = model.getCollectibles();
 
@@ -106,7 +107,7 @@ public final class DataBuilder {
      * @param model the game model containing the current game state
      * @return a list of ScoreData objects representing the scores
      */
-    public static List<ScoreData> getScores(final GameModel model) {
+    static List<ScoreData> getScores(final GameModel model) {
         final Save currentSave = model.getCurrentSave();
         if (currentSave == null) {
             return List.of();
@@ -129,7 +130,7 @@ public final class DataBuilder {
      * @param model the game model containing the current game state
      * @return a ScoreData object representing the current score
      */
-    public static ScoreData getCurrentScore(final GameModel model) {
+    static ScoreData getCurrentScore(final GameModel model) {
         final Score score = model.exitGame();
         return new ScoreData(
             score.getCharacterName(),

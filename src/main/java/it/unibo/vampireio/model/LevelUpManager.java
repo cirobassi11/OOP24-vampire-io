@@ -3,25 +3,38 @@ package it.unibo.vampireio.model;
 import java.util.List;
 import java.util.Objects;
 
-public class LevelUpManager {
+/**
+ * * Manages the level-up process for characters, including weapon upgrades.
+ * Provides methods to retrieve random weapons for level-up choices and to
+ * handle
+ * the leveling up of existing weapons or adding new ones.
+ */
+class LevelUpManager {
+    private static final int LEVELUP_CHOICES = 3;
     private final EntityManager entityManager;
     private final WeaponRandomizer weaponRandomizer;
-    private static final int LEVELUP_CHOICES = 3;
 
-    public LevelUpManager(final EntityManager entityManager, final WeaponRandomizer weaponRandomizer) {
+    /**
+     * Constructs a LevelUpManager with the specified EntityManager and
+     * WeaponRandomizer.
+     *
+     * @param entityManager    the EntityManager to manage entities
+     * @param weaponRandomizer the WeaponRandomizer to provide random weapons
+     */
+    LevelUpManager(final EntityManager entityManager, final WeaponRandomizer weaponRandomizer) {
         this.entityManager = entityManager;
         this.weaponRandomizer = weaponRandomizer;
     }
 
-    public List<WeaponData> getRandomLevelUpWeapons() {
+    List<WeaponData> getRandomLevelUpWeapons() {
         return weaponRandomizer.getRandomWeapons(LEVELUP_CHOICES).stream()
                 .map(weaponID -> DataLoader.getInstance().getWeaponLoader().get(weaponID).orElse(null))
                 .filter(Objects::nonNull)
                 .toList();
     }
 
-    public void levelUpWeapon(Character character, String selectedWeapon) {
-        Weapon weapon = findWeaponById(character, selectedWeapon);
+    void levelUpWeapon(final Character character, final String selectedWeapon) {
+        final Weapon weapon = findWeaponById(character, selectedWeapon);
 
         if (weapon != null) {
             weapon.levelUp();
@@ -30,28 +43,27 @@ public class LevelUpManager {
         }
     }
 
-    Weapon findWeaponById(Character character, String weaponId) {
+    Weapon findWeaponById(final Character character, final String weaponId) {
         return character.getWeapons().stream()
                 .filter(weapon -> weapon.getId().equals(weaponId))
                 .findFirst()
                 .orElse(null);
     }
 
-    private void addNewWeapon(Character character, String weaponId) {
-        WeaponData weaponData = DataLoader.getInstance().getWeaponLoader().get(weaponId).orElse(null);
+    private void addNewWeapon(final Character character, final String weaponId) {
+        final WeaponData weaponData = DataLoader.getInstance().getWeaponLoader().get(weaponId).orElse(null);
         if (weaponData != null) {
-            Weapon newWeapon = createWeapon(weaponData);
+            final Weapon newWeapon = createWeapon(weaponData);
             character.addWeapon(newWeapon);
         }
     }
 
-    private Weapon createWeapon(WeaponData data) {
+    private Weapon createWeapon(final WeaponData data) {
         return new WeaponImpl(
                 this.entityManager,
                 data.getId(),
                 data.getDefaultCooldown(),
                 data.getDefaultAttacksPerCooldown(),
-                this.entityManager.getAttackFactory(data.getId())
-        );
+                this.entityManager.getAttackFactory(data.getId()));
     }
 }

@@ -2,9 +2,13 @@ package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D;
 import java.util.List;
-import java.util.ArrayList;
 
-public class GarlicAttack extends AbstractAttack {
+/**
+ * Represents a GarlicAttack that damages enemies within its radius.
+ * The attack lasts for a fixed duration and deals damage to enemies
+ * that come into contact with it.
+ */
+public final class GarlicAttack extends AbstractAttack {
 
     private static final long DURATION_MS = 1000;
     private static final long DAMAGE_TICK_MS = 200;
@@ -13,6 +17,16 @@ public class GarlicAttack extends AbstractAttack {
     private List<Enemy> damagedEnemies;
     private long lastDamageTime;
 
+    /**
+     * Constructs a GarlicAttack with the specified parameters.
+     *
+     * @param id            the unique identifier for the attack
+     * @param position      the position of the attack in the game world
+     * @param radius        the radius of the attack's effect
+     * @param damage        the amount of damage dealt by the attack
+     * @param duration      the duration of the attack in milliseconds
+     * @param entityManager the entity manager managing game entities
+     */
     public GarlicAttack(
             final String id,
             final Point2D.Double position,
@@ -26,16 +40,12 @@ public class GarlicAttack extends AbstractAttack {
     }
 
     @Override
-    public void onCollision(Collidable collidable) {
+    public void onCollision(final Collidable collidable) {
         if (collidable instanceof Enemy) {
-            Enemy enemy = (Enemy) collidable;
+            final Enemy enemy = (Enemy) collidable;
             enemy.setGettingAttacked(true);
             enemy.dealDamage(this.damage);
         }
-    }
-
-    public long getRemainingTime() {
-        return DURATION_MS - (System.currentTimeMillis() - creationTime);
     }
 
     @Override

@@ -1,26 +1,26 @@
 package it.unibo.vampireio.model;
 
-public abstract class AbstractAttackFactory {
+abstract class AbstractAttackFactory {
     protected final EntityManager entityManager;
     private int currentLevel;
 
-    public AbstractAttackFactory(final EntityManager entityManager) {
+    AbstractAttackFactory(final EntityManager entityManager) {
         this.entityManager = entityManager;
         this.currentLevel = 1;
     }
 
-    public abstract Attack createAttack();
+    abstract Attack createAttack();
 
-    protected AttackData getAttackDataById(final String id) {
+    AttackData getAttackDataById(final String id) {
         final AttackData attackData = DataLoader.getInstance().getAttackLoader().get(id).get();
         return attackData;
     }
 
-    public int getCurrentLevel() {
+    int getCurrentLevel() {
         return this.currentLevel;
     }
 
-    public void increaseLevel() {
+    void increaseLevel() {
         this.currentLevel++;
     }
 }

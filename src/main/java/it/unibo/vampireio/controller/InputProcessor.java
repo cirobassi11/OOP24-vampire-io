@@ -1,18 +1,32 @@
 package it.unibo.vampireio.controller;
 
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 
-public final class InputProcessor {
+/**
+ * InputProcessor is responsible for processing user input from the keyboard.
+ * It computes movement directions based on key presses and checks for pause requests.
+ */
+final class InputProcessor {
 
     private final InputHandler inputHandler;
 
-    public InputProcessor(InputHandler inputHandler) {
+    /**
+     * Constructs an InputProcessor with the specified InputHandler.
+     *
+     * @param inputHandler the InputHandler to use for processing input
+     */
+    InputProcessor(InputHandler inputHandler) {
         this.inputHandler = inputHandler;
     }
 
-    public Point2D.Double computeDirection() {
+    /**
+     * Computes the movement direction based on the current key presses.
+     * The direction is normalized to ensure consistent speed.
+     *
+     * @return a Point2D.Double representing the normalized direction vector
+     */
+    Point2D.Double computeDirection() {
         Point2D.Double direction = new Point2D.Double(0, 0);
         if (inputHandler.isKeyPressed(KeyEvent.VK_W) || inputHandler.isKeyPressed(KeyEvent.VK_UP)) {
             direction.y -= 1;
@@ -34,11 +48,16 @@ public final class InputProcessor {
         return direction;
     }
 
-    public boolean isPauseRequested() {
+    /**
+     * Checks if the pause key (Escape) is pressed.
+     *
+     * @return true if the pause key is pressed, false otherwise
+     */
+    boolean isPauseRequested() {
         return inputHandler.isKeyPressed(KeyEvent.VK_ESCAPE);
     }
 
-    public void clear() {
+    void clear() {
         inputHandler.clearPressedKeys();
     }
 }

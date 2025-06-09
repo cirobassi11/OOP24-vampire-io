@@ -10,6 +10,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages the saving and loading of game states.
+ * Handles the creation, reading, and writing of save files and an index file
+ * that keeps track of available saves.
+ */
 public class SaveManager {
 
     private GameWorld model;

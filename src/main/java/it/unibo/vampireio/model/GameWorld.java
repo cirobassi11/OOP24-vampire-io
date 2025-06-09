@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Collection;
 
-
-
-
-public class GameWorld implements GameModel {
+/**
+ * GameWorld is the main class that represents the game world and implements the
+ * GameModel interface.
+ * It manages the game state, including entities, score, saves, and shop
+ * functionalities.
+ */
+public final class GameWorld implements GameModel {
 
     static final Dimension VISUAL_SIZE = new Dimension(1280, 720);
     private ModelErrorListener errorListener;
@@ -18,28 +21,31 @@ public class GameWorld implements GameModel {
     private Score score;
 
     private ConfigData configData;
-
     private EntityManager entityManager;
     private SaveManager saveManager;
     private ShopManager shopManager;
     private GameDataProvider gameDataProvider;
 
+    /**
+     * Constructs a GameWorld instance, initializes the data loader, save manager,
+     * and shop manager.
+     */
     public GameWorld() {
         DataLoader.init(this);
         this.saveManager = new SaveManager(this);
         this.shopManager = new ShopManager(this.saveManager);
 
-        final ConfigData configData = DataLoader.getInstance().getConfigLoader().get("").orElse(null);
-        if (configData != null) {
-            this.configData = configData;
+        final Optional<ConfigData> optionalConfigData = DataLoader.getInstance().getConfigLoader().get("");
+        if (optionalConfigData.isPresent()) {
+            this.configData = optionalConfigData.get();
         } else {
             this.notifyError("Config data not found!");
         }
     }
 
     @Override
-    public void setModelErrorListener(final ModelErrorListener errorListener) {
-        this.errorListener = errorListener;
+    public void setModelErrorListener(final ModelErrorListener listener) {
+        this.errorListener = listener;
     }
 
     void notifyError(final String errorMessage) {
@@ -91,12 +97,12 @@ public class GameWorld implements GameModel {
     }
 
     @Override
-    public Character getCharacter() {
+    public Living getCharacter() {
         return this.gameDataProvider.getCharacter();
     }
 
     @Override
-    public List<Enemy> getEnemies() {
+    public List<Living> getEnemies() {
         return this.gameDataProvider.getEnemies();
     }
 
@@ -201,10 +207,6 @@ public class GameWorld implements GameModel {
     @Override
     public Collection<Unlockable> getAllItems() {
         return this.shopManager.getAllItems();
-    }
-
-    public EntityManager getEntityManager() {
-        return this.entityManager;
     }
 
     @Override

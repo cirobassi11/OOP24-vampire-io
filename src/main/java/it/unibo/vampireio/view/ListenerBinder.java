@@ -10,6 +10,10 @@ import java.awt.event.ActionListener;
  */
 public final class ListenerBinder {
 
+    /**
+     * Private constructor to prevent instantiation.
+     * This class is a utility class and should not be instantiated.
+     */
     private ListenerBinder() {
     }
 

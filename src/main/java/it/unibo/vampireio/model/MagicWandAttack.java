@@ -3,10 +3,26 @@ package it.unibo.vampireio.model;
 import java.awt.geom.Point2D;
 import java.util.List;
 
-public class MagicWandAttack extends AbstractAttack {
+/**
+ * Represents an attack with a magic wand that targets the nearest enemy.
+ * If no enemies are present, it will move in a random direction.
+ */
+public final class MagicWandAttack extends AbstractAttack {
 
-    private Enemy targetEnemy;
+    private Living targetEnemy;
 
+    /**
+     * Constructs a MagicWandAttack with the specified parameters.
+     *
+     * @param id          the unique identifier for the attack
+     * @param position    the initial position of the attack
+     * @param radius      the radius of the attack
+     * @param direction   the initial direction of the attack
+     * @param speed       the speed of the attack
+     * @param damage      the damage dealt by the attack
+     * @param duration    the duration of the attack in milliseconds
+     * @param entityManager the entity manager to manage entities in the game
+     */
     public MagicWandAttack(
             final String id,
             final Point2D.Double position,
@@ -24,11 +40,11 @@ public class MagicWandAttack extends AbstractAttack {
         }
     }
 
-    private Enemy findNearestEnemy() {
+    private Living findNearestEnemy() {
         double minDistance = Double.MAX_VALUE;
-        Enemy nearest = null;
+        Living nearest = null;
 
-        for (Enemy enemy : entityManager.getEnemies()) {
+        for (Living enemy : entityManager.getEnemies()) {
             Point2D.Double enemyPos = enemy.getPosition();
             Point2D.Double currentPos = this.getPosition();
 

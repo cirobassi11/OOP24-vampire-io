@@ -3,11 +3,17 @@ package it.unibo.vampireio.model;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class WeaponRandomizer {
+final class WeaponRandomizer {
     private List<String> weaponsList;
     private Character character;
 
-    public WeaponRandomizer(final List<String> weaponsList, final Character character) {
+    /**
+     * Constructor for WeaponRandomizer.
+     *
+     * @param weaponsList the list of available weapons
+     * @param character the character for which weapons are being randomized
+     */
+    WeaponRandomizer(final List<String> weaponsList, final Character character) {
         this.weaponsList = weaponsList;
         this.character = character;
     }
@@ -23,7 +29,13 @@ public class WeaponRandomizer {
             .collect(Collectors.toList());
     }
 
-    public List<String> getRandomWeapons(final int numberOfWeapons) {
+    /**
+     * Returns a list of random weapons for the character.
+     *
+     * @param numberOfWeapons the number of weapons to return
+     * @return a list of weapon IDs
+     */
+    List<String> getRandomWeapons(final int numberOfWeapons) {
         if (!this.character.hasMaxWeapons()) {
             return this.randomize(numberOfWeapons);
         }
