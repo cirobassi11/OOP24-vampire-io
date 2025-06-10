@@ -22,7 +22,7 @@ public final class GameViewImpl implements GameView {
 
     private final Map<String, JPanel> panels = new HashMap<>();
     private final FrameManager frameManager;
-    private ImageManager imageManager;
+    private final ImageManager imageManager;
     private ViewErrorListener errorListener;
 
     /**

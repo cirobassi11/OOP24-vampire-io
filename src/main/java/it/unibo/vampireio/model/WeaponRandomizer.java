@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 final class WeaponRandomizer {
-    private List<String> weaponsList;
-    private Character character;
+    private final List<String> weaponsList;
+    private final Character character;
 
     /**
      * Constructor for WeaponRandomizer.
@@ -20,7 +20,7 @@ final class WeaponRandomizer {
 
     private List<String> randomize(final int numberOfWeapons) {
         if (this.weaponsList.size() < numberOfWeapons) {
-            return null;
+            return List.of();
         }
 
         return this.weaponsList.stream()

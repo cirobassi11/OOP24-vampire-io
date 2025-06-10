@@ -93,11 +93,9 @@ final class ShopManager {
     List<UnlockablePowerUp> getUnlockablePowerUps() {
         final List<UnlockablePowerUp> unlockablePowerUps = DataLoader.getInstance().getPowerUpLoader().getAll();
         final Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
-
-        final List<UnlockablePowerUp> levelAdjustedPowerUps = unlockablePowerUps.stream()
+        return unlockablePowerUps.stream()
                 .peek(p -> p.setCurrentLevel(unlockedPowerUps.getOrDefault(p.getId(), 0)))
                 .toList();
-        return levelAdjustedPowerUps;
     }
 
     Collection<Unlockable> getAllItems() {

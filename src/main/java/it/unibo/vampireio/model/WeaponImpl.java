@@ -7,8 +7,8 @@ package it.unibo.vampireio.model;
  */
 public final class WeaponImpl implements Weapon {
     private final String id;
+    private final int projectilePerCooldown;
     private long cooldown;
-    private int projectilePerCooldown;
     private long timeSinceLastAttack;
     private int currentLevel;
     private final AbstractAttackFactory attackFactory;

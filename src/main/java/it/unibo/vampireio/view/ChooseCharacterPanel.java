@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import it.unibo.vampireio.controller.UnlockableItemData;
 
 class ChooseCharacterPanel extends AbstractBasePanel {
+    private static final long serialVersionUID = 1L;
 
     private List<UnlockableItemData> choosableCharactersData = List.of();
     private final JButton confirmButton;
@@ -25,7 +26,7 @@ class ChooseCharacterPanel extends AbstractBasePanel {
 
     void setChoosableCharactersData(final List<UnlockableItemData> choosableCharactersData) {
         this.choosableCharactersData = choosableCharactersData;
-        List<String> characterNames;
+        final List<String> characterNames;
         if (choosableCharactersData == null || choosableCharactersData.isEmpty()) {
             characterNames = List.of();
         } else {

@@ -305,7 +305,7 @@ class GamePanel extends JPanel {
         final String timeString = String.format("%02d:%02d", elapsedMinutes, elapsedSeconds);
         g.setColor(Color.WHITE);
         g.setFont(font);
-        g.drawString(timeString, (int) ((this.getWidth() - g.getFontMetrics().stringWidth(timeString)) / 2), 
+        g.drawString(timeString, (this.getWidth() - g.getFontMetrics().stringWidth(timeString) / 2), 
         (int) (LEVEL_BAR_Y_OFFSET * scale + LEVEL_BAR_HEIGHT * scale + TIMER_Y_EXTRA_OFFSET * scale));
 
         // Draws the weapons

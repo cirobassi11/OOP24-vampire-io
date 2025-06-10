@@ -11,11 +11,11 @@ import java.io.InputStream;
 
 class AudioManager {
     private static final float DEFAULT_VOLUME_DB = -25.0f;
-    private static final String audioPath = "/audio/";
+    private static final String AUDIO_PATH = "/audio/";
 
     AudioManager(final GameViewImpl view) {
         try {
-            final InputStream backingTrackStream = getClass().getResourceAsStream(audioPath + "soundtrack.wav");
+            final InputStream backingTrackStream = getClass().getResourceAsStream(AUDIO_PATH + "soundtrack.wav");
             final AudioInputStream backingTrackAudio = AudioSystem.getAudioInputStream(backingTrackStream);
             final Clip backingTrack = AudioSystem.getClip();
             backingTrack.open(backingTrackAudio);
