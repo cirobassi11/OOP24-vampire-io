@@ -27,9 +27,7 @@ class ChooseCharacterPanel extends AbstractBasePanel {
     void setChoosableCharactersData(final List<UnlockableItemData> choosableCharactersData) {
         this.choosableCharactersData = choosableCharactersData;
         final List<String> characterNames;
-        if (choosableCharactersData == null || choosableCharactersData.isEmpty()) {
-            characterNames = List.of();
-        } else {
+        if (choosableCharactersData != null && !choosableCharactersData.isEmpty()) {
             this.choosableCharactersData = choosableCharactersData;
             characterNames = choosableCharactersData.stream()
                     .map(UnlockableItemData::getName)

@@ -69,11 +69,10 @@ final class ShopManager {
     }
 
     List<UnlockableCharacter> getChoosableCharacters() {
-        final List<UnlockableCharacter> unlockedCharacters = this.saveManager.getCurrentSave()
+        return this.saveManager.getCurrentSave()
                 .getUnlockedCharacters().stream()
                 .map(id -> DataLoader.getInstance().getCharacterLoader().get(id).get())
                 .toList();
-        return unlockedCharacters;
     }
 
     List<UnlockableCharacter> getLockedCharacters() {
