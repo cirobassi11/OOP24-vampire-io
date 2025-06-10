@@ -26,6 +26,9 @@ import javax.swing.ImageIcon;
 abstract class AbstractBasePanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
+    private final FrameManager frameManager;
+    private final List<Component> allComponents = new LinkedList<>();
+
     // Color constants
     protected static final Color BUTTON_BACKGROUND = new Color(50, 50, 50);
     protected static final Color BUTTON_HOVER = new Color(200, 0, 0);
@@ -55,9 +58,6 @@ abstract class AbstractBasePanel extends JPanel {
     protected static final int BUTTON_HEIGHT_RATIO = 15;
     protected static final int SCROLL_WIDTH_RATIO = 5;
     protected static final int SCROLL_HEIGHT_RATIO = 5;
-
-    private final FrameManager frameManager;
-    private final List<Component> allComponents = new LinkedList<>();
 
     AbstractBasePanel(final FrameManager frameManager) {
         this.frameManager = frameManager;

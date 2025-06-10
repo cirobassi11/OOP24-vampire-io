@@ -34,7 +34,7 @@ class ScoreboardPanel extends AbstractBasePanel {
     void setScoresData(final List<ScoreData> scoresData) {
         this.scoresData = scoresData;
         final List<String> scoreNames;
-        
+
         if (scoresData == null || scoresData.isEmpty()) {
             scoreNames = List.of();
             this.scoreLabel.setText("");

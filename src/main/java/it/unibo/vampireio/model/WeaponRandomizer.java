@@ -42,7 +42,7 @@ final class WeaponRandomizer {
         return character.getWeapons().stream()
         .sorted((a, b) -> Math.random() < 0.5 ? -1 : 1)
         .limit(numberOfWeapons)
-        .map(weapon -> weapon.getId())
+        .map(Identifiable::getId)
         .collect(Collectors.toList());
     }
 }

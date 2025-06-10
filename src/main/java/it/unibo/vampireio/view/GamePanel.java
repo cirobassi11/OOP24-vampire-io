@@ -210,18 +210,21 @@ class GamePanel extends JPanel {
         final int characterWidth = (int) (characterDimension.width * scale);
         final int characterHeight = (int) (characterDimension.height * scale);
 
-        String directionSuffix = "_";
+        final StringBuilder directionSuffixBuilder = new StringBuilder("_");
         if (character.getDirection().getX() < 0) {
-            directionSuffix += LEFT_DIRECTION;
+            directionSuffixBuilder.append(LEFT_DIRECTION);
             this.lastCharacterDirection = LEFT_DIRECTION;
         } else if (character.getDirection().getX() > 0) {
-            directionSuffix += RIGHT_DIRECTION;
+            directionSuffixBuilder.append(RIGHT_DIRECTION);
             this.lastCharacterDirection = RIGHT_DIRECTION;
         } else {
-            directionSuffix += this.lastCharacterDirection;
+            directionSuffixBuilder.append(this.lastCharacterDirection);
         }
 
-        final Image tile = this.imageManager.getImage(character.getId() + "/" + this.currentCharacterFrame + directionSuffix);
+        final Image tile = this.imageManager.getImage(character.getId()
+        + "/"
+        + this.currentCharacterFrame
+        + directionSuffixBuilder);
 
         if (tile != null) {
             if (character.isBeingAttacked()) { // red image if the character is being attacked

@@ -65,7 +65,7 @@ public final class CollisionManager {
             }
         }
         final double combinedRadius = currentEnemyRadius + character.getRadius();
-        
+
         return futurePosition.distance(character.getPosition()) < combinedRadius / 2;
     }
 
