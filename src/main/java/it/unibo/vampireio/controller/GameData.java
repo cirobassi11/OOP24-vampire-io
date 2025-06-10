@@ -9,6 +9,7 @@ import java.util.List;
  * attacks, collectibles, and items.
  */
 public final class GameData {
+
     private final VisibleMapSizeData visibleMapSize;
     private final long elapsedTime;
     private final int level;
@@ -24,17 +25,17 @@ public final class GameData {
     /**
      * Constructs a GameData instance with the specified parameters.
      *
-     * @param visibleMapSize   the visible map size data
-     * @param elapsedTime       the elapsed time in milliseconds
-     * @param level             the current level of the game
-     * @param levelPercentage   the percentage of the level completed
-     * @param killCounter       the number of kills made by the player
-     * @param coinCounter       the number of coins collected by the player
-     * @param character         the character data of the player
-     * @param enemies           a list of enemy data in the game
-     * @param attacks           a list of attack data in the game
-     * @param collectibles      a list of collectible data in the game
-     * @param items             a list of item data in the game
+     * @param visibleMapSize  the visible map size data
+     * @param elapsedTime     the elapsed time in milliseconds
+     * @param level           the current level of the game
+     * @param levelPercentage the percentage of the level completed
+     * @param killCounter     the number of kills made by the player
+     * @param coinCounter     the number of coins collected by the player
+     * @param character       the character data of the player
+     * @param enemies         a list of enemy data in the game
+     * @param attacks         a list of attack data in the game
+     * @param collectibles    a list of collectible data in the game
+     * @param items           a list of item data in the game
      */
     public GameData(
             final VisibleMapSizeData visibleMapSize,
@@ -47,8 +48,7 @@ public final class GameData {
             final List<LivingEntityData> enemies,
             final List<PositionableData> attacks,
             final List<PositionableData> collectibles,
-            final List<ItemData> items
-        ) {
+            final List<ItemData> items) {
         this.visibleMapSize = visibleMapSize;
         this.elapsedTime = elapsedTime;
         this.level = level;

@@ -30,6 +30,21 @@ public final class ScoreImpl implements Score {
         this.coinCounter = 0;
     }
 
+    /**
+     * Copy constructor to create a new ScoreImpl object from an existing one.
+     * This allows for cloning or resetting scores while retaining the character
+     * name.
+     *
+     * @param score the ScoreImpl object to copy from
+     */
+    public ScoreImpl(final ScoreImpl score) {
+        this.characterName = score.getCharacterName();
+        this.sessionTime = score.getSessionTime();
+        this.killCounter = score.getKillCounter();
+        this.level = score.getLevel();
+        this.coinCounter = score.getCoinCounter();
+    }
+
     void incrementKillCounter() {
         this.killCounter++;
     }

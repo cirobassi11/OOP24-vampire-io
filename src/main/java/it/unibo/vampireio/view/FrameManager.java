@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Map;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -28,12 +29,12 @@ public final class FrameManager {
     /**
      * Constructs a FrameManager with the specified title and background image.
      *
-     * @param title          the title of the frame
+     * @param title           the title of the frame
      * @param backgroundImage the background image for the frame
      */
     public FrameManager(final String title, final Image backgroundImage) {
         this.frame = new JFrame(title);
-        this.backgroundImage = backgroundImage;
+        this.backgroundImage = new ImageIcon(backgroundImage).getImage();
         this.cardLayout = new CardLayout();
         this.cardPanel = new JPanel(this.cardLayout);
         this.initFrame();
@@ -103,7 +104,7 @@ public final class FrameManager {
      * @return the current frame size
      */
     public Dimension getFrameSize() {
-        return this.currentFrameSize;
+        return new Dimension(currentFrameSize.width, currentFrameSize.height);
     }
 
     /**
@@ -112,6 +113,6 @@ public final class FrameManager {
      * @return the background image
      */
     public Image getBackgroundImage() {
-        return this.backgroundImage;
+        return new ImageIcon(this.backgroundImage).getImage();
     }
 }

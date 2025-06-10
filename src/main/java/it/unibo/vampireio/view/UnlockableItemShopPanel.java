@@ -14,9 +14,9 @@ import it.unibo.vampireio.controller.UnlockableItemData;
 class UnlockableItemShopPanel extends AbstractBasePanel {
     private static final long serialVersionUID = 1L;
 
-    private final ImageManager imageManager;
+    private final transient ImageManager imageManager;
 
-    private List<UnlockableItemData> unlockableItemsData = List.of();
+    private transient List<UnlockableItemData> unlockableItemsData = List.of();
 
     private final JButton buyButton;
     private final JButton backButton;
@@ -34,7 +34,8 @@ class UnlockableItemShopPanel extends AbstractBasePanel {
 
         this.coinsLabel = this.addLabel("", 0, 0);
         this.itemsList = this.addScrollableList(List.of(), 0, ++gridy);
-        this.iconLabel = this.addImage(new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB)), 0, ++gridy);
+        this.iconLabel = this.addImage(new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB)), 0,
+                ++gridy);
         this.descriptionLabel = this.addLabel(" ", 0, ++gridy);
         this.priceLabel = this.addLabel(" ", 0, ++gridy);
         this.buyButton = this.addButton("BUY", 0, ++gridy);

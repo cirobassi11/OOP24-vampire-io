@@ -21,7 +21,7 @@ public abstract class AbstractPositionableEntity implements Positionable {
      */
     protected AbstractPositionableEntity(final String id, final Point2D.Double position) {
         this.id = id;
-        this.position = position;
+        this.position = new Point2D.Double(position.getX(), position.getY());
     }
 
     /**
@@ -37,7 +37,7 @@ public abstract class AbstractPositionableEntity implements Positionable {
      */
     @Override
     public final Point2D.Double getPosition() {
-        return this.position;
+        return new Point2D.Double(position.getX(), position.getY());
     }
 
     /**
@@ -45,7 +45,7 @@ public abstract class AbstractPositionableEntity implements Positionable {
      */
     @Override
     public final void setPosition(final Point2D.Double position) {
-        this.position = position;
+        this.position = new Point2D.Double(position.getX(), position.getY());
     }
 
     /**

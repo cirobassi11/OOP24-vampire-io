@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 
 /**
  * GenericDataLoader is responsible for loading and managing game data from a
@@ -70,7 +71,7 @@ class GenericDataLoader<T extends Identifiable> {
                 return;
             }
 
-            final InputStreamReader reader = new InputStreamReader(input);
+            final InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8);
             final Type listType = TypeToken.getParameterized(List.class, type).getType();
             List<T> list = gson.fromJson(reader, listType);
 

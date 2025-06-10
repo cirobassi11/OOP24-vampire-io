@@ -31,7 +31,7 @@ public final class UnlockableCharacter extends AbstractUnlockableItem {
             final Stats stats,
             final String defaultWeapon) {
         super(id, name, description, price, 1);
-        this.characterStats = stats;
+        this.characterStats = new Stats(stats);
         this.defaultWeapon = defaultWeapon;
         this.radius = radius;
     }

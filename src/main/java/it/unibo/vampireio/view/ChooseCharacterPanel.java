@@ -10,7 +10,7 @@ import it.unibo.vampireio.controller.UnlockableItemData;
 class ChooseCharacterPanel extends AbstractBasePanel {
     private static final long serialVersionUID = 1L;
 
-    private List<UnlockableItemData> choosableCharactersData = List.of();
+    private transient List<UnlockableItemData> choosableCharactersData;
     private final JButton confirmButton;
     private final JButton backButton;
     private final JList<String> charactersList;
@@ -18,6 +18,7 @@ class ChooseCharacterPanel extends AbstractBasePanel {
     ChooseCharacterPanel(final FrameManager frameManager) {
         super(frameManager);
 
+        this.choosableCharactersData = List.of();
         this.charactersList = this.addScrollableList(List.of(), 0, 0);
         this.confirmButton = this.addButton("CONFIRM", 0, 1);
         this.backButton = this.addButton("BACK", 0, 2);

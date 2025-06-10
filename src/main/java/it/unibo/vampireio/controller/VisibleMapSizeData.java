@@ -7,6 +7,7 @@ import java.awt.Dimension;
  * This class encapsulates the width and height of the visible area.
  */
 public final class VisibleMapSizeData {
+
     private final Dimension dimension;
 
     /**
@@ -22,9 +23,10 @@ public final class VisibleMapSizeData {
     /**
      * Returns the dimension of the visible map.
      *
-     * @return a Dimension object representing the width and height of the visible map
+     * @return a Dimension object representing the width and height of the visible
+     *         map
      */
     public Dimension getDimension() {
-        return this.dimension;
+        return new Dimension(this.dimension.width, this.dimension.height);
     }
 }

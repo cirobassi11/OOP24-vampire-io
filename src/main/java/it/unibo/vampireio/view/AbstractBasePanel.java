@@ -26,7 +26,8 @@ import javax.swing.ImageIcon;
 /**
  * AbstractBasePanel is an abstract class that serves as a base for creating
  * custom panels in the VampireIO game.
- * It provides methods to add buttons, labels, combo boxes, and scrollable lists,
+ * It provides methods to add buttons, labels, combo boxes, and scrollable
+ * lists,
  * along with common styling and layout configurations.
  */
 abstract class AbstractBasePanel extends JPanel {
@@ -68,7 +69,8 @@ abstract class AbstractBasePanel extends JPanel {
     /**
      * Constructor for AbstractBasePanel.
      *
-     * @param frameManager the FrameManager instance to manage the frame's background
+     * @param frameManager the FrameManager instance to manage the frame's
+     *                     background
      */
     AbstractBasePanel(final FrameManager frameManager) {
         this.frameManager = frameManager;
@@ -90,8 +92,7 @@ abstract class AbstractBasePanel extends JPanel {
         final GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(
                 COMPONENT_INSET_TOP, COMPONENT_INSET_LEFT,
-                COMPONENT_INSET_BOTTOM, COMPONENT_INSET_RIGHT
-        );
+                COMPONENT_INSET_BOTTOM, COMPONENT_INSET_RIGHT);
         gbc.gridx = gridx;
         gbc.gridy = gridy;
         gbc.weightx = 1;
@@ -171,16 +172,14 @@ abstract class AbstractBasePanel extends JPanel {
             if (c instanceof JButton) {
                 c.setPreferredSize(new Dimension(
                         frameSize.width / BUTTON_WIDTH_RATIO,
-                        frameSize.height / BUTTON_HEIGHT_RATIO
-                ));
+                        frameSize.height / BUTTON_HEIGHT_RATIO));
                 c.setFont(DEFAULT_FONT.deriveFont((float) frameSize.height / FONT_SIZE_RATIO));
             } else if (c instanceof JLabel || c instanceof JComboBox) {
                 c.setFont(DEFAULT_FONT.deriveFont((float) frameSize.height / FONT_SIZE_RATIO));
             } else if (c instanceof JScrollPane) {
                 c.setPreferredSize(new Dimension(
                         frameSize.width / SCROLL_WIDTH_RATIO,
-                        frameSize.height / SCROLL_HEIGHT_RATIO
-                ));
+                        frameSize.height / SCROLL_HEIGHT_RATIO));
             }
         }
         this.revalidate();

@@ -38,7 +38,7 @@ public final class EntityManager {
             final SaveManager saveManager,
             final UnlockableCharacter selectedCharacter) {
         this.config = config;
-        this.score = score;
+        this.score = new ScoreImpl(score);
         this.saveManager = saveManager;
         this.enemySpawner = new EnemySpawner(this, this.config.getMaxGameDuration());
 

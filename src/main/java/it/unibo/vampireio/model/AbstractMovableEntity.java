@@ -41,12 +41,12 @@ public abstract class AbstractMovableEntity extends AbstractCollidableEntity imp
      */
     @Override
     public void setDirection(final Point2D.Double direction) {
-        this.direction = direction;
+        this.direction = new Point2D.Double(direction.getX(), direction.getY());
     }
 
     @Override
     public final Point2D.Double getDirection() {
-        return this.direction;
+        return new Point2D.Double(this.direction.getX(), this.direction.getY());
     }
 
     @Override

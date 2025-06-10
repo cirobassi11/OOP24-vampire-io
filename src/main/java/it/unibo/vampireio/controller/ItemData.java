@@ -20,8 +20,7 @@ public final class ItemData {
     public ItemData(
             final String id,
             final String name,
-            final String description
-        ) {
+            final String description) {
         this.id = id;
         this.name = name;
         this.description = description;

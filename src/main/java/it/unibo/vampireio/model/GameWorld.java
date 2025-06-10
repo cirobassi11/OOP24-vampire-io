@@ -95,7 +95,7 @@ public final class GameWorld implements GameModel {
 
     @Override
     public Dimension getVisualSize() {
-        return VISUAL_SIZE;
+        return new Dimension(VISUAL_SIZE.width, VISUAL_SIZE.height);
     }
 
     @Override
@@ -198,12 +198,13 @@ public final class GameWorld implements GameModel {
 
     @Override
     public Score exitGame() {
-        this.score.setLevel(this.entityManager.getCharacter().getLevel());
-        this.score.setCoinCounter(this.entityManager.getCharacter().getCoinCounter());
+        final ScoreImpl tempScore = new ScoreImpl(score);
+        tempScore.setLevel(this.entityManager.getCharacter().getLevel());
+        tempScore.setCoinCounter(this.entityManager.getCharacter().getCoinCounter());
         this.saveManager.getCurrentSave().incrementMoneyAmount(getCoinCounter());
-        this.saveManager.getCurrentSave().addScore(this.score);
+        this.saveManager.getCurrentSave().addScore(tempScore);
         this.saveManager.saveCurrentSave();
-        return this.score;
+        return tempScore;
     }
 
     @Override

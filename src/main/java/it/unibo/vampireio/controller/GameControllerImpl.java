@@ -18,9 +18,11 @@ public final class GameControllerImpl implements GameController {
     private final GameLoopManager gameLoopManager;
 
     /**
-     * Constructs a GameControllerImpl instance, initializing the model, view, input handler,
+     * Constructs a GameControllerImpl instance, initializing the model, view, input
+     * handler,
      * input processor, screen manager, and game loop manager.
-     * It also sets up error listeners for the model and view to handle error messages.
+     * It also sets up error listeners for the model and view to handle error
+     * messages.
      */
     public GameControllerImpl() {
         this.view = new GameViewImpl();
@@ -31,7 +33,8 @@ public final class GameControllerImpl implements GameController {
         this.inputProcessor = new InputProcessor(this.inputHandler);
         this.screenManager = new ScreenManager(this.view);
         this.gameLoopManager = new GameLoopManager(this.model, this.view, this.inputHandler, this.inputProcessor);
-        ListenerInitializer.initialize(this.view, this.model, this, this.gameLoopManager, this.screenManager, this.inputHandler);
+        ListenerInitializer.initialize(this.view, this.model, this, this.gameLoopManager, this.screenManager,
+                this.inputHandler);
     }
 
     @Override

@@ -34,7 +34,7 @@ public final class Character extends AbstractLivingEntity {
             final int weaponSlots) {
         super(id, new Point2D.Double(0, 0), radius, new Point2D.Double(1, 0), stats.getStat(StatType.MOVE_SPEED),
                 stats.getStat(StatType.MAX_HEALTH));
-        this.stats = stats;
+        this.stats = new Stats(stats);
         this.level = 1;
         this.levelPercentage = 0;
         this.coinCounter = 0;
@@ -43,10 +43,48 @@ public final class Character extends AbstractLivingEntity {
         this.addWeapon(weapon);
     }
 
+    /*
+     * /**
+     * Constructs a new character with the specified parameters.
+     *
+     * @param id the unique identifier for the character
+     * 
+     * @param stats the stats of the character
+     * 
+     * @param radius the radius of the character
+     * 
+     * @param position the initial position of the character
+     * 
+     * @param direction the initial direction of the character
+     * 
+     * @param moveSpeed the movement speed of the character
+     * 
+     * @param maxHealth the maximum health of the character
+     * 
+     * @param weaponSlots the maximum number of weapons the character can hold
+     * /
+     * public Character(final Character character) {
+     * super(character.getId(), new Point2D.Double(character.getPosition().getX(),
+     * character.getPosition().getY()), character.getRadius(),
+     * new Point2D.Double(character.getDirection().getX(),
+     * character.getDirection().getY()),
+     * character.getMoveSpeed(), character.getMaxHealth());
+     * this.stats = new Stats(character.stats);
+     * this.level = character.getLevel();
+     * this.levelPercentage = character.getLevelPercentage();
+     * this.coinCounter = character.getCoinCounter();
+     * this.weaponSlots = character.getWeaponSlots();
+     * this.hasJustLevelledUp = character.hasJustLevelledUp();
+     * this.weapons.addAll(character.getWeapons());
+     * this.lastDirection = new Point2D.Double(character.getLastDirection().getX(),
+     * character.getLastDirection().getY());
+     * }
+     */
+
     @Override
     public void setDirection(final Point2D.Double direction) {
         if (direction.getX() != 0 || direction.getY() != 0) {
-            lastDirection = direction;
+            lastDirection = new Point2D.Double(direction.getX(), direction.getY());
         }
         super.setDirection(direction);
     }
@@ -57,7 +95,7 @@ public final class Character extends AbstractLivingEntity {
      * @return the last direction as a Point2D.Double
      */
     public Point2D.Double getLastDirection() {
-        return this.lastDirection;
+        return new Point2D.Double(lastDirection.getX(), lastDirection.getY());
     }
 
     /**
@@ -66,7 +104,7 @@ public final class Character extends AbstractLivingEntity {
      * @return the stats of the character
      */
     public Stats getStats() {
-        return this.stats;
+        return new Stats(this.stats);
     }
 
     /**
@@ -174,6 +212,15 @@ public final class Character extends AbstractLivingEntity {
      */
     public boolean hasMaxWeapons() {
         return this.weapons.size() >= this.weaponSlots;
+    }
+
+    /**
+     * Returns the maximum number of weapon slots the character has.
+     *
+     * @return the number of weapon slots
+     */
+    public int getWeaponSlots() {
+        return this.weaponSlots;
     }
 
     @Override

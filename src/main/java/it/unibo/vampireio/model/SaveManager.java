@@ -35,10 +35,13 @@ public final class SaveManager {
         final File indexFile = new File(indexFileName);
         if (!indexFile.exists()) {
             try {
-                indexFile.createNewFile();
+                if (!indexFile.createNewFile()) {
+                    this.model.notifyError("Failed to create index file.");
+                    return;
+                }
                 this.savesNames = new ArrayList<>();
             } catch (final IOException e) {
-                this.model.notifyError(this.SAVING_ERROR);
+                this.model.notifyError(SAVING_ERROR);
             }
         } else {
             this.readIndex();
@@ -174,8 +177,9 @@ public final class SaveManager {
      */
     private String getFilePath(final String saveTime) {
         final File saveDirectory = new File(System.getProperty("user.home") + File.separator + "vampire-io_save");
-        if (!saveDirectory.exists()) {
-            saveDirectory.mkdirs();
+        if (!saveDirectory.exists() && !saveDirectory.mkdirs()) {
+            this.model.notifyError("Failed to create save directory.");
+            return null;
         }
         return saveDirectory.getPath() + File.separator + saveTime + ".sav";
     }

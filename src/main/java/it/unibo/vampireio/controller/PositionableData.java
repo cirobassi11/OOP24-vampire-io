@@ -7,6 +7,7 @@ import java.awt.geom.Point2D;
  * This class encapsulates the entity's ID, position, direction, and radius.
  */
 public class PositionableData {
+
     private final String id;
     private final Point2D.Double position;
     private final Point2D.Double direction;
@@ -26,8 +27,8 @@ public class PositionableData {
             final Point2D.Double direction,
             final double radius) {
         this.id = id;
-        this.position = position;
-        this.direction = direction;
+        this.position = new Point2D.Double(position.getX(), position.getY());
+        this.direction = new Point2D.Double(direction.getX(), direction.getY());
         this.radius = radius;
     }
 
@@ -46,7 +47,7 @@ public class PositionableData {
      * @return the entity's position
      */
     public Point2D.Double getPosition() {
-        return this.position;
+        return new Point2D.Double(this.position.getX(), this.position.getY());
     }
 
     /**
@@ -54,8 +55,8 @@ public class PositionableData {
      *
      * @return the entity's direction
      */
-    public Point2D.Double getDirection() {
-        return this.direction;
+    public Point2D getDirection() {
+        return new Point2D.Double(this.direction.getX(), this.direction.getY());
     }
 
     /**
