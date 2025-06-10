@@ -36,6 +36,17 @@ public abstract class AbstractMovableEntity extends AbstractCollidableEntity imp
     }
 
     /**
+     * Copy constructor for AbstractMovableEntity.
+     *
+     * @param entity the AbstractMovableEntity to copy
+     */
+    AbstractMovableEntity(final AbstractMovableEntity entity) {
+        super(entity);
+        this.direction = new Point2D.Double(entity.getDirection().getX(), entity.getDirection().getY());
+        this.speed = entity.getSpeed();
+    }
+
+    /**
      * Subclasses that override this method should call
      * {@code super.setDirection(direction)}.
      */

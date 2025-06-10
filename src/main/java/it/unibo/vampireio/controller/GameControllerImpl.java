@@ -32,7 +32,7 @@ public final class GameControllerImpl implements GameController {
         this.inputHandler = new InputHandler();
         this.inputProcessor = new InputProcessor(this.inputHandler);
         this.screenManager = new ScreenManager(this.view);
-        this.gameLoopManager = new GameLoopManager(this.model, this.view, this.inputHandler, this.inputProcessor);
+        this.gameLoopManager = new GameLoopManager(this.model, this.view, this.inputProcessor);
         ListenerInitializer.initialize(this.view, this.model, this, this.gameLoopManager, this.screenManager,
                 this.inputHandler);
     }
@@ -40,6 +40,10 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void showError(final String errorMessage) {
         this.view.showError(errorMessage);
-        System.exit(1);
+        throw new IllegalStateException("Errore critico: " + errorMessage);
+    }
+
+    void quitGame() {
+        System.exit(0);
     }
 }

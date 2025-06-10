@@ -31,6 +31,19 @@ public abstract class AbstractLivingEntity extends AbstractMovableEntity impleme
         this.isGettingAttacked = false;
     }
 
+    /**
+     * Copy constructor that creates a new AbstractLivingEntity from an existing
+     * one.
+     *
+     * @param entity the AbstractLivingEntity to copy
+     */
+    AbstractLivingEntity(final AbstractLivingEntity entity) {
+        super(entity);
+        this.maxHealth = entity.getMaxHealth();
+        this.health = entity.getHealth();
+        this.isGettingAttacked = entity.isGettingAttacked();
+    }
+
     @Override
     public final double getHealth() {
         return this.health;
@@ -47,7 +60,8 @@ public abstract class AbstractLivingEntity extends AbstractMovableEntity impleme
     }
 
     /**
-     * Subclasses overriding this method should call {@code super.dealDamage(damage)}.
+     * Subclasses overriding this method should call
+     * {@code super.dealDamage(damage)}.
      */
     @Override
     public void dealDamage(final double damage) {

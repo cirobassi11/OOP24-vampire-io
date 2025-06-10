@@ -16,7 +16,7 @@ class UnlockableItemShopPanel extends AbstractBasePanel {
 
     private final transient ImageManager imageManager;
 
-    private transient List<UnlockableItemData> unlockableItemsData = List.of();
+    private List<UnlockableItemData> unlockableItemsData = List.of();
 
     private final JButton buyButton;
     private final JButton backButton;

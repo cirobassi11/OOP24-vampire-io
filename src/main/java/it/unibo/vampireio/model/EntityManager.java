@@ -3,6 +3,7 @@ package it.unibo.vampireio.model;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Iterator;
 import java.awt.geom.Point2D;
 
@@ -71,8 +72,9 @@ public final class EntityManager {
     private Stats applyBuffs(final Stats baseStats) {
         final Stats modifiedStats = new Stats(baseStats);
         final Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
-        for (final String powerUpID : unlockedPowerUps.keySet()) {
-            final int level = unlockedPowerUps.get(powerUpID);
+        for (final Entry<String, Integer> unlockedPowerUp : unlockedPowerUps.entrySet()) {
+            final String powerUpID = unlockedPowerUp.getKey();
+            final int level = unlockedPowerUp.getValue();
             final UnlockablePowerUp powerUp = DataLoader.getInstance().getPowerUpLoader().get(powerUpID).orElse(null);
             if (powerUp != null) {
                 powerUp.setCurrentLevel(level);
@@ -215,7 +217,7 @@ public final class EntityManager {
      * @return the character
      */
     public Character getCharacter() {
-        return this.character;
+        return new Character(this.character);
     }
 
     /**

@@ -47,7 +47,7 @@ final class ListenerInitializer {
         screenManager.showScreen(GameView.SAVE_MENU);
 
         final ActionListener backListener = e -> screenManager.goBack();
-        final ActionListener quitListener = e -> System.exit(0);
+        final ActionListener quitListener = e -> controller.quitGame();
 
         // SAVE MENU
         final ActionListener newSaveListener = e -> {

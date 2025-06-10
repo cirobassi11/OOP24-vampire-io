@@ -43,43 +43,22 @@ public final class Character extends AbstractLivingEntity {
         this.addWeapon(weapon);
     }
 
-    /*
-     * /**
-     * Constructs a new character with the specified parameters.
+    /**
+     * Copy constructor that creates a new Character from an existing one.
      *
-     * @param id the unique identifier for the character
-     * 
-     * @param stats the stats of the character
-     * 
-     * @param radius the radius of the character
-     * 
-     * @param position the initial position of the character
-     * 
-     * @param direction the initial direction of the character
-     * 
-     * @param moveSpeed the movement speed of the character
-     * 
-     * @param maxHealth the maximum health of the character
-     * 
-     * @param weaponSlots the maximum number of weapons the character can hold
-     * /
-     * public Character(final Character character) {
-     * super(character.getId(), new Point2D.Double(character.getPosition().getX(),
-     * character.getPosition().getY()), character.getRadius(),
-     * new Point2D.Double(character.getDirection().getX(),
-     * character.getDirection().getY()),
-     * character.getMoveSpeed(), character.getMaxHealth());
-     * this.stats = new Stats(character.stats);
-     * this.level = character.getLevel();
-     * this.levelPercentage = character.getLevelPercentage();
-     * this.coinCounter = character.getCoinCounter();
-     * this.weaponSlots = character.getWeaponSlots();
-     * this.hasJustLevelledUp = character.hasJustLevelledUp();
-     * this.weapons.addAll(character.getWeapons());
-     * this.lastDirection = new Point2D.Double(character.getLastDirection().getX(),
-     * character.getLastDirection().getY());
-     * }
+     * @param character the Character to copy
      */
+    public Character(final Character character) {
+        super(character);
+        this.stats = new Stats(character.getStats());
+        this.level = character.getLevel();
+        this.levelPercentage = character.getLevelPercentage();
+        this.coinCounter = character.getCoinCounter();
+        this.weaponSlots = character.getWeaponSlots();
+        this.hasJustLevelledUp = character.hasJustLevelledUp();
+        this.lastDirection = new Point2D.Double(character.lastDirection.getX(), character.lastDirection.getY());
+        this.weapons.addAll(character.getWeapons());
+    }
 
     @Override
     public void setDirection(final Point2D.Double direction) {

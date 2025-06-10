@@ -5,7 +5,8 @@ import java.awt.geom.Point2D;
 /**
  * Abstract class representing a collidable entity in the game.
  * It extends AbstractPositionableEntity and implements Collidable interface.
- * Provides methods to get the radius and check for collisions with other collidable entities.
+ * Provides methods to get the radius and check for collisions with other
+ * collidable entities.
  */
 public abstract class AbstractCollidableEntity extends AbstractPositionableEntity implements Collidable {
     private final double radius;
@@ -20,6 +21,17 @@ public abstract class AbstractCollidableEntity extends AbstractPositionableEntit
     protected AbstractCollidableEntity(final String id, final Point2D.Double position, final double radius) {
         super(id, position);
         this.radius = radius;
+    }
+
+    /**
+     * Copy constructor that creates a new AbstractCollidableEntity from an existing
+     * one.
+     *
+     * @param entity the AbstractCollidableEntity to copy
+     */
+    AbstractCollidableEntity(final AbstractCollidableEntity entity) {
+        super(entity);
+        this.radius = entity.getRadius();
     }
 
     @Override

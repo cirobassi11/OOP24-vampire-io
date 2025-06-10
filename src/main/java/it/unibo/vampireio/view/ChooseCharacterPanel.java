@@ -10,7 +10,7 @@ import it.unibo.vampireio.controller.UnlockableItemData;
 class ChooseCharacterPanel extends AbstractBasePanel {
     private static final long serialVersionUID = 1L;
 
-    private transient List<UnlockableItemData> choosableCharactersData;
+    private List<UnlockableItemData> choosableCharactersData;
     private final JButton confirmButton;
     private final JButton backButton;
     private final JList<String> charactersList;

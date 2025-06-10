@@ -27,7 +27,7 @@ final class InputProcessor {
      *
      * @return a Point2D.Double representing the normalized direction vector
      */
-    Point2D.Double computeDirection() {
+    synchronized Point2D.Double computeDirection() {
         final Point2D.Double direction = new Point2D.Double(0, 0);
         if (inputHandler.isKeyPressed(KeyEvent.VK_W) || inputHandler.isKeyPressed(KeyEvent.VK_UP)) {
             direction.y -= 1;
@@ -54,11 +54,11 @@ final class InputProcessor {
      *
      * @return true if the pause key is pressed, false otherwise
      */
-    boolean isPauseRequested() {
+    synchronized boolean isPauseRequested() {
         return inputHandler.isKeyPressed(KeyEvent.VK_ESCAPE);
     }
 
-    void clear() {
+    synchronized void clear() {
         inputHandler.clearPressedKeys();
     }
 }

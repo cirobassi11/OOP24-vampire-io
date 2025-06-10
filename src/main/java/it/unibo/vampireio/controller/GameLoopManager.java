@@ -16,7 +16,6 @@ final class GameLoopManager {
 
     private final GameModel model;
     private final GameView view;
-    private final InputHandler inputHandler;
     private final InputProcessor inputProcessor;
 
     private boolean running;
@@ -28,17 +27,14 @@ final class GameLoopManager {
      *
      * @param model          the game model to manage
      * @param view           the game view to update
-     * @param inputHandler   the input handler to process user inputs
      * @param inputProcessor the input processor to compute movement directions
      */
     GameLoopManager(
             final GameModel model,
             final GameView view,
-            final InputHandler inputHandler,
             final InputProcessor inputProcessor) {
         this.model = model;
         this.view = view;
-        this.inputHandler = inputHandler;
         this.inputProcessor = inputProcessor;
     }
 
@@ -66,8 +62,8 @@ final class GameLoopManager {
      * Pauses the game loop, clearing any pressed keys.
      * The game can be resumed later.
      */
-    void pause() {
-        inputHandler.clearPressedKeys();
+    synchronized void pause() {
+        this.inputProcessor.clear();
         paused = true;
     }
 
@@ -105,7 +101,9 @@ final class GameLoopManager {
                     running = false;
                     view.setCurrentScore(DataBuilder.getCurrentScore(this.model));
                     view.showScreen(GameView.END_GAME);
-                    inputHandler.clearPressedKeys();
+                    synchronized (this) {
+                        this.inputProcessor.clear();
+                    }
                     break;
                 }
 
@@ -117,15 +115,19 @@ final class GameLoopManager {
                     view.showScreen(GameView.ITEM_SELECTION);
                 }
 
-                if (inputProcessor.isPauseRequested()) {
-                    pause();
-                    view.showScreen(GameView.PAUSE);
+                synchronized (this) {
+                    if (this.inputProcessor.isPauseRequested()) {
+                        pause();
+                        view.showScreen(GameView.PAUSE);
+                    }
                 }
 
                 if (!paused) {
-                    final Point2D.Double direction = inputProcessor.computeDirection();
-                    this.model.update(updateInterval, direction);
-                    view.update(DataBuilder.getData(this.model));
+                    synchronized (this) {
+                        final Point2D.Double direction = this.inputProcessor.computeDirection();
+                        this.model.update(updateInterval, direction);
+                        view.update(DataBuilder.getData(this.model));
+                    }
                 }
 
                 lastUpdateTime = currentTime;

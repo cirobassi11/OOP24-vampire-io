@@ -1,11 +1,14 @@
 package it.unibo.vampireio.controller;
 
+import java.io.Serializable;
+
 /**
  * Represents an unlockable item in the game.
  * This class encapsulates the item's ID, name, description,
  * current level, maximum level, and price.
  */
-public final class UnlockableItemData {
+public final class UnlockableItemData implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private final String id;
     private final String name;
@@ -17,12 +20,12 @@ public final class UnlockableItemData {
     /**
      * Constructs an UnlockableItemData instance with the specified parameters.
      *
-     * @param id            the unique identifier of the item
-     * @param name          the name of the item
-     * @param description   a brief description of the item
-     * @param currentLevel  the current level of the item
-     * @param maxLevel      the maximum level the item can reach
-     * @param price         the price of the item in game currency
+     * @param id           the unique identifier of the item
+     * @param name         the name of the item
+     * @param description  a brief description of the item
+     * @param currentLevel the current level of the item
+     * @param maxLevel     the maximum level the item can reach
+     * @param price        the price of the item in game currency
      */
     public UnlockableItemData(
             final String id,
@@ -30,8 +33,7 @@ public final class UnlockableItemData {
             final String description,
             final int currentLevel,
             final int maxLevel,
-            final int price
-        ) {
+            final int price) {
         this.id = id;
         this.name = name;
         this.description = description;

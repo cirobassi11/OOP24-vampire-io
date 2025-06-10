@@ -1,10 +1,13 @@
 package it.unibo.vampireio.controller;
 
+import java.io.Serializable;
+
 /**
  * Represents an item in the game with its ID, name, and description.
  * This class is used to encapsulate the data related to an item.
  */
-public final class ItemData {
+public final class ItemData implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private final String id;
     private final String name;

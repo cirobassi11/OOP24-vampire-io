@@ -25,6 +25,17 @@ public abstract class AbstractPositionableEntity implements Positionable {
     }
 
     /**
+     * Copy constructor that creates a new AbstractPositionableEntity from an
+     * existing one.
+     *
+     * @param entity the AbstractPositionableEntity to copy
+     */
+    AbstractPositionableEntity(final AbstractPositionableEntity entity) {
+        this.id = entity.getId();
+        this.position = new Point2D.Double(entity.getPosition().getX(), entity.getPosition().getY());
+    }
+
+    /**
      * Subclasses that override this method should call {@code super.getId()}.
      */
     @Override

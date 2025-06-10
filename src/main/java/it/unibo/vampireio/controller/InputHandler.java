@@ -9,8 +9,8 @@ import javax.swing.KeyStroke;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * InputHandler is responsible for managing keyboard input in the game.
@@ -19,7 +19,7 @@ import java.util.Set;
  * keys.
  */
 public final class InputHandler {
-    private final Set<Integer> pressedKeys = new HashSet<>();
+    private final Set<Integer> pressedKeys = ConcurrentHashMap.newKeySet();
 
     /**
      * Sets up key bindings for the specified component.
