@@ -34,7 +34,7 @@ public final class GameViewImpl implements GameView {
         this.frameManager = new FrameManager(FRAME_TITLE, this.imageManager.getImage("background"));
         this.initPanels();
         this.frameManager.addPanels(this.panels);
-        this.showScreen(GameViewImpl.SAVE_MENU);
+        this.showScreen(SAVE_MENU);
         new AudioManager(this);
     }
 

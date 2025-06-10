@@ -25,10 +25,6 @@ abstract class AbstractAttackFactory {
 
     abstract Attack createAttack();
 
-    AttackData getAttackDataById(final String id) {
-        return DataLoader.getInstance().getAttackLoader().get(id).get();
-    }
-
     int getCurrentLevel() {
         return this.currentLevel;
     }
@@ -43,5 +39,9 @@ abstract class AbstractAttackFactory {
 
     protected AttackData getAttackData() {
         return this.attackData;
+    }
+
+    private static AttackData getAttackDataById(final String id) {
+        return DataLoader.getInstance().getAttackLoader().get(id).get();
     }
 }

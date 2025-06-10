@@ -40,7 +40,7 @@ public final class DataLoader {
      *
      * @param model the GameWorld model to which the data loaders will be bound
      */
-    public static void init(final GameWorld model) {
+    public static synchronized void init(final GameWorld model) {
         if (instance == null) {
             instance = new DataLoader(model);
         }

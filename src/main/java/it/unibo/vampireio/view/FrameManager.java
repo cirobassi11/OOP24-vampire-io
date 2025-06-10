@@ -4,11 +4,9 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.Taskbar;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Map;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -20,7 +18,6 @@ public final class FrameManager {
     private static final double ASPECT_RATIO = 16.0 / 9.0;
     private static final Dimension DEFAULT_RESOLUTION = new Dimension(1280, 720);
     private static final Dimension MIN_RESOLUTION = new Dimension(640, 360);
-    private static final String ICON_PATH = "/images/icon.png";
 
     private final JFrame frame;
     private final CardLayout cardLayout;
@@ -43,7 +40,6 @@ public final class FrameManager {
     }
 
     private void initFrame() {
-        this.setIcon(ICON_PATH);
         this.setResolution(DEFAULT_RESOLUTION);
 
         this.frame.setLocationRelativeTo(null);
@@ -81,19 +77,6 @@ public final class FrameManager {
     private void setResolution(final Dimension resolution) {
         frame.setSize(resolution);
         this.currentFrameSize = resolution;
-    }
-
-    private void setIcon(final String path) {
-        final Image image = new ImageIcon(getClass().getResource(path)).getImage();
-        try {
-            if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                frame.setIconImage(image);
-            } else {
-                Taskbar.getTaskbar().setIconImage(image);
-            }
-        } catch (final UnsupportedOperationException e) {
-            // Taskbar is not supported on this platform, do nothing
-        }
     }
 
     /**

@@ -57,9 +57,8 @@ class GamePanel extends JPanel {
     private static final double ENEMY_OSCILLATION_SPEED = 0.005;
 
     private final FrameManager frameManager;
-    private GameData data;
-
     private final ImageManager imageManager;
+    private GameData data;
 
     private String lastCharacterDirection = LEFT_DIRECTION;
     private int currentCharacterFrame;
@@ -68,7 +67,6 @@ class GamePanel extends JPanel {
     GamePanel(final FrameManager frameManager, final ImageManager imageManager) {
         this.frameManager = frameManager;
         this.imageManager = imageManager;
-        setFocusable(true);
     }
 
     void setData(final GameData data) {
@@ -308,7 +306,7 @@ class GamePanel extends JPanel {
         final String timeString = String.format("%02d:%02d", elapsedMinutes, elapsedSeconds);
         g.setColor(Color.WHITE);
         g.setFont(font);
-        g.drawString(timeString, this.getWidth() - g.getFontMetrics().stringWidth(timeString) / 2, 
+        g.drawString(timeString, (this.getWidth() - g.getFontMetrics().stringWidth(timeString)) / 2, 
         (int) (LEVEL_BAR_Y_OFFSET * scale + LEVEL_BAR_HEIGHT * scale + TIMER_Y_EXTRA_OFFSET * scale));
 
         // Draws the weapons

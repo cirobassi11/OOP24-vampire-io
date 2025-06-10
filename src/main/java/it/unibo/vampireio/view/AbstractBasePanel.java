@@ -23,44 +23,58 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.swing.ImageIcon;
 
+/**
+ * AbstractBasePanel is an abstract class that serves as a base for creating
+ * custom panels in the VampireIO game.
+ * It provides methods to add buttons, labels, combo boxes, and scrollable lists,
+ * along with common styling and layout configurations.
+ */
 abstract class AbstractBasePanel extends JPanel {
     private static final long serialVersionUID = 1L;
+
+    // Color constants
+    private static final Color BUTTON_BACKGROUND = new Color(50, 50, 50);
+    private static final Color BUTTON_HOVER = new Color(200, 0, 0);
+    private static final Color BUTTON_BORDER = new Color(255, 215, 0);
+    private static final Color COMBOBOX_BACKGROUND = new Color(50, 50, 50);
+    private static final Color COMBOBOX_BORDER = new Color(200, 200, 200);
+    private static final Color LIST_BACKGROUND = new Color(40, 40, 40);
+    private static final Color LIST_BORDER_COLOR = Color.GRAY;
+
+    // Font constants
+    private static final Font DEFAULT_FONT = new Font("Serif", Font.BOLD, 24);
+    private static final float SMALL_FONT_SCALE = 16f;
+    private static final int FONT_SIZE_RATIO = 30;
+
+    // Layout constants
+    private static final int COMPONENT_INSET_TOP = 10;
+    private static final int COMPONENT_INSET_LEFT = 10;
+    private static final int COMPONENT_INSET_BOTTOM = 20;
+    private static final int COMPONENT_INSET_RIGHT = 10;
+    private static final int BUTTON_BORDER_THICKNESS = 3;
+    private static final int COMBOBOX_BORDER_THICKNESS = 2;
+    private static final int LIST_BORDER_THICKNESS = 2;
+    private static final int LIST_VISIBLE_ROWS = 5;
+
+    // Resize ratios
+    private static final int BUTTON_WIDTH_RATIO = 6;
+    private static final int BUTTON_HEIGHT_RATIO = 15;
+    private static final int SCROLL_WIDTH_RATIO = 5;
+    private static final int SCROLL_HEIGHT_RATIO = 5;
 
     private final FrameManager frameManager;
     private final List<Component> allComponents = new LinkedList<>();
 
-    // Color constants
-    protected static final Color BUTTON_BACKGROUND = new Color(50, 50, 50);
-    protected static final Color BUTTON_HOVER = new Color(200, 0, 0);
-    protected static final Color BUTTON_BORDER = new Color(255, 215, 0);
-    protected static final Color COMBOBOX_BACKGROUND = new Color(50, 50, 50);
-    protected static final Color COMBOBOX_BORDER = new Color(200, 200, 200);
-    protected static final Color LIST_BACKGROUND = new Color(40, 40, 40);
-    protected static final Color LIST_BORDER_COLOR = Color.GRAY;
-
-    // Font constants
-    protected static final Font DEFAULT_FONT = new Font("Serif", Font.BOLD, 24);
-    protected static final float SMALL_FONT_SCALE = 16f;
-    protected static final int FONT_SIZE_RATIO = 30;
-
-    // Layout constants
-    protected static final int COMPONENT_INSET_TOP = 10;
-    protected static final int COMPONENT_INSET_LEFT = 10;
-    protected static final int COMPONENT_INSET_BOTTOM = 20;
-    protected static final int COMPONENT_INSET_RIGHT = 10;
-    protected static final int BUTTON_BORDER_THICKNESS = 3;
-    protected static final int COMBOBOX_BORDER_THICKNESS = 2;
-    protected static final int LIST_BORDER_THICKNESS = 2;
-    protected static final int LIST_VISIBLE_ROWS = 5;
-
-    // Resize ratios
-    protected static final int BUTTON_WIDTH_RATIO = 6;
-    protected static final int BUTTON_HEIGHT_RATIO = 15;
-    protected static final int SCROLL_WIDTH_RATIO = 5;
-    protected static final int SCROLL_HEIGHT_RATIO = 5;
-
+    /**
+     * Constructor for AbstractBasePanel.
+     *
+     * @param frameManager the FrameManager instance to manage the frame's background
+     */
     AbstractBasePanel(final FrameManager frameManager) {
         this.frameManager = frameManager;
+    }
+
+    {
         this.setLayout(new GridBagLayout());
         this.setOpaque(false);
     }
