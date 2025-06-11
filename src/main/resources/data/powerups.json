@@ -32,7 +32,7 @@
       "statToModify": "MOVE_SPEED"
     },
     {
-      "id": "powerUps/might",
+      "id": "powerups/might",
       "name": "Might",
       "description": "Increase character damage",
       "price": 20,
@@ -40,7 +40,7 @@
       "statToModify": "MIGHT"
     },
     {
-      "id": "powerUps/cooldown",
+      "id": "powerups/cooldown",
       "name": "Cooldown",
       "description": "Decrease time between the shots",
       "price": 20,
