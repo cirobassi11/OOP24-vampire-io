@@ -6,6 +6,8 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -16,7 +18,8 @@ class AudioManager {
     AudioManager(final GameViewImpl view) {
         try {
             final InputStream backingTrackStream = getClass().getResourceAsStream(AUDIO_PATH + "soundtrack.wav");
-            final AudioInputStream backingTrackAudio = AudioSystem.getAudioInputStream(backingTrackStream);
+            final AudioInputStream backingTrackAudio = AudioSystem
+                    .getAudioInputStream(new BufferedInputStream(backingTrackStream));
             final Clip backingTrack = AudioSystem.getClip();
             backingTrack.open(backingTrackAudio);
 

@@ -3,7 +3,7 @@
       "id": "powerups/maxhealth",
       "name": "Health",
       "description": "Increase character max health",
-      "price": 10,
+      "price": 25,
       "maxLevel": 5,
       "statToModify": "MAX_HEALTH"
     },
@@ -27,7 +27,7 @@
       "id": "powerups/movespeed",
       "name": "Movement Speed",
       "description": "Increase character movement speed",
-      "price": 5,
+      "price": 15,
       "maxLevel": 3,
       "statToModify": "MOVE_SPEED"
     },
@@ -43,7 +43,7 @@
       "id": "powerUps/cooldown",
       "name": "Cooldown",
       "description": "Decrease time between the shots",
-      "price": 15,
+      "price": 20,
       "maxLevel": 3,
       "statToModify": "COOLDOWN"
     }
