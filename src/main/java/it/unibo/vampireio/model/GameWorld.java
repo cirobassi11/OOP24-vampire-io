@@ -188,7 +188,7 @@ public final class GameWorld implements GameModel {
 
     @Override
     public boolean hasJustLevelledUp() {
-        return this.gameDataProvider.getCharacter().hasJustLevelledUp();
+        return this.gameDataProvider.hasJustLevelledUp();
     }
 
     @Override

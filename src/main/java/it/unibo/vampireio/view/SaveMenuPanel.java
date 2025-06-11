@@ -8,13 +8,11 @@ class SaveMenuPanel extends AbstractBasePanel {
 
     private final JButton newSaveButton;
     private final JButton loadButton;
-    private final JButton quitButton;
 
     SaveMenuPanel(final FrameManager frameManager) {
         super(frameManager);
         this.newSaveButton = this.addButton("NEW GAME", 0, 0);
         this.loadButton = this.addButton("LOAD GAME", 0, 1);
-        this.quitButton = this.addButton("QUIT", 0, 2);
     }
 
     void setNewSaveListener(final ActionListener listener) {
@@ -23,10 +21,6 @@ class SaveMenuPanel extends AbstractBasePanel {
 
     void setShowSaveListener(final ActionListener listener) {
         this.loadButton.addActionListener(listener);
-    }
-
-    void setQuitListener(final ActionListener listener) {
-        this.quitButton.addActionListener(listener);
     }
 
 }

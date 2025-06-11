@@ -42,8 +42,4 @@ public final class GameControllerImpl implements GameController {
         this.view.showError(errorMessage);
         throw new IllegalStateException("Errore critico: " + errorMessage);
     }
-
-    void quitGame() {
-        System.exit(0);
-    }
 }

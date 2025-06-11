@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Manages the saving and loading of game states.
@@ -28,8 +29,12 @@ public final class SaveManager {
      * Constructs a SaveManager for the given GameWorld model.
      * Initializes the save index file and reads existing saves if available.
      *
-     * @param model the GameWorld model to manage saves for
+     * @param model the GameWorld model
      */
+    @SuppressFBWarnings(
+        value = "EI2",
+        justification = "The GameWorld instance is intentionally shared and is used in a controlled way within SaveManager."
+    )
     public SaveManager(final GameWorld model) {
         this.model = model;
         final File indexFile = new File(indexFileName);
@@ -65,15 +70,15 @@ public final class SaveManager {
                     if (item instanceof String) {
                         this.savesNames.add((String) item);
                     } else {
-                        this.model.notifyError(this.READING_ERROR);
+                        this.model.notifyError(READING_ERROR);
                     }
                 }
             } else {
-                this.model.notifyError(this.READING_ERROR);
+                this.model.notifyError(READING_ERROR);
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            this.model.notifyError(this.READING_ERROR);
+            this.model.notifyError(READING_ERROR);
         }
     }
 
@@ -82,7 +87,7 @@ public final class SaveManager {
                 ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(savesNames);
         } catch (final IOException e) {
-            this.model.notifyError(this.SAVING_ERROR);
+            this.model.notifyError(SAVING_ERROR);
         }
     }
 
@@ -132,10 +137,10 @@ public final class SaveManager {
                     ObjectInputStream in = new ObjectInputStream(input)) {
                 this.currentSave = (Save) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                this.model.notifyError(this.READING_ERROR);
+                this.model.notifyError(READING_ERROR);
             }
         } else {
-            this.model.notifyError(this.READING_ERROR);
+            this.model.notifyError(READING_ERROR);
         }
     }
 
@@ -152,7 +157,7 @@ public final class SaveManager {
                     ObjectOutputStream out = new ObjectOutputStream(output)) {
                 out.writeObject(currentSave);
             } catch (final IOException e) {
-                this.model.notifyError(this.SAVING_ERROR);
+                this.model.notifyError(SAVING_ERROR);
             }
         }
     }

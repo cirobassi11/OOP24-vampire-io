@@ -5,6 +5,8 @@ import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Random;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * EnemySpawner is responsible for spawning enemies in the game world.
  * It manages the spawn intervals, levels, and the specific enemies to spawn.
@@ -39,6 +41,11 @@ public final class EnemySpawner {
      * @param entityManager   the EntityManager to manage entities
      * @param maxGameDuration the maximum duration of the game in milliseconds
      */
+    @SuppressFBWarnings(
+        value = "EI2",
+        justification = "The EntityManager instance is intentionally shared"
+            + "and is used in a controlled way within EnemySpawner."
+    )
     public EnemySpawner(final EntityManager entityManager, final long maxGameDuration) {
         this.entityManager = entityManager;
         this.enemiesData = DataLoader.getInstance().getEnemyLoader().getAll();

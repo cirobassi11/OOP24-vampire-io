@@ -283,4 +283,18 @@ public final class EntityManager {
     public List<WeaponData> getRandomWeaponsForLevelUp() {
         return this.levelUpManager.getRandomLevelUpWeapons();
     }
+
+    /**
+     * Checks if the character has just levelled up.
+     * This method resets the level-up flag after checking.
+     *
+     * @return true if the character has just levelled up, false otherwise
+     */
+    boolean hasJustLevelledUp() {
+        if (!this.character.hasJustLevelledUp()) {
+            return false;
+        }
+        this.character.resetHasJustLevelledUp();
+        return true;
+    }
 }

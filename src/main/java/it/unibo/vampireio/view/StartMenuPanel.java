@@ -10,7 +10,6 @@ class StartMenuPanel extends AbstractBasePanel {
     private final JButton scoreboardButton;
     private final JButton shopButton;
     private final JButton loadSaveButton;
-    private final JButton quitButton;
 
     StartMenuPanel(final FrameManager frameManager) {
         super(frameManager);
@@ -19,7 +18,6 @@ class StartMenuPanel extends AbstractBasePanel {
         this.scoreboardButton = this.addButton("SCOREBOARD", 0, 1);
         this.shopButton = this.addButton("SHOP", 1, 1);
         this.loadSaveButton = this.addButton("LOAD SAVE", 2, 1);
-        this.quitButton = this.addButton("QUIT", 1, 2);
     }
 
     void setStartListener(final ActionListener listener) {
@@ -37,9 +35,4 @@ class StartMenuPanel extends AbstractBasePanel {
     void setLoadSaveListener(final ActionListener listener) {
         this.loadSaveButton.addActionListener(listener);
     }
-
-    void setQuitListener(final ActionListener listener) {
-        this.quitButton.addActionListener(listener);
-    }
-
 }

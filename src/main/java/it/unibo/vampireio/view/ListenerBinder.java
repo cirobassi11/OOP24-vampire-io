@@ -20,11 +20,9 @@ public final class ListenerBinder {
     static void bindSaveMenuPanelListener(
             final SaveMenuPanel saveMenuPanel,
             final ActionListener newSaveListener,
-            final ActionListener showSaveListener,
-            final ActionListener quitListener) {
+            final ActionListener showSaveListener) {
         saveMenuPanel.setNewSaveListener(newSaveListener);
         saveMenuPanel.setShowSaveListener(showSaveListener);
-        saveMenuPanel.setQuitListener(quitListener);
     }
 
     static void bindStartMenuPanelListener(
@@ -32,13 +30,11 @@ public final class ListenerBinder {
             final ActionListener startListener,
             final ActionListener scoreboardListener,
             final ActionListener shopListener,
-            final ActionListener loadSaveListener,
-            final ActionListener quitListener) {
+            final ActionListener loadSaveListener) {
         startMenuPanel.setStartListener(startListener);
         startMenuPanel.setScoreboardListener(scoreboardListener);
         startMenuPanel.setShopListener(shopListener);
         startMenuPanel.setLoadSaveListener(loadSaveListener);
-        startMenuPanel.setQuitListener(quitListener);
     }
 
     static void bindSaveSelectionPanelListener(

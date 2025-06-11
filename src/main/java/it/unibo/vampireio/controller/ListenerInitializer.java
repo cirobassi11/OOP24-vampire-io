@@ -47,7 +47,6 @@ final class ListenerInitializer {
         screenManager.showScreen(GameView.SAVE_MENU);
 
         final ActionListener backListener = e -> screenManager.goBack();
-        final ActionListener quitListener = e -> controller.quitGame();
 
         // SAVE MENU
         final ActionListener newSaveListener = e -> {
@@ -59,7 +58,7 @@ final class ListenerInitializer {
             screenManager.showScreen(GameView.SAVE_SELECTION);
         };
 
-        view.setSaveMenuPanelListeners(newSaveListener, showSaveListener, quitListener);
+        view.setSaveMenuPanelListeners(newSaveListener, showSaveListener);
 
         // START MENU
         final ActionListener startListener = e -> {
@@ -81,8 +80,7 @@ final class ListenerInitializer {
                 startListener,
                 scoreboardListener,
                 shopListener,
-                loadSaveListener,
-                quitListener);
+                loadSaveListener);
 
         // CHOOSE CHARACTER
         final ActionListener confirmCharacterListener = e -> {

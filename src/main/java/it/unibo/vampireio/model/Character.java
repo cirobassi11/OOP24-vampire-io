@@ -169,9 +169,15 @@ public final class Character extends AbstractLivingEntity {
      * @return true if the character has just levelled up, false otherwise
      */
     public boolean hasJustLevelledUp() {
-        final boolean result = this.hasJustLevelledUp;
+        return this.hasJustLevelledUp;
+    }
+
+    /**
+     * Resets the flag indicating that the character has just levelled up.
+     * This should be called after the level-up effects have been applied.
+     */
+    public void resetHasJustLevelledUp() {
         this.hasJustLevelledUp = false;
-        return result;
     }
 
     /**

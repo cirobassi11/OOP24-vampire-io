@@ -56,13 +56,12 @@ public final class GameViewImpl implements GameView {
     @Override
     public void setSaveMenuPanelListeners(
             final ActionListener newSaveListener,
-            final ActionListener showSaveListener,
-            final ActionListener quitListener) {
+            final ActionListener showSaveListener) {
         ListenerBinder.bindSaveMenuPanelListener(
                 (SaveMenuPanel) this.panels.get(SAVE_MENU),
                 newSaveListener,
-                showSaveListener,
-                quitListener);
+                showSaveListener
+        );
     }
 
     @Override
@@ -70,14 +69,13 @@ public final class GameViewImpl implements GameView {
             final ActionListener startListener,
             final ActionListener scoreboardListener,
             final ActionListener shopListener,
-            final ActionListener loadSaveListener,
-            final ActionListener quitListener) {
+            final ActionListener loadSaveListener
+        ) {
         ListenerBinder.bindStartMenuPanelListener((StartMenuPanel) this.panels.get(START),
                 startListener,
                 scoreboardListener,
                 shopListener,
-                loadSaveListener,
-                quitListener);
+                loadSaveListener);
     }
 
     @Override

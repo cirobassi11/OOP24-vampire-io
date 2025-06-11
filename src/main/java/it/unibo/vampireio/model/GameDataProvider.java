@@ -2,6 +2,8 @@ package it.unibo.vampireio.model;
 
 import java.util.List;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Provides access to game data such as characters, enemies, attacks, weapons,
  * collectibles,
@@ -21,6 +23,8 @@ public final class GameDataProvider {
      * @param saveManager   the SaveManager to handle game saves
      * @param score         the Score to track player score and session time
      */
+    @SuppressFBWarnings(value = "EI2", justification = "The EntityManager instance is intentionally shared"
+            + "and is used in a controlled way within GameDataProvider.")
     public GameDataProvider(final EntityManager entityManager, final SaveManager saveManager, final Score score) {
         this.entityManager = entityManager;
         this.saveManager = saveManager;
@@ -78,7 +82,7 @@ public final class GameDataProvider {
         return this.score.getSessionTime();
     }
 
-    List<WeaponData> getRandomLevelUpWeapons() {
-        return this.entityManager.getRandomWeaponsForLevelUp();
+    boolean hasJustLevelledUp() {
+        return this.entityManager.hasJustLevelledUp();
     }
 }

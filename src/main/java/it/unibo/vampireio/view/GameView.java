@@ -130,12 +130,10 @@ public interface GameView {
          *
          * @param newSaveListener ActionListener for creating a new save.
          * @param showSaveListener ActionListener for showing existing saves.
-         * @param quitListener ActionListener for quitting the game.
          */
         void setSaveMenuPanelListeners(
                         ActionListener newSaveListener,
-                        ActionListener showSaveListener,
-                        ActionListener quitListener);
+                        ActionListener showSaveListener);
 
         /**
          * Sets the listeners for the StartMenuPanel.
@@ -144,14 +142,12 @@ public interface GameView {
          * @param scoreboardListener ActionListener for viewing the scoreboard.
          * @param shopListener ActionListener for accessing the shop.
          * @param loadSaveListener ActionListener for loading a save.
-         * @param quitListener ActionListener for quitting the game.
          */
         void setStartMenuPanelListeners(
                         ActionListener startListener,
                         ActionListener scoreboardListener,
                         ActionListener shopListener,
-                        ActionListener loadSaveListener,
-                        ActionListener quitListener);
+                        ActionListener loadSaveListener);
 
         /**
          * Sets the listeners for the SaveSelectionPanel.
