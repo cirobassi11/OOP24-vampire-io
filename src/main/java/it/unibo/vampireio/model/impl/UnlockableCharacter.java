@@ -44,7 +44,7 @@ public final class UnlockableCharacter extends AbstractUnlockableItem {
      * @return the character's Stats
      */
     public Stats getCharacterStats() {
-        return this.characterStats;
+        return new Stats(this.characterStats);
     }
 
     /**

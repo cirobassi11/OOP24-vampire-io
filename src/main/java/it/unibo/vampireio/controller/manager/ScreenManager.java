@@ -2,6 +2,8 @@ package it.unibo.vampireio.controller.manager;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.view.api.GameView;
 
 /**
@@ -18,6 +20,10 @@ public final class ScreenManager {
      *
      * @param view the GameView to manage screens for
      */
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "The GameView instance is intentionally shared and is used in a controlled way within ScreenManager."
+        )
     public ScreenManager(final GameView view) {
         this.view = view;
     }

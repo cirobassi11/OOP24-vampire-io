@@ -1,5 +1,6 @@
 package it.unibo.vampireio.model.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.model.api.Attack;
 import it.unibo.vampireio.model.api.Weapon;
 import it.unibo.vampireio.model.impl.attacks.AbstractAttackFactory;
@@ -29,6 +30,10 @@ public final class WeaponImpl implements Weapon {
      * @param projectilePerCooldown the number of projectiles spawned per cooldown
      * @param attackFactory         the factory to create attacks
      */
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "The EntityManager instance is intentionally shared and is used in a controlled way within WeaponImpl."
+        )
     public WeaponImpl(
             final EntityManager entityManager,
             final String id,

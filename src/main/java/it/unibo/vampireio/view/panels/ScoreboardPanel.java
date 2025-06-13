@@ -10,7 +10,8 @@ import it.unibo.vampireio.view.manager.FrameManager;
 
 /**
  * ScoreboardPanel is a panel that displays the scoreboard of the game.
- * It shows a list of scores, details of the selected score, and a button to go back.
+ * It shows a list of scores, details of the selected score, and a button to go
+ * back.
  */
 public final class ScoreboardPanel extends AbstractBasePanel {
     private static final long serialVersionUID = 1L;
@@ -46,7 +47,7 @@ public final class ScoreboardPanel extends AbstractBasePanel {
      * @param scoresData the list of ScoreData to be displayed
      */
     public void setScoresData(final List<ScoreData> scoresData) {
-        this.scoresData = scoresData;
+        this.scoresData = List.copyOf(scoresData);
         final List<String> scoreNames;
 
         if (scoresData == null || scoresData.isEmpty()) {

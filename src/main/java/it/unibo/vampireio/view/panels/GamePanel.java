@@ -8,10 +8,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.controller.data.GameData;
 import it.unibo.vampireio.controller.data.ItemData;
 import it.unibo.vampireio.controller.data.PositionableData;
@@ -80,6 +81,10 @@ public final class GamePanel extends JPanel {
      * @param frameManager the FrameManager to manage frames
      * @param imageManager the ImageManager to manage images
      */
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "Manager instances are intentionally shared and used in a controlled way within GamePanel."
+    )
     public GamePanel(final FrameManager frameManager, final ImageManager imageManager) {
         this.frameManager = frameManager;
         this.imageManager = imageManager;
@@ -221,7 +226,8 @@ public final class GamePanel extends JPanel {
 
                         g2d.rotate(angle, centerX, centerY);
 
-                        if (enemy.isBeingAttacked()) { // White image if the enemy is being attacked
+                        // White image if the enemy is being attacked
+                        if (enemy.isBeingAttacked()) {
                             final BufferedImage whiteImage = new BufferedImage(enemyWidth,
                                     enemyHeight,
                                     BufferedImage.TYPE_INT_ARGB);
@@ -368,7 +374,8 @@ public final class GamePanel extends JPanel {
             g.setColor(Color.WHITE);
             g.setFont(font);
             g.drawString(timeString, (this.getWidth() - g.getFontMetrics().stringWidth(timeString)) / 2,
-                    (int) (LEVEL_BAR_Y_OFFSET * scale + LEVEL_BAR_HEIGHT * scale + TIMER_Y_EXTRA_OFFSET * scale));
+                    (int) (LEVEL_BAR_Y_OFFSET * scale + LEVEL_BAR_HEIGHT * scale
+                            + TIMER_Y_EXTRA_OFFSET * scale));
 
             // Draws weapon icons
             int weaponIconX = 1;
@@ -398,16 +405,5 @@ public final class GamePanel extends JPanel {
 
         return !(screenX + width < 0 || screenX > this.getWidth() || screenY + height < 0
                 || screenY > this.getHeight());
-    }
-
-    /**
-     * Sets the player input listener for this panel.
-     *
-     * @param inputListener the KeyListener to set
-     */
-    public void setPlayerInputListener(final KeyListener inputListener) {
-        this.addKeyListener(inputListener);
-        this.setFocusable(true);
-        this.requestFocus();
     }
 }

@@ -2,6 +2,8 @@ package it.unibo.vampireio.controller.manager;
 
 import java.awt.geom.Point2D;
 import java.util.stream.Collectors;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.controller.data.DataBuilder;
 import it.unibo.vampireio.controller.data.ItemData;
 import it.unibo.vampireio.model.api.GameModel;
@@ -31,6 +33,10 @@ public final class GameLoopManager {
      * @param view           the game view to update
      * @param inputProcessor the input processor to compute movement directions
      */
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "Model, view, and InputProcessor instances intentionally shared."
+        )
     public GameLoopManager(
             final GameModel model,
             final GameView view,

@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.model.impl.ScoreImpl;
 import it.unibo.vampireio.model.impl.UnlockableCharacter;
 import it.unibo.vampireio.model.impl.UnlockablePowerUp;
@@ -57,13 +59,17 @@ public final class EntityManager {
      * @param saveManager       the save manager
      * @param selectedCharacter the character selected by the player
      */
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "The Score instance is intentionally shared within EntityManager."
+    )
     public EntityManager(
             final ConfigData config,
             final ScoreImpl score,
             final SaveManager saveManager,
             final UnlockableCharacter selectedCharacter) {
         this.config = config;
-        this.score = new ScoreImpl(score);
+        this.score = score;
         this.saveManager = saveManager;
         this.enemySpawner = new EnemySpawner(this, this.config.getMaxGameDuration());
 

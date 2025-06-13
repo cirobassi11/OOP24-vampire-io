@@ -26,7 +26,8 @@ public class AudioManager {
      */
     public AudioManager(final GameViewImpl view) {
         try {
-            final InputStream backingTrackStream = getClass().getResourceAsStream(AUDIO_PATH + "soundtrack.wav");
+            final InputStream backingTrackStream = AudioManager.class
+                    .getResourceAsStream(AUDIO_PATH + "soundtrack.wav");
             final AudioInputStream backingTrackAudio = AudioSystem
                     .getAudioInputStream(new BufferedInputStream(backingTrackStream));
             final Clip backingTrack = AudioSystem.getClip();

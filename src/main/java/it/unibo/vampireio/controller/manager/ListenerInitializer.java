@@ -37,7 +37,7 @@ public final class ListenerInitializer {
      * @param controller      the game controller
      * @param gameLoopManager the game loop manager
      * @param screenManager   the screen manager
-     * @param inputHandler    the input handler
+     * @param inputProcessor  the input handler
      */
     public static void init(
             final GameView view,
@@ -45,9 +45,9 @@ public final class ListenerInitializer {
             final GameControllerImpl controller,
             final GameLoopManager gameLoopManager,
             final ScreenManager screenManager,
-            final InputHandler inputHandler) {
+            final InputProcessor inputProcessor) {
 
-        view.setPlayerInputListener(inputHandler);
+        view.setPlayerInputListener(inputProcessor);
         screenManager.showScreen(GameView.SAVE_MENU);
 
         final ActionListener backListener = e -> screenManager.goBack();

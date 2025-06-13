@@ -47,8 +47,7 @@ final class EnemySpawner {
      */
     @SuppressFBWarnings(
         value = "EI2",
-        justification = "The EntityManager instance is intentionally shared"
-            + "and is used in a controlled way within EnemySpawner."
+        justification = "The EntityManager instance is intentionally shared and is used in a controlled way within EnemySpawner."
     )
     EnemySpawner(final EntityManager entityManager, final long maxGameDuration) {
         this.entityManager = entityManager;

@@ -8,7 +8,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import javax.imageio.ImageIO;
-import it.unibo.vampireio.view.impl.GameViewImpl;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.vampireio.view.api.GameView;
 
 /**
  * ImageManager is responsible for loading and managing images used in the game.
@@ -18,7 +20,7 @@ import it.unibo.vampireio.view.impl.GameViewImpl;
 public class ImageManager {
     private static final String LOADING_ERROR = "An error occurred while loading image";
 
-    private final GameViewImpl view;
+    private final GameView view;
     private final Map<String, Image> images = new HashMap<>();
     private final Set<String> failedImages = new HashSet<>();
 
@@ -26,9 +28,13 @@ public class ImageManager {
      * Constructs an ImageManager with the specified GameViewImpl.
      * This manager will use the view to notify errors related to image loading.
      *
-     * @param view the GameViewImpl instance to notify in case of errors
+     * @param view the GameView instance to notify in case of errors
      */
-    public ImageManager(final GameViewImpl view) {
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "The GameView instance is intentionally shared and is used in a controlled way within ImageManager."
+        )
+    public ImageManager(final GameView view) {
         this.view = view;
     }
 

@@ -43,6 +43,21 @@ public final class UnlockableItemData implements Serializable {
     }
 
     /**
+     * Copy constructor that creates a new UnlockableItemData instance from an
+     * existing one.
+     *
+     * @param item the UnlockableItemData instance to copy
+     */
+    public UnlockableItemData(final UnlockableItemData item) {
+        this.id = item.getId();
+        this.name = item.getName();
+        this.description = item.getDescription();
+        this.currentLevel = item.getCurrentLevel();
+        this.maxLevel = item.getMaxLevel();
+        this.price = item.getPrice();
+    }
+
+    /**
      * Returns the unique identifier of the item.
      *
      * @return the item's ID

@@ -10,7 +10,7 @@ import it.unibo.vampireio.controller.data.GameData;
 import it.unibo.vampireio.controller.data.ItemData;
 import it.unibo.vampireio.controller.data.ScoreData;
 import it.unibo.vampireio.controller.data.UnlockableItemData;
-import it.unibo.vampireio.controller.manager.InputHandler;
+import it.unibo.vampireio.controller.manager.InputProcessor;
 import it.unibo.vampireio.view.manager.FrameManager;
 import it.unibo.vampireio.view.manager.ImageManager;
 import it.unibo.vampireio.view.manager.ListenerBinder;
@@ -169,8 +169,8 @@ public final class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setPlayerInputListener(final InputHandler inputHandler) {
-        ListenerBinder.bindGamePanelListener((GamePanel) this.panels.get(GAME), inputHandler);
+    public void setPlayerInputListener(final InputProcessor inputProcessor) {
+        ListenerBinder.bindGamePanelListener((GamePanel) this.panels.get(GAME), inputProcessor);
     }
 
     @Override

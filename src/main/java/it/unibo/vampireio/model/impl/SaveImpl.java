@@ -42,6 +42,21 @@ public final class SaveImpl implements Save {
         this.scores = new LinkedList<>();
     }
 
+    /**
+     * Copy constructor that creates a new SaveImpl instance from an existing one.
+     * Copies the save time, unlocked characters, unlocked power-ups, money amount,
+     * and scores from the provided save.
+     *
+     * @param save the SaveImpl instance to copy
+     */
+    public SaveImpl(final Save save) {
+        this.saveTime = save.getSaveTime();
+        this.unlockedCharacters = new HashSet<>(save.getUnlockedCharacters());
+        this.unlockedPowerUps = new HashMap<>(save.getUnlockedPowerUps());
+        this.moneyAmount = save.getMoneyAmount();
+        this.scores = new LinkedList<>(save.getScores());
+    }
+
     @Override
     public String getSaveTime() {
         return this.saveTime;

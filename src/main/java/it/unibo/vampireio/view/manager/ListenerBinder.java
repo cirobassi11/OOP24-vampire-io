@@ -1,7 +1,7 @@
 package it.unibo.vampireio.view.manager;
 
 import javax.swing.event.ListSelectionListener;
-import it.unibo.vampireio.controller.manager.InputHandler;
+import it.unibo.vampireio.controller.manager.InputProcessor;
 import it.unibo.vampireio.view.panels.SaveMenuPanel;
 import it.unibo.vampireio.view.panels.SaveSelectionPanel;
 import it.unibo.vampireio.view.panels.ScoreboardPanel;
@@ -109,7 +109,7 @@ public final class ListenerBinder {
      */
     public static void bindGamePanelListener(
             final GamePanel gamePanel,
-            final InputHandler inputListener) {
+            final InputProcessor inputListener) {
         inputListener.setupKeyBindings(gamePanel);
     }
 

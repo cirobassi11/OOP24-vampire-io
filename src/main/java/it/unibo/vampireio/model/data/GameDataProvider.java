@@ -31,8 +31,10 @@ public final class GameDataProvider {
      * @param saveManager   the SaveManager to handle game saves
      * @param score         the Score to track player score and session time
      */
-    @SuppressFBWarnings(value = "EI2", justification = "The EntityManager instance is intentionally shared"
-            + "and is used in a controlled way within GameDataProvider.")
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "The EntityManager and SaveManager instances are intentionally shared within GameDataProvider."
+    )
     public GameDataProvider(final EntityManager entityManager, final SaveManager saveManager, final Score score) {
         this.entityManager = entityManager;
         this.saveManager = saveManager;

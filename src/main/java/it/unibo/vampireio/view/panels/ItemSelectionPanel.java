@@ -51,9 +51,8 @@ public final class ItemSelectionPanel extends AbstractBasePanel {
      */
     public void setItemsData(final List<ItemData> itemsData) {
         final List<String> itemNames;
-        this.itemsData = itemsData;
+        this.itemsData = List.copyOf(itemsData);
         if (itemsData != null && !itemsData.isEmpty()) {
-            this.itemsData = itemsData;
             itemNames = itemsData.stream()
                     .map(ItemData::getName)
                     .toList();

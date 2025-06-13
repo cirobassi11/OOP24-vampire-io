@@ -2,7 +2,6 @@ package it.unibo.vampireio.controller.impl;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.controller.api.GameController;
-import it.unibo.vampireio.controller.manager.InputHandler;
 import it.unibo.vampireio.model.api.GameModel;
 import it.unibo.vampireio.model.impl.GameWorld;
 import it.unibo.vampireio.view.impl.GameViewImpl;
@@ -19,7 +18,6 @@ public final class GameControllerImpl implements GameController {
 
     private final GameModel model;
     private final GameView view;
-    private final InputHandler inputHandler;
     private final InputProcessor inputProcessor;
     private final ScreenManager screenManager;
     private final GameLoopManager gameLoopManager;
@@ -36,12 +34,11 @@ public final class GameControllerImpl implements GameController {
         this.model = new GameWorld();
         this.model.setModelErrorListener(this::showError);
         this.view.setViewErrorListener(this::showError);
-        this.inputHandler = new InputHandler();
-        this.inputProcessor = new InputProcessor(this.inputHandler);
+        this.inputProcessor = new InputProcessor();
         this.screenManager = new ScreenManager(this.view);
         this.gameLoopManager = new GameLoopManager(this.model, this.view, this.inputProcessor);
         ListenerInitializer.init(this.view, this.model, this, this.gameLoopManager, this.screenManager,
-                this.inputHandler);
+                this.inputProcessor);
     }
 
     @SuppressFBWarnings(value = "DM_EXIT", justification = "Exiting the application on error is acceptable in this context.")

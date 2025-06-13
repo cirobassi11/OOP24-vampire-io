@@ -1,5 +1,6 @@
 package it.unibo.vampireio.model.impl.attacks;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.model.api.Attack;
 import it.unibo.vampireio.model.data.AttackData;
 import it.unibo.vampireio.model.data.DataLoader;
@@ -22,6 +23,10 @@ public abstract class AbstractAttackFactory {
      * @param entityManager the EntityManager to be used by this factory
      * @param attackID      the ID of the attack to be created
      */
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "The EntityManager instance is intentionally shared within AbstractAttackFactory."
+        )
     public AbstractAttackFactory(final EntityManager entityManager, final String attackID) {
         this.entityManager = entityManager;
         this.currentLevel = 1;

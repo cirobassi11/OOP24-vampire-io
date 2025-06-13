@@ -38,9 +38,9 @@ public final class SaveManager {
      * @param model the GameWorld model
      */
     @SuppressFBWarnings(
-        value = "EI2",
+        value = "EI2", 
         justification = "The GameWorld instance is intentionally shared and is used in a controlled way within SaveManager."
-    )
+        )
     public SaveManager(final GameWorld model) {
         this.model = model;
         final File indexFile = new File(indexFileName);
@@ -174,7 +174,7 @@ public final class SaveManager {
      * @return the current Save object
      */
     public Save getCurrentSave() {
-        return this.currentSave;
+        return new SaveImpl(this.currentSave);
     }
 
     /**

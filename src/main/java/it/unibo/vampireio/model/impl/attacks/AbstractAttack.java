@@ -34,8 +34,10 @@ public abstract class AbstractAttack extends AbstractMovableEntity implements At
      * @param duration      the duration of the attack in milliseconds
      * @param entityManager the entity manager to manage entities in the game
      */
-    @SuppressFBWarnings(value = "EI2", justification = "The EntityManager instance is intentionally shared"
-            + "and is used in a controlled way within AbstractAttack.")
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "The EntityManager instance is intentionally shared within AbstractAttack."
+    )
     public AbstractAttack(
             final String id,
             final Point2D.Double position,

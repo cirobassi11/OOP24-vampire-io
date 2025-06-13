@@ -37,8 +37,8 @@ public final class UnlockableItemShopPanel extends AbstractBasePanel {
      * Constructs an UnlockableItemShopPanel with the specified FrameManager and
      * ImageManager.
      *
-     * @param frameManager  the FrameManager to manage frames
-     * @param imageManager  the ImageManager to handle images
+     * @param frameManager the FrameManager to manage frames
+     * @param imageManager the ImageManager to handle images
      */
     public UnlockableItemShopPanel(final FrameManager frameManager, final ImageManager imageManager) {
         super(frameManager);
@@ -73,7 +73,7 @@ public final class UnlockableItemShopPanel extends AbstractBasePanel {
                     .toList();
         }
 
-        this.unlockableItemsData = itemsData;
+        this.unlockableItemsData = List.copyOf(itemsData);
         this.itemsList.setListData(itemsNames.toArray(new String[0]));
         this.itemsList.addListSelectionListener(e -> itemInfo());
     }
