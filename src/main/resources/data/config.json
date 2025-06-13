@@ -1,5 +1,6 @@
 [
     {
+        "id": "config",
         "defaultCharacterId": "characters/gennaro",
         "weaponSlots": 3,
         "maxGameDuration": 300000,

@@ -21,7 +21,7 @@ class ItemSelectionPanel extends AbstractBasePanel {
         this.itemList = this.addScrollableList(List.of(), 0, 0);
     }
 
-    public void setChooseItemListener(final ActionListener listener) {
+    void setChooseItemListener(final ActionListener listener) {
         this.chooseItemButton.addActionListener(listener);
     }
 
@@ -37,7 +37,7 @@ class ItemSelectionPanel extends AbstractBasePanel {
         }
     }
 
-    public String getSelectedItem() {
+    String getSelectedItem() {
         final int selectedIndex = this.itemList.getSelectedIndex();
         if (selectedIndex >= 0 && selectedIndex < this.itemsData.size()) {
             return this.itemsData.get(selectedIndex).getId();

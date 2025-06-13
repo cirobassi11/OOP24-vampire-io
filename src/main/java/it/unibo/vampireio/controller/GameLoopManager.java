@@ -49,12 +49,9 @@ final class GameLoopManager {
         if (!this.model.initGame(selectedCharacter)) {
             return false;
         }
-
         running = true;
         paused = false;
-
         new Thread(this::runGameLoop).start();
-
         return true;
     }
 

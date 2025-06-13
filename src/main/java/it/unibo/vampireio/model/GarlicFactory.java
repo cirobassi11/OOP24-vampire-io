@@ -4,7 +4,7 @@ package it.unibo.vampireio.model;
  * Factory class for creating GarlicAttack instances.
  * Increases the attack's radius with each level up.
  */
-public final class GarlicFactory extends AbstractAttackFactory {
+final class GarlicFactory extends AbstractAttackFactory {
     private static final String ATTACK_ID = "attacks/garlic";
     private static final double RADIUS_INCREASE_RATIO = 1.02;
 
@@ -14,12 +14,12 @@ public final class GarlicFactory extends AbstractAttackFactory {
      *
      * @param entityManager the EntityManager to be used by this factory
      */
-    public GarlicFactory(final EntityManager entityManager) {
+    GarlicFactory(final EntityManager entityManager) {
         super(entityManager, ATTACK_ID);
     }
 
     @Override
-    public Attack createAttack() {
+    Attack createAttack() {
         final Character character = this.getEntityManager().getCharacter();
         final Stats stats = character.getStats();
         return new GarlicAttack(
@@ -32,7 +32,7 @@ public final class GarlicFactory extends AbstractAttackFactory {
     }
 
     @Override
-    public void increaseLevel() {
+    void increaseLevel() {
         super.increaseLevel();
         final double currentRadius = this.getAttackData().getRadius();
         final double newRadius = currentRadius * RADIUS_INCREASE_RATIO;

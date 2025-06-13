@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model;
 
 import java.util.List;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -9,7 +8,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * collectibles,
  * player level, score, and save data.
  */
-public final class GameDataProvider {
+final class GameDataProvider {
 
     private final EntityManager entityManager;
     private final SaveManager saveManager;
@@ -25,7 +24,7 @@ public final class GameDataProvider {
      */
     @SuppressFBWarnings(value = "EI2", justification = "The EntityManager instance is intentionally shared"
             + "and is used in a controlled way within GameDataProvider.")
-    public GameDataProvider(final EntityManager entityManager, final SaveManager saveManager, final Score score) {
+    GameDataProvider(final EntityManager entityManager, final SaveManager saveManager, final Score score) {
         this.entityManager = entityManager;
         this.saveManager = saveManager;
         this.score = score;

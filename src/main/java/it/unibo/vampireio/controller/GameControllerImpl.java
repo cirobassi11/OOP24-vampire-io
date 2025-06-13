@@ -1,5 +1,7 @@
 package it.unibo.vampireio.controller;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import it.unibo.vampireio.model.GameModel;
 import it.unibo.vampireio.model.GameWorld;
 import it.unibo.vampireio.view.GameView;
@@ -37,9 +39,13 @@ public final class GameControllerImpl implements GameController {
                 this.inputHandler);
     }
 
+    @SuppressFBWarnings(
+        value = "DM_EXIT",
+        justification = "Exiting the application on error is acceptable in this context."
+    )
     @Override
     public void showError(final String errorMessage) {
         this.view.showError(errorMessage);
-        throw new IllegalStateException("Errore critico: " + errorMessage);
+        System.exit(1);
     }
 }

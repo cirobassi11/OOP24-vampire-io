@@ -10,6 +10,9 @@ package it.unibo.vampireio.model;
  * collectibles.
  */
 class ConfigData implements Identifiable {
+
+    static final String CONFIG_ID = "config";
+
     private final String defaultCharacterId;
     private final int weaponSlots;
     private final long maxGameDuration;
@@ -50,7 +53,7 @@ class ConfigData implements Identifiable {
 
     @Override
     public String getId() {
-        return "";
+        return CONFIG_ID;
     }
 
     String getDefaultCharacterId() {

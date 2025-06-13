@@ -106,7 +106,7 @@ public final class SaveManager {
      * If the default character is not found, an error is notified to the model.
      */
     void createNewSave() {
-        final ConfigData configData = DataLoader.getInstance().getConfigLoader().get("").orElse(null);
+        final ConfigData configData = DataLoader.getInstance().getConfigLoader().get(ConfigData.CONFIG_ID).orElse(null);
         final UnlockableCharacter defaultCharacter = DataLoader.getInstance().getCharacterLoader()
                 .get(configData.getDefaultCharacterId()).orElse(null);
         if (defaultCharacter == null) {

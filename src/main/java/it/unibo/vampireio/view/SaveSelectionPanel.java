@@ -32,7 +32,7 @@ class SaveSelectionPanel extends AbstractBasePanel {
         this.savesList.setListData(saves.toArray(new String[0]));
     }
 
-    public String getSelectedSave() {
+    String getSelectedSave() {
         return this.savesList.getSelectedValue();
     }
 

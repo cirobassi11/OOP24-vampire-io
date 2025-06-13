@@ -3,7 +3,7 @@ package it.unibo.vampireio.model;
 /**
  * Enum representing different types of stats in the game.
  */
-public enum StatType {
+enum StatType {
     /**
      * Represents the maximum health of a character.
      */

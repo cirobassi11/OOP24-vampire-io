@@ -5,7 +5,6 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
-
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -61,11 +60,11 @@ public final class InputHandler {
         }
     }
 
-    boolean isKeyPressed(final int keyCode) {
-        return this.pressedKeys.contains(keyCode);
-    }
-
     void clearPressedKeys() {
         this.pressedKeys.clear();
+    }
+
+    boolean isKeyPressed(final int keyCode) {
+        return this.pressedKeys.contains(keyCode);
     }
 }

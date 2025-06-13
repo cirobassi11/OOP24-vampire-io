@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * FrameManager is responsible for managing the main application frame,
  * including setting up the layout, adding panels, and handling resizing.
  */
-public final class FrameManager {
+final class FrameManager {
     private static final double ASPECT_RATIO = 16.0 / 9.0;
     private static final Dimension DEFAULT_RESOLUTION = new Dimension(1280, 720);
     private static final Dimension MIN_RESOLUTION = new Dimension(640, 360);
@@ -32,7 +32,7 @@ public final class FrameManager {
      * @param title           the title of the frame
      * @param backgroundImage the background image for the frame
      */
-    public FrameManager(final String title, final Image backgroundImage) {
+    FrameManager(final String title, final Image backgroundImage) {
         this.frame = new JFrame(title);
         this.backgroundImage = new ImageIcon(backgroundImage).getImage();
         this.cardLayout = new CardLayout();
@@ -71,7 +71,7 @@ public final class FrameManager {
      *
      * @param panels a map of panel names to JPanel instances
      */
-    public void addPanels(final Map<String, JPanel> panels) {
+    void addPanels(final Map<String, JPanel> panels) {
         panels.forEach(this.cardPanel::add);
     }
 
@@ -85,7 +85,7 @@ public final class FrameManager {
      *
      * @param name the name of the screen to show
      */
-    public void showScreen(final String name) {
+    void showScreen(final String name) {
         this.cardLayout.show(cardPanel, name);
     }
 
@@ -94,7 +94,7 @@ public final class FrameManager {
      *
      * @param message the error message to display
      */
-    public void showError(final String message) {
+    void showError(final String message) {
         javax.swing.JOptionPane.showMessageDialog(this.frame, message, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
@@ -103,7 +103,7 @@ public final class FrameManager {
      *
      * @return the current frame size
      */
-    public Dimension getFrameSize() {
+    Dimension getFrameSize() {
         return new Dimension(currentFrameSize.width, currentFrameSize.height);
     }
 
@@ -112,7 +112,7 @@ public final class FrameManager {
      *
      * @return the background image
      */
-    public Image getBackgroundImage() {
+    Image getBackgroundImage() {
         return new ImageIcon(this.backgroundImage).getImage();
     }
 }

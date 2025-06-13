@@ -6,7 +6,7 @@ package it.unibo.vampireio.model;
  * It provides access to loaders for characters, enemies, weapons, attacks,
  * power-ups, and configuration data.
  */
-public final class DataLoader {
+final class DataLoader {
 
     private static DataLoader instance;
 
@@ -40,7 +40,7 @@ public final class DataLoader {
      *
      * @param model the GameWorld model to which the data loaders will be bound
      */
-    public static synchronized void init(final GameWorld model) {
+    static synchronized void init(final GameWorld model) {
         if (instance == null) {
             instance = new DataLoader(model);
         }
@@ -52,7 +52,7 @@ public final class DataLoader {
      *
      * @return the singleton instance of DataLoader
      */
-    public static DataLoader getInstance() {
+    static DataLoader getInstance() {
         return instance;
     }
 
@@ -61,7 +61,7 @@ public final class DataLoader {
      *
      * @return the character loader
      */
-    public GenericDataLoader<UnlockableCharacter> getCharacterLoader() {
+    GenericDataLoader<UnlockableCharacter> getCharacterLoader() {
         return this.characterLoader;
     }
 
@@ -70,7 +70,7 @@ public final class DataLoader {
      *
      * @return the enemy loader
      */
-    public GenericDataLoader<EnemyData> getEnemyLoader() {
+    GenericDataLoader<EnemyData> getEnemyLoader() {
         return this.enemyLoader;
     }
 
@@ -79,7 +79,7 @@ public final class DataLoader {
      *
      * @return the weapon loader
      */
-    public GenericDataLoader<WeaponData> getWeaponLoader() {
+    GenericDataLoader<WeaponData> getWeaponLoader() {
         return this.weaponLoader;
     }
 
@@ -88,7 +88,7 @@ public final class DataLoader {
      *
      * @return the attack loader
      */
-    public GenericDataLoader<AttackData> getAttackLoader() {
+    GenericDataLoader<AttackData> getAttackLoader() {
         return this.attackLoader;
     }
 
@@ -97,7 +97,7 @@ public final class DataLoader {
      *
      * @return the power-up loader
      */
-    public GenericDataLoader<UnlockablePowerUp> getPowerUpLoader() {
+    GenericDataLoader<UnlockablePowerUp> getPowerUpLoader() {
         return this.powerUpLoader;
     }
 
@@ -106,7 +106,7 @@ public final class DataLoader {
      *
      * @return the config loader
      */
-    public GenericDataLoader<ConfigData> getConfigLoader() {
+    GenericDataLoader<ConfigData> getConfigLoader() {
         return this.configLoader;
     }
 }

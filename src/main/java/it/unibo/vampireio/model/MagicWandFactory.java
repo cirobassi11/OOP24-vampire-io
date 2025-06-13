@@ -20,7 +20,7 @@ final class MagicWandFactory extends AbstractAttackFactory {
     }
 
     @Override
-    public Attack createAttack() {
+    Attack createAttack() {
         final Character character = this.getEntityManager().getCharacter();
         final Stats stats = character.getStats();
         return new MagicWandAttack(
@@ -35,7 +35,7 @@ final class MagicWandFactory extends AbstractAttackFactory {
     }
 
     @Override
-    public void increaseLevel() {
+    void increaseLevel() {
         super.increaseLevel();
         final Weapon weapon = this.getEntityManager().getWeaponById("weapons/magicWand");
         weapon.multiplyCooldown(COOLDOWN_MULTIPLIER);

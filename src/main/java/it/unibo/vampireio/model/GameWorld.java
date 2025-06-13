@@ -37,7 +37,7 @@ public final class GameWorld implements GameModel {
         this.saveManager = new SaveManager(this);
         this.shopManager = new ShopManager(this.saveManager);
 
-        final Optional<ConfigData> optionalConfigData = DataLoader.getInstance().getConfigLoader().get("");
+        final Optional<ConfigData> optionalConfigData = DataLoader.getInstance().getConfigLoader().get(ConfigData.CONFIG_ID);
         if (optionalConfigData.isPresent()) {
             this.configData = optionalConfigData.get();
         } else {

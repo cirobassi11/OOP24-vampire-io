@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
  * This class binds the listeners to the various panels.
  * It provides static methods to set up the listeners for each panel.
  */
-public final class ListenerBinder {
+final class ListenerBinder {
 
     /**
      * Private constructor to prevent instantiation.

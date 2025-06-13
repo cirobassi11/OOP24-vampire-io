@@ -13,7 +13,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * The spawner adjusts its behavior based on the game's progression and time
  * remaining.
  */
-public final class EnemySpawner {
+final class EnemySpawner {
     private static final long INITIAL_SPAWN_INTERVAL = 2000;
     private static final long MIN_SPAWN_INTERVAL = 300;
     private static final long DECREMENT_INTERVAL = 500;
@@ -46,7 +46,7 @@ public final class EnemySpawner {
         justification = "The EntityManager instance is intentionally shared"
             + "and is used in a controlled way within EnemySpawner."
     )
-    public EnemySpawner(final EntityManager entityManager, final long maxGameDuration) {
+    EnemySpawner(final EntityManager entityManager, final long maxGameDuration) {
         this.entityManager = entityManager;
         this.enemiesData = DataLoader.getInstance().getEnemyLoader().getAll();
         this.enemiesData.sort((e1, e2) -> Integer.compare(e1.getLevel(), e2.getLevel()));
@@ -64,7 +64,7 @@ public final class EnemySpawner {
      *
      * @param tickTime the time elapsed since the last update in milliseconds
      */
-    public void update(final long tickTime) {
+    void update(final long tickTime) {
         this.timeRemaining -= tickTime;
         this.timeSinceLastSpawn += tickTime;
         this.timeSinceLastDecrement += tickTime;

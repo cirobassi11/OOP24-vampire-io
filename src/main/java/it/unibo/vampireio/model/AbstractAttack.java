@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model;
 
 import java.awt.geom.Point2D;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**

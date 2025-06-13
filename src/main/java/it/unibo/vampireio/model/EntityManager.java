@@ -12,7 +12,7 @@ import java.awt.geom.Point2D;
  * the character, enemies, attacks, and collectibles.
  * It handles their updates, collisions, and interactions.
  */
-public final class EntityManager {
+final class EntityManager {
     private final Character character;
     private final List<Enemy> enemies = new LinkedList<>();
     private final List<Attack> attacks = new LinkedList<>();
@@ -33,7 +33,7 @@ public final class EntityManager {
      * @param saveManager       the save manager
      * @param selectedCharacter the character selected by the player
      */
-    public EntityManager(
+    EntityManager(
             final ConfigData config,
             final ScoreImpl score,
             final SaveManager saveManager,
@@ -103,7 +103,7 @@ public final class EntityManager {
      * @param tickTime           the time elapsed since the last update
      * @param characterDirection the direction of the character
      */
-    public void updateEntities(final long tickTime, final Point2D.Double characterDirection) {
+    void updateEntities(final long tickTime, final Point2D.Double characterDirection) {
         this.updateCharacter(tickTime, characterDirection);
         this.updateEnemies(tickTime);
         this.updateAttacks(tickTime);
@@ -189,7 +189,7 @@ public final class EntityManager {
      *
      * @param enemy the enemy to add
      */
-    public void addEnemy(final Enemy enemy) {
+    void addEnemy(final Enemy enemy) {
         this.enemies.add(enemy);
     }
 
@@ -198,7 +198,7 @@ public final class EntityManager {
      *
      * @param attack the attack to add
      */
-    public void addAttack(final Attack attack) {
+    void addAttack(final Attack attack) {
         this.attacks.add(attack);
     }
 
@@ -207,7 +207,7 @@ public final class EntityManager {
      *
      * @param collectible the collectible to add
      */
-    public void addCollectible(final Collectible collectible) {
+    void addCollectible(final Collectible collectible) {
         this.collectibles.add(collectible);
     }
 
@@ -216,7 +216,7 @@ public final class EntityManager {
      *
      * @return the character
      */
-    public Character getCharacter() {
+    Character getCharacter() {
         return new Character(this.character);
     }
 
@@ -225,7 +225,7 @@ public final class EntityManager {
      *
      * @return a list of enemies
      */
-    public List<Living> getEnemies() {
+    List<Living> getEnemies() {
         return List.copyOf(this.enemies);
     }
 
@@ -234,7 +234,7 @@ public final class EntityManager {
      *
      * @return a list of attacks
      */
-    public List<Attack> getAttacks() {
+    List<Attack> getAttacks() {
         return List.copyOf(this.attacks);
     }
 
@@ -243,7 +243,7 @@ public final class EntityManager {
      *
      * @return a list of weapons
      */
-    public List<Weapon> getWeapons() {
+    List<Weapon> getWeapons() {
         return this.character.getWeapons();
     }
 
@@ -252,7 +252,7 @@ public final class EntityManager {
      *
      * @return a list of collectibles
      */
-    public List<Collectible> getCollectibles() {
+    List<Collectible> getCollectibles() {
         return List.copyOf(this.collectibles);
     }
 
@@ -262,7 +262,7 @@ public final class EntityManager {
      * @param weaponID the ID of the weapon to retrieve
      * @return the weapon with the specified ID, or null if not found
      */
-    public Weapon getWeaponById(final String weaponID) {
+    Weapon getWeaponById(final String weaponID) {
         return this.levelUpManager.findWeaponById(this.character, weaponID);
     }
 
@@ -271,7 +271,7 @@ public final class EntityManager {
      *
      * @param selectedWeapon the ID of the weapon to level up
      */
-    public void levelUpWeapon(final String selectedWeapon) {
+    void levelUpWeapon(final String selectedWeapon) {
         this.levelUpManager.levelUpWeapon(this.character, selectedWeapon);
     }
 
@@ -280,7 +280,7 @@ public final class EntityManager {
      *
      * @return a list of random weapons for level-up
      */
-    public List<WeaponData> getRandomWeaponsForLevelUp() {
+    List<WeaponData> getRandomWeaponsForLevelUp() {
         return this.levelUpManager.getRandomLevelUpWeapons();
     }
 

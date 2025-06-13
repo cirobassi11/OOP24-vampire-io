@@ -4,7 +4,7 @@ package it.unibo.vampireio.model;
  * KnifeFactory is responsible for creating KnifeAttack instances.
  * It extends AbstractAttackFactory to utilize common attack creation logic.
  */
-public final class KnifeFactory extends AbstractAttackFactory {
+final class KnifeFactory extends AbstractAttackFactory {
     private static final String ATTACK_ID = "attacks/knife";
     private static final double COOLDOWN_MULTIPLIER = 0.90;
 
@@ -14,12 +14,12 @@ public final class KnifeFactory extends AbstractAttackFactory {
      *
      * @param entityManager the EntityManager to be used for creating attacks
      */
-    public KnifeFactory(final EntityManager entityManager) {
+    KnifeFactory(final EntityManager entityManager) {
         super(entityManager, ATTACK_ID);
     }
 
     @Override
-    public Attack createAttack() {
+    Attack createAttack() {
         final Character character = this.getEntityManager().getCharacter();
         final Stats stats = character.getStats();
         return new KnifeAttack(
@@ -34,7 +34,7 @@ public final class KnifeFactory extends AbstractAttackFactory {
     }
 
     @Override
-    public void increaseLevel() {
+    void increaseLevel() {
         super.increaseLevel();
         final Weapon weapon = this.getEntityManager().getWeaponById("weapons/knife");
         weapon.multiplyCooldown(this.COOLDOWN_MULTIPLIER);

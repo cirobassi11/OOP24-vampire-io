@@ -7,7 +7,7 @@ package it.unibo.vampireio.controller;
  */
 public interface GameController {
     /**
-     * Displays an error message to the user.
+     * Displays an error message to the user and exits the application.
      *
      * @param message The error message to be displayed.
      */
