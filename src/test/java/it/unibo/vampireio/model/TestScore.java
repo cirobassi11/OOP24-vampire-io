@@ -2,9 +2,9 @@ package it.unibo.vampireio.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import it.unibo.vampireio.model.impl.ScoreImpl;
 
 /**
  * TestScore is a test class for the ScoreImpl class.

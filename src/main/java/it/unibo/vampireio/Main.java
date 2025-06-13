@@ -1,6 +1,6 @@
 package it.unibo.vampireio;
 
-import it.unibo.vampireio.controller.GameControllerImpl;
+import it.unibo.vampireio.controller.impl.GameControllerImpl;
 
 /**
  * The main class of the project.

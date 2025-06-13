@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.awt.geom.Point2D;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import it.unibo.vampireio.model.api.Positionable;
+import it.unibo.vampireio.model.impl.AbstractPositionableEntity;
 
 /**
  * TestPositionable is a test class for the Positionable interface and its

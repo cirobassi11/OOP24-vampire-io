@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.awt.geom.Point2D;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import it.unibo.vampireio.model.api.Collidable;
+import it.unibo.vampireio.model.impl.AbstractCollidableEntity;
 
 /**
  * TestCollidable is a test class for the Collidable interface and its
