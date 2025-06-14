@@ -1,16 +1,9 @@
 package it.unibo.vampireio.model.manager;
 
-import java.awt.Dimension;
-import java.awt.geom.Point2D;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.vampireio.model.data.EnemyData;
 import it.unibo.vampireio.model.impl.Enemy;
-import it.unibo.vampireio.model.impl.GameWorld;
-import it.unibo.vampireio.model.api.Living;
-import it.unibo.vampireio.model.data.DataLoader;
 
 /**
  * EnemySpawner is responsible for spawning enemies in the game world.
@@ -40,9 +33,10 @@ final class EnemySpawner {
     private boolean reaperSpawned;
 
     /**
-     * Creates a new EnemySpawner.
+     * Constructs an EnemySpawner with the specified parameters.
      *
-     * @param entityManager   the EntityManager to manage entities
+     * @param entityManager the EntityManager instance to manage entities
+     * @param enemyFactory  the EnemyFactory to create enemies
      * @param maxGameDuration the maximum duration of the game in milliseconds
      */
     @SuppressFBWarnings(
@@ -87,21 +81,25 @@ final class EnemySpawner {
         }
     }
 
+    /**
+     * Spawns enemies based on the current game state.
+     * It spawns a reaper if it hasn't been spawned yet and the time is right,
+     * and then spawns a random number of enemies based on the current level.
+     */
     private void spawnEnemy() {
         if (!reaperSpawned && timeRemaining <= 0) {
-            Optional<Enemy> reaper = enemyFactory.createEnemy(enemyFactory.getMaxEnemyLevel());
+            final Optional<Enemy> reaper = enemyFactory.createEnemy(enemyFactory.getMaxEnemyLevel());
             if (reaper.isPresent()) {
                 this.entityManager.addEnemy(reaper.get());
             }
             reaperSpawned = true;
         }
-        
 
         final long enemiesToSpawn = random.nextLong(MAX_ENEMY_SPAWN) + 1;
         final int levelCap = Math.min(currentLevel, enemyFactory.getMaxEnemyLevel() - 1);
 
         for (int i = 0; i < enemiesToSpawn; i++) {
-            Optional<Enemy> enemy = enemyFactory.createEnemy(random.nextInt(levelCap + 1));
+            final Optional<Enemy> enemy = enemyFactory.createEnemy(random.nextInt(levelCap + 1));
             if (enemy.isPresent()) {
                 this.entityManager.addEnemy(enemy.get());
             }
