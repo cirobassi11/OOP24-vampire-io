@@ -3,6 +3,7 @@ package it.unibo.vampireio.model.manager;
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.model.data.EnemyData;
@@ -26,11 +27,10 @@ final class EnemySpawner {
     private static final long MAX_ENEMY_SPAWN = 4;
     private static final long LEVEL_INTERVAL = 30_000;
 
-    private final List<EnemyData> enemiesData;
     private final Random random = new Random();
     private final EntityManager entityManager;
+    private final EnemyFactory enemyFactory;
 
-    private final int maxEnemyLevel;
     private long spawnInterval;
     private long timeSinceLastSpawn;
     private long timeSinceLastDecrement;
@@ -49,11 +49,9 @@ final class EnemySpawner {
         value = "EI2",
         justification = "The EntityManager instance is intentionally shared and is used in a controlled way within EnemySpawner."
     )
-    EnemySpawner(final EntityManager entityManager, final long maxGameDuration) {
+    EnemySpawner(final EntityManager entityManager, final EnemyFactory enemyFactory, final long maxGameDuration) {
         this.entityManager = entityManager;
-        this.enemiesData = DataLoader.getInstance().getEnemyLoader().getAll();
-        this.enemiesData.sort((e1, e2) -> Integer.compare(e1.getLevel(), e2.getLevel()));
-        this.maxEnemyLevel = this.enemiesData.size() - 1;
+        this.enemyFactory = enemyFactory;
         this.spawnInterval = INITIAL_SPAWN_INTERVAL;
         this.timeSinceLastSpawn = 0;
         this.timeSinceLastDecrement = 0;
@@ -78,7 +76,7 @@ final class EnemySpawner {
             this.timeSinceLastDecrement = 0;
         }
 
-        if (this.timeSinceLevelUp >= LEVEL_INTERVAL && this.currentLevel < this.maxEnemyLevel) {
+        if (this.timeSinceLevelUp >= LEVEL_INTERVAL && this.currentLevel < this.enemyFactory.getMaxEnemyLevel()) {
             this.currentLevel++;
             this.timeSinceLevelUp = 0;
         }
@@ -91,86 +89,22 @@ final class EnemySpawner {
 
     private void spawnEnemy() {
         if (!reaperSpawned && timeRemaining <= 0) {
-            spawnSpecificEnemy(enemiesData.getLast());
+            Optional<Enemy> reaper = enemyFactory.createEnemy(enemyFactory.getMaxEnemyLevel());
+            if (reaper.isPresent()) {
+                this.entityManager.addEnemy(reaper.get());
+            }
             reaperSpawned = true;
         }
+        
 
         final long enemiesToSpawn = random.nextLong(MAX_ENEMY_SPAWN) + 1;
-        final int levelCap = Math.min(currentLevel, enemiesData.size() - 2);
+        final int levelCap = Math.min(currentLevel, enemyFactory.getMaxEnemyLevel() - 1);
 
         for (int i = 0; i < enemiesToSpawn; i++) {
-            final EnemyData enemyData = enemiesData.get(random.nextInt(levelCap + 1));
-            spawnSpecificEnemy(enemyData);
-        }
-    }
-
-    private void spawnSpecificEnemy(final EnemyData enemyData) {
-        final double radius = enemyData.getRadius();
-        for (int attempts = 0; attempts < 10; attempts++) {
-            final Point2D.Double pos = getRandomSpawnPosition(radius);
-            if (isPositionFree(pos, radius)) {
-                final Enemy newEnemy = new Enemy(
-                        enemyData.getId(),
-                        pos,
-                        radius,
-                        new Point2D.Double(0, 0),
-                        enemyData.getSpeed(),
-                        enemyData.getHealth(),
-                        enemyData.getDamage());
-                entityManager.addEnemy(newEnemy);
-                break;
+            Optional<Enemy> enemy = enemyFactory.createEnemy(random.nextInt(levelCap + 1));
+            if (enemy.isPresent()) {
+                this.entityManager.addEnemy(enemy.get());
             }
         }
-    }
-
-    private Point2D.Double getRandomSpawnPosition(final double radius) {
-        final Dimension visualSize = GameWorld.VISUAL_SIZE;
-        final Point2D.Double playerPos = this.entityManager.getCharacter().getPosition();
-
-        final double halfWidth = visualSize.getWidth() / 2.0;
-        final double halfHeight = visualSize.getHeight() / 2.0;
-
-        final int side = random.nextInt(4);
-        final int margin = (int) (radius * 2);
-
-        double x = playerPos.getX();
-        double y = playerPos.getY();
-
-        switch (side) {
-            case 0: // Left
-                x -= halfWidth + margin;
-                y -= halfHeight;
-                y += random.nextInt(visualSize.height);
-                break;
-            case 1: // Right
-                x += halfWidth + margin;
-                y -= halfHeight;
-                y += random.nextInt(visualSize.height);
-                break;
-            case 2: // Top
-                y -= halfHeight + margin;
-                x -= halfWidth;
-                x += random.nextInt(visualSize.width);
-                break;
-            case 3: // Bottom
-                y += halfHeight + margin;
-                x -= halfWidth;
-                x += random.nextInt(visualSize.width);
-                break;
-            default:
-                break;
-        }
-
-        return new Point2D.Double(x, y);
-    }
-
-    private boolean isPositionFree(final Point2D.Double pos, final double radius) {
-        for (final Living e : this.entityManager.getEnemies()) {
-            final double distance = pos.distance(e.getPosition());
-            if (distance < radius + e.getRadius()) {
-                return false;
-            }
-        }
-        return true;
     }
 }
