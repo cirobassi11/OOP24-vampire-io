@@ -41,11 +41,24 @@ public abstract class AbstractCollidableEntity extends AbstractPositionableEntit
     }
 
     @Override
-    public final boolean isColliding(final Collidable collidable) {
+    public final void checkCollision(final Collidable collidable) {
+        if (collidable != null && this.isColliding(collidable)) {
+            this.onCollision(collidable);
+        }
+    }
+
+    @Override
+    public abstract void onCollision(Collidable collidable);
+
+    private boolean isColliding(final Collidable collidable) {
         final double dx = this.getPosition().getX() - collidable.getPosition().getX();
         final double dy = this.getPosition().getY() - collidable.getPosition().getY();
         final double distanceSquared = dx * dx + dy * dy;
         final double combinedRadius = this.getRadius() + collidable.getRadius();
-        return distanceSquared <= combinedRadius * combinedRadius;
+        if (distanceSquared <= combinedRadius * combinedRadius) {
+            this.onCollision(collidable);
+            return true;
+        }
+        return false;
     }
 }

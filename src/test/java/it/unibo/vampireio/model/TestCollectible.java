@@ -5,7 +5,6 @@ import java.awt.geom.Point2D;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import it.unibo.vampireio.model.api.Collectible;
-import it.unibo.vampireio.model.api.Collidable;
 import it.unibo.vampireio.model.impl.collectibles.AbstractCollectibleItem;
 
 /**
@@ -37,10 +36,6 @@ class TestCollectible {
     private static class TestCollectibleImpl extends AbstractCollectibleItem {
         TestCollectibleImpl(final String id, final Point2D.Double position, final int value) {
             super(id, position, value);
-        }
-
-        @Override
-        public void onCollision(final Collidable collidable) {
         }
     }
 }

@@ -2,7 +2,9 @@ package it.unibo.vampireio.model.impl.collectibles;
 
 import java.awt.geom.Point2D.Double;
 import it.unibo.vampireio.model.api.Collectible;
+import it.unibo.vampireio.model.api.Collidable;
 import it.unibo.vampireio.model.impl.AbstractCollidableEntity;
+import it.unibo.vampireio.model.impl.Character;
 
 /**
  * AbstractCollectibleItem is an abstract class that represents a collectible item in the game.
@@ -13,6 +15,7 @@ public abstract class AbstractCollectibleItem extends AbstractCollidableEntity i
 
     private static final double COLLECTIBLE_RADIUS = 10;
     private final int value;
+    private boolean collected;
 
     /**
      * Constructs a new AbstractCollectibleItem with the specified parameters.
@@ -29,5 +32,24 @@ public abstract class AbstractCollectibleItem extends AbstractCollidableEntity i
     @Override
     public final int getValue() {
         return this.value;
+    }
+
+    @Override
+    public final boolean isCollected() {
+        return this.collected;
+    }
+
+    @Override
+    public final void setCollected(final boolean collected) {
+        this.collected = collected;
+    }
+
+    @Override
+    public final void onCollision(final Collidable collidable) {
+        if (collidable instanceof Character && !this.isCollected()) {
+            final Character character = (Character) collidable;
+            character.collect(this);
+            this.setCollected(true);
+        }
     }
 }

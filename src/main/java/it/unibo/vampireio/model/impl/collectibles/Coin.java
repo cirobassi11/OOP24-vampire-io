@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model.impl.collectibles;
 
 import java.awt.geom.Point2D.Double;
-import it.unibo.vampireio.model.api.Collidable;
 
 /**
  * Represents a collectible coin in the game.
@@ -17,9 +16,5 @@ public class Coin extends AbstractCollectibleItem {
      */
     public Coin(final Double position) {
         super("collectibles/coin", position, COIN_VALUE);
-    }
-
-    @Override
-    public void onCollision(final Collidable collidable) {
     }
 }

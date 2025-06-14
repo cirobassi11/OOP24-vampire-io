@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model.impl.collectibles;
 
 import java.awt.geom.Point2D.Double;
-import it.unibo.vampireio.model.api.Collidable;
 
 /**
  * Represents a collectible item that grants experience points when collected.
@@ -19,9 +18,5 @@ public class ExperienceGem extends AbstractCollectibleItem {
      */
     public ExperienceGem(final Double position) {
         super("collectibles/experienceGem", position, EXPERIENCE_VALUE);
-    }
-
-    @Override
-    public void onCollision(final Collidable collidable) {
     }
 }

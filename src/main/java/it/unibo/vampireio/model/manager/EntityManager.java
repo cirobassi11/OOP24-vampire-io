@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.model.impl.ScoreImpl;
 import it.unibo.vampireio.model.impl.UnlockableCharacter;
@@ -29,7 +28,6 @@ import it.unibo.vampireio.model.impl.attacks.MagicWandFactory;
 import it.unibo.vampireio.model.impl.attacks.SantaWaterFactory;
 import it.unibo.vampireio.model.impl.attacks.GarlicFactory;
 import it.unibo.vampireio.model.impl.attacks.KnifeFactory;
-
 import java.util.Iterator;
 import java.awt.geom.Point2D;
 

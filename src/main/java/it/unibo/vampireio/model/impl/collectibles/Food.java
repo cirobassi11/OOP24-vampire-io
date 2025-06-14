@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model.impl.collectibles;
 
 import java.awt.geom.Point2D.Double;
-import it.unibo.vampireio.model.api.Collidable;
 
 /**
  * Represents a food collectible item in the game.
@@ -18,9 +17,5 @@ public final class Food extends AbstractCollectibleItem {
      */
     public Food(final Double position) {
         super("collectibles/food", position, HEAL_VALUE);
-    }
-
-    @Override
-    public void onCollision(final Collidable collidable) {
     }
 }

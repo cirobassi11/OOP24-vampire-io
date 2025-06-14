@@ -36,9 +36,7 @@ public final class CollisionManager {
 
     private static void checkEnemyCharacterCollisions(final Collidable character, final List<Enemy> enemies) {
         for (final Collidable enemy : enemies) {
-            if (enemy.isColliding(character)) {
-                enemy.onCollision(character);
-            }
+            enemy.checkCollision(character);
         }
     }
 
@@ -47,8 +45,8 @@ public final class CollisionManager {
         final Iterator<Collectible> it = collectibles.iterator();
         while (it.hasNext()) {
             final Collectible collectible = it.next();
-            if (collectible.isColliding(character)) {
-                character.collect(collectible);
+            collectible.checkCollision(character);
+            if (collectible.isCollected()) {
                 it.remove();
             }
         }
@@ -58,7 +56,7 @@ public final class CollisionManager {
             final Enemy currentEnemy,
             final Point2D.Double futurePosition,
             final List<Enemy> enemies,
-            final Character character) {
+            final Collidable character) {
         final double currentEnemyRadius = currentEnemy.getRadius();
 
         for (final Enemy otherEnemy : enemies) {
@@ -86,10 +84,7 @@ public final class CollisionManager {
      */
     public static boolean checkAttackCollisions(final Attack attack, final List<Living> enemies) {
         for (final Living enemy : enemies) {
-            if (attack.isColliding(enemy)) {
-                attack.onCollision(enemy);
-                return true;
-            }
+            attack.checkCollision(enemy);
         }
         return false;
     }

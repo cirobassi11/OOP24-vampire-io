@@ -81,7 +81,6 @@ public class EnemyFactory {
         return this.maxEnemyLevel;
     }
 
-    //getrandomspawnPosition
     /**
      * Generates a random spawn position for an enemy, ensuring it is outside the
      * player's visual area.
