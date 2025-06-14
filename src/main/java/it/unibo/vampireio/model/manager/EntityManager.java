@@ -71,7 +71,7 @@ public final class EntityManager {
         this.config = config;
         this.score = score;
         this.saveManager = saveManager;
-        this.enemySpawner = new EnemySpawner(this, this.config.getMaxGameDuration());
+        this.enemySpawner = new EnemySpawner(this, new EnemyFactory(this), this.config.getMaxGameDuration());
 
         final Stats stats = applyBuffs(selectedCharacter.getCharacterStats());
 
