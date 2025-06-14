@@ -146,13 +146,6 @@ public interface GameModel {
     void loadSave(String selectedSaving);
 
     /**
-     * Retrieves the current save of the game.
-     *
-     * @return the current Save object
-     */
-    Save getCurrentSave();
-
-    /**
      * Retrieves a list of characters that can be chosen in the game.
      *
      * @return a list of UnlockableCharacter objects
@@ -230,4 +223,18 @@ public interface GameModel {
      * @param errorMessage the error message to notify
      */
     void notifyError(String errorMessage);
+
+    /**
+     * Returns the amount of money the player currently has.
+     *
+     * @return the amount of money as an integer
+     */
+    int getMoneyAmount();
+
+    /**
+     * Returns a list of scores from the current save.
+     *
+     * @return a list of Score objects representing the scores
+     */
+    List<Score> getScores();
 }

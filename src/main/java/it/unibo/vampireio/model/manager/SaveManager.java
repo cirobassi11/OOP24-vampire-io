@@ -8,11 +8,15 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.model.impl.SaveImpl;
 import it.unibo.vampireio.model.api.Save;
+import it.unibo.vampireio.model.api.Score;
 import it.unibo.vampireio.model.impl.GameWorld;
 import it.unibo.vampireio.model.impl.UnlockableCharacter;
+import it.unibo.vampireio.model.impl.UnlockablePowerUp;
 import it.unibo.vampireio.model.data.ConfigData;
 import it.unibo.vampireio.model.data.DataLoader;
 
@@ -169,15 +173,6 @@ public final class SaveManager {
     }
 
     /**
-     * Returns the current save.
-     *
-     * @return the current Save object
-     */
-    public Save getCurrentSave() {
-        return new SaveImpl(this.currentSave);
-    }
-
-    /**
      * Returns the file path for a save file based on the save time.
      * The save files are stored in a directory named "vampire-io_save" in the
      * user's
@@ -193,5 +188,121 @@ public final class SaveManager {
             return null;
         }
         return saveDirectory.getPath() + File.separator + saveTime + ".sav";
+    }
+
+    /**
+     * Returns a list of scores from the current save.
+     * If no save is loaded, an error is notified to the model and an empty list is
+     * returned.
+     *
+     * @return a list of Score objects representing the scores in the current save
+     */
+    public List<Score> getScores() {
+        if (this.currentSave == null) {
+            this.model.notifyError(READING_ERROR);
+            return List.of();
+        }
+        return this.currentSave.getScores();
+    }
+
+    /**
+     * Increments the money amount in the current save by the specified amount.
+     *
+     * @param moneyAmount the amount to add to the current money amount
+     */
+    public void incrementMoneyAmount(final int moneyAmount) {
+        if (this.currentSave == null) {
+            this.model.notifyError(READING_ERROR);
+            return;
+        }
+        this.currentSave.incrementMoneyAmount(moneyAmount);
+        this.saveCurrentSave();
+    }
+
+    /**
+     * Adds a new score to the current save.
+     *
+     * @param score the Score object to be added
+     */
+    public void addScore(final Score score) {
+        if (this.currentSave == null) {
+            this.model.notifyError(READING_ERROR);
+            return;
+        }
+        this.currentSave.addScore(score);
+        this.saveCurrentSave();
+    }
+
+    /**
+     * Returns a map of unlocked power-ups in the current save.
+     * The keys are power-up IDs and the values are their enhancement levels.
+     *
+     * @return a map where keys are power-up IDs and values are their enhancement
+     *         levels
+     */
+    public Map<String, Integer> getUnlockedPowerUps() {
+        if (this.currentSave == null) {
+            this.model.notifyError(READING_ERROR);
+            return Map.of();
+        }
+        return this.currentSave.getUnlockedPowerUps();
+    }
+
+    /**
+     * Returns the amount of money in the current save.
+     *
+     * @return the amount of money as an integer
+     */
+    public int getMoneyAmount() {
+        if (this.currentSave == null) {
+            this.model.notifyError(READING_ERROR);
+            return 0;
+        }
+        return this.currentSave.getMoneyAmount();
+    }
+
+    /**
+     * Enhances a power-up in the current save.
+     *
+     * @param powerUp the UnlockablePowerUp object representing the power-up to be
+     *                enhanced
+     */
+    public void enhancePowerUp(final UnlockablePowerUp powerUp) {
+        if (this.currentSave == null) {
+            this.model.notifyError(READING_ERROR);
+            return;
+        }
+        this.currentSave.enhancePowerUp(powerUp);
+        this.saveCurrentSave();
+    }
+
+    /**
+     * Adds a new unlocked character to the current save.
+     *
+     * @param character the UnlockableCharacter object representing the character to
+     *                  be added
+     */
+    public void addUnlockedCharacter(final UnlockableCharacter character) {
+        if (this.currentSave == null) {
+            this.model.notifyError(READING_ERROR);
+            return;
+        }
+        this.currentSave.addUnlockedCharacter(character);
+        this.saveCurrentSave();
+    }
+
+    /**
+     * Returns a list of unlocked characters in the current save.
+     * If no save is loaded, an error is notified to the model and an empty list is
+     * returned.
+     *
+     * @return a list of strings representing the IDs of unlocked characters
+     */
+    public List<String> getUnlockedCharacters() {
+        if (this.currentSave == null) {
+            this.model.notifyError(READING_ERROR);
+            return List.of();
+        }
+        return this.currentSave.getUnlockedCharacters();
     }
 }

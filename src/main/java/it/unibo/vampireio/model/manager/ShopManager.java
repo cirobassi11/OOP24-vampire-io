@@ -4,7 +4,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import it.unibo.vampireio.model.api.Save;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.model.api.Unlockable;
 import it.unibo.vampireio.model.data.DataLoader;
 import it.unibo.vampireio.model.impl.UnlockableCharacter;
@@ -24,6 +25,10 @@ public final class ShopManager {
      *
      * @param saveManager the SaveManager to be used by this ShopManager
      */
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "The SaveManager instance is intentionally shared and is used in a controlled way within ShopManager."
+    )
     public ShopManager(final SaveManager saveManager) {
         this.saveManager = saveManager;
     }
@@ -35,16 +40,15 @@ public final class ShopManager {
      * @return true if the purchase was successful, false otherwise
      */
     public boolean buyCharacter(final String characterID) {
-        final Save currentSave = saveManager.getCurrentSave();
         final UnlockableCharacter character = this.getLockedCharacters().stream()
                 .filter(c -> c.getId().equals(characterID))
                 .findFirst()
                 .orElse(null);
-        if (character == null || !canAfford(currentSave, character.getPrice())) {
+        if (character == null || !canAfford(character.getPrice())) {
             return false;
         }
 
-        return purchaseCharacter(currentSave, character);
+        return purchaseCharacter(character);
     }
 
     /**
@@ -54,34 +58,31 @@ public final class ShopManager {
      * @return true if the purchase was successful, false otherwise
      */
     public boolean buyPowerUp(final String powerUpID) {
-        final Save currentSave = saveManager.getCurrentSave();
         final UnlockablePowerUp powerUp = DataLoader.getInstance().getPowerUpLoader().get(powerUpID).orElse(null);
 
-        if (powerUp == null || !canAfford(currentSave, powerUp.getPrice())) {
+        if (powerUp == null || !canAfford(powerUp.getPrice())) {
             return false;
         }
 
-        return purchasePowerUp(currentSave, powerUp);
+        return purchasePowerUp(powerUp);
     }
 
-    private boolean canAfford(final Save save, final int price) {
-        return save.getMoneyAmount() >= price;
+    private boolean canAfford(final int price) {
+        return this.saveManager.getMoneyAmount() >= price;
     }
 
-    private boolean purchaseCharacter(final Save save, final UnlockableCharacter character) {
-        save.incrementMoneyAmount(-character.getPrice());
-        save.addUnlockedCharacter(character);
-        saveManager.saveCurrentSave();
+    private boolean purchaseCharacter(final UnlockableCharacter character) {
+        this.saveManager.incrementMoneyAmount(-character.getPrice());
+        this.saveManager.addUnlockedCharacter(character);
         return true;
     }
 
-    private boolean purchasePowerUp(final Save save, final UnlockablePowerUp powerUp) {
+    private boolean purchasePowerUp(final UnlockablePowerUp powerUp) {
         if (!powerUp.enhance()) {
             return false;
         }
-        save.incrementMoneyAmount(-powerUp.getPrice());
-        save.enhancePowerUp(powerUp);
-        saveManager.saveCurrentSave();
+        this.saveManager.incrementMoneyAmount(-powerUp.getPrice());
+        this.saveManager.enhancePowerUp(powerUp);
         return true;
     }
 
@@ -92,8 +93,7 @@ public final class ShopManager {
      *         characters
      */
     public List<UnlockableCharacter> getChoosableCharacters() {
-        return this.saveManager.getCurrentSave()
-                .getUnlockedCharacters().stream()
+        return this.saveManager.getUnlockedCharacters().stream()
                 .map(id -> DataLoader.getInstance().getCharacterLoader().get(id).get())
                 .toList();
     }
@@ -126,7 +126,7 @@ public final class ShopManager {
      */
     public List<UnlockablePowerUp> getUnlockablePowerUps() {
         final List<UnlockablePowerUp> unlockablePowerUps = DataLoader.getInstance().getPowerUpLoader().getAll();
-        final Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
+        final Map<String, Integer> unlockedPowerUps = this.saveManager.getUnlockedPowerUps();
         return unlockablePowerUps.stream()
                 .peek(p -> p.setCurrentLevel(unlockedPowerUps.getOrDefault(p.getId(), 0)))
                 .toList();

@@ -23,7 +23,7 @@ public final class ScreenManager {
     @SuppressFBWarnings(
         value = "EI2", 
         justification = "The GameView instance is intentionally shared and is used in a controlled way within ScreenManager."
-        )
+    )
     public ScreenManager(final GameView view) {
         this.view = view;
     }

@@ -12,7 +12,6 @@ import it.unibo.vampireio.model.api.Collectible;
 import it.unibo.vampireio.model.api.GameModel;
 import it.unibo.vampireio.model.api.Living;
 import it.unibo.vampireio.model.api.ModelErrorListener;
-import it.unibo.vampireio.model.api.Save;
 import it.unibo.vampireio.model.api.Score;
 import it.unibo.vampireio.model.api.Unlockable;
 import it.unibo.vampireio.model.api.Weapon;
@@ -195,11 +194,6 @@ public final class GameWorld implements GameModel {
     }
 
     @Override
-    public Save getCurrentSave() {
-        return this.saveManager.getCurrentSave();
-    }
-
-    @Override
     public long getElapsedTime() {
         if (this.score == null) {
             return 0;
@@ -222,8 +216,8 @@ public final class GameWorld implements GameModel {
         final ScoreImpl tempScore = new ScoreImpl(score);
         tempScore.setLevel(this.entityManager.getCharacter().getLevel());
         tempScore.setCoinCounter(this.entityManager.getCharacter().getCoinCounter());
-        this.saveManager.getCurrentSave().incrementMoneyAmount(getCoinCounter());
-        this.saveManager.getCurrentSave().addScore(tempScore);
+        this.saveManager.incrementMoneyAmount(getCoinCounter());
+        this.saveManager.addScore(tempScore);
         this.saveManager.saveCurrentSave();
         return tempScore;
     }
@@ -246,5 +240,15 @@ public final class GameWorld implements GameModel {
     @Override
     public boolean buyPowerUp(final String selectedPowerUp) {
         return this.shopManager.buyPowerUp(selectedPowerUp);
+    }
+
+    @Override
+    public int getMoneyAmount() {
+        return this.saveManager.getMoneyAmount();
+    }
+
+    @Override
+    public List<Score> getScores() {
+        return this.saveManager.getScores();
     }
 }

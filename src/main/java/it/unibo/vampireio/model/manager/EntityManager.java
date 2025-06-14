@@ -101,7 +101,7 @@ public final class EntityManager {
 
     private Stats applyBuffs(final Stats baseStats) {
         final Stats modifiedStats = new Stats(baseStats);
-        final Map<String, Integer> unlockedPowerUps = this.saveManager.getCurrentSave().getUnlockedPowerUps();
+        final Map<String, Integer> unlockedPowerUps = this.saveManager.getUnlockedPowerUps();
         for (final Entry<String, Integer> unlockedPowerUp : unlockedPowerUps.entrySet()) {
             final String powerUpID = unlockedPowerUp.getKey();
             final int level = unlockedPowerUp.getValue();

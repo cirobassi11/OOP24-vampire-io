@@ -5,7 +5,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.model.api.Attack;
 import it.unibo.vampireio.model.api.Collectible;
 import it.unibo.vampireio.model.api.Living;
-import it.unibo.vampireio.model.api.Save;
 import it.unibo.vampireio.model.api.Score;
 import it.unibo.vampireio.model.api.Weapon;
 import it.unibo.vampireio.model.manager.EntityManager;
@@ -129,15 +128,6 @@ public final class GameDataProvider {
      */
     public List<String> getSaveNames() {
         return this.saveManager.getSavesNames();
-    }
-
-    /**
-     * Returns the current save.
-     *
-     * @return the current Save object
-     */
-    public Save getCurrentSave() {
-        return this.saveManager.getCurrentSave();
     }
 
     /**

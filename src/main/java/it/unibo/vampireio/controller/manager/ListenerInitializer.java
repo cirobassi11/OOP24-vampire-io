@@ -147,7 +147,7 @@ public final class ListenerInitializer {
                             c.getMaxLevel(), c.getPrice()))
                     .collect(Collectors.toList());
             view.setUnlockableCharactersData(characters);
-            view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
+            view.setCoinsAmount(model.getMoneyAmount());
             screenManager.showScreen(GameView.UNLOCKABLE_CHARACTERS);
         };
 
@@ -157,7 +157,7 @@ public final class ListenerInitializer {
                             p.getMaxLevel(), p.getPrice()))
                     .collect(Collectors.toList());
             view.setUnlockablePowerUpsData(powerUps);
-            view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
+            view.setCoinsAmount(model.getMoneyAmount());
             screenManager.showScreen(GameView.UNLOCKABLE_POWERUPS);
         };
 
@@ -175,7 +175,7 @@ public final class ListenerInitializer {
                                 c.getCurrentLevel(), c.getMaxLevel(), c.getPrice()))
                         .collect(Collectors.toList());
                 view.setUnlockableCharactersData(characters);
-                view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
+                view.setCoinsAmount(model.getMoneyAmount());
                 view.disableBuyButton();
             }
         };
@@ -196,7 +196,7 @@ public final class ListenerInitializer {
 
                 if (item == null) {
                     controller.showError(selected + " is not a valid item.");
-                } else if (model.getCurrentSave().getMoneyAmount() < item.getPrice()
+                } else if (model.getMoneyAmount() < item.getPrice()
                         || item.getCurrentLevel() >= item.getMaxLevel() && item.getMaxLevel() > 0) {
                     view.disableBuyButton();
                 } else {
@@ -216,7 +216,7 @@ public final class ListenerInitializer {
                                 p.getCurrentLevel(), p.getMaxLevel(), p.getPrice()))
                         .collect(Collectors.toList());
                 view.setUnlockablePowerUpsData(powerUps);
-                view.setCoinsAmount(model.getCurrentSave().getMoneyAmount());
+                view.setCoinsAmount(model.getMoneyAmount());
                 view.disableBuyButton();
             }
         };

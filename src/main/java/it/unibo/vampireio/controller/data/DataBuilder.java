@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import it.unibo.vampireio.model.api.GameModel;
 import it.unibo.vampireio.model.api.Living;
-import it.unibo.vampireio.model.api.Save;
 import it.unibo.vampireio.model.api.Score;
 import it.unibo.vampireio.model.api.Attack;
 import it.unibo.vampireio.model.api.Collectible;
@@ -105,11 +104,11 @@ public final class DataBuilder {
      * @return a list of ScoreData objects representing the scores
      */
     public static List<ScoreData> getScores(final GameModel model) {
-        final Save currentSave = model.getCurrentSave();
-        if (currentSave == null) {
+        final List<Score> scoresList = model.getScores();
+        if (scoresList == null) {
             return List.of();
         }
-        return currentSave.getScores().stream()
+        return scoresList.stream()
                 .map(score -> new ScoreData(
                         score.getCharacterName(),
                         score.getSessionTime(),
