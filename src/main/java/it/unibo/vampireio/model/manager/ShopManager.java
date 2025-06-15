@@ -128,7 +128,7 @@ public final class ShopManager {
         final List<UnlockablePowerUp> unlockablePowerUps = DataLoader.getInstance().getPowerUpLoader().getAll();
         final Map<String, Integer> unlockedPowerUps = this.saveManager.getUnlockedPowerUps();
         for (final UnlockablePowerUp powerUp : unlockablePowerUps) {
-            final int level = unlockedPowerUps.get(powerUp.getId());
+            final int level = unlockedPowerUps.getOrDefault(powerUp.getId(), 0);
             powerUp.setCurrentLevel(level);
         }
         return unlockablePowerUps;

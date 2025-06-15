@@ -12,9 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -89,16 +90,15 @@ public final class GenericDataLoader<T extends Identifiable> {
             }
 
             final InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8);
-            final Type listType = TypeToken.getParameterized(List.class, type).getType();
-            List<T> list = gson.fromJson(reader, listType);
-
-            if (list == null) {
-                list = List.of();
-            }
+            final JsonArray jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
 
             dataById = new HashMap<>();
-            for (final T element : list) {
-                dataById.put(element.getId(), element);
+
+            for (final JsonElement element : jsonArray) {
+                final T item = gson.fromJson(element, type);
+                if (item != null) {
+                    dataById.put(item.getId(), item);
+                }
             }
         } catch (IOException | JsonSyntaxException e) {
             this.model.notifyError("Error while loading data from " + path);
