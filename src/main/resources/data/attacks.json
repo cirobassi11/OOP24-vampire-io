@@ -10,7 +10,7 @@
         "id": "attacks/garlic",
         "radius": 64.0,
         "speed": 0,
-        "damage": 49,
+        "damage": 20,
         "duration": 1000
     },
     {
@@ -24,7 +24,7 @@
         "id": "attacks/knife",
         "radius": 16.0,
         "speed": 3.0,
-        "damage": 100,
+        "damage": 70,
         "duration": 10000
     }
     

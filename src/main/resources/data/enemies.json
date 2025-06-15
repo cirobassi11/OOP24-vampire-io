@@ -14,7 +14,7 @@
     "level": 1,
     "damage": 1,
     "speed": 0.4,
-    "health": 100,
+    "health": 200,
     "radius": 32
   },
   {
@@ -23,7 +23,7 @@
     "level": 2,
     "damage": 1,
     "speed": 0.5,
-    "health": 120,
+    "health": 250,
     "radius": 32
   },
   {
@@ -32,7 +32,7 @@
     "level": 3,
     "damage": 1,
     "speed": 0.5,
-    "health": 200,
+    "health": 300,
     "radius": 32
   },
   {
@@ -41,7 +41,7 @@
     "level": 4,
     "damage": 1,
     "speed": 0.5,
-    "health": 250,
+    "health": 350,
     "radius": 32
   }
   ,{
@@ -50,7 +50,7 @@
     "level": 5,
     "damage": 1,
     "speed": 0.85,
-    "health": 200,
+    "health": 400,
     "radius": 32
   },
   {
@@ -59,7 +59,7 @@
     "level": 6,
     "damage": 1,
     "speed": 0,
-    "health": 740,
+    "health": 750,
     "radius": 32
   },
   {

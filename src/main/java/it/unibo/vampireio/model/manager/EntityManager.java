@@ -91,7 +91,11 @@ public final class EntityManager {
                 this.config.getWeaponSlots());
 
         this.weaponRandomizer = new WeaponRandomizer(
-                DataLoader.getInstance().getWeaponLoader().getAll().stream().map(WeaponData::getId).toList(),
+                DataLoader.getInstance()
+                .getWeaponLoader()
+                .getAll().stream()
+                .map(WeaponData::getId)
+                .toList(),
                 this.character);
 
         this.levelUpManager = new LevelUpManager(this, this.weaponRandomizer);

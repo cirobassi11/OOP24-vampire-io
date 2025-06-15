@@ -40,15 +40,15 @@ public final class ShopManager {
      * @return true if the purchase was successful, false otherwise
      */
     public boolean buyCharacter(final String characterID) {
-        final UnlockableCharacter character = this.getLockedCharacters().stream()
-                .filter(c -> c.getId().equals(characterID))
+        final UnlockableCharacter lockedCharacter = this.getLockedCharacters().stream()
+                .filter(character -> character.getId().equals(characterID))
                 .findFirst()
                 .orElse(null);
-        if (character == null || !canAfford(character.getPrice())) {
+        if (lockedCharacter == null || !canAfford(lockedCharacter.getPrice())) {
             return false;
         }
 
-        return purchaseCharacter(character);
+        return purchaseCharacter(lockedCharacter);
     }
 
     /**
@@ -113,7 +113,7 @@ public final class ShopManager {
                 .toList();
 
         final List<UnlockableCharacter> lockedCharacters = unlockableCharacters.stream()
-                .filter(c -> !unlockedIds.contains(c.getId()))
+                .filter(character -> !unlockedIds.contains(character.getId()))
                 .toList();
         return List.copyOf(lockedCharacters);
     }
@@ -127,9 +127,11 @@ public final class ShopManager {
     public List<UnlockablePowerUp> getUnlockablePowerUps() {
         final List<UnlockablePowerUp> unlockablePowerUps = DataLoader.getInstance().getPowerUpLoader().getAll();
         final Map<String, Integer> unlockedPowerUps = this.saveManager.getUnlockedPowerUps();
-        return unlockablePowerUps.stream()
-                .peek(p -> p.setCurrentLevel(unlockedPowerUps.getOrDefault(p.getId(), 0)))
-                .toList();
+        for (final UnlockablePowerUp powerUp : unlockablePowerUps) {
+            final int level = unlockedPowerUps.get(powerUp.getId());
+            powerUp.setCurrentLevel(level);
+        }
+        return unlockablePowerUps;
     }
 
     /**

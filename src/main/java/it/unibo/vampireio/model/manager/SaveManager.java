@@ -7,11 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.model.impl.SaveImpl;
 import it.unibo.vampireio.model.api.Save;
@@ -313,8 +310,11 @@ public final class SaveManager {
             this.model.notifyError(READING_ERROR);
             return List.of();
         }
-        return scoreList.stream()
-            .sorted(Comparator.comparingInt(Score::getScore).reversed())
-            .collect(Collectors.toList());
+        final List<Score> sortedScores = new ArrayList<>();
+        for (final Score score : scoreList) {
+            sortedScores.add(score);
+        }
+        sortedScores.sort((s1, s2) -> Integer.compare(s2.getScore(), s1.getScore()));
+        return sortedScores;
     }
 }
