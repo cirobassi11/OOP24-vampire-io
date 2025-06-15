@@ -79,7 +79,6 @@ public final class GameWorld implements GameModel {
     @Override
     public boolean initGame(final String selectedCharacter) {
         this.isGameOver = false;
-
         final Optional<UnlockableCharacter> optionalSelectedUnlockableCharacter = DataLoader.getInstance()
                 .getCharacterLoader()
                 .get(selectedCharacter);
@@ -87,14 +86,9 @@ public final class GameWorld implements GameModel {
             return false;
         }
         final UnlockableCharacter selectedUnlockableCharacter = optionalSelectedUnlockableCharacter.get();
-
         this.score = new ScoreImpl(selectedUnlockableCharacter.getName());
-
-        this.entityManager = new EntityManager(this.configData, this.score, this.saveManager,
-                selectedUnlockableCharacter);
-
+        this.entityManager = new EntityManager(this.configData, this.score, this.saveManager, selectedUnlockableCharacter);
         this.gameDataProvider = new GameDataProvider(entityManager, saveManager, score);
-
         return true;
     }
 

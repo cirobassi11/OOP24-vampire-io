@@ -44,7 +44,8 @@ public final class EndGamePanel extends AbstractBasePanel {
                         + "<br>Coins: " + score.getCoinCounter()
                         + "<br>Time: " + (int) score.getSessionTime() / 1000 / SECONDS_PER_MINUTE + "min "
                         + (int) score.getSessionTime() / 1000 % SECONDS_PER_MINUTE + "sec"
-                        + "</html>");
+                        + "</html>"
+        );
     }
 
     /**

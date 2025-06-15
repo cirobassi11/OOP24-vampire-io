@@ -175,8 +175,9 @@ public final class GameViewImpl implements GameView {
 
     @Override
     public void update(final GameData data) {
-        ((GamePanel) panels.get(GAME)).setData(data);
-        panels.get(GAME).repaint();
+        final var gamePanel = (GamePanel) this.panels.get(GAME);
+        gamePanel.setData(data);
+        gamePanel.repaint();
     }
 
     @Override

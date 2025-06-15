@@ -91,8 +91,8 @@ final class EnemySpawner {
             final Optional<Enemy> reaper = enemyFactory.createEnemy(enemyFactory.getMaxEnemyLevel());
             if (reaper.isPresent()) {
                 this.entityManager.addEnemy(reaper.get());
+                reaperSpawned = true;
             }
-            reaperSpawned = true;
         }
 
         final long enemiesToSpawn = random.nextLong(MAX_ENEMY_SPAWN) + 1;

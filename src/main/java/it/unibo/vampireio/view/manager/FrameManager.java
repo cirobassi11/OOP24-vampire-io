@@ -25,7 +25,6 @@ public final class FrameManager {
     private final CardLayout cardLayout;
     private final JPanel cardPanel;
     private final Image backgroundImage;
-    private Dimension currentFrameSize;
 
     /**
      * Constructs a FrameManager with the specified title and background image.
@@ -77,8 +76,7 @@ public final class FrameManager {
     }
 
     private void setResolution(final Dimension resolution) {
-        frame.setSize(resolution);
-        this.currentFrameSize = resolution;
+        this.frame.setSize(resolution);
     }
 
     /**
@@ -105,7 +103,7 @@ public final class FrameManager {
      * @return the current frame size
      */
     public Dimension getFrameSize() {
-        return new Dimension(currentFrameSize.width, currentFrameSize.height);
+        return this.frame.getSize();
     }
 
     /**

@@ -65,6 +65,6 @@ public abstract class AbstractPositionableEntity implements Positionable {
      */
     @Override
     public final double getDistance(final Positionable positionable) {
-        return position.distance(positionable.getPosition());
+        return this.position.distance(positionable.getPosition());
     }
 }

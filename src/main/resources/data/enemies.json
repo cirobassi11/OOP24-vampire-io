@@ -54,18 +54,9 @@
     "radius": 32
   },
   {
-    "id": "enemies/sad-molisano",
-    "name": "Sad Molisano",
-    "level": 6,
-    "damage": 1,
-    "speed": 0,
-    "health": 750,
-    "radius": 32
-  },
-  {
     "id": "enemies/reaper",
     "name": "The Reaper",
-    "level": 7,
+    "level": 6,
     "damage": 10000,
     "speed": 3,
     "health": 1700,

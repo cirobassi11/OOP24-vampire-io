@@ -11,7 +11,6 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.controller.data.GameData;
 import it.unibo.vampireio.controller.data.ItemData;
@@ -108,7 +107,7 @@ public final class GamePanel extends JPanel {
     @Override
     public void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        if (g instanceof Graphics2D g2d) {
+        if (g instanceof Graphics2D g2d && this.data != null) {
             final Dimension fov = this.data.getVisibleMapSizeData().getDimension();
             final double scale = this.frameManager.getFrameSize().getWidth() / fov.getWidth();
 
@@ -141,7 +140,7 @@ public final class GamePanel extends JPanel {
 
                     final Image tile = this.imageManager.getImage("map");
                     if (tile != null) {
-                        g.drawImage(tile, screenX - TILE_BORDER_ADJUSTMENT,
+                        g2d.drawImage(tile, screenX - TILE_BORDER_ADJUSTMENT,
                                 screenY - TILE_BORDER_ADJUSTMENT,
                                 (int) (MAP_TILE_WIDTH * scale) + TILE_RENDER_PADDING,
                                 (int) (MAP_TILE_HEIGHT * scale) + TILE_RENDER_PADDING,
@@ -163,7 +162,7 @@ public final class GamePanel extends JPanel {
                             + cameraOffsetY - collectibleDimension.height / 2.0);
                     final Image tile = this.imageManager.getImage(collectible.getId());
                     if (tile != null) {
-                        g.drawImage(tile, collectibleX, collectibleY,
+                        g2d.drawImage(tile, collectibleX, collectibleY,
                                 (int) (collectibleDimension.width * scale),
                                 (int) (collectibleDimension.height * scale),
                                 null);
@@ -290,9 +289,9 @@ public final class GamePanel extends JPanel {
                     redG.setColor(TRANSLUCENT_RED);
                     redG.fillRect(0, 0, characterWidth, characterHeight);
                     redG.dispose();
-                    g.drawImage(redImage, characterX, characterY, null);
+                    g2d.drawImage(redImage, characterX, characterY, null);
                 } else {
-                    g.drawImage(tile, characterX, characterY, characterWidth, characterHeight,
+                    g2d.drawImage(tile, characterX, characterY, characterWidth, characterHeight,
                             null);
                 }
             }
@@ -304,7 +303,7 @@ public final class GamePanel extends JPanel {
                 this.lastCharacterFrameTime = elapsedTime;
             }
 
-            final Font font = g.getFont().deriveFont((float) (FONT_SIZE_BASE * scale));
+            final Font font = g2d.getFont().deriveFont((float) (FONT_SIZE_BASE * scale));
 
             // Draws the health bar
             final Dimension healthBarDimension = new Dimension(HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT);
@@ -313,21 +312,21 @@ public final class GamePanel extends JPanel {
             final int healthBarX = characterX + (characterWidth - healthBarWidth) / 2;
             final int healthBarY = characterY + characterHeight + (int) (4 * scale);
 
-            g.setColor(Color.BLACK);
-            g.fillRect(healthBarX - 1, healthBarY - 1, healthBarWidth + 2, healthBarHeight + 2);
+            g2d.setColor(Color.BLACK);
+            g2d.fillRect(healthBarX - 1, healthBarY - 1, healthBarWidth + 2, healthBarHeight + 2);
 
             final int filledWidth = (int) (healthBarWidth * character.getHealth()
                     / character.getMaxHealth());
-            g.setColor(Color.RED);
-            g.fillRect(healthBarX, healthBarY, filledWidth, healthBarHeight);
+            g2d.setColor(Color.RED);
+            g2d.fillRect(healthBarX, healthBarY, filledWidth, healthBarHeight);
 
             // Draws the level bar
             final double levelPercentage = this.data.getLevelPercentage();
-            g.setColor(Color.BLACK);
-            g.fillRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale), this.getWidth(),
+            g2d.setColor(Color.BLACK);
+            g2d.fillRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale), this.getWidth(),
                     (int) (LEVEL_BAR_HEIGHT * scale));
-            g.setColor(Color.BLUE);
-            g.fillRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale),
+            g2d.setColor(Color.BLUE);
+            g2d.fillRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale),
                     (int) (this.getWidth() * levelPercentage / 100),
                     (int) (LEVEL_BAR_HEIGHT * scale));
 
@@ -336,33 +335,33 @@ public final class GamePanel extends JPanel {
             g2d.drawRect(0, (int) (LEVEL_BAR_Y_OFFSET * scale), this.getWidth(),
                     (int) (LEVEL_BAR_HEIGHT * scale));
 
-            g.setColor(Color.WHITE);
-            g.setFont(font);
-            g.drawString("LV " + this.data.getLevel(),
+            g2d.setColor(Color.WHITE);
+            g2d.setFont(font);
+            g2d.drawString("LV " + this.data.getLevel(),
                     (int) (this.getWidth() - LEVEL_TEXT_X_OFFSET * scale),
                     (int) (LEVEL_TEXT_Y_OFFSET * scale));
 
-            g.setColor(Color.WHITE);
-            g.setFont(font);
+            g2d.setColor(Color.WHITE);
+            g2d.setFont(font);
 
             // Draws the kill counter
-            g.drawString(String.valueOf(this.data.getKillCounter()),
+            g2d.drawString(String.valueOf(this.data.getKillCounter()),
                     (int) (this.getWidth() - KILL_COUNTER_X_OFFSET * scale),
                     (int) (COUNTER_Y_OFFSET * scale));
             final Image killCounterImage = this.imageManager.getImage("hud/kill");
             if (killCounterImage != null) {
-                g.drawImage(killCounterImage, (int) (this.getWidth() - KILL_ICON_X_OFFSET * scale),
+                g2d.drawImage(killCounterImage, (int) (this.getWidth() - KILL_ICON_X_OFFSET * scale),
                         (int) (ICON_Y_OFFSET * scale), (int) (ICON_SIZE * scale),
                         (int) (ICON_SIZE * scale), null);
             }
 
             // Draws the coin counter
-            g.drawString(String.valueOf(this.data.getCoinCounter()),
+            g2d.drawString(String.valueOf(this.data.getCoinCounter()),
                     (int) (this.getWidth() - COIN_COUNTER_X_OFFSET * scale),
                     (int) (COUNTER_Y_OFFSET * scale));
             final Image coinCounterImage = this.imageManager.getImage("hud/coin");
             if (coinCounterImage != null) {
-                g.drawImage(coinCounterImage, (int) (this.getWidth() - COIN_ICON_X_OFFSET * scale),
+                g2d.drawImage(coinCounterImage, (int) (this.getWidth() - COIN_ICON_X_OFFSET * scale),
                         (int) (ICON_Y_OFFSET * scale), (int) (ICON_SIZE * scale),
                         (int) (ICON_SIZE * scale), null);
             }
@@ -371,9 +370,9 @@ public final class GamePanel extends JPanel {
             final long elapsedSeconds = elapsedTime / 1000 % 60;
             final long elapsedMinutes = elapsedTime / 1000 / 60;
             final String timeString = String.format("%02d:%02d", elapsedMinutes, elapsedSeconds);
-            g.setColor(Color.WHITE);
-            g.setFont(font);
-            g.drawString(timeString, (this.getWidth() - g.getFontMetrics().stringWidth(timeString)) / 2,
+            g2d.setColor(Color.WHITE);
+            g2d.setFont(font);
+            g2d.drawString(timeString, (this.getWidth() - g2d.getFontMetrics().stringWidth(timeString)) / 2,
                     (int) (LEVEL_BAR_Y_OFFSET * scale + LEVEL_BAR_HEIGHT * scale
                             + TIMER_Y_EXTRA_OFFSET * scale));
 
@@ -383,7 +382,7 @@ public final class GamePanel extends JPanel {
             for (final ItemData item : this.data.getItemsData()) {
                 final Image itemIcon = this.imageManager.getImage(item.getId());
                 if (itemIcon != null) {
-                    g.drawImage(itemIcon, (int) (weaponIconX * scale), (int) (weaponIconY * scale),
+                    g2d.drawImage(itemIcon, (int) (weaponIconX * scale), (int) (weaponIconY * scale),
                             (int) (ICON_SIZE * scale), (int) (ICON_SIZE * scale), null);
                     weaponIconX += ICON_SIZE + 1;
                 }

@@ -55,10 +55,6 @@ public abstract class AbstractCollidableEntity extends AbstractPositionableEntit
         final double dy = this.getPosition().getY() - collidable.getPosition().getY();
         final double distanceSquared = dx * dx + dy * dy;
         final double combinedRadius = this.getRadius() + collidable.getRadius();
-        if (distanceSquared <= combinedRadius * combinedRadius) {
-            this.onCollision(collidable);
-            return true;
-        }
-        return false;
+        return distanceSquared <= combinedRadius * combinedRadius;
     }
 }

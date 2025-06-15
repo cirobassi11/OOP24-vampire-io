@@ -1,7 +1,6 @@
 package it.unibo.vampireio.view.panels;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -42,6 +41,7 @@ public abstract class AbstractBasePanel extends JPanel {
     private static final Color COMBOBOX_BORDER = new Color(200, 200, 200);
     private static final Color LIST_BACKGROUND = new Color(40, 40, 40);
     private static final Color LIST_BORDER_COLOR = Color.GRAY;
+    private static final Color FOREGROUND_COLOR = Color.WHITE;
 
     // Font constants
     private static final Font DEFAULT_FONT = new Font("Serif", Font.BOLD, 24);
@@ -120,7 +120,7 @@ public abstract class AbstractBasePanel extends JPanel {
     protected final JButton addButton(final String text, final int gridx, final int gridy) {
         final JButton button = new JButton(text);
         button.setFont(DEFAULT_FONT);
-        button.setForeground(Color.WHITE);
+        button.setForeground(FOREGROUND_COLOR);
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createLineBorder(BUTTON_BORDER, BUTTON_BORDER_THICKNESS));
         button.setContentAreaFilled(false);
@@ -152,7 +152,7 @@ public abstract class AbstractBasePanel extends JPanel {
     protected final JLabel addLabel(final String text, final int gridx, final int gridy) {
         final JLabel label = new JLabel(text);
         label.setFont(DEFAULT_FONT);
-        label.setForeground(Color.WHITE);
+        label.setForeground(FOREGROUND_COLOR);
 
         this.addComponent(label, gridx, gridy);
         return label;
@@ -169,7 +169,7 @@ public abstract class AbstractBasePanel extends JPanel {
         final JComboBox<String> comboBox = new JComboBox<>();
         comboBox.setFont(DEFAULT_FONT.deriveFont(SMALL_FONT_SCALE));
         comboBox.setBackground(COMBOBOX_BACKGROUND);
-        comboBox.setForeground(Color.WHITE);
+        comboBox.setForeground(FOREGROUND_COLOR);
         comboBox.setBorder(BorderFactory.createLineBorder(COMBOBOX_BORDER, COMBOBOX_BORDER_THICKNESS));
         this.addComponent(comboBox, gridx, gridy);
         return comboBox;
@@ -185,12 +185,9 @@ public abstract class AbstractBasePanel extends JPanel {
      * @return the created JList
      */
     protected final JList<String> addScrollableList(final List<String> items, final int gridx, final int gridy) {
-        final DefaultListModel<String> model = new DefaultListModel<>();
-        items.forEach(model::addElement);
-
-        final JList<String> list = new JList<>(model);
+        final JList<String> list = new JList<>(items.toArray(new String[0]));
         list.setFont(DEFAULT_FONT.deriveFont(SMALL_FONT_SCALE));
-        list.setForeground(Color.WHITE);
+        list.setForeground(FOREGROUND_COLOR);
         list.setBackground(LIST_BACKGROUND);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setVisibleRowCount(LIST_VISIBLE_ROWS);
@@ -202,6 +199,20 @@ public abstract class AbstractBasePanel extends JPanel {
 
         this.addComponent(scrollPane, gridx, gridy);
         return list;
+    }
+
+    /**
+     * Adds an image to the panel at the specified grid position.
+     *
+     * @param image the ImageIcon to display
+     * @param gridx the x position in the grid
+     * @param gridy the y position in the grid
+     * @return the created JLabel containing the image
+     */
+    protected final JLabel addImage(final ImageIcon image, final int gridx, final int gridy) {
+        final JLabel label = new JLabel(image);
+        this.addComponent(label, gridx, gridy);
+        return label;
     }
 
     /**
@@ -229,19 +240,5 @@ public abstract class AbstractBasePanel extends JPanel {
             }
         }
         this.revalidate();
-    }
-
-    /**
-     * Adds an image to the panel at the specified grid position.
-     *
-     * @param image the ImageIcon to display
-     * @param gridx the x position in the grid
-     * @param gridy the y position in the grid
-     * @return the created JLabel containing the image
-     */
-    protected final JLabel addImage(final ImageIcon image, final int gridx, final int gridy) {
-        final JLabel label = new JLabel(image);
-        this.addComponent(label, gridx, gridy);
-        return label;
     }
 }
