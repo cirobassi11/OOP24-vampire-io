@@ -54,17 +54,6 @@ public final class Stats implements Serializable {
     }
 
     /**
-     * Increases the value of a specific statistic by a given amount.
-     *
-     * @param type   the type of statistic to modify
-     * @param amount the amount to add to the statistic
-     */
-    public void modifyStat(final StatType type, final double amount) {
-        final double currentValue = getStat(type);
-        setStat(type, currentValue + amount);
-    }
-
-    /**
      * Multiplies the value of a specific statistic by a given factor.
      *
      * @param type   the type of statistic to modify
