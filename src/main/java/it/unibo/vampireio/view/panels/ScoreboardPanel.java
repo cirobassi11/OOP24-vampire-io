@@ -81,14 +81,14 @@ public final class ScoreboardPanel extends AbstractBasePanel {
         if (index >= 0 && index < this.scoresData.size()) {
             final ScoreData selected = this.scoresData.get(index);
             final String details = String.format(
-                    "<html>Character: %s<br>Session Time: %.2f seconds<br>Kills: %d<br>"
-                            + "Level: %d<br>Coins: %d<br>Score: %d</html>",
+                    "<html>Score: %d<br>Character: %s<br>Session Time: %.2f seconds<br>Kills: %d<br>"
+                            + "Level: %d<br>Coins: %d</html>",
+                    selected.getScore(),
                     selected.getCharacterName(),
                     selected.getSessionTime() / 1000.0,
                     selected.getKillCounter(),
                     selected.getLevelCounter(),
-                    selected.getCoinCounter(),
-                    selected.getScore());
+                    selected.getCoinCounter());
             this.scoreLabel.setText(details);
         }
     }
