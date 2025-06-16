@@ -157,9 +157,7 @@ public final class EntityManager {
     }
 
     private void updateEnemies(final long tickTime) {
-        for (final Enemy enemy : enemies) {
-            this.updateEnemy(enemy, tickTime);
-        }
+        this.enemies.forEach(enemy -> this.updateEnemy(enemy, tickTime));
     }
 
     private void updateEnemy(final Enemy enemy, final long tickTime) {
