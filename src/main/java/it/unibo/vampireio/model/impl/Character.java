@@ -41,7 +41,7 @@ public final class Character extends AbstractLivingEntity {
      */
     public Character(final String id, final Stats stats, final double radius, final Weapon weapon,
             final int weaponSlots) {
-        super(id, new Point2D.Double(0, 0), radius, new Point2D.Double(1, 0), stats.getStat(StatType.MOVE_SPEED),
+        super(id, new Point2D.Double(0, 0), radius, new Point2D.Double(-1, 0), stats.getStat(StatType.MOVE_SPEED),
                 stats.getStat(StatType.MAX_HEALTH));
         this.stats = new Stats(stats);
         this.level = 1;

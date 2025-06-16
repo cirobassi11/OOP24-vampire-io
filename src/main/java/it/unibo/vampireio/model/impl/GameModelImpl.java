@@ -28,7 +28,7 @@ import java.util.Collection;
  * It manages the game state, including entities, score, saves, and shop
  * functionalities.
  */
-public final class GameWorld implements GameModel {
+public final class GameModelImpl implements GameModel {
     /**
      * The default visible size of the map.
      */
@@ -50,7 +50,7 @@ public final class GameWorld implements GameModel {
      * Constructs a GameWorld instance, initializes the data loader, save manager,
      * and shop manager.
      */
-    public GameWorld() {
+    public GameModelImpl() {
         DataLoader.init(this);
         this.saveManager = new SaveManager(this);
         this.shopManager = new ShopManager(this.saveManager);

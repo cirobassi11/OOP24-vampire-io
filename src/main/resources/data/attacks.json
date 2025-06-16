@@ -22,7 +22,7 @@
     },
     {
         "id": "attacks/knife",
-        "radius": 16.0,
+        "radius": 15.0,
         "speed": 3.0,
         "damage": 70,
         "duration": 10000

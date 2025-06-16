@@ -10,6 +10,8 @@ import it.unibo.vampireio.model.api.Collidable;
  * collidable entities.
  */
 public abstract class AbstractCollidableEntity extends AbstractPositionableEntity implements Collidable {
+    private static final double COLLISION_RADIUS_EXPONENT = 1.8;
+
     private final double radius;
 
     /**
@@ -41,10 +43,12 @@ public abstract class AbstractCollidableEntity extends AbstractPositionableEntit
     }
 
     @Override
-    public final void checkCollision(final Collidable collidable) {
+    public final boolean checkCollision(final Collidable collidable) {
         if (collidable != null && this.isColliding(collidable)) {
             this.onCollision(collidable);
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -55,6 +59,6 @@ public abstract class AbstractCollidableEntity extends AbstractPositionableEntit
         final double dy = this.getPosition().getY() - collidable.getPosition().getY();
         final double distanceSquared = dx * dx + dy * dy;
         final double combinedRadius = this.getRadius() + collidable.getRadius();
-        return distanceSquared <= combinedRadius * combinedRadius;
+        return distanceSquared <= Math.pow(combinedRadius, COLLISION_RADIUS_EXPONENT);
     }
 }

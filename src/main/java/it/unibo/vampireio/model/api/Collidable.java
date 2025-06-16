@@ -14,11 +14,12 @@ public interface Collidable extends Positionable {
 
     /**
      * Checks if this collidable object is colliding with another collidable object.
-     * If a collision occurs, it triggers the onCollision method.
+     * If a collision occurs, it triggers the onCollision method and returns true.
      *
      * @param collidable the other collidable object to check for collision
+     * @return true if a collision occurs, false otherwise
      */
-    void checkCollision(Collidable collidable);
+    boolean checkCollision(Collidable collidable);
 
     /**
      * Handles the collision response when this collidable object collides with another collidable object.

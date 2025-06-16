@@ -19,6 +19,8 @@ import java.util.Iterator;
  */
 public final class CollisionManager {
 
+    private static final double COLLISION_RADIUS_MULTIPLIER = 2.5;
+
     /**
      * Private constructor to prevent instantiation of this utility class.
      * This class should only be used statically.
@@ -63,14 +65,14 @@ public final class CollisionManager {
             if (!currentEnemy.equals(otherEnemy)) {
                 final double combinedRadius = currentEnemyRadius + otherEnemy.getRadius();
 
-                if (futurePosition.distance(otherEnemy.getPosition()) < combinedRadius / 2) {
+                if (futurePosition.distance(otherEnemy.getPosition()) < combinedRadius / COLLISION_RADIUS_MULTIPLIER) {
                     return true;
                 }
             }
         }
         final double combinedRadius = currentEnemyRadius + character.getRadius();
 
-        return futurePosition.distance(character.getPosition()) < combinedRadius / 2;
+        return futurePosition.distance(character.getPosition()) < combinedRadius / COLLISION_RADIUS_MULTIPLIER;
     }
 
     /**
@@ -84,7 +86,9 @@ public final class CollisionManager {
      */
     public static boolean checkAttackCollisions(final Attack attack, final List<Living> enemies) {
         for (final Living enemy : enemies) {
-            attack.checkCollision(enemy);
+            if (attack.checkCollision(enemy)) {
+                return true;
+            }
         }
         return false;
     }

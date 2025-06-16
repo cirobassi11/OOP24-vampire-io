@@ -10,7 +10,7 @@ import it.unibo.vampireio.model.api.Living;
 import it.unibo.vampireio.model.data.DataLoader;
 import it.unibo.vampireio.model.data.EnemyData;
 import it.unibo.vampireio.model.impl.Enemy;
-import it.unibo.vampireio.model.impl.GameWorld;
+import it.unibo.vampireio.model.impl.GameModelImpl;
 
 /**
  * EnemyFactory is responsible for creating enemy instances in the game world.
@@ -89,7 +89,7 @@ public class EnemyFactory {
      * @return a Point2D.Double representing the random spawn position
      */
     private Point2D.Double getRandomSpawnPosition(final double radius) {
-        final Dimension visualSize = GameWorld.VISUAL_SIZE;
+        final Dimension visualSize = GameModelImpl.VISUAL_SIZE;
         final Point2D.Double playerPos = this.entityManager.getCharacter().getPosition();
 
         final double halfWidth = visualSize.getWidth() / 2.0;

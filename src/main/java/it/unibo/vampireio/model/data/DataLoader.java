@@ -1,6 +1,6 @@
 package it.unibo.vampireio.model.data;
 
-import it.unibo.vampireio.model.impl.GameWorld;
+import it.unibo.vampireio.model.impl.GameModelImpl;
 import it.unibo.vampireio.model.impl.UnlockableCharacter;
 import it.unibo.vampireio.model.impl.UnlockablePowerUp;
 
@@ -27,7 +27,7 @@ public final class DataLoader {
      *
      * @param model the GameWorld model to which the data loaders will be bound
      */
-    private DataLoader(final GameWorld model) {
+    private DataLoader(final GameModelImpl model) {
         this.characterLoader = new GenericDataLoader<>(model, "data/characters.json", UnlockableCharacter.class);
         this.enemyLoader = new GenericDataLoader<>(model, "data/enemies.json", EnemyData.class);
         this.weaponLoader = new GenericDataLoader<>(model, "data/weapons.json", WeaponData.class);
@@ -44,7 +44,7 @@ public final class DataLoader {
      *
      * @param model the GameWorld model to which the data loaders will be bound
      */
-    public static synchronized void init(final GameWorld model) {
+    public static synchronized void init(final GameModelImpl model) {
         if (instance == null) {
             instance = new DataLoader(model);
         }

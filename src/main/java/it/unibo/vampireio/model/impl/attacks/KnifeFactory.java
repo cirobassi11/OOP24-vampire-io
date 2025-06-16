@@ -1,5 +1,7 @@
 package it.unibo.vampireio.model.impl.attacks;
 
+import java.awt.geom.Point2D;
+
 import it.unibo.vampireio.model.api.Attack;
 import it.unibo.vampireio.model.api.Weapon;
 import it.unibo.vampireio.model.data.StatType;
@@ -31,7 +33,11 @@ public final class KnifeFactory extends AbstractAttackFactory {
         final Stats stats = character.getStats();
         return new KnifeAttack(
                 this.getAttackData().getId(),
-                character.getPosition(),
+                new Point2D.Double(
+                        character.getPosition().getX()
+                                + character.getLastDirection().getX() * this.getAttackData().getRadius(),
+                        character.getPosition().getY()
+                                + character.getLastDirection().getY() * this.getAttackData().getRadius()),
                 this.getAttackData().getRadius(),
                 character.getLastDirection(),
                 this.getAttackData().getSpeed() * stats.getStat(StatType.SPEED),
@@ -44,6 +50,6 @@ public final class KnifeFactory extends AbstractAttackFactory {
     public void increaseLevel() {
         super.increaseLevel();
         final Weapon weapon = this.getEntityManager().getWeaponById("weapons/knife");
-        weapon.multiplyCooldown(this.COOLDOWN_MULTIPLIER);
+        weapon.multiplyCooldown(COOLDOWN_MULTIPLIER);
     }
 }

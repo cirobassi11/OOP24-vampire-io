@@ -3,7 +3,7 @@ package it.unibo.vampireio.controller.impl;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.controller.api.GameController;
 import it.unibo.vampireio.model.api.GameModel;
-import it.unibo.vampireio.model.impl.GameWorld;
+import it.unibo.vampireio.model.impl.GameModelImpl;
 import it.unibo.vampireio.view.impl.GameViewImpl;
 import it.unibo.vampireio.view.api.GameView;
 import it.unibo.vampireio.controller.manager.InputProcessor;
@@ -31,7 +31,7 @@ public final class GameControllerImpl implements GameController {
      */
     public GameControllerImpl() {
         this.view = new GameViewImpl();
-        this.model = new GameWorld();
+        this.model = new GameModelImpl();
         this.model.setModelErrorListener(this::showError);
         this.view.setViewErrorListener(this::showError);
         this.inputProcessor = new InputProcessor();
