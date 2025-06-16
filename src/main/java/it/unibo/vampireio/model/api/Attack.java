@@ -5,7 +5,7 @@ package it.unibo.vampireio.model.api;
  * An attack is a collidable and movable entity that can be executed and has a
  * lifespan.
  */
-public interface Attack extends Collidable, Movable {
+public interface Attack extends Movable {
     /**
      * Executes the attack logic at the specified tick time.
      *

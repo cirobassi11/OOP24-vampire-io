@@ -4,7 +4,7 @@ package it.unibo.vampireio.model.api;
  * Represents a living entity in the game, such as a player or an enemy.
  * Living entities can move, have health, and can be attacked or healed.
  */
-public interface Living extends Movable, Collidable {
+public interface Living extends Movable {
     /**
      * Gets the current health of the living entity.
      *

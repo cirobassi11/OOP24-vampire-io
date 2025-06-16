@@ -7,7 +7,7 @@ import java.awt.geom.Point2D;
  * It extends the Positionable interface to ensure that each movable object
  * has a unique identifier and a position.
  */
-public interface Movable extends Positionable {
+public interface Movable extends Collidable {
     /**
      * Sets the direction of movement for the movable object.
      *
