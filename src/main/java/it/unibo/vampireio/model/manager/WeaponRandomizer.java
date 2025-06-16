@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model.manager;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import it.unibo.vampireio.model.api.Identifiable;
 import it.unibo.vampireio.model.impl.Character;
 
@@ -28,7 +27,7 @@ final class WeaponRandomizer {
         return this.weaponsList.stream()
             .sorted((a, b) -> Math.random() < 0.5 ? -1 : 1)
             .limit(numberOfWeapons)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     /**
@@ -45,6 +44,6 @@ final class WeaponRandomizer {
         .sorted((a, b) -> Math.random() < 0.5 ? -1 : 1)
         .limit(numberOfWeapons)
         .map(Identifiable::getId)
-        .collect(Collectors.toList());
+        .toList();
     }
 }

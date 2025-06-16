@@ -1,7 +1,6 @@
 package it.unibo.vampireio.controller.manager;
 
 import java.awt.geom.Point2D;
-import java.util.stream.Collectors;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.controller.data.DataBuilder;
@@ -116,7 +115,7 @@ public final class GameLoopManager {
                     pause();
                     view.setItemsData(this.model.getRandomLevelUpWeapons().stream()
                             .map(item -> new ItemData(item.getId(), item.getName(), item.getDescription()))
-                            .collect(Collectors.toList()));
+                            .toList());
                     view.showScreen(GameView.ITEM_SELECTION);
                 }
 
