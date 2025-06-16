@@ -7,6 +7,7 @@ import java.awt.geom.Point2D;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import it.unibo.vampireio.model.api.Collidable;
+import it.unibo.vampireio.model.api.Movable;
 import it.unibo.vampireio.model.impl.AbstractMovableEntity;
 
 /**
@@ -16,10 +17,12 @@ import it.unibo.vampireio.model.impl.AbstractMovableEntity;
 class TestMovable {
 
     private static final Point2D.Double START_POSITION = new Point2D.Double(0.0, 0.0);
-    private static final Point2D.Double POSITION = new Point2D.Double(10.0, 5.0);
+    private static final Point2D.Double TEST_POSITION_1 = new Point2D.Double(10.0, 5.0);
+    private static final Point2D.Double TEST_POSITION_2 = new Point2D.Double(3.0, 4.0);
     private static final Point2D.Double TEST_FUTURE_POSITION = new Point2D.Double(10.0, -95.0);
     private static final Point2D.Double TEST_DIRECTION = new Point2D.Double(1.0, 1.0);
     private static final Point2D.Double TEST_DIRECTION_2 = new Point2D.Double(1, 0);
+    private static final Point2D.Double TEST_DIRECTION_3 = new Point2D.Double(0.6, 0.8);
     private static final Point2D.Double TEST_DIRECTION_ZERO = new Point2D.Double(0.0, 0.0);
     private static final Point2D.Double TEST_FUTURE_DIRECTION = new Point2D.Double(0, -1);
     private static final Point2D.Double TEST_MOVEMENT = new Point2D.Double(200.0, 0.0);
@@ -64,6 +67,23 @@ class TestMovable {
     }
 
     /**
+     * Tests the setDirectionTorwards method of the Movable interface.
+     * It checks if the direction is set correctly towards a target positionable
+     * object.
+     */
+    @Test
+    void testMoveTorwards() {
+        final Movable target = new TestMovableImpl("target", TEST_POSITION_2);
+        movable.setPosition(new Point2D.Double(0.0, 0.0));
+        movable.setDirectionTorwards(target);
+
+        final Point2D.Double actualDirection = movable.getDirection();
+
+        assertEquals(TEST_DIRECTION_3.getX(), actualDirection.getX());
+        assertEquals(TEST_DIRECTION_3.getY(), actualDirection.getY());
+    }
+
+    /**
      * Tests the getFuturePosition method of the Movable interface.
      * It checks if the future position is calculated correctly based on the current
      * position,
@@ -71,7 +91,7 @@ class TestMovable {
      */
     @Test
     void testGetFuturePosition() {
-        movable.setPosition(POSITION);
+        movable.setPosition(TEST_POSITION_1);
         movable.setDirection(TEST_FUTURE_DIRECTION);
         movable.setSpeed(TEST_HALF_SPEED);
         final Point2D.Double future = movable.getFuturePosition(TEST_TICKTIME);

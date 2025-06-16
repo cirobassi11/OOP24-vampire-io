@@ -16,6 +16,13 @@ public interface Movable extends Collidable {
     void setDirection(Point2D.Double direction);
 
     /**
+     * Sets the direction of movement towards a target positionable object.
+     *
+     * @param target the target Positionable object to move towards.
+     */
+    void setDirectionTorwards(Positionable target);
+
+    /**
      * Gets the current direction of movement for the movable object.
      *
      * @return the direction as a Point2D.Double object.

@@ -41,7 +41,7 @@ public final class FrameManager {
     }
 
     private void initFrame() {
-        this.setResolution(DEFAULT_RESOLUTION);
+        this.frame.setSize(DEFAULT_RESOLUTION);
 
         this.frame.setLocationRelativeTo(null);
         this.frame.setResizable(true);
@@ -56,7 +56,7 @@ public final class FrameManager {
             public void componentResized(final ComponentEvent e) {
                 final int width = Math.max(frame.getWidth(), MIN_RESOLUTION.width);
                 final int height = Math.max((int) (width / ASPECT_RATIO), MIN_RESOLUTION.height);
-                setResolution(new Dimension(width, height));
+                frame.setSize(new Dimension(width, height));
                 for (final Component comp : cardPanel.getComponents()) {
                     if (comp instanceof AbstractBasePanel basePanel) {
                         basePanel.updateComponentSize();
@@ -73,10 +73,6 @@ public final class FrameManager {
      */
     public void addPanels(final Map<String, JPanel> panels) {
         panels.forEach(this.cardPanel::add);
-    }
-
-    private void setResolution(final Dimension resolution) {
-        this.frame.setSize(resolution);
     }
 
     /**

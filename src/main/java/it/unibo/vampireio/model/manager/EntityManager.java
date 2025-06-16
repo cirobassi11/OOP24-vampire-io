@@ -164,13 +164,7 @@ public final class EntityManager {
 
     private void updateEnemy(final Enemy enemy, final long tickTime) {
         enemy.setGettingAttacked(false);
-
-        final double deltaX = character.getPosition().getX() - enemy.getPosition().getX();
-        final double deltaY = character.getPosition().getY() - enemy.getPosition().getY();
-        final double distance = enemy.getDistance(character);
-
-        final Point2D.Double enemyDirection = new Point2D.Double(deltaX / distance, deltaY / distance);
-        enemy.setDirection(enemyDirection);
+        enemy.setDirectionTorwards(this.character);
 
         final Point2D.Double enemyFuturePosition = enemy.getFuturePosition(tickTime);
         final boolean collisionWithOtherEntities = CollisionManager.checkEnemyCollisions(enemy, enemyFuturePosition,

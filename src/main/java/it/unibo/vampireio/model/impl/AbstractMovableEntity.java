@@ -2,6 +2,7 @@ package it.unibo.vampireio.model.impl;
 
 import java.awt.geom.Point2D;
 import it.unibo.vampireio.model.api.Movable;
+import it.unibo.vampireio.model.api.Positionable;
 
 /**
  * AbstractMovableEntity is an abstract class that represents a movable entity
@@ -54,6 +55,19 @@ public abstract class AbstractMovableEntity extends AbstractCollidableEntity imp
     @Override
     public void setDirection(final Point2D.Double direction) {
         this.direction = new Point2D.Double(direction.getX(), direction.getY());
+    }
+
+    @Override
+    public final void setDirectionTorwards(final Positionable target) {
+        final Point2D.Double targetPosition = target.getPosition();
+        final double dx = targetPosition.getX() - this.getPosition().getX();
+        final double dy = targetPosition.getY() - this.getPosition().getY();
+        final double length = Math.sqrt(dx * dx + dy * dy);
+        if (length > 0) {
+            this.setDirection(new Point2D.Double(dx / length, dy / length));
+        } else {
+            this.setDirection(new Point2D.Double(0, 0));
+        }
     }
 
     @Override
