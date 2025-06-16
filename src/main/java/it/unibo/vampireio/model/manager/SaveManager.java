@@ -121,10 +121,6 @@ public final class SaveManager {
         if (defaultCharacter == null) {
             this.model.notifyError("Default character not found in config data!");
         }
-        this.createNewSave(defaultCharacter);
-    }
-
-    private void createNewSave(final UnlockableCharacter defaultCharacter) {
         this.currentSave = new SaveImpl();
         this.savesNames.add(this.currentSave.getSaveTime());
         this.currentSave.addUnlockedCharacter(defaultCharacter);
