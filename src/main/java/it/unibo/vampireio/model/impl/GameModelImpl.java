@@ -28,11 +28,6 @@ import java.util.Collection;
  * functionalities.
  */
 public final class GameModelImpl implements GameModel {
-    /**
-     * The default visible size of the map.
-     */
-    public static final Dimension VISUAL_SIZE = new Dimension(1280, 720);
-
     private final SaveManager saveManager;
     private final ShopManager shopManager;
 

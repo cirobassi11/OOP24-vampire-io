@@ -18,6 +18,12 @@ import it.unibo.vampireio.model.impl.UnlockablePowerUp;
  * and more.
  */
 public interface GameModel {
+
+    /**
+     * The default visible size of the map.
+     */
+    Dimension VISUAL_SIZE = new Dimension(1280, 720);
+
     /**
      * Sets the listener for model errors.
      *

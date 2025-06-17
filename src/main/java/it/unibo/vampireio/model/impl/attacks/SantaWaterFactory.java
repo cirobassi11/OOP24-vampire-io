@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 import it.unibo.vampireio.model.api.Attack;
 import it.unibo.vampireio.model.data.StatType;
 import it.unibo.vampireio.model.data.Stats;
-import it.unibo.vampireio.model.impl.GameModelImpl;
+import it.unibo.vampireio.model.api.GameModel;
 import it.unibo.vampireio.model.impl.Character;
 import it.unibo.vampireio.model.manager.EntityManager;
 import java.awt.Dimension;
@@ -52,7 +52,7 @@ public final class SantaWaterFactory extends AbstractAttackFactory {
 
     private Point2D.Double getRandomPosition() {
         final Point2D.Double characterPosition = this.getEntityManager().getCharacter().getPosition();
-        final Dimension dimension = GameModelImpl.VISUAL_SIZE;
+        final Dimension dimension = GameModel.VISUAL_SIZE;
         final double x = characterPosition.getX() + (Math.random() * dimension.getWidth() * SPAWN_AREA_PERCENTAGE)
                 - (dimension.getWidth() * SPAWN_AREA_PERCENTAGE / 2);
         final double y = characterPosition.getY() + (Math.random() * dimension.getHeight() * SPAWN_AREA_PERCENTAGE)
