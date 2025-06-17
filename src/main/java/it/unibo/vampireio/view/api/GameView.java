@@ -215,8 +215,11 @@ public interface GameView {
      * Sets the listeners for the ItemSelectionPanel.
      *
      * @param chooseItemListener ActionListener for choosing an item.
+     * @param chooseButtonListener ActionListener for the choose item button.
      */
-    void setItemSelectionPanelListener(ActionListener chooseItemListener);
+    void setItemSelectionPanelListener(
+        ListSelectionListener chooseItemListener,
+        ActionListener chooseButtonListener);
 
     /**
      * Sets the listeners for the UnlockableItemShopPanel.
@@ -342,4 +345,14 @@ public interface GameView {
      * Enables the confirm character button in the character selection.
      */
     void enableConfirmCharacterButton();
+
+    /**
+     * Disables the choose button in the item selection.
+     */
+    void disableChooseItemButton();
+
+    /**
+     * Enables the choose item button in the item selection.
+     */
+    void enableChooseItemButton();
 }

@@ -4,6 +4,8 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.event.ListSelectionListener;
+
 import it.unibo.vampireio.controller.data.ItemData;
 import it.unibo.vampireio.view.manager.FrameManager;
 
@@ -31,15 +33,18 @@ public final class ItemSelectionPanel extends AbstractBasePanel {
 
         this.chooseItemButton = this.addButton("CHOOSE", 0, 1);
         this.itemList = this.addScrollableList(List.of(), 0, 0);
+
+        this.chooseItemButton.setEnabled(false);
     }
 
     /**
-     * Sets a listener for the choose item button.
+     * Sets a listener for the item list selection.
+     * This listener will be notified when the user selects an item from the list.
      *
-     * @param listener the ActionListener to set for the choose item button
+     * @param listener the ListSelectionListener to set for the item list
      */
-    public void setChooseItemListener(final ActionListener listener) {
-        this.chooseItemButton.addActionListener(listener);
+    public void setChooseItemListener(final ListSelectionListener listener) {
+        this.itemList.addListSelectionListener(listener);
     }
 
     /**
@@ -72,5 +77,28 @@ public final class ItemSelectionPanel extends AbstractBasePanel {
             return this.itemsData.get(selectedIndex).getId();
         }
         return null;
+    }
+
+    /**
+     * Sets a listener for the choose item button.
+     *
+     * @param listener the ActionListener to set for the choose item button
+     */
+    public void setChooseItemButtonListener(final ActionListener listener) {
+        this.chooseItemButton.addActionListener(listener);
+    }
+
+    /**
+     * Disables the choose item button.
+     */
+    public void disableChooseItemButton() {
+        this.chooseItemButton.setEnabled(false);
+    }
+
+    /**
+     * Enables the choose item button.
+     */
+    public void enableChooseItemButton() {
+        this.chooseItemButton.setEnabled(true);
     }
 }

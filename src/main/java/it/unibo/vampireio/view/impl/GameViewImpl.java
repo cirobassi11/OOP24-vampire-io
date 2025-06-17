@@ -147,9 +147,10 @@ public final class GameViewImpl implements GameView {
     }
 
     @Override
-    public void setItemSelectionPanelListener(final ActionListener chooseItemListener) {
+    public void setItemSelectionPanelListener(final ListSelectionListener chooseItemListener, 
+        final ActionListener chooseButtonListener) {
         ListenerBinder.bindItemSelectionPanelListener((ItemSelectionPanel) this.panels.get(ITEM_SELECTION),
-                chooseItemListener);
+                chooseItemListener, chooseButtonListener);
 
     }
 
@@ -288,6 +289,16 @@ public final class GameViewImpl implements GameView {
     @Override
     public void enableConfirmCharacterButton() {
         ((ChooseCharacterPanel) this.panels.get(CHOOSE_CHARACTER)).enableConfirmCharacterButton();
+    }
+
+    @Override
+    public void disableChooseItemButton() {
+        ((ItemSelectionPanel) this.panels.get(ITEM_SELECTION)).disableChooseItemButton();
+    }
+
+    @Override
+    public void enableChooseItemButton() {
+        ((ItemSelectionPanel) this.panels.get(ITEM_SELECTION)).enableChooseItemButton();
     }
 
     @Override

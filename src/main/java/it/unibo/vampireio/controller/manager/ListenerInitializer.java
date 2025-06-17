@@ -132,17 +132,27 @@ public final class ListenerInitializer {
 
         view.setSaveSelectionPanelListener(setChooseSaveListener, backListener);
 
-        // ITEM SELECTION
-        final ActionListener setChooseItemListener = e -> {
-            final String item = view.getSelectedItem();
-            if (item != null) {
-                model.levelUpWeapon(item);
+        //ITEM SELECTION
+        final ListSelectionListener setItemSelectionListener = e -> {
+            final String selectedItem = view.getSelectedItem();
+            if (selectedItem != null) {
+                view.enableChooseItemButton();
+            } else {
+                view.disableChooseItemButton();
+            }
+        };
+
+        //CHOOSE BUTTON
+        final ActionListener chooseButtonListener = e -> {
+            final String selectedItem = view.getSelectedItem();
+            if (selectedItem != null) {
+                model.levelUpWeapon(selectedItem);
                 gameLoopManager.resume();
                 screenManager.showScreen(GameView.GAME);
             }
         };
 
-        view.setItemSelectionPanelListener(setChooseItemListener);
+        view.setItemSelectionPanelListener(setItemSelectionListener, chooseButtonListener);
 
         // SHOP
         final ActionListener setCharacterShopListener = e -> {

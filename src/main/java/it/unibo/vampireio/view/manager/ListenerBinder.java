@@ -175,11 +175,14 @@ public final class ListenerBinder {
      *
      * @param itemSelectionPanel the ItemSelectionPanel to bind listeners to
      * @param chooseItemListener the listener for choosing an item
+     * @param chooseButtonListener the listener for the choose item button
      */
     public static void bindItemSelectionPanelListener(
             final ItemSelectionPanel itemSelectionPanel,
-            final ActionListener chooseItemListener) {
+            final ListSelectionListener chooseItemListener,
+            final ActionListener chooseButtonListener) {
         itemSelectionPanel.setChooseItemListener(chooseItemListener);
+        itemSelectionPanel.setChooseItemButtonListener(chooseButtonListener);
     }
 
     /**
