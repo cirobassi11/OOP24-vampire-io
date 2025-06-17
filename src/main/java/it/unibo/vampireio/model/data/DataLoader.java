@@ -25,7 +25,7 @@ public final class DataLoader {
      * Private constructor to prevent instantiation of this singleton class.
      * Initializes the data loaders for various game data types.
      *
-     * @param model the GameWorld model to which the data loaders will be bound
+     * @param model the GameModel model to which the data loaders will be bound
      */
     private DataLoader(final GameModel model) {
         this.characterLoader = new GenericDataLoader<>(model, "data/characters.json", UnlockableCharacter.class);
@@ -37,12 +37,12 @@ public final class DataLoader {
     }
 
     /**
-     * Initializes the DataLoader singleton instance with the provided GameWorld
+     * Initializes the DataLoader singleton instance with the provided GameModel
      * model.
      * This method should be called once at the start of the game to set up the data
      * loaders.
      *
-     * @param model the GameWorld model to which the data loaders will be bound
+     * @param model the GameModel model to which the data loaders will be bound
      */
     public static synchronized void init(final GameModel model) {
         if (instance == null) {

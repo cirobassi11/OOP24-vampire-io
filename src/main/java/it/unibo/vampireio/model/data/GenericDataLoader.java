@@ -37,7 +37,7 @@ public final class GenericDataLoader<T extends Identifiable> {
     /**
      * Constructs a GenericDataLoader with the specified model, path, and type.
      *
-     * @param model the GameWorld model to notify on errors
+     * @param model the GameModel model to notify on errors
      * @param path  the path to the JSON file containing the data
      * @param type  the class type of the data being loaded
      */

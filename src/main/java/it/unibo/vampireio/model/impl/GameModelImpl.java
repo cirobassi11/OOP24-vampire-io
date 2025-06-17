@@ -22,7 +22,7 @@ import it.unibo.vampireio.model.data.WeaponData;
 import java.util.Collection;
 
 /**
- * GameWorld is the main class that represents the game world and implements the
+ * GameModelImpl is the main class that represents the model and implements the
  * GameModel interface.
  * It manages the game state, including entities, score, saves, and shop
  * functionalities.
@@ -46,7 +46,7 @@ public final class GameModelImpl implements GameModel {
     private GameDataProvider gameDataProvider;
 
     /**
-     * Constructs a GameWorld instance, initializes the data loader, save manager,
+     * Constructs a GameModelImpl instance, initializes the data loader, save manager,
      * and shop manager.
      */
     public GameModelImpl() {

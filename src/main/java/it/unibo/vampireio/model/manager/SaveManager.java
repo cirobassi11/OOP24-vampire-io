@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.model.impl.SaveImpl;
 import it.unibo.vampireio.model.api.GameModel;
@@ -25,112 +26,72 @@ import it.unibo.vampireio.model.data.DataLoader;
  * that keeps track of available saves.
  */
 public final class SaveManager {
-    private static final String SAVING_ERROR = "An error occurred while saving the file";
-    private static final String READING_ERROR = "An error occurred while reading the file";
+    private static final String SAVING_ERROR = "An error occurred while saving";
+    private static final String READING_ERROR = "An error occurred while reading";
     private final GameModel model;
 
-    private final String indexFileName = System.getProperty("user.home") + File.separator
-            + "vampire-io_saves_index.sav";
+    private final String folderName = System.getProperty("user.home") + File.separator + "vampire-io_save";
     private Save currentSave;
-    private List<String> savesNames;
 
     /**
-     * Constructs a SaveManager for the given GameWorld model.
-     * Initializes the save index file and reads existing saves if available.
+     * Constructs a SaveManager for the given GameModel model.
      *
-     * @param model the GameWorld model
+     * @param model the GameModel model
      */
     @SuppressFBWarnings(
-        value = "EI2", 
-        justification = "The GameWorld instance is intentionally shared and is used in a controlled way within SaveManager."
-        )
+        value = "EI2",
+        justification = "The GameModel instance is intentionally shared and is used in a controlled way within SaveManager.")
     public SaveManager(final GameModel model) {
         this.model = model;
-        final File indexFile = new File(indexFileName);
-        if (!indexFile.exists()) {
-            try {
-                if (!indexFile.createNewFile()) {
-                    this.model.notifyError("Failed to create index file.");
-                    return;
-                }
-                this.savesNames = new ArrayList<>();
-            } catch (final IOException e) {
-                this.model.notifyError(SAVING_ERROR);
-            }
-        } else {
-            this.readIndex();
-        }
-    }
-
-    private void readIndex() {
-        final File indexFile = new File(this.indexFileName);
-        this.savesNames = new ArrayList<>();
-
-        if (indexFile.length() == 0) {
-            return;
-        }
-
-        try (FileInputStream input = new FileInputStream(indexFile);
-                ObjectInputStream in = new ObjectInputStream(input)) {
-
-            final Object obj = in.readObject();
-            if (obj instanceof List<?>) {
-                for (final Object item : (List<?>) obj) {
-                    if (item instanceof String) {
-                        this.savesNames.add((String) item);
-                    } else {
-                        this.model.notifyError(READING_ERROR);
-                    }
-                }
-            } else {
-                this.model.notifyError(READING_ERROR);
-            }
-
-        } catch (IOException | ClassNotFoundException e) {
-            this.model.notifyError(READING_ERROR);
-        }
-    }
-
-    private void saveIndex() {
-        try (FileOutputStream fileOut = new FileOutputStream(indexFileName);
-                ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-            out.writeObject(savesNames);
-        } catch (final IOException e) {
-            this.model.notifyError(SAVING_ERROR);
-        }
     }
 
     /**
-     * Returns the names of all available saves.
-     * This method provides a read-only view of the saves names list.
+     * Returns a list of save names from the save directory.
+     * The save directory is located in the user's home directory under
+     * "vampire-io_save".
+     * If an error occurs while reading the directory, an error is notified to the
+     * model.
      *
-     * @return a list of save names
+     * @return a list of strings representing the names of available saves
      */
     public List<String> getSavesNames() {
-        return List.copyOf(this.savesNames);
+        final List<File> files = new ArrayList<>(List.of(new File(folderName).listFiles()));
+        if (!files.isEmpty()) {
+            return files.stream()
+                    .filter(File::exists)
+                    .filter(File::isFile)
+                    .filter(File::canRead)
+                    .map(File::getName)
+                    .collect(Collectors.toList());
+        }
+        return List.of();
     }
 
     /**
      * Creates a new save with the default character defined in the config data.
-     * If the default character is not found, an error is notified to the model.
+     * If the default character cannot be found, an error is notified to the model.
+     * The new save is saved immediately after creation.
      */
     public void createNewSave() {
         final ConfigData configData = DataLoader.getInstance().getConfigLoader().get(ConfigData.CONFIG_ID).orElse(null);
-        final UnlockableCharacter defaultCharacter = DataLoader.getInstance().getCharacterLoader()
+        if (configData != null) {
+            final UnlockableCharacter defaultCharacter = DataLoader.getInstance().getCharacterLoader()
                 .get(configData.getDefaultCharacterId()).orElse(null);
-        if (defaultCharacter == null) {
-            this.model.notifyError("Default character not found in config data!");
+            if (defaultCharacter == null) {
+                this.model.notifyError(READING_ERROR);
+            }
+            this.currentSave = new SaveImpl();
+            this.currentSave.addUnlockedCharacter(defaultCharacter);
+            this.saveCurrentSave();
+        } else {
+            this.model.notifyError(READING_ERROR);
         }
-        this.currentSave = new SaveImpl();
-        this.savesNames.add(this.currentSave.getSaveTime());
-        this.currentSave.addUnlockedCharacter(defaultCharacter);
-        this.saveCurrentSave();
-        this.saveIndex();
     }
 
     /**
-     * Loads a save by its name.
-     * If the save file does not exist or cannot be read, an error is notified to
+     * Loads a save from the specified file.
+     * The save file is identified by the selected save name.
+     * If the save file cannot be read or does not exist, an error is notified to
      * the model.
      *
      * @param selectedSave the name of the save to load
@@ -168,32 +129,31 @@ public final class SaveManager {
     }
 
     /**
-     * Returns the file path for a save file based on the save time.
-     * The save files are stored in a directory named "vampire-io_save" in the
-     * user's
-     * home directory.
+     * Constructs the file path for the save file based on the provided save time.
+     * The save file is stored in the user's home directory under "vampire-io_save".
+     * If the directory does not exist, it attempts to create it.
      *
-     * @param saveTime the timestamp of the save
-     * @return the file path for the save file
+     * @param saveTime the name of the save file, a timestamp
+     * @return the full path to the save file, or null if an error occurs
      */
     private String getFilePath(final String saveTime) {
-        final File saveDirectory = new File(System.getProperty("user.home") + File.separator + "vampire-io_save");
+    final File saveDirectory = new File(folderName);
         if (!saveDirectory.exists() && !saveDirectory.mkdirs()) {
-            this.model.notifyError("Failed to create save directory.");
+            this.model.notifyError(SAVING_ERROR);
             return null;
         }
-        return saveDirectory.getPath() + File.separator + saveTime + ".sav";
+        return saveDirectory.getPath() + File.separator + saveTime;
     }
 
     /**
      * Returns a list of scores from the current save.
-     * If no save is loaded, an error is notified to the model and an empty list is
-     * returned.
+     * If no save is loaded or if the scores are null, an error is notified to the
+     * model and an empty list is returned.
      *
-     * @return a list of Score objects representing the scores in the current save
+     * @return a sorted list of Score objects from the current save
      */
     public List<Score> getScores() {
-        if (this.currentSave == null) {
+        if (this.currentSave == null || this.currentSave.getScores() == null) {
             this.model.notifyError(READING_ERROR);
             return List.of();
         }
@@ -301,16 +261,16 @@ public final class SaveManager {
         return this.currentSave.getUnlockedCharacters();
     }
 
-    private List<Score> sortScores(final List<Score> scoreList) {
-        if (this.currentSave == null || scoreList == null) {
-            this.model.notifyError(READING_ERROR);
-            return List.of();
-        }
-        final List<Score> sortedScores = new ArrayList<>();
-        for (final Score score : scoreList) {
-            sortedScores.add(score);
-        }
+    /**
+     * Sorts a list of Score objects in descending order based on their score value.
+     *
+     * @param scoreList the list of Score objects to be sorted
+     * @return a new list of Score objects sorted in descending order
+     */
+    private static List<Score> sortScores(final List<Score> scoreList) {
+        final List<Score> sortedScores = new ArrayList<>(scoreList);
         sortedScores.sort((s1, s2) -> Integer.compare(s2.getScore(), s1.getScore()));
         return sortedScores;
     }
+
 }
