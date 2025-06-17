@@ -24,7 +24,7 @@ public class ImageManager {
     private final Set<String> failedImages = new HashSet<>();
 
     /**
-     * Constructs an ImageManager with the specified GameViewImpl.
+     * Constructs an ImageManager with the specified GameView.
      * This manager will use the view to notify errors related to image loading.
      *
      * @param view the GameView instance to notify in case of errors

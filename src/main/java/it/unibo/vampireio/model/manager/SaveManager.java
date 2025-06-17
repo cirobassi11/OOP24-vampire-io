@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.model.impl.SaveImpl;
+import it.unibo.vampireio.model.api.GameModel;
 import it.unibo.vampireio.model.api.Save;
 import it.unibo.vampireio.model.api.Score;
-import it.unibo.vampireio.model.impl.GameModelImpl;
 import it.unibo.vampireio.model.impl.UnlockableCharacter;
 import it.unibo.vampireio.model.impl.UnlockablePowerUp;
 import it.unibo.vampireio.model.data.ConfigData;
@@ -27,7 +27,7 @@ import it.unibo.vampireio.model.data.DataLoader;
 public final class SaveManager {
     private static final String SAVING_ERROR = "An error occurred while saving the file";
     private static final String READING_ERROR = "An error occurred while reading the file";
-    private final GameModelImpl model;
+    private final GameModel model;
 
     private final String indexFileName = System.getProperty("user.home") + File.separator
             + "vampire-io_saves_index.sav";
@@ -44,7 +44,7 @@ public final class SaveManager {
         value = "EI2", 
         justification = "The GameWorld instance is intentionally shared and is used in a controlled way within SaveManager."
         )
-    public SaveManager(final GameModelImpl model) {
+    public SaveManager(final GameModel model) {
         this.model = model;
         final File indexFile = new File(indexFileName);
         if (!indexFile.exists()) {

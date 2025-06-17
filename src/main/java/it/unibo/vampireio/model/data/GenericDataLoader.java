@@ -1,7 +1,7 @@
 package it.unibo.vampireio.model.data;
 
+import it.unibo.vampireio.model.api.GameModel;
 import it.unibo.vampireio.model.api.Identifiable;
-import it.unibo.vampireio.model.impl.GameModelImpl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,7 +27,7 @@ import java.nio.charset.StandardCharsets;
  */
 public final class GenericDataLoader<T extends Identifiable> {
 
-    private final GameModelImpl model;
+    private final GameModel model;
     private final String path;
     private final Class<T> type;
     private final Gson gson;
@@ -41,7 +41,7 @@ public final class GenericDataLoader<T extends Identifiable> {
      * @param path  the path to the JSON file containing the data
      * @param type  the class type of the data being loaded
      */
-    GenericDataLoader(final GameModelImpl model, final String path, final Class<T> type) {
+    GenericDataLoader(final GameModel model, final String path, final Class<T> type) {
         this.model = model;
         this.path = path;
         this.type = type;

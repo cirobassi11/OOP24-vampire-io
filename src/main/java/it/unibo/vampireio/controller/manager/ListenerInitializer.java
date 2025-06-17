@@ -1,9 +1,9 @@
 package it.unibo.vampireio.controller.manager;
 
+import it.unibo.vampireio.controller.api.GameController;
 import it.unibo.vampireio.controller.data.DataBuilder;
 import it.unibo.vampireio.controller.data.ScoreData;
 import it.unibo.vampireio.controller.data.UnlockableItemData;
-import it.unibo.vampireio.controller.impl.GameControllerImpl;
 import it.unibo.vampireio.model.api.GameModel;
 import it.unibo.vampireio.model.api.Unlockable;
 import it.unibo.vampireio.model.impl.UnlockableCharacter;
@@ -41,7 +41,7 @@ public final class ListenerInitializer {
     public static void init(
             final GameView view,
             final GameModel model,
-            final GameControllerImpl controller,
+            final GameController controller,
             final GameLoopManager gameLoopManager,
             final ScreenManager screenManager,
             final InputProcessor inputProcessor) {

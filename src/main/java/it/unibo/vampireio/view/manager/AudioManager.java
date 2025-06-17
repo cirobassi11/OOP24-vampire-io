@@ -6,7 +6,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import it.unibo.vampireio.view.impl.GameViewImpl;
+import it.unibo.vampireio.view.api.GameView;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,9 +22,9 @@ public class AudioManager {
     /**
      * Constructs an AudioManager and initializes the background music.
      *
-     * @param view the GameViewImpl instance to notify in case of errors
+     * @param view the GameView instance to notify in case of errors
      */
-    public AudioManager(final GameViewImpl view) {
+    public AudioManager(final GameView view) {
         try {
             final InputStream backingTrackStream = AudioManager.class
                     .getResourceAsStream(AUDIO_PATH + "soundtrack.wav");
