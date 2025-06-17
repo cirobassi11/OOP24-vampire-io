@@ -2,7 +2,6 @@ package it.unibo.vampireio.controller.manager;
 
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
-
 import javax.swing.JComponent;
 
 /**

@@ -2,7 +2,6 @@ package it.unibo.vampireio.model.impl.attacks;
 
 import java.awt.geom.Point2D;
 import java.util.List;
-
 import it.unibo.vampireio.model.api.Collidable;
 import it.unibo.vampireio.model.api.Living;
 import it.unibo.vampireio.model.impl.Enemy;

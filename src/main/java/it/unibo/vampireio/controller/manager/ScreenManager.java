@@ -2,7 +2,6 @@ package it.unibo.vampireio.controller.manager;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vampireio.view.api.GameView;
 

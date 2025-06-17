@@ -10,7 +10,6 @@ import it.unibo.vampireio.model.impl.collectibles.ExperienceGem;
 import it.unibo.vampireio.model.impl.collectibles.Food;
 import it.unibo.vampireio.model.data.Stats;
 import it.unibo.vampireio.model.data.StatType;
-
 import java.awt.geom.Point2D;
 
 /**

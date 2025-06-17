@@ -19,7 +19,6 @@ import it.unibo.vampireio.model.data.ConfigData;
 import it.unibo.vampireio.model.data.DataLoader;
 import it.unibo.vampireio.model.data.GameDataProvider;
 import it.unibo.vampireio.model.data.WeaponData;
-
 import java.util.Collection;
 
 /**

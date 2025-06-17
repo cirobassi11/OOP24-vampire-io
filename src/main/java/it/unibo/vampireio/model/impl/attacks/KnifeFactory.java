@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model.impl.attacks;
 
 import java.awt.geom.Point2D;
-
 import it.unibo.vampireio.model.api.Attack;
 import it.unibo.vampireio.model.api.Weapon;
 import it.unibo.vampireio.model.data.StatType;

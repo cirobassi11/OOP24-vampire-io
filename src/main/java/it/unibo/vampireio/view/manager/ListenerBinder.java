@@ -13,7 +13,6 @@ import it.unibo.vampireio.view.panels.EndGamePanel;
 import it.unibo.vampireio.view.panels.GamePanel;
 import it.unibo.vampireio.view.panels.ItemSelectionPanel;
 import it.unibo.vampireio.view.panels.PausePanel;
-
 import java.awt.event.ActionListener;
 
 /**

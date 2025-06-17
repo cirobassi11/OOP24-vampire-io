@@ -1,7 +1,6 @@
 package it.unibo.vampireio.model.impl.attacks;
 
 import java.awt.geom.Point2D;
-
 import it.unibo.vampireio.model.api.Collidable;
 import it.unibo.vampireio.model.impl.Enemy;
 import it.unibo.vampireio.model.manager.CollisionManager;

@@ -3,7 +3,6 @@ package it.unibo.vampireio.model.api;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-
 import it.unibo.vampireio.model.impl.UnlockableCharacter;
 import it.unibo.vampireio.model.impl.UnlockablePowerUp;
 
