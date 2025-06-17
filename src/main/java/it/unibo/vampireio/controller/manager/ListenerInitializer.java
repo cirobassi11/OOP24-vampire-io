@@ -11,7 +11,6 @@ import it.unibo.vampireio.model.api.Score;
 import it.unibo.vampireio.view.api.GameView;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.swing.event.ListSelectionListener;
 
 /**
@@ -74,7 +73,7 @@ public final class ListenerInitializer {
                         character.getCurrentLevel(),
                         character.getMaxLevel(),
                         character.getPrice()))
-                    .collect(Collectors.toList());
+                    .toList();
             view.setChoosableCharactersData(characters);
             screenManager.showScreen(GameView.CHOOSE_CHARACTER);
         };
@@ -155,7 +154,7 @@ public final class ListenerInitializer {
                         character.getCurrentLevel(),
                         character.getMaxLevel(),
                         character.getPrice()))
-                    .collect(Collectors.toList());
+                    .toList();
             view.setUnlockableCharactersData(characters);
             view.setCoinsAmount(model.getMoneyAmount());
             screenManager.showScreen(GameView.UNLOCKABLE_CHARACTERS);
@@ -170,7 +169,7 @@ public final class ListenerInitializer {
                         powerUp.getCurrentLevel(),
                         powerUp.getMaxLevel(),
                         powerUp.getPrice()))
-                    .collect(Collectors.toList());
+                    .toList();
             view.setUnlockablePowerUpsData(powerUps);
             view.setCoinsAmount(model.getMoneyAmount());
             screenManager.showScreen(GameView.UNLOCKABLE_POWERUPS);
@@ -193,7 +192,7 @@ public final class ListenerInitializer {
                             character.getCurrentLevel(),
                             character.getMaxLevel(),
                             character.getPrice()))
-                        .collect(Collectors.toList());
+                        .toList();
                 view.setUnlockableCharactersData(characters);
                 view.setCoinsAmount(model.getMoneyAmount());
                 view.disableBuyButton();
@@ -239,7 +238,7 @@ public final class ListenerInitializer {
                             powerup.getCurrentLevel(),
                             powerup.getMaxLevel(),
                             powerup.getPrice()))
-                        .collect(Collectors.toList());
+                        .toList();
                 view.setUnlockablePowerUpsData(powerUps);
                 view.setCoinsAmount(model.getMoneyAmount());
                 view.disableBuyButton();

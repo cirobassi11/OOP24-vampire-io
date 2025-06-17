@@ -3,7 +3,6 @@ package it.unibo.vampireio.controller.data;
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.util.List;
-import java.util.stream.Collectors;
 import it.unibo.vampireio.model.api.GameModel;
 import it.unibo.vampireio.model.api.Living;
 import it.unibo.vampireio.model.api.Score;
@@ -58,7 +57,7 @@ public final class DataBuilder {
                         enemy.getMaxHealth(),
                         enemy.isGettingAttacked(),
                         enemy.isMoving()))
-                .collect(Collectors.toList());
+                .toList();
 
         final List<PositionableData> attacksData = attacks.stream()
                 .map(attack -> new PositionableData(
@@ -68,7 +67,7 @@ public final class DataBuilder {
                         new Point2D.Double(attack.getDirection().getX(),
                                 attack.getDirection().getY()),
                         attack.getRadius()))
-                .collect(Collectors.toList());
+                .toList();
 
         final List<PositionableData> collectiblesData = collectibles.stream()
                 .map(collectible -> new PositionableData(
@@ -77,11 +76,11 @@ public final class DataBuilder {
                                 collectible.getPosition().getY()),
                         new Point2D.Double(0, 0),
                         collectible.getRadius()))
-                .collect(Collectors.toList());
+                .toList();
 
         final List<ItemData> itemsData = model.getWeapons().stream()
                 .map(item -> new ItemData(item.getId(), "", ""))
-                .collect(Collectors.toList());
+                .toList();
 
         return new GameData(
                 visibleMapSizeData,
@@ -116,7 +115,7 @@ public final class DataBuilder {
                         score.getLevel(),
                         score.getCoinCounter(),
                         score.getScore()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
